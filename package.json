@@ -3,20 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/free-regular-svg-icons": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^13.5.0",
+    "bootstrap": "^5.3.3",
+    "prop-types": "^15.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-router-dom": "^7.4.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "sweetalert2": "^11.17.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "clean": "rm -rf package-lock.json ./build ./node_modules"
   },
   "eslintConfig": {
     "extends": [
@@ -35,5 +42,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/bootstrap": "^5.2.10",
+    "@types/node": "^22.13.14",
+    "@types/prop-types": "^15.7.14",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4"
   }
 }
