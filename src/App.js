@@ -1,8 +1,6 @@
 import './App.css';
-import Navbar from './Navbar/Navbar';
-import Register_member from './Member/Register_member';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-
+import {Chat_main} from './chatting';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 console.groupCollapsed('src/App.js'); console.groupEnd();
 
@@ -11,9 +9,9 @@ const App = () => {
   return (
     <div className="App">
       <div className='main'>
-        <Navbar />
+        {/* <div class="navbar"></div> */}
         <Routes>
-          <Route path="/" element={<Register_member />} />
+          <Route path="/" element={<Chat_main />} />
         </Routes>
       </div>
     </div>
