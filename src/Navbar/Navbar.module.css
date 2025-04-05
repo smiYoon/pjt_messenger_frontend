@@ -21,16 +21,25 @@
 
 .buttons button {
     background-color: skyblue;
-    border-radius: 50%;
     text-align: center;
     width: 60px;
     height: 60px;
     font-weight: bold;
+    transform: rotate(0deg);
+    border-radius: 50%;
     border: none;
+    transition: all .7s ease;
 }
 
 .project button {
     font-size: 0.7rem;
+}
+
+.buttons button:hover {
+    transform: rotate(360deg);
+    border-radius: 10px;
+    /* transition: all .7s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
+    transition: all .7s ease;
 }
 
 .profile {
