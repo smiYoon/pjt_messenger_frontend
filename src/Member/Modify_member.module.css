@@ -1,0 +1,123 @@
+.cover {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+
+.container {
+    width: 90%;
+    height: 90%;
+    display: flex;
+    gap: 1vw;
+    position: relative;
+}
+
+.left_panel {
+    border-radius: 20px;
+    background-color: #E5E1F5;
+    width: 34%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, .15);
+
+    input {
+        border: none;
+        font-size: 2rem;
+        background-color: transparent;
+        text-align: center;
+        width: 10vw;
+    }
+}
+
+.pic {
+    top: 20%;
+    position: absolute;
+
+    img {
+        width: 270px;
+    }
+}
+
+.name {
+    top: 50%;
+    position: absolute;
+    font-size: 2rem;
+    align-items: center;
+}
+
+.name::after {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 5vw;
+    background-color: #6c47ff;
+    margin: 5px auto 0;
+}
+
+.user_id {
+    display: flex;
+    justify-content: center;
+    top: 60%;
+    position: absolute;
+    font-size: 2rem;
+    width: 15vw;
+}
+
+.empno {
+    display: flex;
+    justify-content: center;
+    top: 70%;
+    position: absolute;
+    font-size: 2rem;
+    width: 15vw;
+}
+
+.right_panel {
+    display: flex;
+    flex-direction: column;
+    width: 64%;
+    position: relative;
+    right: 0;
+    gap: 1vw;
+    
+}
+
+.right_panel .title {
+    border-radius: 15px;
+    background-color: #E5E1F5;
+    padding: 40px 60px;
+    color: #444;
+    font-size: 3rem;
+    font-weight: 900;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, .15);
+}
+
+.right_panel .input {
+    border-radius: 20px;
+    background-color: #E5E1F5;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, .15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.right_panel .input input {
+    width: 20vw;
+    height: 8vh;
+    font-size: 2rem;
+    text-align: center;
+    border: 1px solid #6c47ff;
+    border-radius: 15px;
+}
+
+.input input:focus {
+    border: none;
+}

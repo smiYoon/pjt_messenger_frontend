@@ -1,6 +1,6 @@
 import './App.css';
 import Navbar from './Navbar/Navbar';
-import Register_member from './Member/Register_member';
+import { Register, Modify } from './Member';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 
@@ -13,7 +13,8 @@ const App = () => {
       <div className='main'>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Register_member />} />
+          {/* <Route path="/" element={<Register />} /> */}
+          <Route path="/" element={<Modify />} />
         </Routes>
       </div>
     </div>
