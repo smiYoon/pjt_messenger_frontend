@@ -1,0 +1,22 @@
+.container {
+    position: absolute;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    width: 96vw;
+    height: 100vh;
+    top: 0;
+    left: 4vw;
+}
+
+.left_panel {
+    width: 50%;
+    height: 100vh;
+
+}
+
+.right_panel {
+    width: 50%;
+    /* height: 100vh; */
+
+}
