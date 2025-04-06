@@ -12,16 +12,42 @@
 .left_panel {
     width: 50%;
     height: 100vh;
-    background-color: beige;
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
 
 }
+
+.register_title {
+    display: flex;
+    justify-content: center;
+
+    font-size: 3rem;
+    
+}
+
+.register_img {
+    background-image: url('./img/Register.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    width: 100%;
+    height: 100%;
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
 
 .right_panel {
     width: 50%;
     /* height: 100vh; */
     background-color: #E5E1F5;
     display: flex;
-    flex-direction: column;  /* flex박스 내의 자식 요소 배치 결정 -> column 자식 요소들을 수직을 정렬*/
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
@@ -30,46 +56,58 @@
 
 }
 
-/* .right_panel .input_box {
-    background-color: #E5E1F5;
+.right_panel .input_box {
+    
     display: flex;
     flex-direction: column;  
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    height: 100%;
+    height: 80%;
     gap: 5vh;
     
 } 
-*/
 
-.single_input .input {
-    width: 30vw;
-    height: 8vh;
-    font-size: 2rem;
-    text-align: center;
+.right_panel .input_box .input {
+    font-size: 1rem;
+    text-align: left;
     border: 1px solid #6c47ff;
     border-radius: 15px;
+}
+
+
+.single_input .input {
+    width: 31vw;
+    height: 7vh;
+}
+
+.two_input {
+    display: flex;
+    height: 7vh;
+    gap: 1vw;
 }
 
 .two_input .largeinput {
     width: 20vw;
-    height: 8vh;
-    font-size: 2rem;
-    text-align: center;
-    border: 1px solid #6c47ff;
     border-radius: 15px;
+    border: 1px solid #6c47ff;
 }
 
 .two_input .smallinput {
     width: 10vw;
-    height: 8vh;
-    font-size: 2rem;
-    text-align: center;
-    border: 1px solid #6c47ff;
     border-radius: 15px;
+    border: 1px solid #6c47ff;
 }
 
+.role_box {
+    display: flex;
+    width: 15vw;
+    height: 5vh;
+    font-size: 2rem;
+    gap: 2vh;
+}
+
+/* 
 .Department {
     width: 15vw;
     height: 8vh;
@@ -80,4 +118,9 @@
     width: 15vw;
     height: 8vh;
     font-size: 2rem;
+} */
+
+.button_box {
+    display: flex;
+    gap: 2vw;
 }

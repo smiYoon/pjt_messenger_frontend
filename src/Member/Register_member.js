@@ -24,11 +24,11 @@ const Register_member = () => {
     return (
         <div className={styles.container}>
             <div className={styles.left_panel}>
-                <div>REGISTER</div>
-                <div>이미지</div>
+                <div className={styles.register_title}>REGISTER</div>
+                <div className={styles.register_img} />
             </div>
             <div className={styles.right_panel}>
-                {/* <div className={styles.input_box}> */}
+                <div className={styles.input_box}>
                     <div className={styles.single_input}>
                         <input type='text' value={inputId} className={styles.input} onChange={handlerIdChange} placeholder='아이디' />
                     </div>
@@ -46,10 +46,10 @@ const Register_member = () => {
                     <div className={styles.single_input}>
                         <input type='text' value={inputEmail} className={styles.input} onChange={handlerEmailChange} placeholder='이메일' />
                     </div>
-                    <div>
+                    <div className={styles.role_box}>
                         <select
                             name='Department'
-                            className={styles.Department}
+                            // className={styles.Department}
                             onChange={handlerChange}
                         >
                             <option value="">부서</option>
@@ -61,7 +61,7 @@ const Register_member = () => {
                         </select>
                         <select
                             name='Position'
-                            className={styles.Position}
+                            // className={styles.Position}
                             onChange={handlerChange}
                         >
                             <option value="">직급</option>
@@ -72,11 +72,15 @@ const Register_member = () => {
                             <option value="5">인사담당자</option>
                         </select>
                     </div>
-                    <div>
-                        <div>등록</div>
-                        <div>취소</div>
+                    <div className={styles.button_box}>
+                        <div>
+                            <button>등록</button>
+                        </div>
+                        <div>
+                            <button>취소</button>
+                        </div>
                     </div>
-                {/* </div> text_box */}
+                 </div> {/* text_box */}
             </div> {/* 오른쪽 창 */}
         </div>
     )
