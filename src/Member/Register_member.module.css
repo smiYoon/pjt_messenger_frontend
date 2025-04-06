@@ -12,11 +12,72 @@
 .left_panel {
     width: 50%;
     height: 100vh;
+    background-color: beige;
 
 }
 
 .right_panel {
     width: 50%;
     /* height: 100vh; */
+    background-color: #E5E1F5;
+    display: flex;
+    flex-direction: column;  /* flex박스 내의 자식 요소 배치 결정 -> column 자식 요소들을 수직을 정렬*/
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    height: 100%;
+    gap: 5vh;
 
+}
+
+/* .right_panel .input_box {
+    background-color: #E5E1F5;
+    display: flex;
+    flex-direction: column;  
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    height: 100%;
+    gap: 5vh;
+    
+} 
+*/
+
+.single_input .input {
+    width: 30vw;
+    height: 8vh;
+    font-size: 2rem;
+    text-align: center;
+    border: 1px solid #6c47ff;
+    border-radius: 15px;
+}
+
+.two_input .largeinput {
+    width: 20vw;
+    height: 8vh;
+    font-size: 2rem;
+    text-align: center;
+    border: 1px solid #6c47ff;
+    border-radius: 15px;
+}
+
+.two_input .smallinput {
+    width: 10vw;
+    height: 8vh;
+    font-size: 2rem;
+    text-align: center;
+    border: 1px solid #6c47ff;
+    border-radius: 15px;
+}
+
+.Department {
+    width: 15vw;
+    height: 8vh;
+    font-size: 2rem;
+}
+
+.Position {
+    width: 15vw;
+    height: 8vh;
+    font-size: 2rem;
 }
