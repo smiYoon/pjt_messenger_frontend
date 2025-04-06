@@ -2,8 +2,6 @@ import './App.css';
 import {Chat_main} from './chatting';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Navbar/Navbar';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-
 
 console.groupCollapsed('src/App.js'); console.groupEnd();
 
