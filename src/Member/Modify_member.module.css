@@ -11,7 +11,7 @@
     width: 70%;
     height: 80vh;
     display: flex;
-    gap: 1vw;
+    gap: 1.5vw;
     position: relative;
 }
 
@@ -100,7 +100,7 @@
     width: 64%;
     position: relative;
     right: 0;
-    gap: 1vw;
+    gap: 1.5vw;
     height: inherit;
 }
 
@@ -133,18 +133,18 @@
 }
 
 .input .single {
-    width: 30vw;
+    width: 25vw;
 }
 
 .input .double {
     display: flex;
-    width: 30vw;
+    width: 25vw;
     gap: 1vw;
 }
 
 .double .dept,
 .double .position {
-    flex-grow: 1;
+    width: 50%;
 }
 
 .double .address {
@@ -170,14 +170,23 @@
 
 .buttons {
     display: flex;
-    gap: 3vw;
+    gap: 4vw;
     margin-top: 1.5vw;
 }
 
 .buttons button {
-    padding: 10px 40px;
+    padding: 15px 50px;
     font-size: 1.5rem;
     font-weight: bold;
     border-radius: 10px;
     border: 1px solid #6c47ff;
+}
+
+.buttons .modify {
+    color: white;
+    background-color: #6c47ff;
+}
+
+.buttons .cancel {
+    background-color: white;
 }
