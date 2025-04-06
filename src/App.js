@@ -1,6 +1,9 @@
 import './App.css';
 import {Chat_main} from './chatting';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './Navbar/Navbar';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+
 
 console.groupCollapsed('src/App.js'); console.groupEnd();
 
@@ -9,7 +12,7 @@ const App = () => {
   return (
     <div className="App">
       <div className='main'>
-        {/* <div class="navbar"></div> */}
+        <Navbar/>
         <Routes>
           <Route path="/" element={<Chat_main />} />
         </Routes>
