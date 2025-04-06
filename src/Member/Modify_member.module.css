@@ -1,5 +1,5 @@
 .cover {
-    width: 100vw;
+    width: 96vw;
     height: 100vh;
     position: relative;
     display: flex;
@@ -8,8 +8,8 @@
 }
 
 .container {
-    width: 80%;
-    height: 80%;
+    width: 70%;
+    height: 80vh;
     display: flex;
     gap: 1vw;
     position: relative;
@@ -66,11 +66,9 @@
 }
 
 .article {
-    justify-content: center;
     top: 60%;
     position: absolute;
     font-size: 1.5rem;
-    width: 14vw;
 }
 
 .article .user_id,
@@ -78,10 +76,12 @@
     display: flex;
     gap: 1vw;
     margin-bottom: 1vw;
+    justify-content: space-between;
 }
 
-.article div {
-    margin-left: auto;
+.user_id div,
+.empno div {
+    text-align: center;
 }
 
 .user_id div::after,
@@ -101,20 +101,26 @@
     position: relative;
     right: 0;
     gap: 1vw;
-
+    height: inherit;
 }
 
 .right_panel .title {
     border-radius: 15px;
     background-color: #E5E1F5;
     padding: 40px 60px;
+    box-sizing: border-box;
     color: #444;
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: 900;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, .15);
 }
 
+.right_panel .form {
+    flex-grow: 8;
+}
+
 .right_panel .input {
+    height: 100%;
     border-radius: 20px;
     background-color: #E5E1F5;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, .15);
@@ -124,7 +130,6 @@
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    height: 100%;
 }
 
 .input .single {
@@ -143,11 +148,11 @@
 }
 
 .double .address {
-    flex-grow: 4;
+    width: 70%;
 }
 
 .double .postal {
-    flex-grow: 1;
+    width: 30%;
 }
 
 .right_panel .input input {
