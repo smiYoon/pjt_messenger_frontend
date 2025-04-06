@@ -1,7 +1,7 @@
 .main{
     width: 95vw;
     height: 100vh;
-    background-color: aqua;
+    /* background-color: aqua; */
 
     display: flex;
 }
@@ -9,7 +9,7 @@
 .leftbox{
     width: 25vw;
     height: 100vh;
-    background-color: blue;
+    /* background-color: blue; */
 
     /* display: flex; */
     align-content: center;
@@ -21,7 +21,7 @@
 .centerbox{
     width: 45vw;
     height: 100vh;
-    background-color: yellow;
+    /* background-color: yellow; */
 
     align-content: center;
     justify-items: center;
@@ -32,7 +32,7 @@
 .rightbox{
     width: 25vw;
     height: 100vh;
-    background-color:red;
+    /* background-color:red; */
 
     align-content: center;
     justify-items: center;
