@@ -10,25 +10,25 @@ const Navbar = () => {
     <div className={styles.container}>
       <div className={styles.buttons}>
         <div className={styles.chat}>
-          <button>
+          <button className={styles.flip}>
             채팅
           </button>
         </div>
 
         <div className={styles.work}>
-          <button>
+          <button className={styles.flip}>
             업무
           </button>
         </div>
 
         <div className={styles.board}>
-          <button>
+          <button className={styles.flip}>
             게시판
           </button>
         </div>
 
         <div className={styles.project}>
-          <button>
+          <button className={styles.flip}>
             프로젝트
           </button>
         </div>

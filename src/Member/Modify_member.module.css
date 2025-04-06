@@ -4,12 +4,12 @@
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;    
+    align-items: center;
 }
 
 .container {
-    width: 90%;
-    height: 90%;
+    width: 80%;
+    height: 80%;
     display: flex;
     gap: 1vw;
     position: relative;
@@ -27,54 +27,71 @@
 
     input {
         border: none;
-        font-size: 2rem;
+        font-size: 1.5rem;
         background-color: transparent;
-        text-align: center;
-        width: 10vw;
+        /* text-align: center; */
+        padding: 0 0 0 30px;
+        box-sizing: border-box;
+        /* width: 10vw; */
     }
 }
 
+.left_panel input:focus {
+    outline: none;
+}
+
 .pic {
-    top: 20%;
+    top: 10%;
     position: absolute;
 
     img {
-        width: 270px;
+        width: 200px;
     }
 }
 
 .name {
-    top: 50%;
+    top: 45%;
     position: absolute;
+    text-align: center;
     font-size: 2rem;
-    align-items: center;
 }
 
 .name::after {
     content: '';
     display: block;
     height: 3px;
-    width: 5vw;
+    width: 8vw;
     background-color: #6c47ff;
-    margin: 5px auto 0;
+    margin: 10px auto 0;
 }
 
-.user_id {
-    display: flex;
+.article {
     justify-content: center;
     top: 60%;
     position: absolute;
-    font-size: 2rem;
-    width: 15vw;
+    font-size: 1.5rem;
+    width: 14vw;
 }
 
-.empno {
+.article .user_id,
+.article .empno {
     display: flex;
-    justify-content: center;
-    top: 70%;
-    position: absolute;
-    font-size: 2rem;
-    width: 15vw;
+    gap: 1vw;
+    margin-bottom: 1vw;
+}
+
+.article div {
+    margin-left: auto;
+}
+
+.user_id div::after,
+.empno div::after {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 8vw;
+    background-color: #6c47ff;
+    margin: 10px auto 0;
 }
 
 .right_panel {
@@ -84,7 +101,7 @@
     position: relative;
     right: 0;
     gap: 1vw;
-    
+
 }
 
 .right_panel .title {
@@ -103,21 +120,59 @@
     box-shadow: 4px 4px 10px rgba(0, 0, 0, .15);
     display: flex;
     flex-direction: column;
+    gap: 1vw;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
     height: 100%;
 }
 
+.input .single {
+    width: 30vw;
+}
+
+.input .double {
+    display: flex;
+    width: 30vw;
+    gap: 1vw;
+}
+
+.double .dept,
+.double .position {
+    flex-grow: 1;
+}
+
+.double .address {
+    flex-grow: 4;
+}
+
+.double .postal {
+    flex-grow: 1;
+}
+
 .right_panel .input input {
-    width: 20vw;
-    height: 8vh;
-    font-size: 2rem;
+    height: 6vh;
+    font-size: 1.5rem;
     text-align: center;
     border: 1px solid #6c47ff;
-    border-radius: 15px;
+    border-radius: 10px;
+    box-sizing: border-box;
 }
 
 .input input:focus {
-    border: none;
+    outline: none;
+}
+
+.buttons {
+    display: flex;
+    gap: 3vw;
+    margin-top: 1.5vw;
+}
+
+.buttons button {
+    padding: 10px 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 1px solid #6c47ff;
 }

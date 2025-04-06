@@ -11,15 +11,20 @@ const Modify_member = () => {
                         <img src={profile} alt='' />
                     </div>
                     <div className={styles.name}>
-                        <input type='text' placeholder='김태영' />
+                        {/* <input type='text' placeholder='김태영' /> */}
+                        김태영
                     </div>
-                    <div className={styles.user_id}>
-                        아이디
-                        <input type='text' placeholder='youngfourty' />
-                    </div>
-                    <div className={styles.empno}>
-                        사번
-                        <input type='text' placeholder='B00298180' />
+                    <div className={styles.article}>
+                        <div className={styles.user_id}>
+                            <span>아이디&nbsp;</span>
+                            <div>youngfourty</div>
+                            {/* <input type='text' placeholder='youngfourty' /> */}
+                        </div>
+                        <div className={styles.empno}>
+                            <span>사번&nbsp;</span>
+                            <div>B00298180</div>
+                            {/* <input type='text' placeholder='B00298180' /> */}
+                        </div>
                     </div>
                 </div>
                 <div className={styles.right_panel}>
@@ -27,36 +32,31 @@ const Modify_member = () => {
                         사원 상세정보 / 수정
                     </div>
                     <div className={styles.input}>
-                        <div>
-                            <input type='text' placeholder='사번' />
-                            <input type='text' placeholder='아이디' />
+                        <div className={styles.double}>
+                            <input type='text' className={styles.dept} placeholder='부서' />
+                            <input type='text' className={styles.position} placeholder='직급' />
                         </div>
 
                         <div>
-                            <input type='text' placeholder='비밀번호' />
+                            <input type='text' className={styles.single} placeholder='비밀번호' />
                         </div>
 
                         <div>
-                            <input type='text' placeholder='이름' />
-                            <input type='text' placeholder='휴대폰번호' />
+                            <input type='text' className={styles.single} placeholder='휴대폰번호' />
+                        </div>
+
+                        <div className={styles.double}>
+                            <input type='text' className={styles.address} placeholder='주소' />
+                            <input type='text' className={styles.postal} placeholder='우편번호' />
                         </div>
 
                         <div>
-                            <input type='text' placeholder='주소' />
-                            <input type='text' placeholder='우편번호' />
+                            <input type='text' className={styles.single} placeholder='이메일' />
                         </div>
 
-                        <div>
-                            <input type='text' placeholder='이메일' />
-                        </div>
-
-                        <div>
-                            <input type='text' placeholder='부서' />
-                            <input type='text' placeholder='직급' />
-                        </div>
-                        <div>
-                            <button>수정</button>
-                            <button>취소</button>
+                        <div className={styles.buttons}>
+                            <button className={styles.modify}>수정</button>
+                            <button className={styles.cancel}>취소</button>
                         </div>
                     </div>
                 </div>

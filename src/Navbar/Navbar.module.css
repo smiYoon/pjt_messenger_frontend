@@ -25,10 +25,10 @@
     width: 60px;
     height: 60px;
     font-weight: bold;
-    transform: rotate(0deg);
+    /* transform: rotate(0deg); */
     border-radius: 50%;
     border: none;
-    transition: all .7s ease;
+    transition: all .3s ease;
 }
 
 .project button {
@@ -36,10 +36,10 @@
 }
 
 .buttons button:hover {
-    transform: rotate(360deg);
-    border-radius: 10px;
+    /* transform: rotate(360deg); */
+    border-radius: 7px;
     /* transition: all .7s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
-    transition: all .7s ease;
+    transition: all .3s ease;
 }
 
 .profile {
@@ -60,3 +60,4 @@ img {
 .logout {
     font-size: 1.5rem;
 }
+
