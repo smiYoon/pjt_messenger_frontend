@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Register_member.module.css';
+import  Register  from './img/Register.png';
 
 const Register_member = () => {
     const [inputId, setInputId] = useState('');
@@ -35,16 +36,12 @@ const Register_member = () => {
         <div className={styles.container}>
             <div className={styles.left_panel}>
                 <div className={styles.register_title}>REGISTER</div>
-                <div className={styles.register_img} />
+                <img src={Register} className={styles.register_img} />
             </div>
             <div className={styles.right_panel}>
                 <div className={styles.input_box}>
-                    <div className={styles.single_input}>
-                        <input type='text' value={inputId} className={styles.input} onChange={handlerIdChange} placeholder='아이디' />
-                    </div>
-                    <div className={styles.single_input}>
-                        <input type='text' value={inputPasswd} className={styles.input} onChange={handlerPasswdChange} placeholder='비밀번호' />
-                    </div>
+                        <input type='text' value={inputId} className={styles.single} onChange={handlerIdChange} placeholder='아이디' />
+                        <input type='text' value={inputPasswd} className={styles.single} onChange={handlerPasswdChange} placeholder='비밀번호' />
                     <div className={styles.two_input}>
                         <input type='text' value={inputName} className={styles.smallinput} onChange={handlerNameChange} placeholder='이름' />
                         <input type='number' value={inputPhoneNum} className={styles.largeinput} onChange={handlerPhoneNumChange} placeholder='휴대폰 번호' />
@@ -53,13 +50,11 @@ const Register_member = () => {
                         <input type='text' className={styles.largeinput} placeholder='주소' />
                         <input type='number' className={styles.smallinput} placeholder='우편번호' />
                     </div>
-                    <div className={styles.single_input}>
-                        <input type='text' value={inputEmail} className={styles.input} onChange={handlerEmailChange} placeholder='이메일' />
-                    </div>
+                        <input type='text' value={inputEmail} className={styles.single} onChange={handlerEmailChange} placeholder='이메일' />
                     <div className={styles.role_box}>
                         <select
                             name='Department'
-                            // className={styles.Department}
+                            className={styles.Department}
                             onChange={handlerChange}
                         >
                             <option value="">부서</option>
@@ -71,7 +66,7 @@ const Register_member = () => {
                         </select>
                         <select
                             name='Position'
-                            // className={styles.Position}
+                            className={styles.Position}
                             onChange={handlerChange}
                         >
                             <option value="">직급</option>
@@ -84,10 +79,10 @@ const Register_member = () => {
                     </div>
                     <div className={styles.button_box}>
                         <div>
-                            <button>등록</button>
+                            <button onClick={handleCancelClick} className={styles.register} >등록</button>
                         </div>
                         <div>
-                            <button onClick={handleCancelClick} >취소</button>
+                            <button onClick={handleCancelClick} className={styles.cancel} >취소</button>
                         </div>
                     </div>
                  </div> {/* text_box */}

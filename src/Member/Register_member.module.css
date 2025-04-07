@@ -15,31 +15,34 @@
     background-color: aliceblue;
     display: flex;
     flex-direction: column;
+    position: relative;
+
 
 }
 
 .register_title {
+    position: absolute;
     display: flex;
     justify-content: center;
-
-    font-size: 3rem;
+    font-weight: bolder;
+    font-size: 5rem;
+    top: 20%;
+    right: 23%;
     
+
 }
 
 .register_img {
-    background-image: url('./img/Register.png');
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    width: 100%;
-    height: 100%;
-
+    position: absolute;
+    width: 60%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
 }
 
 
@@ -57,70 +60,121 @@
 }
 
 .right_panel .input_box {
-    
+
     display: flex;
-    flex-direction: column;  
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
+    width: 30vw;
     height: 80%;
-    gap: 5vh;
-    
-} 
+    gap: 1.5vw;
 
-.right_panel .input_box .input {
-    font-size: 1rem;
-    text-align: left;
-    border: 1px solid #6c47ff;
-    border-radius: 15px;
+    input {
+        font-size: 1rem;
+        text-align: left;
+        border: 1px solid #6c47ff;
+        border-radius: 10px;
+        height: 6vh;
+        box-sizing: border-box;
+        padding: 0 10px;
+    }
+
+    input:focus {
+        outline: none;
+    }
 }
 
-
-.single_input .input {
-    width: 31vw;
-    height: 7vh;
+.input_box .single {
+    width: 100%;
 }
 
 .two_input {
     display: flex;
-    height: 7vh;
+    width: inherit;
     gap: 1vw;
 }
 
 .two_input .largeinput {
-    width: 20vw;
-    border-radius: 15px;
+    width: 80%;
     border: 1px solid #6c47ff;
 }
 
 .two_input .smallinput {
-    width: 10vw;
-    border-radius: 15px;
+    width: 20%;
+
     border: 1px solid #6c47ff;
 }
 
 .role_box {
     display: flex;
-    width: 15vw;
-    height: 5vh;
-    font-size: 2rem;
+    width: 100%;
+    height: 6vh;
     gap: 2vh;
 }
 
-/* 
+
 .Department {
-    width: 15vw;
-    height: 8vh;
-    font-size: 2rem;
+    width: 30vw;
+    border-radius: 7px;
+    border: 1px solid #6c47ff;
+    /* box-sizing: border-box; */
+    padding: 0 10px;
+    font-size: 1rem;
+}
+
+.Department:focus {
+    outline: none;
 }
 
 .Position {
-    width: 15vw;
-    height: 8vh;
-    font-size: 2rem;
-} */
+    width: 30vw;
+    border-radius: 7px;
+    border: 1px solid #6c47ff;
+    /* box-sizing: border-box; */
+    padding: 0 10px;
+    font-size: 1rem;
+}
+
+.Position:focus {
+    outline: none;
+}
 
 .button_box {
     display: flex;
     gap: 2vw;
+}
+
+.button_box button {
+    padding: 15px 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 1px solid #6c47ff;
+}
+
+
+
+.button_box .register {
+    color: white;
+    background-color: #6c47ff;
+    transition: background-color 0.3s ease-in;
+    cursor: pointer;
+}
+
+.button_box .cancel {
+    background-color: white;
+    transition: background-color 0.3s ease-in;
+    cursor: pointer;
+}
+
+
+.register:hover {
+    background-color: #4a1dff;
+}
+
+
+
+.cancel:hover {
+    background-color: #d5d5d5;
 }
