@@ -8,7 +8,7 @@ const ChatEmpList = () => {
             
                 <div className={styles.container}>
                     <div className={styles.chatname}>채팅방 인원</div>
-
+                    
                     <div className={styles.emplist}>
                         <div className={styles.emp}>
                             <div className={styles.empimg}></div>
