@@ -18,7 +18,7 @@
 .left_panel {
     border-radius: 20px;
     background-color: #E5E1F5;
-    width: 34%;
+    width: 40%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -97,7 +97,7 @@
 .right_panel {
     display: flex;
     flex-direction: column;
-    width: 64%;
+    width: 60%;
     position: relative;
     right: 0;
     gap: 1.5vw;
@@ -111,7 +111,7 @@
     box-sizing: border-box;
     color: #444;
     font-size: 2rem;
-    font-weight: 900;
+    font-weight: bold;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, .15);
 }
 
@@ -120,7 +120,6 @@
 }
 
 .right_panel .input {
-    height: 100%;
     border-radius: 20px;
     background-color: #E5E1F5;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, .15);
@@ -129,22 +128,41 @@
     gap: 1vw;
     justify-content: center;
     align-items: center;
+    padding: 0 10vw;
     box-sizing: border-box;
+    height: 100%;
 }
 
 .input .single {
     width: 25vw;
+    position: relative;
 }
 
 .input .double {
     display: flex;
+    position: relative;
     width: 25vw;
     gap: 1vw;
 }
 
-.double .dept,
-.double .position {
-    width: 50%;
+.double .dept_container .dept,
+.double .position_container .position {
+    width: 100%;
+}
+
+.placeholder_text {
+    position: absolute;
+    top: 10%;
+    margin-left: 10px;
+    font-size: 0.8rem;
+}
+
+.double .postal_text {
+    position: absolute;
+    top: 10%;
+    right: 21%;
+    transform: translateX(50%);
+    font-size: 0.8rem;
 }
 
 .double .address {
@@ -157,10 +175,11 @@
 
 .right_panel .input input {
     height: 6vh;
-    font-size: 1.5rem;
-    text-align: center;
+    font-size: 1.2rem;
+    /* text-align: center; */
     border: 1px solid #6c47ff;
     border-radius: 10px;
+    padding: 20px 0 5px 10px;
     box-sizing: border-box;
 }
 
@@ -185,8 +204,15 @@
 .buttons .modify {
     color: white;
     background-color: #6c47ff;
+    cursor: pointer;
+}
+
+.buttons .modify:hover {
+    background-color: #4a1dff;
+    transition: background-color 0.2s ease;
 }
 
 .buttons .cancel {
     background-color: white;
+    cursor: pointer;
 }

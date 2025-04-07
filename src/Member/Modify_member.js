@@ -34,25 +34,36 @@ const Modify_member = () => {
                     <div className={styles.form}>
                         <div className={styles.input}>
                             <div className={styles.double}>
-                                <input type='text' className={styles.dept} placeholder='부서' />
-                                <input type='text' className={styles.position} placeholder='직급' />
+                                <div className={styles.dept_container}>
+                                    <input type='text' className={styles.dept} placeholder='' />
+                                    <div className={styles.placeholder_text}>부서</div>
+                                </div>
+                                <div className={styles.position_container}>
+                                    <input type='text' className={styles.position} placeholder='' />
+                                    <div className={styles.placeholder_text}>직급</div>
+                                </div>
                             </div>
 
-                            <div>
-                                <input type='text' className={styles.single} placeholder='비밀번호' />
+                            <div className={styles.single}>
+                                <input type='text' className={styles.single} placeholder='' />
+                                <div className={styles.placeholder_text}>비밀번호</div>
                             </div>
 
-                            <div>
-                                <input type='text' className={styles.single} placeholder='휴대폰번호' />
+                            <div className={styles.single}>
+                                <input type='text' className={styles.single} placeholder='' />
+                                <div className={styles.placeholder_text}>휴대폰번호</div>
                             </div>
 
                             <div className={styles.double}>
-                                <input type='text' className={styles.address} placeholder='주소' />
-                                <input type='text' className={styles.postal} placeholder='우편번호' />
+                                    <input type='text' className={styles.address} placeholder='' />
+                                    <div className={styles.placeholder_text}>주소</div>
+                                    <input type='text' className={styles.postal} placeholder='' />
+                                    <div className={styles.postal_text}>우편번호</div>
                             </div>
 
-                            <div>
-                                <input type='text' className={styles.single} placeholder='이메일' />
+                            <div className={styles.single}>
+                                <input type='text' className={styles.single} placeholder='' />
+                                <div className={styles.placeholder_text}>이메일</div>
                             </div>
 
                             <div className={styles.buttons}>
