@@ -1,0 +1,38 @@
+.body {
+    margin: 0;
+    padding: 0;
+    width: 96vw;
+    height: 100vh;   
+}
+
+.container {
+    margin: 2vh auto;
+    width: 90%;
+    height: 80%;
+}
+
+.pageTitle {
+    color: #444;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.subContainerTitle {
+    color: #444;
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding-bottom: 3vh;
+
+}
+
+.upCommingContainer {
+    margin-top: 5vh;
+    height: 30vh;
+}
+
+.listContainer {
+    margin-top: 7vh;
+    height: 45vh;
+    background-color: lightcoral;
+}
+
