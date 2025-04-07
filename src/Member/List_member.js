@@ -29,9 +29,10 @@ const List_member = () => {
               <option value="name">이름</option>
               <option value="phone">전화번호</option>
             </select>
-            <input type='text' className={styles.text}>
-
-            </input>
+            <div className={styles.search_container}>
+              <input type='text' className={styles.text} placeholder='검색어를 입력하세요.' />
+              <i class="fa-solid fa-magnifying-glass" />
+            </div>
           </div>
         </div>
         <div className={styles.card}>
