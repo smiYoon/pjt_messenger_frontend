@@ -6,6 +6,12 @@
     border-radius: 20px;
 }
 
+.summaryAllBox {
+    position: relative;
+    width: 100%;
+    height: 150px;
+}
+
 /* todaySummary */
 .todaySummary {
     position: relative;
@@ -26,7 +32,7 @@
     /* design */
     
     color: #ffff;
-    background-color: #3c2d80;
+    background-color: #6C47FF;
     
     border-radius: 20px;
     overflow: hidden;
@@ -36,8 +42,6 @@
 .todaySummary:hover .magicWand,
 .todaySummary:hover .todaySummaryTxt {
     opacity: 0.7;
-
-
 }
 
 .magicWand {
@@ -76,13 +80,12 @@
     100% { transform: scale(50) rotate(45deg); opacity: 0; }
   }
 
-
   
 /* dateSetManually */
   .dateSetManually {
     position: relative;
     
-    top: 60px;
+    top: 40px;
     left: 20px;
 
     width: 120px;
@@ -94,7 +97,7 @@
     /* design */
 
     background-color: #ffff;
-    color: #3c2d80;
+    color: #6C47FF;
 
     border-radius: 15px;
 
@@ -106,11 +109,12 @@
 .startDateBox {
     position: relative;
     display: flex;
+    gap: 20px;
 
     width: 300px;
-    height: 30px;
+    height: 300px;
 
-    top: 80px;
+    top: 60px;
 }
 .startDate {
     position: relative;
@@ -127,7 +131,7 @@
     /* design */
 
     background-color: #ffff;
-    color: #3c2d80;
+    color: #6C47FF;
 
     border-radius: 15px;
 
@@ -139,7 +143,7 @@
 .endDate {
     position: relative;
 
-    top: 100px;
+    top: 80px;
     left: 20px;
 
     padding-top: 10px;
@@ -151,7 +155,7 @@
     /* design */
 
     background-color: #ffff;
-    color: #3c2d80;
+    color: #6C47FF;
 
     border-radius: 15px;
 
@@ -162,11 +166,11 @@
 .summary {
     position: relative;
 
-    top: 120px;
+    top: 100px;
     left: 120px;
 
     padding-top: 10px;
-    padding-left: 25px;
+    padding-left: 30px;
 
     width: 80px;
     height: 30px;
@@ -175,7 +179,7 @@
 
     /* design */
 
-    background-color: #3c2d80;
+    background-color: #6C47FF;
     color: #ffff;
 
     border-radius: 20px;
@@ -193,17 +197,24 @@
     
     border-radius: 15px;
 
-    top: 140px;
+    top: 120px;
     left: 20px;
 
     width: 300px;
-    height: 425px;
+    height: 460px;
 }
 
 
 /* Calendar */
 
+.startCalendar {
+    position: relative;
+    max-width: 500px;
+    height: 300px;
+}
+
 .Calendar {
     position: relative;
-    width: 100%;
+    max-width: 200px;
+    height: 200px;
 }
