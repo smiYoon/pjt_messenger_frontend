@@ -1,29 +1,102 @@
-.overlay  {
-    position: fixed ;
-    inset:0; 
-    background:rgba(0, 0, 0, 0.3);
-    /* backgroundopacity-30 ; */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
     display: flex;
-    align-items: center; 
-    justify-content:center;
-}
-
-.popup  {
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .popup {
     width: 666px;
     height: 730px;
-    background: #e5e1f5;
+    background: #e6ddf6;
     border-radius: 12px;
-    padding:32px;
+    padding: 32px;
     position: relative;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.clsX {
+  }
+  
+  .clsX {
     position: absolute;
     top: 16px;
-    right: 16px;
-    font-size:  20px;
+    right: 20px;
+    font-size: 20px;
     background: none;
-    border:none;
-    cursor: pointer
-}
+    border: none;
+    cursor: pointer;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  
+  .field {
+    margin-bottom: 20px;
+  }
+  
+  .field label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  
+  .field input,
+  .field select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+  
+  .inviteRow {
+    display: flex;
+  }
+  
+  .inviteRow input {
+    flex: 1;
+  }
+  
+  .inviteRow button {
+    padding: 12px 16px;
+    background-color: #7046d3;
+    color: white;
+    border: none;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+  }
+  
+  .avatarRow {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0;
+  }
+  
+  .avatar {
+    width: 40px;
+    height: 40px;
+    background: #ccc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .mkBtn {
+    width: 100%;
+    padding: 14px;
+    background-color: #7046d3;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  

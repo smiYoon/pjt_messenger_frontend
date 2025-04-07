@@ -6,8 +6,8 @@ const CreateChat=() =>{
     const [selectPj, setSelectPj] =useState("AI 협업메신저"); //프로젝트 
     const [inviteName,setInviteName] = useState(""); //초대할 리스트
     const [invitedList, setInvitedList] =useState([]); //초대된 리스트
+    const [selectPjs, setSelectPjs] = useState([]);
 
-  // 닫기X 버튼, 만들기 버튼
 
   const handleAddInvite= ()=>{
       // if (inviteName.trim() != ""){ //조직도에서 리스트로 받아오지 못하는 것 같음.
@@ -21,16 +21,16 @@ const CreateChat=() =>{
       //     setInviteName(""); //추가하고 빈칸으로 만들기
       // }; 두번째
 
-      // const handleAddInvite = () => {
-      //   const names = inviteName
-      //     .split(",")
-      //     .map((name) => name.trim())
-      //     .filter(Boolean);
-      //   const newNames = names.filter((id) => !invitedList.includes(id));
-      //   //중복된 id제거        
-      //   setInvitedList([...invitedList, ...newNames]);
-      //   setInviteName("");
-      // };
+ 
+        const names = inviteName
+          .split(",")
+          .map((name) => name.trim())
+          .filter(Boolean);
+        const newNames = names.filter((id) => !invitedList.includes(id));
+        //중복된 id제거        
+        setInvitedList([...invitedList, ...newNames]);
+        setInviteName("");
+
 
   //     <ul>
   // {invitedList.map(({ id, name }) => (
@@ -47,7 +47,7 @@ const CreateChat=() =>{
           ,members:invitedList
       };//chatRoomData
 
-      console.log("채팅방 데이터(json): {}",JSON.stringify(chatRoomData));
+      console.log("채팅방 데이터(json):",JSON.stringify(chatRoomData));
       //json으로 가는 모습으로 콘솔 확인하기
   }//HandleCreateRoom
 
@@ -58,7 +58,7 @@ const CreateChat=() =>{
   //       projectId: selectedProject, // 서버로는 ID 보내기
   //       members: invitedList,
   //     };
-  //     console.log("보낼 데이터:", data);
+  //     console.log("보낼 데이터:", data);invitedList
   //   };
 
 
@@ -71,47 +71,54 @@ const CreateChat=() =>{
         .then((data) => setSelectPj(data));
   }, []);
 
-  return (
+  return(
       <div className={styles.overlay }>
           <div className={styles.popup }>
               <button className={styles.clsX}>X</button>
               <h2 className={styles.title}>채팅방 만들기</h2>
 
               {/* div 1 */}   
-              <div className={styles.mkName}>
-                  <label className={styles.mkChatT}>채팅방 이름</label>
+              <div className={styles.field}>
+                  <label 
+                  // className={styles.mkChatT}
+                  >채팅방 이름</label>
                   <input
                   type="text"
                   value={roomName}
                   onChange={(e) => setRoomName(e.target.value)}
-                  className={styles.inputN}
+                  // className={styles.inputN}
                   placeholder="채팅방 이름을 적으세요"
                   />
               </div> {/*mkName*/}
 
               {/* div 2 */} 
-              <div className={styles.mkPj}>
-                  <label className={styles.pjT}>연관프로젝트</label>
+              <div className={styles.field}>
+                  <label
+                  // className={styles.pjT}
+                  >연관프로젝트</label>
                   <select
                   value={selectPj}
                   onChange={(e)=>setSelectPj(e.target.value)}
-                  className={styles.selecPj} >
+                  // className={styles.selecPj}
+                  >
                       <option value="" disabled selected hidden>프로젝트를 선택하세요</option>
-                      {/* {selectPjs.map((pj) => (
+                      {selectPjs.map((pj) => (
                         <option key={pj.id} value={pj.id}>{pj.name}</option>
-                      ))};   */}
+                      ))};  
                   </select>
               </div>{/*mkPj*/}
 
               {/* div 3 */}
-              <div className={styles.inviteEm}>
-                <label className={styles.ivtT}>인원 초대</label>
-                <div className={styles.ivt}>
+              <div className={styles.field}>
+                <label 
+                // className={styles.ivtT}
+                >인원 초대</label>
+                <div className={styles.inviteRow}>
                   <input
                   type="text"
                   value={inviteName}
                   onChange={(e) => setInviteName(e.target.value)}
-                  className={styles.ivtNs}
+                  // className={styles.ivtNs}
                   placeholder="초대 이름"
                   />
                   <button
@@ -121,13 +128,13 @@ const CreateChat=() =>{
                 </div> {/*flex*/}
               </div>{/*inviteEm*/}
 
-          <div className={styles.ivtedEms} >
+          <div className={styles.avatarRow} >
             {invitedList.map((name, index) => (
               <div
                 key={index}
-                className={styles.ivtedEm}
+                className={styles.avatar}
               >
-                {name[0]}
+                {name}
               </div>
             ))}
           </div>
