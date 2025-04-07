@@ -1,0 +1,46 @@
+.MessageInputBox {
+    position: relative;
+    top: 580px;
+    left: 20px;
+
+    width: 725px;
+    height: 60px;
+
+    border-radius: 10px;
+    background-color: white;
+}
+
+
+.fileIcon {
+    position: relative;
+    top: 12px;
+    left: 15px;
+
+    font-size: 35px;
+    transform: rotate(35deg);
+
+    cursor: pointer;
+}
+
+.messageInput {
+    position: relative;
+
+    left: 30px;
+    top: 2px;
+
+    width: 500px;
+    height: 30px;
+
+    border: none;
+    outline: none;
+
+    font-size: 20px;
+}
+
+.sendMessage {
+    position: relative;
+
+    top: 10px;
+    left: 130px;
+    font-size: 30px;
+}
