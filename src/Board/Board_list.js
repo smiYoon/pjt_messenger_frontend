@@ -14,7 +14,7 @@ const Board_list = () => {
             <div className={styles.list_container}>
                 <div className={styles.option_box}>
                     <button className={styles.button}>등록</button>
-                    <div className={styles.search}>
+                    <div className={styles.search_box}>
                         <select
                             name='Search'
                             className={styles.select}
