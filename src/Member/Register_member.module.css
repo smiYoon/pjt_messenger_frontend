@@ -1,12 +1,11 @@
 .container {
-    position: absolute;
+    position: relative;
     display: flex;
     margin: 0;
     padding: 0;
     width: 96vw;
     height: 100vh;
-    top: 0;
-    left: 4vw;
+
 }
 
 .left_panel {
@@ -16,7 +15,6 @@
     display: flex;
     flex-direction: column;
     position: relative;
-
 
 }
 
