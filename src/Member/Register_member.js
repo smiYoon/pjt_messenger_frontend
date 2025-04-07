@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Register_member.module.css';
 
 const Register_member = () => {
@@ -8,18 +9,27 @@ const Register_member = () => {
     const [inputPhoneNum, setInputPhoneNum] = useState('');
     const [inputEmail, setInputEmail] = useState('');
     const [inputValue, setInputValue] = useState('');
-
+    const navigate = useNavigate();
+    
     const handlerIdChange = (e) => setInputId(e.target.value);
     const handlerPasswdChange = (e) => setInputPasswd(e.target.value);
     const handlerNameChange = (e) => setInputName(e.target.value);
     const handlerPhoneNumChange = (e) => setInputPhoneNum(e.target.value);
     const handlerEmailChange = (e) => setInputEmail(e.target.value);
     const handlerChange = (e) => setInputValue(e.target.value);
+    const handleCancelClick = () => {
+      navigate(-1); // 이전 페이지로 이동
+    };
+
     // 번호 포멧팅 함수
     function formatPhoneNumber(tel) {
         const telStr = tel.toString();
         return `${telStr.slice(0, 3)}-${telStr.slice(3, 7)}-${telStr.slice(7, 11)}`;
     }
+
+
+    
+
 
     return (
         <div className={styles.container}>
@@ -77,7 +87,7 @@ const Register_member = () => {
                             <button>등록</button>
                         </div>
                         <div>
-                            <button>취소</button>
+                            <button onClick={handleCancelClick} >취소</button>
                         </div>
                     </div>
                  </div> {/* text_box */}

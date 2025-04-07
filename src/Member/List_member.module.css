@@ -1,0 +1,83 @@
+.container {
+    width: 96vw;
+    height: 100vh;
+    display: flex;
+}
+
+.left_panel {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    padding: 10vh 10vw;
+    box-sizing: border-box;
+}
+
+.header {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 30px;
+}
+
+.main {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.main .register {
+    padding: 10px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 7px;
+    border: #6c47ff;
+    background-color: #6c47ff;
+    color: white;
+    cursor: pointer;
+}
+
+.main .search {
+    margin-left: auto;
+}
+
+.search .dropdown {
+    margin-right: 20px;
+    height: 4vh;
+    border: 1px solid #6c47ff;
+    padding: 0;
+}
+
+.search .dropdown:focus {
+    outline: none;
+}
+
+.search .text {
+    width: 15vw;
+    height: 4vh;
+    border-radius: 20px;
+    border: none;
+    padding: 0 20px;
+    box-sizing: border-box;
+    outline: 1px solid #6c47ff;
+    transition: outline 0.5s ease-in-out;
+}
+
+.search .text:focus {
+    outline: 2px solid #6c47ff;
+    transition: outline 0.5s ease-in-out;
+}
+
+.left_panel .card {
+    height: 80%;
+    border: 1px solid #444;
+}
+
+.left_panel .paging {
+     text-align: center;
+}
+
+.right_panel {
+    width: 20%;
+    background-color: #d5d5d5;
+}
