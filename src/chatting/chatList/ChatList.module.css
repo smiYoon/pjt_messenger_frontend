@@ -6,6 +6,8 @@
     border-radius: 20px;
 
     justify-items: center;
+
+    overflow-y: auto;
 }
 
 .topbox{

@@ -21,16 +21,16 @@ const CreateChat=() =>{
       //     setInviteName(""); //추가하고 빈칸으로 만들기
       // }; 두번째
 
-      const handleAddInvite = () => {
-        const names = inviteName
-          .split(",")
-          .map((name) => name.trim())
-          .filter(Boolean);
-        const newNames = names.filter((id) => !invitedList.includes(id));
-        //중복된 id제거        
-        setInvitedList([...invitedList, ...newNames]);
-        setInviteName("");
-      };
+      // const handleAddInvite = () => {
+      //   const names = inviteName
+      //     .split(",")
+      //     .map((name) => name.trim())
+      //     .filter(Boolean);
+      //   const newNames = names.filter((id) => !invitedList.includes(id));
+      //   //중복된 id제거        
+      //   setInvitedList([...invitedList, ...newNames]);
+      //   setInviteName("");
+      // };
 
   //     <ul>
   // {invitedList.map(({ id, name }) => (
@@ -71,7 +71,7 @@ const CreateChat=() =>{
         .then((data) => setSelectPj(data));
   }, []);
 
-  retrun(
+  return (
       <div className={styles.overlay }>
           <div className={styles.popup }>
               <button className={styles.clsX}>X</button>
@@ -97,9 +97,9 @@ const CreateChat=() =>{
                   onChange={(e)=>setSelectPj(e.target.value)}
                   className={styles.selecPj} >
                       <option value="" disabled selected hidden>프로젝트를 선택하세요</option>
-                      {selectPjs.map((pj) => (
+                      {/* {selectPjs.map((pj) => (
                         <option key={pj.id} value={pj.id}>{pj.name}</option>
-                      ))};  
+                      ))};   */}
                   </select>
               </div>{/*mkPj*/}
 
