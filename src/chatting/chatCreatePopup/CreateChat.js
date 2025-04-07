@@ -7,7 +7,14 @@ const CreateChat=() =>{
     const [inviteName,setInviteName] = useState(""); //초대할 리스트
     const [invitedList, setInvitedList] =useState([]); //초대된 리스트
     const [selectPjs, setSelectPjs] = useState([]);
+    const [isOpen, setIsOpen] = useState(true);
 
+    useEffect(() => {
+      // 예: fetch 또는 axios 사용
+      fetch("/api/selectPj") //json 받을 url
+        .then((res) => res.json())
+        .then((data) => setSelectPj(data));
+  }, []);
 
   const handleAddInvite= ()=>{
       // if (inviteName.trim() != ""){ //조직도에서 리스트로 받아오지 못하는 것 같음.
@@ -61,20 +68,23 @@ const CreateChat=() =>{
   //     console.log("보낼 데이터:", data);invitedList
   //   };
 
+  
+
+  const closePopup = () => {
+    setIsOpen(false);
+  };
+
+  if (!isOpen) return null;
 
 
 
-  useEffect(() => {
-      // 예: fetch 또는 axios 사용
-      fetch("/api/selectPj") //json 받을 url
-        .then((res) => res.json())
-        .then((data) => setSelectPj(data));
-  }, []);
+
 
   return(
       <div className={styles.overlay }>
           <div className={styles.popup }>
-              <button className={styles.clsX}>X</button>
+              <button className={styles.clsX}
+              onClick={closePopup}>X</button>
               <h2 className={styles.title}>채팅방 만들기</h2>
 
               {/* div 1 */}   
