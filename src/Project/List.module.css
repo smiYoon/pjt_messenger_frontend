@@ -30,9 +30,53 @@
     height: 30vh;
 }
 
+
+
+
+
 .listContainer {
     margin-top: 7vh;
     height: 45vh;
-    background-color: lightcoral;
 }
 
+.listBar {
+    width: 96%;
+    height: 5vh;
+    padding: 10px 2%;
+    border-radius: 10px;
+    background-color: #E5E1F5;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.statusBar {
+    width: 23%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.noneBar {
+    width: 34%;
+}
+.searchBar {
+    width: 40%;
+    background-color: seagreen;
+}
+
+.statusBar > div {
+    display: inline-block;
+    font-size: 1.3rem;
+}
+.statusBar > div.active {
+    color: #4FC765;
+}
+.statusBar > div.active::before {
+    content: '';
+    width: 100%;
+    height: 5px;
+    display: block;
+    background-color: #4FC765;
+    position:relative;
+    bottom: -42px;
+}

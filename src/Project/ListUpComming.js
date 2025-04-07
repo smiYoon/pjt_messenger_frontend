@@ -25,9 +25,9 @@ const ListUpComming = () => {
 
             <div className={styles.timeline}>
 
-                <div className={styles.status}>4</div>
+                <div className={styles.status}>진행 중</div>
 
-                <div className={styles.deadline}><RxLapTimer />5</div>
+                <div className={styles.deadline}><RxLapTimer className={styles.icon} /> D-2</div>
 
             </div>
 

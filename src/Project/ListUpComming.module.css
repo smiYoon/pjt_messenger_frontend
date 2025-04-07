@@ -30,7 +30,11 @@
 }
 .timeline {
     width: 10%;
-    background-color: blueviolet;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
 }
 .dot {
     width: 3%;
@@ -63,7 +67,15 @@
 
 .status {
     width: 100%;
+    font-size: .8rem;
 }
 .deadline {
     width: 100%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #f00;
+}
+
+.icon {
+    vertical-align: text-top;
 }

@@ -26,6 +26,22 @@ const List = () => {
 
           <div className={styles.subContainerTitle}>전체 프로젝트 리스트</div>
 
+          <div className={styles.listBar}>
+
+            <div className={styles.statusBar}>
+              <div>진행예정</div>
+              <div className={styles.active}>진행 중</div>
+              <div>진행완료</div>
+            </div>
+
+            <div className={styles.noneBar}></div>
+
+            <div className={styles.searchBar}>
+
+            </div>
+
+          </div>
+
           <P_ListUnit />
           <P_ListUnit />
           <P_ListUnit />
