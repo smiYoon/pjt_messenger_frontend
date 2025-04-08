@@ -7,8 +7,7 @@ const CreateChat=({onCloseClick}) =>{
     const [inviteName,setInviteName] = useState(""); //초대할 리스트
     const [invitedList, setInvitedList] =useState([]); //초대된 리스트
     const [selectPjs, setSelectPjs] = useState([]);
-    const [isOpen, setIsOpen] = useState(true);
-
+  
     useEffect(() => {
       // 예: fetch 또는 axios 사용
       fetch("/api/selectPj") //json 받을 url
@@ -72,8 +71,6 @@ const CreateChat=({onCloseClick}) =>{
 
 
 
-
-
   return(
       <div className={styles.overlay }>
           <div className={styles.popup }>
@@ -127,10 +124,10 @@ const CreateChat=({onCloseClick}) =>{
                   />
                   <button
                   onClick={handleAddInvite}
-                  className={styles.ivtBtn}
+                  
                   >+</button>
-                </div> {/*flex*/}
-              </div>{/*inviteEm*/}
+                </div> {/*inviteRow*/}
+              </div>{/*field*/}
 
           <div className={styles.avatarRow} >
             {invitedList.map((name, index) => (
@@ -146,8 +143,7 @@ const CreateChat=({onCloseClick}) =>{
           <button
             onClick={handleCreateRoom}
             className={styles.mkBtn}
-          >
-            만들기
+          >만들기
           </button>
 
 
