@@ -15,7 +15,7 @@ const List_member = () => {
           사원 리스트
         </div>
         <div className={styles.main}>
-          <Link to={`/2`} className={styles.register}>
+          <Link to={`/member/register`} className={styles.register}>
             사원 등록
           </Link>
           <div className={styles.search}>

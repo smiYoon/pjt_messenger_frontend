@@ -21,6 +21,9 @@ const Register_member = () => {
     const handleCancelClick = () => {
       navigate(-1); // 이전 페이지로 이동
     };
+    const handleRegisterClick = () => {
+        navigate(`/member/list`);
+    };
 
     // 번호 포멧팅 함수
     function formatPhoneNumber(tel) {
@@ -79,7 +82,7 @@ const Register_member = () => {
                     </div>
                     <div className={styles.button_box}>
                         <div>
-                            <button onClick={handleCancelClick} className={styles.register} >등록</button>
+                            <button onClick={handleRegisterClick} className={styles.register}>등록</button>
                         </div>
                         <div>
                             <button onClick={handleCancelClick} className={styles.cancel} >취소</button>
