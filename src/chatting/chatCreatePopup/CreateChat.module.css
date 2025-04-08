@@ -62,11 +62,13 @@
   }
   
   .inviteRow button {
-    padding: 12px 16px;
-    background-color: #7046d3;
+    margin-left: 2%;
+    padding: 3px 12px;
+    background-color: #533EB0;
     color: white;
+    font-size: 40px;
     border: none;
-    border-radius: 0 6px 6px 0;
+    border-radius: 6px;
     cursor: pointer;
   }
   
@@ -91,7 +93,7 @@
   .mkBtn {
     width: 100%;
     padding: 14px;
-    background-color: #7046d3;
+    background-color:#533EB0;
     color: white;
     font-size: 16px;
     border: none;
