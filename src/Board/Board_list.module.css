@@ -19,7 +19,7 @@
 
 .list_Page {
     width: 90%;
-    background-color: #E5E1F5;
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,6 +40,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    margin-bottom: 20px;
 }
 
 .button {
@@ -107,15 +108,44 @@
 
 
 
-.Board_title {
-    height: 10%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+.Board_table {
+    
+    width: 100%;
     
 }
+
+.Board_title {
+    background-color: #B8D9FF;
+    height: 50px;
+    
+}
+
+.Board_table:global(th) {
+    border: none;
+}
+
+
+.Board_table tbody tr {
+    
+    height: 50px;
+}
+
+.Board_table tbody td {
+    
+    border: 1px solid #6c47ff;
+    text-align: center;
+}
+
+
+.number {width: 7%;}
+.title {width: 50%;}
+.writer {width: 15%;}
+.writeTime {width: 21%;}
+.views {width: 7%;}
+
 .Board_paging {
     position: absolute;
+    border: 1px solid #6c47ff;
     display: flex;
     bottom: 0;
     right: 50%;

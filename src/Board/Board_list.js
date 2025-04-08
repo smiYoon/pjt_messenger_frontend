@@ -29,12 +29,90 @@ const Board_list = () => {
                         </div>
                     </div>
                 </div>
-                <div className={styles.Board_title}>
-                    <div>번호</div>
-                    <div>제목</div>
-                    <div>작성자</div>
-                    <div>작성 날짜</div>
-                    <div> 조회수</div>
+                <div className={styles.Board_NameContainer}>
+                    <table className={styles.Board_table}>
+                        <thead>
+                            <tr className={styles.Board_title}>
+                                <th className={styles.number}>번호</th>
+                                <th className={styles.title}>제목</th>
+                                <th className={styles.writer}>작성자</th>
+                                <th className={styles.writeTime}>작성 날짜</th>
+                                <th className={styles.views}>조회수</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td >1</td>
+                                <td >성미님이 괴롭혀요/</td>
+                                <td >홍성태</td>
+                                <td >2025.1.11 15:00</td>
+                                <td >10</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <div className={styles.Board_paging}>페이징</div>
             </div>
