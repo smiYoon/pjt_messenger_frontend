@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from "react";
 import styles from './CreateChat.module.css';
 
-const CreateChat=() =>{
+const CreateChat=({onCloseClick}) =>{
     const [roomName, setRoomName]= useState(""); //채팅방이름
     const [selectPj, setSelectPj] =useState("AI 협업메신저"); //프로젝트 
     const [inviteName,setInviteName] = useState(""); //초대할 리스트
@@ -68,13 +68,7 @@ const CreateChat=() =>{
   //     console.log("보낼 데이터:", data);invitedList
   //   };
 
-  
 
-  const closePopup = () => {
-    setIsOpen(false);
-  };
-
-  if (!isOpen) return null;
 
 
 
@@ -84,7 +78,7 @@ const CreateChat=() =>{
       <div className={styles.overlay }>
           <div className={styles.popup }>
               <button className={styles.clsX}
-              onClick={closePopup}>X</button>
+              onClick={onCloseClick}>X</button>
               <h2 className={styles.title}>채팅방 만들기</h2>
 
               {/* div 1 */}   
