@@ -9,7 +9,7 @@
 
 .side_bar {
     width: 10%;
-    background-color: aliceblue;
+    background-color: burlywood;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -22,7 +22,7 @@
 }
 
 .right_panel {
-    width: 70%;
+    width: 60%;
     height: 70%;
     position: relative;
 

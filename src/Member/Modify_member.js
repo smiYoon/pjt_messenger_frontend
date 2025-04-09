@@ -9,6 +9,10 @@ const Modify_member = () => {
                 <div className={styles.left_panel}>
                     <div className={styles.pic}>
                         <img src={profile} alt='' />
+                        <label for='profileUpload'>
+                            <i className={`fas fa-camera ${styles.camera}`} />
+                        </label>
+                        <input type='file' id='profileUpload' accept='image/*' />
                     </div>
                     <div className={styles.name}>
                         {/* <input type='text' placeholder='김태영' /> */}
@@ -55,10 +59,10 @@ const Modify_member = () => {
                             </div>
 
                             <div className={styles.double}>
-                                    <input type='text' className={styles.address} placeholder='' />
-                                    <div className={styles.placeholder_text}>주소</div>
-                                    <input type='text' className={styles.postal} placeholder='' />
-                                    <div className={styles.postal_text}>우편번호</div>
+                                <input type='text' className={styles.address} placeholder='' />
+                                <div className={styles.placeholder_text}>주소</div>
+                                <input type='text' className={styles.postal} placeholder='' />
+                                <div className={styles.postal_text}>우편번호</div>
                             </div>
 
                             <div className={styles.single}>

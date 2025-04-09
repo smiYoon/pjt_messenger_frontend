@@ -32,7 +32,7 @@ const Navbar = () => {
       </div>
 
       <div className={styles.profile}>
-        <img src={profile} alt='' />
+        <img src={ profile } alt='' className={styles.profileImg} />
         <div className={styles.logout}>
           <FontAwesomeIcon icon={faArrowRightFromBracket} />
         </div>

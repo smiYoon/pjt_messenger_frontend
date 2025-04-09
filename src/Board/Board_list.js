@@ -1,124 +1,140 @@
 import React, { useState } from 'react'
 import styles from './Board_list.module.css';
+import { Link } from 'react-router-dom';
 
 const Board_list = () => {
 
     const [inputValue, setInputValue] = useState('');
     const handlerChange = (e) => setInputValue(e.target.value);
 
-  return (
-    <div className={styles.container}>
-        <div className={styles.side_bar}></div>
+    /* 백엔드에서 데이터를 받아오기 전 리터럴 데이터 */
+    const postList = [
+        {
+            postNo: 1,
+            title: "아 졸리다 집에가고싶다1",
+            writer: "Matthew",
+            crtDate: "2025.01.11 15:00",
+            count: 10
+        },
+        {
+            postNo: 2,
+            title: "아 졸리다 집에가고싶다2",
+            writer: "Matthew",
+            crtDate: "2025.01.11 15:00",
+            count: 10
+        },
+        {
+            postNo: 3,
+            title: "아 졸리다 집에가고싶다3",
+            writer: "Matthew",
+            crtDate: "2025.01.11 15:00",
+            count: 10
+        },
+        {
+            postNo: 4,
+            title: "아 졸리다 집에가고싶다4",
+            writer: "Matthew",
+            crtDate: "2025.01.11 15:00",
+            count: 10
+        },
+        {
+            postNo: 5,
+            title: "아 졸리다 집에가고싶다5",
+            writer: "Matthew",
+            crtDate: "2025.01.11 15:00",
+            count: 10
+        },
+        {
+            postNo: 6,
+            title: "아 졸리다 집에가고싶다6",
+            writer: "Matthew",
+            crtDate: "2025.01.11 15:00",
+            count: 10
+        },
+        {
+            postNo: 7,
+            title: "아 졸리다 집에가고싶다6",
+            writer: "Matthew",
+            crtDate: "2025.01.11 15:00",
+            count: 10
+        },
+        {
+            postNo: 8,
+            title: "아 졸리다 집에가고싶다6",
+            writer: "Matthew",
+            crtDate: "2025.01.11 15:00",
+            count: 10
+        },
+        {
+            postNo: 9,
+            title: "아 졸리다 집에가고싶다6",
+            writer: "Matthew",
+            crtDate: "2025.01.11 15:00",
+            count: 10
+        },
+    ]
 
-        <div className={styles.list_Page}>
-            <div className={styles.list_container}>
-                <div className={styles.option_box}>
-                    <button className={styles.button}>등록</button>
-                    <div className={styles.search_box}>
-                        <select
-                            name='Search'
-                            className={styles.select}
-                            onChange={handlerChange}
-                        >
-                            <option value="">제목</option>
-                            <option value="">작성자?</option>
-                        </select>
-                        <div className={styles.input_box}>
-                            <input type='text' className={styles.input} placeholder='검색'></input>
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </div>
+    return (
+        <div className={styles.container}>
+            <div className={styles.side_bar}>
+                <div className={styles.menu}>
+                    <div className={styles.notice}>
+                        공지사항 게시판
+                    </div>
+                    <div className={styles.feedback}>
+                        건의 게시판
                     </div>
                 </div>
-                <div className={styles.Board_NameContainer}>
-                    <table className={styles.Board_table}>
-                        <thead>
-                            <tr className={styles.Board_title}>
-                                <th className={styles.number}>번호</th>
-                                <th className={styles.title}>제목</th>
-                                <th className={styles.writer}>작성자</th>
-                                <th className={styles.writeTime}>작성 날짜</th>
-                                <th className={styles.views}>조회수</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td >1</td>
-                                <td >성미님이 괴롭혀요/</td>
-                                <td >홍성태</td>
-                                <td >2025.1.11 15:00</td>
-                                <td >10</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            </div>
+            <div className={styles.list_Page}>
+                <div className={styles.list_container}>
+                    <div className={styles.header}>
+                        Notification Board
+                    </div>
+                    <div className={styles.option_box}>
+                        <Link className={styles.button}>등록</Link>
+                        <div className={styles.search_box}>
+                            <select
+                                name='searchWord'
+                                className={styles.select}
+                                onChange={handlerChange}
+                            >
+                                <option value="">제목</option>
+                                <option value="">작성자?</option>
+                            </select>
+                            <div className={styles.input_box}>
+                                <input name='searchText' type='text' className={styles.input} placeholder='검색'></input>
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.Board_NameContainer}>
+                        <div className={styles.Board_title}>
+                            <div className={styles.number}>번호</div>
+                            <div className={styles.postTitle}>제목</div>
+                            <div className={styles.writer}>작성자</div>
+                            <div className={styles.writeTime}>작성 날짜</div>
+                            <div className={styles.views}>조회수</div>
+                        </div>
+                        <table className={styles.Board_table}>
+                            <tbody>
+                                {postList.map((post) => (
+                                    <tr>
+                                        <td className={styles.number}>{post.postNo}</td>
+                                        <td className={styles.postTitle}>{post.title}</td>
+                                        <td className={styles.writer}>{post.writer}</td>
+                                        <td className={styles.writeTime}>{post.crtDate}</td>
+                                        <td className={styles.views}>{post.count}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className={styles.Board_paging}>페이징 1, 2, 3</div>
                 </div>
-                <div className={styles.Board_paging}>페이징</div>
             </div>
         </div>
-    </div>
-  )
+    )
 }
 
 export default Board_list

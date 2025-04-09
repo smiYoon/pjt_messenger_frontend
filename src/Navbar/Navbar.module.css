@@ -59,8 +59,10 @@
     gap: 20px;
 }
 
-img {
-    width: 60px;
+.profileImg {
+    width: 50px;
+    border-radius: 50%;
+    border: 3px solid red;
 }
 
 .logout {

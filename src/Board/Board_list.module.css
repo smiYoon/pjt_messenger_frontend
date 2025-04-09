@@ -10,28 +10,49 @@
 .side_bar {
     width: 10%;
     height: 100vh;
-    background-color: aliceblue;
+    background-color: burlywood;
     display: flex;
     flex-direction: column;
     position: relative;
+    box-sizing: border-box;
+    padding: 0 1vw;
 }
 
+.side_bar .menu {
+    position: absolute;
+    top: 10%;
+}
+
+.side_bar .notice,
+.side_bar .feedback {
+    margin: 50px 0;
+    text-align: right;
+    font-size: 1.3rem;
+    color: #222;
+}
 
 .list_Page {
     width: 90%;
-    background-color: white;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    height: 100%;
+}
+
+.list_Page .header {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 30px;
 }
 
 .list_container {
     display: flex;
     position: relative;
     flex-direction: column;
-    width: 90%;
+    width: 70%;
     height: 80%;
 }
 
@@ -44,7 +65,7 @@
 }
 
 .button {
-    padding: 10px 30px;
+    padding: 10px 40px;
     font-size: 1.2rem;
     font-weight: bold;
     text-decoration: none;
@@ -53,12 +74,12 @@
     background-color: #6c47ff;
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s ease-in;
+    transition: background-color 0.1s ease-in;
 }
 
 .button:hover {
     background-color: #4a1dff;
-    transition: background-color 0.3s ease-in;
+    transition: background-color 0.1s ease-in;
 }
 
 
@@ -69,10 +90,11 @@
 }
 
 .select {
-    margin-right: 20px;
+    margin-right: 10px;
+    width: 5vw;
     height: 4vh;
     border: 1px solid #6c47ff;
-    padding: 0;
+    padding: 10px;
     
 }
 
@@ -109,45 +131,45 @@
 
 
 .Board_table {
-    
+    border-collapse: collapse;
     width: 100%;
-    
 }
 
 .Board_title {
     background-color: #B8D9FF;
-    height: 50px;
-    
+    height: 60px;
+    border-radius: 10px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    font-weight: bold;
+    color: #444;
 }
-
-.Board_table:global(th) {
-    border: none;
-}
-
 
 .Board_table tbody tr {
-    
     height: 50px;
+    color: #222;
 }
 
 .Board_table tbody td {
-    
-    border: 1px solid #6c47ff;
+    border-bottom: 1px solid #d5d5d5;
     text-align: center;
 }
 
 
-.number {width: 7%;}
-.title {width: 50%;}
-.writer {width: 15%;}
-.writeTime {width: 21%;}
-.views {width: 7%;}
+.number {width: 10%;}
+.postTitle {width: 45%;}
+.writer {width: 20%;}
+.writeTime {width: 15%;}
+.views {width: 10%;}
 
 .Board_paging {
-    position: absolute;
-    border: 1px solid #6c47ff;
-    display: flex;
-    bottom: 0;
-    right: 50%;
+    /* border: 1px solid #6c47ff; */
+    width: 10vw;
+    text-align: center;
+    margin: 10px auto 0;
+    font-size: 1.2rem;
 }
 
