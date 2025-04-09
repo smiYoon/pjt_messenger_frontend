@@ -8,13 +8,14 @@
   }
   
   .popup {
-    width: 666px;
-    height: 730px;
+    width: 35%;
+    height: 70%;
     background: #e6ddf6;
     border-radius: 12px;
-    padding: 32px;
     position: relative;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+
+    justify-items: center;
   }
   
   .clsX {
@@ -36,6 +37,7 @@
   
   .field {
     margin-bottom: 20px;
+    width: 60%;
   }
   
   .field label {
@@ -64,18 +66,23 @@
   .inviteRow button {
     margin-left: 2%;
     padding: 3px 12px;
-    background-color: #533EB0;
+    background-color: #6C47FF;
     color: white;
     font-size: 40px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
   }
+
+  .inviteRow button:hover{
+    background-color: #4A1DFF;
+  }
   
   .avatarRow {
     display: flex;
     gap: 8px;
     margin: 16px 0;
+
   }
   
   .avatarBox{
@@ -95,14 +102,22 @@
   }
   
   .mkBtn {
-    width: 100%;
-    padding: 14px;
-    background-color:#533EB0;
+    position: absolute;
+    padding: 10px 40px;
+    background-color:#6C47FF;
     color: white;
     font-size: 16px;
     border: none;
     border-radius: 8px;
-    margin-top: 20px;
+
     cursor: pointer;
+
+    left: 40%;
+    bottom: 10%;
+
+  }
+
+  .mkBtn:hover{
+    background-color: #4A1DFF;
   }
   

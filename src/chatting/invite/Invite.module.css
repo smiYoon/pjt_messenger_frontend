@@ -63,7 +63,7 @@
 .inviteRow button{
     margin-left: 1%;
     padding: 3px 12px;
-    background-color: #533EB0;
+    background-color: #6C47FF;
     color: white;
     font-size: 40px;
     border: none;
@@ -71,12 +71,15 @@
     cursor: pointer;
 }
 
+.inviteRow button:hover{
+    background-color: #4A1DFF;
+  }
 
 /* 버튼들 */
 .inviteBtn {
 flex-shrink: 0;
     padding: 5px 10px;
-    background-color: #533EB0;
+    background-color: #6C47FF;
     color: white;
     font-size: 20px;
     border: none;
@@ -85,11 +88,15 @@ flex-shrink: 0;
 
 }
 
+.inviteBtn:hover{
+    background-color: #4A1DFF;
+  }
+
 .opOrga {
     width: 40%;
     padding: 5px;
     /* background-color: #7046d3; */
-    background-color: #533EB0;
+    background-color: #6C47FF;
     color: white;
     font-size: 20px;
     border: none;
@@ -97,3 +104,7 @@ flex-shrink: 0;
     margin-left: 5%;
     cursor: pointer;
   }
+
+.opOrga:hover{
+background-color: #4A1DFF;
+}
