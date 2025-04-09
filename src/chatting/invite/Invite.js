@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Invite.module.css';
 
-const Invite = () => {
+const Invite = ({onOrgaClick}) => {
     const [inviteName, setInviteName] = useState(""); //초대할 리스트
     const [invitedList, setInvitedList] = useState([]); //초대된 리스트 
 
@@ -18,9 +18,9 @@ const Invite = () => {
         setInviteName("");
     };//handleAddInvite
 
-    const handleOpenOrgan=()=>{
-        return null;
-    };//handleOpenOrgan 조직도
+    // const handleOpenOrgan=()=>{
+    //     return onOrgaClick;
+    // };//handleOpenOrgan 조직도
 
     return (
 
@@ -77,7 +77,7 @@ const Invite = () => {
        
 
 
-            <button onClick={handleOpenOrgan}
+            <button onClick={onOrgaClick}
             className={styles.opOrga}>조직도 보기</button>
 
         </div>//invite
