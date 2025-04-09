@@ -1,8 +1,15 @@
 import styles from './AiSummary.module.css';
 import { BsMagic } from "react-icons/bs";
-import StartDateCalendar from './StartDateCalendar';
+import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const AiSummary = () => {
+
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+
+
     return (
                 <div className={styles.aibox}>
 
@@ -21,7 +28,21 @@ const AiSummary = () => {
                             <div className={styles.startDate}>
                                 <span className={styles.startDateTxt}>시작일</span>
                                 <div className={styles.startCalendar}>
-                                <StartDateCalendar/>
+                                <div>
+                                    <DatePicker
+                                    className={styles.startDatePicker}
+                                    selected={startDate}
+                                    onChange={(date) => {setStartDate(date);
+                                        if(endDate && date > endDate){
+                                            setEndDate(null);
+                                        }
+                                    }}
+                                    selelctStart
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    dateFormat="yyyy년 MM월 dd일"
+                                    />
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -30,7 +51,17 @@ const AiSummary = () => {
                             <div className={styles.endDate}>
                                 <span className={styles.endDateTxt}>종료일</span>
                                 <div className={styles.endCalendar}>
-                                {/* <Calendar className={styles.Calendar}/> */}
+                                <div>
+                                    <DatePicker
+                                    className={styles.endDatePicker}
+                                    selected={endDate}
+                                    onChange={(date) => setEndDate(date)}
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    minDate={startDate}
+                                    dateFormat="yyyy년 MM월 dd일"
+                                    />
+                                </div>
                                 </div>
                             </div>
                         </div>
