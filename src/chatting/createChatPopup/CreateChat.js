@@ -115,9 +115,7 @@ const CreateChat = ({ onCloseClick }) => {
 
         {/* div 3 */}
         <div className={styles.field}>
-          <label
-          // className={styles.ivtT}
-          >인원 초대</label>
+          <label>인원 초대</label>
           <div className={styles.inviteRow}>
             <input
               type="text"
@@ -134,9 +132,7 @@ const CreateChat = ({ onCloseClick }) => {
               }}
 
             />
-            <button
-              onClick={handleAddInvite}
-            >+</button>
+            <button onClick={handleAddInvite}>+</button>
           </div> {/*inviteRow*/}
         </div>{/*field*/}
 
@@ -156,7 +152,7 @@ const CreateChat = ({ onCloseClick }) => {
             ))}
             {invitedList.length > 5 && (
               <div className={styles.avatar}>
-                +{invitedList.length - 5}
+                 +{invitedList.length - 5}
               </div>
             )}
           {/* </div> avatarBox */}
@@ -165,11 +161,7 @@ const CreateChat = ({ onCloseClick }) => {
 
         </div> {/*avatarRow */}
 
-        <button
-          onClick={handleCreateRoom}
-          className={styles.mkBtn}
-        >만들기
-        </button>
+        <button onClick={handleCreateRoom} className={styles.mkBtn}>만들기</button>
 
       </div>{/* popup */}
 

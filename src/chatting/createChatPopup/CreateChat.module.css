@@ -9,7 +9,7 @@
   
   .popup {
     width: 35%;
-    height: 70%;
+    height: 50%;
     background: #e6ddf6;
     border-radius: 12px;
     position: relative;
@@ -33,6 +33,7 @@
     font-weight: bold;
     text-align: center;
     margin-bottom: 32px;
+    margin-top: 50px;
   }
   
   .field {
@@ -53,6 +54,7 @@
     border-radius: 6px;
     border: 1px solid #ccc;
     font-size: 14px;
+    box-sizing: border-box;
   }
   
   .inviteRow {
@@ -68,7 +70,7 @@
     padding: 3px 12px;
     background-color: #6C47FF;
     color: white;
-    font-size: 40px;
+    font-size: 33px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
