@@ -1,5 +1,5 @@
 .body {
-    width: 98%;
+    width: 100%;
     height: 9vh;
     margin-bottom: 2.5vh;
     padding: 5px 10px ;
@@ -10,7 +10,10 @@
     display: flex;
     justify-content: space-evenly;
     
-    color: #444;
+    color: #222; 
+    box-sizing: border-box;
+
+    position: relative;
 }
 
 .name {
@@ -36,38 +39,40 @@
     justify-content: space-evenly;
     text-align: center;
 }
-.dot {
+.dotBox {
     width: 3%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.dot {
 
     font-size: 1.5rem;
     letter-spacing: 1px;
 }
 
 
+
+.content label {
+    display: inline-block;
+    width: 80px;
+    font-weight: bold;
+}
 .manager {
     width: 100%;
 }
-.manager label {
-    display: inline-block;
-    width: 80px;
-    font-weight: bold;
-}
 .detail {
-    width: 98%; overflow:hidden; text-overflow:ellipsis;white-space:nowrap;
-}
-.detail label {
-    display: inline-block;
-    width: 80px;
-    font-weight: bold;
+    width: 98%; 
+    color: #444;
+    overflow:hidden; 
+    text-overflow:ellipsis;
+    white-space:nowrap;
 }
 
 
 .status {
     width: 100%;
-    font-size: .8rem;
+    font-size: 1rem;
 }
 .deadline {
     width: 100%;
@@ -78,4 +83,23 @@
 
 .icon {
     vertical-align: text-top;
+}
+
+
+.editMenu {
+    position:absolute;
+    top:50px;
+    right: 30px;
+
+    z-index: 50;
+
+    background-color: #aea2df;
+    border-radius: 5px;
+}
+.editMenu hr {
+    margin: 0;
+}
+.dotBtn {
+    padding: 12px 25px;
+    cursor: pointer;
 }

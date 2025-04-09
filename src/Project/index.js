@@ -7,4 +7,4 @@ export { default as P_ListUpComming } from './ListUpComming';
 
 export { default as P_Create } from './Create';
 
-export { default as P_Update } from './Update';
+export { default as P_Modify } from './Modify';
