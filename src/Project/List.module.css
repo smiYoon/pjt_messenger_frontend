@@ -114,7 +114,7 @@
     
 }
 
-button {
+.container button {
     display: inline-flex;
     padding: 3.5px 20px;
     margin-left: 15px;
@@ -128,16 +128,16 @@ button {
     cursor: pointer;
     transition: background-color 0.3s ease-in;
 }
-button:hover {
+.container button:hover {
     background-color: #4a1dff;
     transition: background-color 0.3s ease-in;
 }
 
-.btnStyle_yg {
+.container .btnStyle_yg {
     border: #4FC765;
     background-color: #4FC765;
 }
-.btnStyle_yg:hover {
+.container .btnStyle_yg:hover {
     background-color: #39b851;    
 }
 
