@@ -8,11 +8,13 @@
   }
   
   .popup {
+    position: relative;
+
     width: 35%;
     height: 50%;
+    left: 2vw;
     background: #e6ddf6;
     border-radius: 12px;
-    position: relative;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 
     justify-items: center;

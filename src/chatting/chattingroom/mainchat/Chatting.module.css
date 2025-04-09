@@ -6,7 +6,9 @@
     border-radius: 20px;
 
     /* 가로 중앙 정렬 */
-    justify-content: center;
+    justify-items: center;
+
+    box-shadow: 4px 4px 10px rgba(0, 0,0,.25);
 }
 
 .SearchBar {
@@ -21,13 +23,12 @@
 
     border-radius: 20px;
 
+    /* display: flex; */
+    /* justify-content: center; */
 }
 
 .searchInput {
     position: relative;
-    
-    left: 35px;
-    bottom: 8px;
 
     width: 80%;
 

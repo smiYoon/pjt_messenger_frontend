@@ -9,10 +9,13 @@
     justify-content: space-evenly;
 
     border-radius: 20px;
+
+    box-shadow: 4px 4px 10px rgba(0, 0,0,.25);
 }
 
 .chatname{
-
+    font-size: 24px;
+    font-weight: 700;
 }
 
 /* ////////////////////////////////// */
@@ -36,5 +39,6 @@
 /* ////////////////////////////////// */
 
 .projecticon{
-
+    font-size: 24px;
+    font-weight: 700;
 }
