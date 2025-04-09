@@ -26,13 +26,13 @@ const Chat_main = () => {
             <div className={styles.centerbox}>
                 <Roomheader/>
                 <Chatting/>
-                {showCreateChat && <CreateChat onCloseClick={() => setShowCreateChat(false)} />}
             </div>
 
             <div className={styles.rightbox}>
                <AiSummary/>
             </div>
 
+            {showCreateChat && <CreateChat onCloseClick={() => setShowCreateChat(false)} />}
             
 
 
