@@ -1,0 +1,120 @@
+.body {
+    width: 22.7%;
+    color: #222; 
+}
+
+.listUnit {
+
+}
+
+
+.content {
+    padding: 10px 30px 30px ;
+    border-radius: 10px;
+    border: 1px solid #6c47ff;
+    height: 32vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    position: relative;
+}
+
+
+.content label {
+    display: inline-block;
+    width: 80px;
+    font-weight: bold;
+}
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.pjtStatus {
+}
+
+.status {
+    width: 110px;
+    padding: 7px 20px;
+
+    border-radius: 50px;
+    border: 1px solid #6c47ff;
+
+    text-align: center;
+    box-sizing: border-box;
+}
+.status1 {
+    background-color: #AADCFF;
+}
+.status2 {
+    background-color: #FFF5AA;
+}
+.status3 {
+    background-color: #4FC765;
+}
+
+
+.dotBox {
+}
+.dot {
+    width: 10%;
+
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+.pjtName {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+.pjtDetail {
+    height: 60px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* 최대 줄 수 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.manager {
+    
+}
+.timeline {
+
+}
+
+
+.editMenu {
+    position:absolute;
+    top:50px;
+    right: 30px;
+
+    z-index: 50;
+
+    background-color: #aea2df;
+    border-radius: 5px;
+}
+.editMenu hr {
+    margin: 0;
+}
+.dotBtn {
+    padding: 12px 25px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
