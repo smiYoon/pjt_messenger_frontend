@@ -78,6 +78,10 @@
     margin: 16px 0;
   }
   
+  .avatarBox{
+    display: flex;
+    gap: 8px;
+ }
   .avatar {
     width: 40px;
     height: 40px;

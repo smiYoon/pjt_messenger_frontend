@@ -14,6 +14,7 @@
 
 
  /* 아바타들 */
+ /* 초대된인원들이 */
 .avatarRow {
     padding-top: 4%;
     padding-left: 5%;
@@ -46,7 +47,7 @@
 
 
 /* 직원검색 */
-/* 초대된인원들이 */
+
 .inviteRow{
     display: flex;
     margin-bottom: 10px;

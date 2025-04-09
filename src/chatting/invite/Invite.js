@@ -20,17 +20,16 @@ const Invite = () => {
 
     const handleOpenOrgan=()=>{
         return null;
-    };//handleOpenOrgan
+    };//handleOpenOrgan 조직도
 
     return (
 
         <div className={styles.invite}>
 
-                {/* 아바타들 */}
+                {/* 아바타들 */}              
               
-              
-                <div className={styles.avatarRow} >
-                <div class ={styles.avatarBox}>
+              <div className={styles.avatarRow} >
+              <div class ={styles.avatarBox}>
                 {invitedList.slice(0, 3).map((name, index) => (
                   <div
                     key={index}
@@ -38,21 +37,23 @@ const Invite = () => {
                   >
                     {name}
                     {/* 이름이 아니고 사진으로 */}
-                  </div>
-                  
+                  </div>                  
                 ))}
-                  {invitedList.length > 3 && (
-                   <div className={styles.avatar}>
+                {invitedList.length > 3 && (
+                  <div className={styles.avatar}>
                    +{invitedList.length - 3}
-                      </div>
-                  )}        
-                </div>
+                  </div>
+                )}        
+              </div> {/* avatarBox */}
+
                 <button
                   onClick={handleAddInvite}
                   className={styles.inviteBtn}
                   >초대하기</button>
 
-                </div>                
+                </div>  {/* avatarRow */} 
+                
+
 
                 {/* 직원 검색 */}             
 
@@ -64,10 +65,8 @@ const Invite = () => {
                   onKeyDown={(e) => {
                     if (/\d/.test(e.key)){
                         e.preventDefault();
-                    }
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") handleAddInvite();
+                        {/*숫자키면 예방한다중단한다.*/}
+                    } else if (e.key === "Enter") handleAddInvite();
                   }}
                   placeholder="직원 검색"
                   />

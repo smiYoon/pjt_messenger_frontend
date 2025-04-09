@@ -7,6 +7,7 @@ const CreateChat=({onCloseClick}) =>{
     const [inviteName,setInviteName] = useState(""); //초대할 리스트
     const [invitedList, setInvitedList] =useState([]); //초대된 리스트
     const [selectPjs, setSelectPjs] = useState([]);
+    // const selectPjs =[]; //프로젝트 리스트가 되어야하는 것 아닌가
   
     useEffect(() => {
       // 예: fetch 또는 axios 사용
@@ -78,6 +79,7 @@ const CreateChat=({onCloseClick}) =>{
               onClick={onCloseClick}>X</button>
               <h2 className={styles.title}>채팅방 만들기</h2>
 
+
               {/* div 1 */}   
               <div className={styles.field}>
                   <label 
@@ -91,6 +93,7 @@ const CreateChat=({onCloseClick}) =>{
                   placeholder="채팅방 이름을 적으세요"
                   />
               </div> {/*mkName*/}
+
 
               {/* div 2 */} 
               <div className={styles.field}>
@@ -109,6 +112,7 @@ const CreateChat=({onCloseClick}) =>{
                   </select>
               </div>{/*mkPj*/}
 
+
               {/* div 3 */}
               <div className={styles.field}>
                 <label 
@@ -118,38 +122,54 @@ const CreateChat=({onCloseClick}) =>{
                   <input
                   type="text"
                   value={inviteName}
+                  placeholder="초대 이름"
                   onChange={(e) => setInviteName(e.target.value)}
                   // className={styles.ivtNs}
-                  placeholder="초대 이름"
+                  onKeyDown={(e) => {
+                    if (/[^a-zA-z가~-힣\s]/.test(e.key)) { e.preventDefault();
+                    }else if (e.key === "Enter"){
+                      handleAddInvite();
+                    }
+                  }}
+                  
                   />
                   <button
-                  onClick={handleAddInvite}
-                  
+                  onClick={handleAddInvite}                  
                   >+</button>
                 </div> {/*inviteRow*/}
               </div>{/*field*/}
 
-          <div className={styles.avatarRow} >
-            {invitedList.map((name, index) => (
+
+              {/* 아바타들 */} 
+              <div className={styles.avatarRow} >
+              <div className={styles.avatarBox}>
+              {invitedList.slice(0, 5).map((name, index) => (          
               <div
                 key={index}
                 className={styles.avatar}
               >
                 {name}
+                {/* 이름이 아니고 사진으로 */}
               </div>
             ))}
-          </div>
+            {invitedList.length >5&&(
+              <div className={styles.avatar}>
+                +{invitedList.length -5}
+              </div>
+            )}
+          </div> {/* avatarBox */}
 
+      
+
+          </div> {/*popup */}
           <button
             onClick={handleCreateRoom}
             className={styles.mkBtn}
           >만들기
           </button>
-
-
-          </div> {/*popup */}
+          </div>{/* avatarRow */}
       </div> //overlay 
-  );
+  );//return
 
 };//CreateChat
 
