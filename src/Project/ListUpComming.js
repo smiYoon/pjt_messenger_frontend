@@ -75,9 +75,9 @@ const ListUpComming = (project) => {
                 <div onClick={() => handleEditButton(project.id)} className={styles.dot}>···</div>
                 {showEditMenu === project.id && (
                     <div ref={editMenuRef} className={styles.editMenu}>
-                        <div className={styles.dotBtn} onClick={openProjectModify}>수정</div>
+                        <div className={styles.dotBtnEdit} onClick={openProjectModify}>수정</div>
                         <hr></hr>
-                        <div className={styles.dotBtn}>삭제</div>
+                        <div className={styles.dotBtnDelete}>삭제</div>
                     </div>
                 )}
 

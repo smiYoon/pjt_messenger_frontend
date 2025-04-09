@@ -9,7 +9,7 @@
     background-color: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(2px);
 
-    z-index: 10;
+    z-index: 99;
     
     display: flex;
     justify-content: center;
@@ -83,7 +83,7 @@
     text-align: center  ;
 }
 
-.button {
+.container button {
     display: inline-flex;
     padding: 3.5px 20px;
     margin-left: 15px;
@@ -97,15 +97,15 @@
     cursor: pointer;
     transition: background-color 0.3s ease-in;
 }
-.button:hover {
+.container button:hover {
     background-color: #4a1dff;
     transition: background-color 0.3s ease-in;
 }
 
-.btnStyle_gray {
+.container button.btnStyle_gray {
     border: #bbb;
     background-color: #bbb;
 }
-.btnStyle_gray:hover {
+.container button.btnStyle_gray:hover {
     background-color: #888;   
 }
