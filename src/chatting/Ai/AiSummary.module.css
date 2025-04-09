@@ -16,13 +16,15 @@
 .todaySummary {
     position: relative;
 
-    top: 20px;
-    left: 20px;
+    top: 3%;
+    left: 6%;
     
-    padding-top: 3px;
-    padding-left: 20px;
+    padding-top: 1%;
+    padding-left: 7%;
 
-    width: 160px;
+    justify-content: center;
+
+    width: 50%;
     height: 40px;
 
     font-size: 18px;
@@ -44,14 +46,15 @@
     opacity: 0.7;
 }
 
+
 .magicWand {
     position: relative;
 
-    top: 5px;
+    top: 8%;
     
-    margin-right: 7px;
+    margin-right: 3%;
 
-    font-size: 25px;
+    font-size: 140%;
 }
 
 
@@ -85,11 +88,11 @@
   .dateSetManually {
     position: relative;
     
-    top: 40px;
-    left: 20px;
+    top: 30%;
+    left: 6%;
 
-    width: 120px;
-    height: 30px;
+    width: 35%;
+    height: 20%;
 
     padding-top: 10px;
     padding-left: 20px;
@@ -119,12 +122,12 @@
     position: relative;
 
     top: 0;
-    left: 20px;
+    left: 6%;
 
     padding-top: 10px;
     padding-left: 18px;
 
-    width: 60px;
+    width: 20%;
     height: 30px;
 
     /* design */
@@ -142,13 +145,13 @@
 .endDate {
     position: relative;
 
-    top: 80px;
-    left: 20px;
+    top: 70px;
+    left: 5%;
 
     padding-top: 10px;
-    padding-left: 18px;
+    padding-left: 20px;
 
-    width: 60px;
+    width: 17%;
     height: 30px;
 
     /* design */
@@ -165,13 +168,13 @@
 .summary {
     position: relative;
 
-    top: 100px;
-    left: 120px;
+    top: 90px;
+    left: 30%;
 
     padding-top: 10px;
-    padding-left: 30px;
+    padding-left: 45px;
 
-    width: 80px;
+    width: 30%;
     height: 30px;
 
     cursor: pointer;
@@ -197,9 +200,10 @@
     border-radius: 15px;
 
     top: 120px;
-    left: 20px;
+    left: 10px;
+    right: 10px;
 
-    width: 300px;
+    width: 88%;
     height: 460px;
 }
 
@@ -212,7 +216,7 @@
 
     padding: 7px;
 
-    width: 200px;
+    width: 11.5vw;
     height: 25px;
 
     margin-left: 70px;
@@ -233,7 +237,7 @@
 
     padding: 7px;
 
-    width: 200px;
+    width: 11.5vw;
     height: 25px;
 
     margin-left: 70px;
