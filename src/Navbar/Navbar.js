@@ -2,9 +2,12 @@ import styles from './Navbar.module.css';
 import profile from './img/profile.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   console.group('Navbar() invoked.'); console.groupEnd();
+
+  const navigate = useNavigate();
 
   return (
     <div className={styles.container}>
@@ -16,7 +19,8 @@ const Navbar = () => {
         </div>
 
         <div className={styles.work}>
-          <button className={styles.flip}>
+          <button className={styles.flip}
+            onClick={() => navigate('/work')}>
             업무
           </button>
         </div>
