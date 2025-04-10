@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styles from './Board_list.module.css';
+import styles from './Notice_list.module.css';
 import { Link } from 'react-router-dom';
 
 const Board_list = () => {

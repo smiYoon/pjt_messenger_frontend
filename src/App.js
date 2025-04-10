@@ -1,7 +1,7 @@
 import './App.css';
 import Navbar from './Navbar/Navbar';
 import { Register, Modify, List } from './Member';
-import { Board_list, Board_create } from './Board';
+import { Notice_list, Notice_create, Notice_detail } from './Board';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 
@@ -15,10 +15,11 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/member/list" element={<List />} />
-          <Route path="/member/edit" element={<Modify />} />
+          <Route path="/member/edit/:employeeId" element={<Modify />} />
           <Route path="/member/register" element={<Register />} />
-          <Route path="/board/list" element={<Board_list />} />
-          <Route path="/" element={<Board_create />} />
+          <Route path="/board/list" element={<Notice_list />} />
+          <Route path="/board/detail" element={<Notice_detail />} />
+          <Route path="/board/create" element={<Notice_create />} />
         </Routes>
       </div>
     </div>
