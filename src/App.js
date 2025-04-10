@@ -17,13 +17,13 @@ const App = () => {
           <Route path="/member/list" element={<List />} />
           <Route path="/member/edit/:employeeId" element={<Modify />} />
           <Route path="/member/register" element={<Register />} />
-          <Route path="/board/create" element={<Notice_create />} />
-          <Route path="/board/detail" element={<Notice_detail />} />
-          <Route path="/board/list" element={<Notice_list />} />
-          <Route path="/board/update" element={<Notice_update />} />
-          <Route path="/board/FeedbackList" element={<Feedback_boardList />} />
-          <Route path="/board/Feedback" element={<Feedback_create />} />
-          <Route path="/board/FeedbackUpdate" element={<Feedback_update />} />
+          <Route path="/board/notice/create" element={<Notice_create />} />
+          <Route path="/board/notice/detail" element={<Notice_detail />} />
+          <Route path="/board/notice/list" element={<Notice_list />} />
+          <Route path="/board/notice/update" element={<Notice_update />} />
+          <Route path="/board/feedback/list" element={<Feedback_boardList />} />
+          <Route path="/board/feedback/create" element={<Feedback_create />} />
+          <Route path="/board/feedback/update" element={<Feedback_update />} />
         </Routes>
       </div>
     </div>

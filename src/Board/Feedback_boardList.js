@@ -79,7 +79,7 @@ const Feedback_boardList = () => {
             <div className={styles.side_bar}>
                 <div className={styles.menu}>
                     <div className={styles.notice_box}>
-                        <Link to={`/board/list`} className={styles.notice}>
+                        <Link to={`/board/notice/list`} className={styles.notice}>
                             공지사항 게시판
                         </Link>
                     </div>

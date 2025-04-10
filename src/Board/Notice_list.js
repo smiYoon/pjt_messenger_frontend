@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from './Notice_list.module.css';
 import { Link } from 'react-router-dom';
 
-const Board_list = () => {
+const Notice_list = () => {
 
     const [inputValue, setInputValue] = useState('');
     const handlerChange = (e) => setInputValue(e.target.value);
@@ -82,7 +82,7 @@ const Board_list = () => {
                     <div className={styles.notice}>
                         공지사항 게시판
                     </div>
-                    <Link to={`/board/Feedbacklist`} className={styles.feedback}>
+                    <Link to={`/board/feedback/list`} className={styles.feedback}>
                         건의 게시판
                     </Link>
             
@@ -139,4 +139,4 @@ const Board_list = () => {
     )
 }
 
-export default Board_list
+export default Notice_list;

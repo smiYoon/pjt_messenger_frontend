@@ -25,10 +25,10 @@
 
 
 .side_bar .notice {
-    background-color: white;
-    font-size: x-large;
-    border: 1px solid #6c47ff;
-
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #222;
 }
 
 
