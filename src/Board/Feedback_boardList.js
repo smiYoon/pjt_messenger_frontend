@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import styles from './Board_list.module.css';
+import styles from './Feedback_boardList.module.css';
 import { Link } from 'react-router-dom';
 
-const Board_list = () => {
+const Feedback_boardList = () => {
 
     const [inputValue, setInputValue] = useState('');
     const handlerChange = (e) => setInputValue(e.target.value);
-
 
     /* 백엔드에서 데이터를 받아오기 전 리터럴 데이터 */
     const postList = [
@@ -79,22 +78,23 @@ const Board_list = () => {
         <div className={styles.container}>
             <div className={styles.side_bar}>
                 <div className={styles.menu}>
-                    <div className={styles.notice}>
-                        공지사항 게시판
+                    <div className={styles.notice_box}>
+                        <Link to={`/board/list`} className={styles.notice}>
+                            공지사항 게시판
+                        </Link>
                     </div>
-                    <Link to={`/board/Feedbacklist`} className={styles.feedback}>
+                    <div className={styles.feedback}>
                         건의 게시판
-                    </Link>
-            
+                    </div>
                 </div>
             </div>
             <div className={styles.list_Page}>
                 <div className={styles.list_container}>
                     <div className={styles.header}>
-                        Notification Board
+                        Feedback Board
                     </div>
                     <div className={styles.option_box}>
-                        <Link to={`/board/create`} className={styles.button}>등록</Link>
+                        <Link to={`/board/Feedback`} className={styles.button}>등록</Link>
                         <div className={styles.search_box}>
                             <select
                                 name='searchWord'
@@ -139,4 +139,4 @@ const Board_list = () => {
     )
 }
 
-export default Board_list
+export default Feedback_boardList
