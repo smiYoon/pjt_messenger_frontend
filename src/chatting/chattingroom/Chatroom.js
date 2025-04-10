@@ -17,13 +17,13 @@ const ChatRoom = () => {
 
 
     useEffect(() => {
-        const socket = new WebSocket("wss://localhost/chat/room1"); // room2가 채팅방 id로 바뀌어야 함.
+        const socket = new WebSocket("wss://localhost:443/chatroom/room1"); // room2가 채팅방 id로 바뀌어야 함.
         socketRef.current = socket;
 
         socket.onopen = () => {
             const newUuid = crypto.randomUUID().split('-')[0];
-            setUuid(newUuid);                                     // 여긴 uuid가 아닌 해당 채팅인원의 이름이 들어가야함.
-            console.log("Connected to /chat/room2");
+            setUuid(newUuid);                                               // 여긴 uuid가 아닌 해당 채팅인원의 이름이 들어가야함.
+            console.log("Connected to /chatroom/1");
         };
 
         socket.onmessage = (e) => {
@@ -35,7 +35,7 @@ const ChatRoom = () => {
         };
 
         socket.onclose = () => {
-            console.log("Disconnected from /chat/room2");
+            console.log("Disconnected from /chatroom/1");
         };
 
         return () => socket.close();
