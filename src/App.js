@@ -1,7 +1,7 @@
 import './App.css';
 import Navbar from './Navbar/Navbar';
 import { Register, Modify, List } from './Member';
-import { Notice_list, Notice_create, Notice_detail } from './Board';
+import { Notice_list, Board_update, Notice_create, Notice_detail, Feedback_boardList , Feedback_create , Feedback_update } from './Board';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 
@@ -20,6 +20,9 @@ const App = () => {
           <Route path="/board/list" element={<Notice_list />} />
           <Route path="/board/detail" element={<Notice_detail />} />
           <Route path="/board/create" element={<Notice_create />} />
+          <Route path="/board/Feedbacklist" element={<Feedback_boardList />} />
+          <Route path="/board/Feedback" element={<Feedback_create />} />
+          <Route path="/board/Feedbackupdate" element={<Feedback_update />} />
         </Routes>
       </div>
     </div>
