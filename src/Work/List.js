@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import styles from "./List.module.css";
+import {WorkBox} from "./index.js";
 
 
 console.groupCollapsed("src/Work/List.js");console.groupEnd();
@@ -60,29 +61,33 @@ const List = () => {
             <div className={styles.pageBottom}>
                 <span className={styles.pageBottom_Box}>
                     <div>진행 예정 <span className={styles.bottomNumber}>2</span><hr className={styles.hr}/></div>
+
                     <div className={styles.bottom_background}>
-                        <button onClick={() => navigate('/work/detail')}>상세버튼</button>
+                        <WorkBox className={styles.WorkBox}/>
                     </div>
                 </span>
 
                 <span className={styles.pageBottom_Box}>
                     <div>진행중 <span className={styles.bottomNumber}>5</span><hr className={styles.hr}/></div>
+
                     <div className={styles.bottom_background}>
-                        <button onClick={() => navigate('/work/detail')}>상세버튼</button>
+                        <WorkBox className={styles.WorkBox}/>
                     </div>
                 </span>
                 
                 <span className={styles.pageBottom_Box}>
                     <div>완료 대기 <span className={styles.bottomNumber}>2</span><hr className={styles.hr}/></div>
+
                     <div className={styles.bottom_background}>
-                        <button onClick={() => navigate('/work/detail')}>상세버튼</button>
+                        <WorkBox className={styles.WorkBox}/>
                     </div>
                 </span>
 
                 <span className={styles.pageBottom_Box}>
                     <div>완료 <span className={styles.bottomNumber}>7</span><hr className={styles.hr}/></div>
+                    
                     <div className={styles.bottom_background}>
-                        <button onClick={() => navigate('/work/detail')}>상세버튼</button>
+                        <WorkBox className={styles.WorkBox}/>
                     </div>
                 </span>
             </div>
