@@ -1,8 +1,14 @@
 import React from 'react';
 import styles from './Modify_member.module.css';
 import profile from '../Navbar/img/profile.png';
+import { useNavigate } from 'react-router-dom';
 
 const Modify_member = () => {
+    const navigate = useNavigate();
+    const handleCancelClick = () => {
+        navigate(`/member/list`);
+    }
+
     return (
         <div className={styles.cover}>
             <div className={styles.container}>
@@ -72,7 +78,7 @@ const Modify_member = () => {
 
                             <div className={styles.buttons}>
                                 <button className={styles.modify}>수정</button>
-                                <button className={styles.cancel}>취소</button>
+                                <button className={styles.cancel} onClick={handleCancelClick}>취소</button>
                             </div>
                         </div>
                     </div>

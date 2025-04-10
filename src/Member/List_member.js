@@ -1,5 +1,5 @@
 import styles from './List_member.module.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import profile from '../Navbar/img/profile.png';
 
@@ -90,6 +90,35 @@ const List_member = () => {
     },
   ]
 
+  const [members, setMembers] = useState([]);
+  const fetchMembers = useCallback(async () => {
+
+    try {
+      const response = await fetch(`https://localhost:443/employee`, {
+        method: 'Get',
+      });
+
+      if(response.ok) {
+        const data = await response.json();
+        setMembers(data.map(member => ({
+          empno: member.empno,
+          name: member.name,
+          email: member.email,
+          tel: member.tel,
+          position: member.position,
+          dept_id: member.dept_id,
+        })));
+      } else {
+        console.error('불러오기 실패', response.statusText);
+      }
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }});
+
+    useEffect(() => {
+      fetchMembers();
+    }, []);
+
 
   return (
     <div className={styles.container}>
@@ -119,22 +148,22 @@ const List_member = () => {
           </div>
         </div>
         <div className={styles.list}>
-          {personalInfo.map((emp) => (
+          {personalInfo.map((members) => (
           <div className={styles.card}>
             <img src={profile} alt='' />
             <div className={styles.name}>
-              {emp.name} {emp.position}
+              {members.name} {members.position}
             </div>
             <div className={styles.dept}>
-              {emp.dept}
+              {members.dept}
             </div>
             <div className={styles.phone}>
-              {emp.phone}
+              {members.phone}
             </div>
             <div className={styles.email}>
-              {emp.email}
+              {members.email}
             </div>
-            <Link to={`/member/edit/${emp.employeeId}`} className={styles.detail}>자세히</Link>
+            <Link to={`/member/edit/${members.employeeId}`} className={styles.detail}>자세히</Link>
           </div>
           ))}
         </div>
