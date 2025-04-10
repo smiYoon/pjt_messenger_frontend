@@ -1,23 +1,32 @@
 .overlay {
     position: fixed;
     inset: 0;
+    /* 화면전체를 덮는다. 숫자가 커질 수록 여백이 생긴다.*/
     background: rgba(0, 0, 0, 0.3);
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    --primary-color: #6C47FF;
   }
   
   .popup {
+    
     position: relative;
 
-    width: 35%;
-    height: 50%;
-    left: 2vw;
+    width: 30%;
+    height: 58%;
+    left: 1.5vw;
     background: #e6ddf6;
     border-radius: 12px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 
     justify-items: center;
+    /*자식 필드들을 중앙정렬 */
+
+    overflow: hidden;
+    white-space: inherit;
   }
   
   .clsX {
@@ -40,7 +49,8 @@
   
   .field {
     margin-bottom: 20px;
-    width: 60%;
+    width: 70%;
+    height: 13%;
   }
   
   .field label {
@@ -68,7 +78,7 @@
   }
   
   .inviteRow button {
-    margin-left: 2%;
+    margin-left: 3%;
     padding: 3px 12px;
     background-color: #6C47FF;
     color: white;
@@ -117,8 +127,10 @@
     cursor: pointer;
 
     left: 40%;
-    bottom: 10%;
+    bottom: 5%;
 
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   .mkBtn:hover{

@@ -160,9 +160,9 @@ const CreateChat = ({ onCloseClick }) => {
 
 
         </div> {/*avatarRow */}
-
+        <div>
         <button onClick={handleCreateRoom} className={styles.mkBtn}>만들기</button>
-
+        </div>
       </div>{/* popup */}
 
     </div> //overlay 

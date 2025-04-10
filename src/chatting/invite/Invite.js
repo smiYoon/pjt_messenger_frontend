@@ -24,6 +24,8 @@ const Invite = ({ onOrgaClick }) => {
 
   return (
     <div className={styles.invite}>
+
+      
       {/* 아바타들 */}
       <div className={styles.avatarRow}>
         <div class={styles.avatarBox}>
@@ -42,6 +44,8 @@ const Invite = ({ onOrgaClick }) => {
         </button>
       </div>
       {/* avatarRow */}
+
+
       {/* 직원 검색 */}
       <div className={styles.inviteRow}>
         <input
