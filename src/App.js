@@ -17,9 +17,10 @@ const App = () => {
           <Route path="/member/list" element={<List />} />
           <Route path="/member/edit/:employeeId" element={<Modify />} />
           <Route path="/member/register" element={<Register />} />
-          <Route path="/board/list" element={<Notice_list />} />
-          <Route path="/board/detail" element={<Notice_detail />} />
           <Route path="/board/create" element={<Notice_create />} />
+          <Route path="/board/detail" element={<Notice_detail />} />
+          <Route path="/board/list" element={<Notice_list />} />
+          <Route path="/board/update" element={<Board_update />} />
           <Route path="/board/Feedbacklist" element={<Feedback_boardList />} />
           <Route path="/board/Feedback" element={<Feedback_create />} />
           <Route path="/board/Feedbackupdate" element={<Feedback_update />} />
