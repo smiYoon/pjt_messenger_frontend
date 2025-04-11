@@ -9,14 +9,14 @@
 
 
 .content {
-    padding: 10px 30px 30px ;
+    padding: 20px 30px ;
     border-radius: 10px;
     border: 1px solid #6c47ff;
-    height: 32vh;
+    height: 33vh;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
 
     position: relative;
 }
@@ -98,7 +98,11 @@
     font-size: 1.2rem;
     font-weight: bold;
     color: #4016eb;
-    text-align: right;
+
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 5px;
 }
 
 
