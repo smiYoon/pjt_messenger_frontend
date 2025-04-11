@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
 
 import {AiSummary} from './Ai';
 import {Chatting, Roomheader} from './chattingroom';
@@ -42,24 +42,30 @@ const Chat_main = () => {
     const [showCreateChat, setShowCreateChat] = useState(false);
     const [showOrga, setShowOrga]=useState(false);//조직도
 
+    ////////////////////////////////////////////////////////////////////
+    const [selectedChatRoom, setSelectedChatRoom] = useState(null);  // 선택된 채팅방
+
+    useEffect(() => {
+        console.log("select", selectedChatRoom)
+    },[selectedChatRoom])
+
     return (
         <div className={styles.main}>
             
             <div className={styles.leftbox}>
                 
                 <Invite onOrgaClick={()=> {setShowOrga(true); console.log("zz");}} />
-                <ChatList onCreateClick={() => setShowCreateChat(true)} />
+                <ChatList onCreateClick={() => setShowCreateChat(true)} onChatClick={(chatRoom) => setSelectedChatRoom(chatRoom)}/>
 
             </div>
 
             <div className={styles.centerbox}>
                 <Roomheader/>
-                <Chatting/>
+                <Chatting selectedChatRoom={selectedChatRoom}/>
             </div>
 
             <div className={styles.rightbox}>
                <AiSummary/>
-              
             </div>
 
             {showOrga && <Organization data={treeData} onCloseOrganClick={() => setShowOrga(false)} />}

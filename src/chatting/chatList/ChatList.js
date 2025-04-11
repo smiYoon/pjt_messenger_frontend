@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import styles from './ChatList.module.css';
 
-const ChatList = ({ onCreateClick }) => {
+const ChatList = ({ onCreateClick,onChatClick }) => {
 
     const [chatrooms, setChatrooms] = useState([]);
 
@@ -32,7 +32,7 @@ const ChatList = ({ onCreateClick }) => {
             <div className={styles.roomboxes}>
 
                 {chatrooms.map((room, index) => (
-                <div key={index} className={styles.chatroombox}>
+                <div key={room.id} className={styles.chatroombox} onClick={() => onChatClick(room)}>
                     <div className={styles.empicon}></div>
                     <div className={styles.rightbox}>
                         <div className={styles.projecticon}>{room.projectBadge}</div>
