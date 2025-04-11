@@ -1,6 +1,5 @@
 import './App.css';
-import {Chat_main} from './chatting';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Chat_main } from './chatting';
 import Navbar from './Navbar/Navbar';
 import ChatRoom from './chatting/chattingroom/Chatroom';
 import { Member_register, Member_modify, Member_list } from './Member';
