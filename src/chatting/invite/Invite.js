@@ -28,7 +28,7 @@ const Invite = ({ onOrgaClick }) => {
       
       {/* 아바타들 */}
       <div className={styles.avatarRow}>
-        <div class={styles.avatarBox}>
+        <div className={styles.avatarBox}>
           {invitedList.slice(0, 3).map((name, index) => (
             <div key={index} className={styles.avatar}>
               {name} {/* 이름이 아니고 사진으로 */}
