@@ -32,7 +32,21 @@ const Register_member = () => {
     }
 
 
-    
+//     <div className={styles.dept_container}>
+//     <input type='text' value={member.dept} className={styles.dept} placeholder='' />
+//     <div className={styles.placeholder_text}>부서</div>
+// </div>
+
+    const member = [{
+        loginId: 'xptmxm123',
+        password: 'Nice1512',
+        name: '이현희',
+        phoneNumber: '1023234521',
+        address: '서울특별시',
+        zipcode: '12942',
+        email: 'dlgusgml99gmailcom'
+    }]
+
 
 
     return (
@@ -41,19 +55,61 @@ const Register_member = () => {
                 <div className={styles.register_title}>REGISTER</div>
                 <img src={Register} className={styles.register_img} />
             </div>
+            {member.map((members) => (
             <div className={styles.right_panel}>
                 <div className={styles.input_box}>
-                        <input type='text' value={inputId} className={styles.single} onChange={handlerIdChange} placeholder='아이디' />
-                        <input type='text' value={inputPasswd} className={styles.single} onChange={handlerPasswdChange} placeholder='비밀번호' />
+
+                    <div className={styles.idbox}>
+                        <input type='text' value={member.loginId} className={styles.single} onChange={handlerIdChange} placeholder='' />
+
+                        <div className={styles.placeholder_text}>아이디</div>
+                    </div>
+
+                    <div className={styles.passwdbox}>
+                        <input type='text' value={member.password} className={styles.single} onChange={handlerPasswdChange} placeholder='' />
+                        <div className={styles.placeholder_pswd}>비밀번호</div>
+                    </div> 
+
+
                     <div className={styles.two_input}>
-                        <input type='text' value={inputName} className={styles.smallinput} onChange={handlerNameChange} placeholder='이름' />
-                        <input type='number' value={inputPhoneNum} className={styles.largeinput} onChange={handlerPhoneNumChange} placeholder='휴대폰 번호' />
-                    </div>
+
+                        <div className={styles.namebox}>
+                            <input type='text' value={member.name} onChange={handlerNameChange} placeholder='' />
+                            <div className={styles.placeholder_name}>이름</div>
+                        </div>
+
+                        <div className={styles.phonebox}>
+                            <input type='number' value={member.phoneNumber} onChange={handlerPhoneNumChange} placeholder='' />
+                            <div className={styles.placeholder_phone}>휴대폰 번호</div>
+                        </div>
+                    </div>  {/*  two_input */}
+
+
+
                     <div className={styles.two_input}> 
-                        <input type='text' className={styles.largeinput} placeholder='주소' />
-                        <input type='number' className={styles.smallinput} placeholder='우편번호' />
-                    </div>
-                        <input type='text' value={inputEmail} className={styles.single} onChange={handlerEmailChange} placeholder='이메일' />
+
+
+                        <div className={styles.addressbox}>
+                            <input type='text' value={member.address} className={styles.largeinput} placeholder='' />
+                            <div className={styles.placeholder_address}>주소</div>
+                        </div>
+
+                        <div className={styles.zipcodebox}>
+                            <input value={member.zipcode} className={styles.smallinput} placeholder='' />
+                            <div className={styles.placeholder_zipcode}>우편번호</div>
+                        </div>
+
+
+                        </div> {/*  two_input */}
+
+
+                        <div className={styles.emailbox}>
+                            <input type='text' value={member.email} className={styles.single} onChange={handlerEmailChange} placeholder='' />
+                            <div className={styles.placeholder_email}>이메일</div>
+                        </div>
+
+
+
                     <div className={styles.role_box}>
                         <select
                             name='Department'
@@ -88,8 +144,9 @@ const Register_member = () => {
                             <button onClick={handleCancelClick} className={styles.cancel} >취소</button>
                         </div>
                     </div>
-                 </div> {/* text_box */}
-            </div> {/* 오른쪽 창 */}
+                 </div> {/* input_box */}
+            </div> 
+            ))}
         </div>
     )
 }

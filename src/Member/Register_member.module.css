@@ -76,7 +76,7 @@
         border-radius: 10px;
         height: 6vh;
         box-sizing: border-box;
-        padding: 0 10px;
+        padding: 25px 10px 10px;
     }
 
     input:focus {
@@ -84,26 +84,154 @@
     }
 }
 
-.input_box .single {
+/* ===========  input 감싸는 박스 ============== */
+
+.input_box .idbox {
+    position: relative;
     width: 100%;
 }
 
-.two_input {
-    display: flex;
-    width: inherit;
-    gap: 1vw;
+
+.input_box .passwdbox {
+    position: relative;
+    width: 100%;
 }
 
+
+.input_box .namebox {
+    position: relative;
+    width: 100%;
+}
+
+
+.input_box .phonebox {
+    position: relative;
+    width: 100%;
+}
+
+
+.input_box .addressbox {
+    position: relative;
+    width: 100%;
+}
+
+
+.input_box .zipcodebox {
+    position: relative;
+    width: 100%;
+}
+
+
+.input_box .emailbox {
+    position: relative;
+    width: 100%;
+}
+
+
+.placeholder_text {
+    position: absolute;
+    color: #222;
+    top: 10%;
+    margin-left: 10px;
+    font-size: 0.8rem;
+}
+
+
+.placeholder_pswd {
+    position: absolute;
+    color: #222;
+    top: 10%;
+    margin-left: 10px;
+    font-size: 0.8rem;
+}
+
+
+.placeholder_name {
+    position: absolute;
+    color: #222;
+    top: 10%;
+    margin-left: 10px;
+    font-size: 0.8rem;
+}
+
+
+.placeholder_phone {
+    position: absolute;
+    color: #222;
+    top: 10%;
+    margin-left: 10px;
+    font-size: 0.8rem;
+}
+
+
+.placeholder_address {
+    position: absolute;
+    color: #222;
+    top: 10%;
+    margin-left: 10px;
+    font-size: 0.8rem;
+}
+
+
+.placeholder_zipcode {
+    position: absolute;
+    color: #222;
+    top: 10%;
+    margin-left: 150px;
+    font-size: 0.8rem;
+}
+
+
+.placeholder_email {
+    position: absolute;
+    color: #222;
+    top: 10%;
+    margin-left: 10px;
+    font-size: 0.8rem;
+}
+
+
+/* ===========  inputbox ============== */
+
+
+.input_box .single {
+    width: 100%;
+    height: 6vh;
+}
+
+.two_input {
+    position: relative;
+    display: flex;
+    width: 100%;
+    gap: 1vw;
+    height: 6vh;
+}
+
+/* ===========  이름 & 휴대폰 input ============== */
+
+
+.two_input input {
+    display: flex;
+    width: 100%;
+}
+
+/* ===========  주소 & 우편번호 input ============== */
+
 .two_input .largeinput {
-    width: 80%;
+    position: absolute;
+    width: 150%;
     border: 1px solid #6c47ff;
 }
 
 .two_input .smallinput {
-    width: 20%;
+    position: absolute;
+    width: 50%;
+    right: 0;
 
     border: 1px solid #6c47ff;
 }
+
+/* ===========  부서 & 직급 ============== */
 
 .role_box {
     display: flex;
@@ -112,9 +240,8 @@
     gap: 2vh;
 }
 
-
 .Department {
-    width: 30vw;
+width: 30vw;
     border-radius: 7px;
     border: 1px solid #6c47ff;
     /* box-sizing: border-box; */
@@ -125,6 +252,7 @@
 .Department:focus {
     outline: none;
 }
+
 
 .Position {
     width: 30vw;
@@ -139,6 +267,9 @@
     outline: none;
 }
 
+
+/* ===========  등록 & 수정 ============== */
+
 .button_box {
     display: flex;
     gap: 2vw;
@@ -152,8 +283,6 @@
     border-radius: 10px;
     border: 1px solid #6c47ff;
 }
-
-
 
 .button_box .register {
     color: white;
