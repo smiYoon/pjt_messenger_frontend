@@ -3,6 +3,10 @@ import { P_Modify } from '.';
 
 import styles from './ListUnit.module.css';
 
+
+import { RxLapTimer } from "react-icons/rx";
+
+
 console.groupCollapsed('src/Project/ListUnit.js'); console.groupEnd();
 
 const ListUnit = (project) => {
@@ -85,6 +89,14 @@ const ListUnit = (project) => {
                     <div className={styles.timeline}>
                         <label>기간</label> 2023.10.01 ~ 2023.10.31
                     </div>
+
+
+                    <hr/>
+
+                    <div className={styles.deadline}>
+                        <RxLapTimer className={styles.icon} /> D-2
+                    </div>
+
 
                 </div>
 
