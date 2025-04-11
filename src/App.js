@@ -15,7 +15,7 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/member/list" element={<List />} />
-          <Route path="/member/edit/:employeeId" element={<Modify />} />
+          <Route path="/member/edit/:empno" element={<Modify />} />
           <Route path="/member/register" element={<Register />} />
           <Route path="/board/notice/create" element={<Notice_create />} />
           <Route path="/board/notice/detail" element={<Notice_detail />} />

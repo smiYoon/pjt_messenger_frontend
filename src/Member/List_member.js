@@ -95,18 +95,19 @@ const List_member = () => {
 
     try {
       const response = await fetch(`https://localhost:443/employee`, {
-        method: 'Get',
+        method: 'GET',
       });
 
       if(response.ok) {
         const data = await response.json();
-        setMembers(data.map(member => ({
-          empno: member.empno,
-          name: member.name,
-          email: member.email,
-          tel: member.tel,
-          position: member.position,
-          dept_id: member.dept_id,
+        console.log("data:", data);
+        setMembers(data.map(members => ({
+          empno: members.empno,
+          name: members.name,
+          email: members.email,
+          tel: members.tel,
+          position: members.position,
+          dept_id: members.department.name,
         })));
       } else {
         console.error('불러오기 실패', response.statusText);
@@ -119,6 +120,12 @@ const List_member = () => {
       fetchMembers();
     }, []);
 
+    const level = {
+      "1": "팀원",
+      "2": "팀장",
+      "3": "부서장",
+      "4": "CEO",
+    };
 
   return (
     <div className={styles.container}>
@@ -148,22 +155,22 @@ const List_member = () => {
           </div>
         </div>
         <div className={styles.list}>
-          {personalInfo.map((members) => (
+          {members.map((member) => (
           <div className={styles.card}>
             <img src={profile} alt='' />
             <div className={styles.name}>
-              {members.name} {members.position}
+              {member.name} {level[member.position]}
             </div>
             <div className={styles.dept}>
-              {members.dept}
+              {member.dept_id}
             </div>
             <div className={styles.phone}>
-              {members.phone}
+              {member.tel}
             </div>
             <div className={styles.email}>
-              {members.email}
+              {member.email}
             </div>
-            <Link to={`/member/edit/${members.employeeId}`} className={styles.detail}>자세히</Link>
+            <Link to={`/member/edit/${member.empno}`} className={styles.detail}>자세히</Link>
           </div>
           ))}
         </div>
