@@ -8,84 +8,84 @@ const List_member = () => {
   const [searchOption, setSearchOption] = useState('');
   const personalInfo = [
     {
-      employeeId: "E2412001",
+      empno: "E2412001",
       file: `${profile}`,
       name: "김개똥1",
       position: "사원",
-      dept: "영업1팀",
-      phone: "010-2222-3333",
+      dept_id: "영업1팀",
+      tel: "010-2222-3333",
       email: "개빡친다@gmail.com"
     },
     {
-      employeeId: "E2412003",
+      empno: "E2412003",
       file: `${profile}`,
       name: "김개똥2",
       position: "사원",
-      dept: "영업2팀",
-      phone: "010-3547-9844",
+      dept_id: "영업2팀",
+      tel: "010-3547-9844",
       email: "개빡친다@gmail.com"
     },
     {
-      employeeId: "E2412007",
+      empno: "E2412007",
       file: `${profile}`,
       name: "김개똥3",
       position: "사원",
-      dept: "영업3팀",
-      phone: "010-3572-6548",
+      dept_id: "영업3팀",
+      tel: "010-3572-6548",
       email: "개빡친다@gmail.com"
     },
     {
-      employeeId: "E2412005",
+      empno: "E2412005",
       file: `${profile}`,
       name: "김개똥4",
       position: "사원",
-      dept: "영업4팀",
-      phone: "010-8953-5376",
+      dept_id: "영업4팀",
+      tel: "010-8953-5376",
       email: "개빡친다@gmail.com"
     },
     {
-      employeeId: "E2403002",
+      empno: "E2403002",
       file: `${profile}`,
       name: "김개똥5",
       position: "사원",
-      dept: "운영1팀",
-      phone: "010-7253-2375",
+      dept_id: "운영1팀",
+      tel: "010-7253-2375",
       email: "개빡친다@gmail.com"
     },
     {
-      employeeId: "E1506003",
+      empno: "E1506003",
       file: `${profile}`,
       name: "김개똥6",
       position: "사원",
-      dept: "운영2팀",
-      phone: "010-2222-3333",
+      dept_id: "운영2팀",
+      tel: "010-2222-3333",
       email: "개빡친다@gmail.com"
     },
     {
-      employeeId: "E1506005",
+      empno: "E1506005",
       file: `${profile}`,
       name: "김개똥7",
       position: "사원",
-      dept: "운영3팀",
-      phone: "010-2222-3333",
+      dept_id: "운영3팀",
+      tel: "010-2222-3333",
       email: "개빡친다@gmail.com"
     },
     {
-      employeeId: "E1509002",
+      empno: "E1509002",
       file: `${profile}`,
       name: "김개똥8",
       position: "팀장",
-      dept: "운영3팀",
-      phone: "010-2222-3333",
+      dept_id: "운영3팀",
+      tel: "010-2222-3333",
       email: "개빡친다@gmail.com"
     },
     {
-      employeeId: "E1811032",
+      empno: "E1811032",
       file: `${profile}`,
       name: "김개똥9",
       position: "팀장",
-      dept: "운영3팀",
-      phone: "010-2222-3333",
+      dept_id: "운영3팀",
+      tel: "010-2222-3333",
       email: "개빡친다@gmail.com"
     },
   ]
@@ -155,7 +155,8 @@ const List_member = () => {
           </div>
         </div>
         <div className={styles.list}>
-          {members.map((member) => (
+          {personalInfo.map((member) => ( // 프론트 테스트용
+          // {members.map((member) => (  // 이걸로 사용해야함
           <div className={styles.card}>
             <img src={profile} alt='' />
             <div className={styles.name}>
@@ -170,7 +171,8 @@ const List_member = () => {
             <div className={styles.email}>
               {member.email}
             </div>
-            <Link to={`/member/edit/${member.empno}`} className={styles.detail}>자세히</Link>
+            <Link to={`/member/edit/`} className={styles.detail}>자세히</Link>
+            {/* <Link to={`/member/edit/${member.empno}`} className={styles.detail}>자세히</Link> */}
           </div>
           ))}
         </div>

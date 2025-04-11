@@ -12,49 +12,62 @@ const Modify_member = () => {
     const { empno } = useParams();
     const [memberForm, setMemberForm] = useState([]);
 
-    useEffect(() => {
-        const fetchMemberData = async () => {
+    const member = [{
+        profile: `${profile}`,
+        name: "김태영",
+        username: "tae",
+        empno: "E2011004",
+        position: "팀원",
+        dept: "개발1팀",
+        password: "oracle",
+        address: "행운1길",
+        zipCode: "13850",
+        tel: "010-7754-4128",
+        email: "taetae@gmail.com",
+    }];
 
-            try {
-                const response = await fetch(`https://localhost:443/employee/${empno}`);
+    // useEffect(() => {
+    //     const fetchMemberData = async () => {
 
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('사원 정보: ', data);
+    //         try {
+    //             const response = await fetch(`https://localhost:443/employee/${empno}`);
 
-                    /* upfiles: null,
-                    existingFileName: data.upfile[0]?.original || '파일 없음', */
-                    setMemberForm({
-                        name: data.name,
-                        username: data.username,
-                        empno: data.empno,
-                        position: data.position,
-                        dept: data.department.name,
-                        password: data.password,
-                        address: data.address,
-                        zipCode: data.zipCode,
-                        tel: data.tel,
-                        email: data.email,
+    //             if (response.ok) {
+    //                 const data = await response.json();
+    //                 console.log('사원 정보: ', data);
 
-                    });
-                } else {
-                    console.error('사원 정보 불러오기 실패:', response.statusText);
-                }
-            } catch (error) {
-                console.error('오류 발생:', error);
-            }
-        };
+    //                 /* upfiles: null,
+    //                 existingFileName: data.upfile[0]?.original || '파일 없음', */
+    //                 setMemberForm({
+    //                     name: data.name,
+    //                     username: data.username,
+    //                     empno: data.empno,
+    //                     position: data.position,
+    //                     dept: data.department.name,
+    //                     password: data.password,
+    //                     address: data.address,
+    //                     zipCode: data.zipCode,
+    //                     tel: data.tel,
+    //                     email: data.email,
+    //                 });
+    //             } else {
+    //                 console.error('사원 정보 불러오기 실패:', response.statusText);
+    //             }
+    //         } catch (error) {
+    //             console.error('오류 발생:', error);
+    //         }
+    //     };
 
-        fetchMemberData();
-    }, []);
+    //     fetchMemberData();
+    // }, []);
 
     return (
         <div className={styles.cover}>
-            {memberForm.map((member) => (
+            {member.map((member) => (
                 <div className={styles.container}>
                     <div className={styles.left_panel}>
                         <div className={styles.pic}>
-                            <img src={profile} alt='' />
+                            <img src={member.profile} alt='' />
                             <label for='profileUpload'>
                                 <i className={`fas fa-camera ${styles.camera}`} />
                             </label>
@@ -67,7 +80,7 @@ const Modify_member = () => {
                         <div className={styles.article}>
                             <div className={styles.user_id}>
                                 <span>아이디&nbsp;</span>
-                                <div>{member.usename}</div>
+                                <div>{member.username}</div>
                                 {/* <input type='text' placeholder='youngfourty' /> */}
                             </div>
                             <div className={styles.empno}>
