@@ -28,6 +28,16 @@
     font-weight: bold;
 }
 
+.content hr {
+    width: 100%;
+    border: 1px solid #6c47ff;
+    margin: 0;
+}
+.content .icon {
+    vertical-align: text-top;
+}
+
+
 
 .header {
     display: flex;
@@ -86,6 +96,14 @@
 
 }
 
+.deadline {
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #4016eb;
+    text-align: right;
+}
+
 
 .editMenu {
     position:absolute;
@@ -127,16 +145,4 @@
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
