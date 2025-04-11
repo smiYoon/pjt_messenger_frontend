@@ -42,6 +42,10 @@
     outline: none;
 }
 
+.left_panel input:focus {
+    outline: none;
+}
+
 .pic {
     top: 10%;
     position: absolute;

@@ -14,21 +14,21 @@ const Navbar = () => {
             회원관리
           </Link>
 
-          <button className={styles.flip}>
+          <Link to={`/chat`} className={styles.flip}>
             채팅
-          </button>
+          </Link>
 
-          <button className={styles.flip}>
+          <Link to={`/work`} className={styles.flip}>
             업무
-          </button>
+          </Link>
 
-          <Link to={`/board/list`} className={styles.flip}>
+          <Link to={`/board/notice/list`} className={styles.flip}>
             게시판
           </Link>
 
-          <button className={styles.flip}>
+          <Link to={`/project/list`} className={styles.flip}>
             프로젝트
-          </button>
+          </Link>
       </div>
 
       <div className={styles.profile}>
