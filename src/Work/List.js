@@ -53,7 +53,7 @@ const List = () => {
                         <button className={styles.addButton} onClick={() => navigate('/work/create')}> 
                             <i 
                             className='fas fa-circle-plus' 
-                            style={{ color: "white", backgroundColor: "#6C47FF" }} /> ADD NEW </button>
+                            style={{ color: "white", backgroundColor: "#6C47FF" }}/> 업무 등록 </button>
                     </span>
                 </span>
             </div>

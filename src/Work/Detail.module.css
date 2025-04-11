@@ -1,3 +1,276 @@
+.container{
+    margin: 3vh auto;
+    width: 85%;
+    height: 80%;
+    padding: 0;
+    text-align: left;
+    display: flex;
+
+    font-size: 2rem;
+    font-weight: bold;
+
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.leftBox{
+    width: 70%;
+    height: 100%;
+    padding: 3vh 2vw;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    margin-right: 2vh;
+
+    background-color: #E5E1F5;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.pageDetail{
+    position: absolute;
+    right: 0;
+    padding-right: 3.8vh;
+}
+
+.leftContent{
+    width: 100%;
+    height: auto;
+    padding: 1vh 2vw;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+
+    box-sizing: border-box;
+}
+
+.contentLeft{
+    width: 20%;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.contentRight{
+    width: 80%;
+    height: 5vh;
+    gap: 2vh;
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.status1{
+    width: 25%;
+    height: 100%;
+    padding: 0 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 20px 20px;
+    background-color: rgb(245, 198, 87);
+    color: white;
+}
+
+.status1:hover{
+    background-color: rgb(178, 150, 27);
+}
+
+.status2{
+    width: 25%;
+    height: 100%;
+    padding: 0 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 20px 20px;
+    background-color: #fd6435;
+    color: white;
+}
+
+.status2:hover{
+    background-color: #b94927;
+}
+
+.status3{
+    width: 25%;
+    height: 100%;
+    padding: 0 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 20px 20px;
+    background-color: #12ab8c;
+    color: white;
+}
+
+.status3:hover{
+    background-color: #096452;
+}
+
+.status4{
+    width: 25%;
+    height: 100%;
+    padding: 0 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 20px 20px;
+    background-color: #00464d;
+    color: white;
+}
+
+.status4:hover{
+    background-color: #001b1e;
+}
+
+.type{
+    width: 20%;
+    height: 100%;
+    border-radius: 5px;
+    background-color: #6C47FF;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.type:hover{
+    background-color: #4A1DFF;
+}
+
+.reactDatepicker{
+    height: 3vh;
+    padding-left: 0.5vw;
+    background-color: white;
+    border: solid 1px #6C47FF;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.detailInputBox{
+    width: 100%;
+    height: 20vh;
+    padding: 1% 2%;
+    border: solid 1px #6C47FF;
+    border-radius: 5px;
+
+    box-sizing: border-box;
+    vertical-align: top;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.rightBox{
+    width: 30%;
+    height: 100%;
+    padding: 0 1vw;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.dateBox{
+    width: auto;
+    height: 10vh;
+    padding: 1vw;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+
+    background-color: #E5E1F5;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.memoBox{
+    width: auto;
+    height: auto;
+    padding: 1.5vh 1vw;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2vh;
+    
+    background-color: #E5E1F5;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.memoInputBox{
+    width: 100%;
+    height: 50vh;
+    padding: 1% 2%;
+    border: solid 1px #6C47FF;
+    border-radius: 5px;
+
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+
+.buttonBox{
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buttonBoxLeft{
+    width: 47%;
+    height: 60%;
+    border-radius: 5px;
+    border: none;
+    background-color: #6C47FF;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+
+.buttonBoxLeft:hover{
+    background-color: #4A1DFF;
+}
+
+.buttonBoxRight{
+    width: 47%;
+    height: 60%;
+    border-radius: 5px;
+    border: none;
+    background-color: #E5E1F5;
+    color: #616264;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.buttonBoxRight:hover{
+    background-color: #D1CFE2;
+}
+
+
 
 .updateCancelButton {
     color: black;
