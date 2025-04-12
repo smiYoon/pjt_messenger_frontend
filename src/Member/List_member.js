@@ -155,8 +155,8 @@ const List_member = () => {
           </div>
         </div>
         <div className={styles.list}>
-          {personalInfo.map((member) => ( // 프론트 테스트용
-          // {members.map((member) => (  // 이걸로 사용해야함
+          {/* {personalInfo.map((member) => ( // 프론트 테스트용 */}
+          {members.map((member) => (  // 이걸로 사용해야함
           <div className={styles.card}>
             <img src={profile} alt='' />
             <div className={styles.name}>

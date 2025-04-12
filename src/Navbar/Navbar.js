@@ -22,7 +22,7 @@ const Navbar = () => {
             업무
           </button>
 
-          <Link to={`/board/list`} className={styles.flip}>
+          <Link to={`/board/notice/list`} className={styles.flip}>
             게시판
           </Link>
 
