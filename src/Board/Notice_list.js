@@ -94,7 +94,7 @@ const Notice_list = () => {
                         Notification Board
                     </div>
                     <div className={styles.option_box}>
-                        <Link to={`/board/create`} className={styles.button}>등록</Link>
+                        <Link to={`/board/notice/create`} className={styles.button}>등록</Link>
                         <div className={styles.search_box}>
                             <select
                                 name='searchWord'
@@ -102,7 +102,7 @@ const Notice_list = () => {
                                 onChange={handlerChange}
                             >
                                 <option value="">제목</option>
-                                <option value="">작성자?</option>
+                                <option value="">작성자</option>
                             </select>
                             <div className={styles.input_box}>
                                 <input name='searchText' type='text' className={styles.input} placeholder='검색'></input>

@@ -4,7 +4,7 @@ import Navbar from './Navbar/Navbar';
 import { Member_register, Member_modify, Member_list } from './Member';
 import { Chat_main } from './chatting';
 import { W_List, W_Create, W_Detail } from './Work/index.js';
-import { Notice_list, Notice_update, Notice_create, Notice_detail, Feedback_boardList , Feedback_create , Feedback_update } from './Board';
+import { Notice_list, Notice_update, Notice_create, Notice_detail, Feedback_boardList , Feedback_create , Feedback_update, Feedback_detail } from './Board';
 import { P_List, P_Create, P_Modify } from './Project/';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
@@ -35,6 +35,7 @@ const App = () => {
           <Route path="/board/feedback/list" element={<Feedback_boardList />} />
           <Route path="/board/feedback/create" element={<Feedback_create />} />
           <Route path="/board/feedback/update" element={<Feedback_update />} />
+          <Route path="/board/feedback/detail" element={<Feedback_detail />} />
           
           {/* <Route path="/chat/room" element={<ChatRoom/>} /> */}
           <Route path="/project/list" element={<P_List/>}/>
