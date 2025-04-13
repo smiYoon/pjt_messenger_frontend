@@ -17,7 +17,7 @@ const ChatList = ({ onCreateClick,onChatClick }) => {
             .catch(err => {
                 console.error("채팅방 리스트 불러오기 실패:", err);
                 });
-      }, []);
+    }, []);
     
 
     return (
@@ -32,7 +32,7 @@ const ChatList = ({ onCreateClick,onChatClick }) => {
             <div className={styles.roomboxes}>
 
                 {chatrooms.map((room, index) => (
-                <div key={room.id} className={styles.chatroombox} onClick={() => onChatClick(room)}>
+                <div key={room.id} className={styles.chatroombox} onClick={() => {onChatClick(room.id); console.log("roomid", room.id)}}>
                     <div className={styles.empicon}></div>
                     <div className={styles.rightbox}>
                         <div className={styles.projecticon}>{room.projectBadge}</div>

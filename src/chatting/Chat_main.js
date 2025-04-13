@@ -41,7 +41,8 @@ const Chat_main = () => {
 
     const [showCreateChat, setShowCreateChat] = useState(false);
     const [showOrga, setShowOrga]=useState(false);//조직도
-
+    
+    
     ////////////////////////////////////////////////////////////////////
     const [selectedChatRoom, setSelectedChatRoom] = useState(null);  // 선택된 채팅방
 
@@ -49,19 +50,38 @@ const Chat_main = () => {
         console.log("select", selectedChatRoom)
     },[selectedChatRoom])
 
+    const handleChatRoomClick = async (chatId) => {
+        try {
+          const response = await fetch(`https://localhost:443/chat/${chatId}`);
+      
+          if (!response.ok) {
+            throw new Error("서버 응답 오류");
+          }
+      
+          const chatRoomDetail = await response.json();
+      
+          setSelectedChatRoom(chatRoomDetail); // 상태 업데이트
+          console.log("selectedChatRoom");
+        } catch (error) {
+          console.error("채팅방 조회 실패:", error);
+        }
+      };
+
+
+
     return (
         <div className={styles.main}>
             
             <div className={styles.leftbox}>
                 
                 <Invite onOrgaClick={()=> {setShowOrga(true); console.log("zz");}} />
-                <ChatList onCreateClick={() => setShowCreateChat(true)} onChatClick={(chatRoom) => setSelectedChatRoom(chatRoom)}/>
+                <ChatList onCreateClick={() => setShowCreateChat(true)} onChatClick={(chatId) => handleChatRoomClick(chatId)} />
 
             </div>
 
             <div className={styles.centerbox}>
-                <Roomheader/>
-                <Chatting selectedChatRoom={selectedChatRoom}/>
+                <Roomheader selectedChatRoom={selectedChatRoom}/>
+                <Chatting selectedChatRoom={selectedChatRoom} id={selectedChatRoom?.id}/>
             </div>
 
             <div className={styles.rightbox}>

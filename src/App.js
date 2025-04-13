@@ -23,6 +23,7 @@ const App = () => {
           <Route path="/member/register" element={<Member_register />} />
 
           <Route path="/chat" element={<Chat_main />} />
+          <Route path="/chat/room" element={<ChatRoom />} />
 
           <Route path="/work" element={<W_List/>}/>
           <Route path="/work/create" element={<W_Create/>}/>
