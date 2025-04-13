@@ -94,7 +94,7 @@ const Feedback_boardList = () => {
                         Feedback Board
                     </div>
                     <div className={styles.option_box}>
-                        <Link to={`/board/Feedback`} className={styles.button}>등록</Link>
+                        <Link to={`/board/Feedback/create`} className={styles.button}>등록</Link>
                         <div className={styles.search_box}>
                             <select
                                 name='searchWord'

@@ -24,6 +24,7 @@ const App = () => {
           <Route path="/board/feedback/list" element={<Feedback_boardList />} />
           <Route path="/board/feedback/create" element={<Feedback_create />} />
           <Route path="/board/feedback/update" element={<Feedback_update />} />
+          <Route path="/board/feedback/detail" element={<Feedback_detail />} />
         </Routes>
       </div>
     </div>

@@ -21,7 +21,7 @@ const Feedback_create = () => {
           <div className={styles.textbox_container}>
             <textarea placeholder='내용을 입력하세요.' className={styles.textbox} />
           </div>
-          <Link to={`/board/Feedbacklist`} className={styles.submit}>등록</Link>
+          <Link to={`/board/Feedback/list`} className={styles.submit}>등록</Link>
         </div>
       </div>
 

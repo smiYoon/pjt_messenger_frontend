@@ -1,10 +1,10 @@
 import React from 'react'
 import Swal from 'sweetalert2'
-import styles from './Notice_detail.module.css';
+import styles from './Feedback_detail.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 
 
-const Notice_detail = () => {
+const Feedback_detail = () => {
 
   const navigate = useNavigate();
 
@@ -93,4 +93,4 @@ const Notice_detail = () => {
   )
 }
 
-export default Notice_detail
+export default Feedback_detail
