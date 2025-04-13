@@ -78,7 +78,7 @@
     content: '';
     display: block;
     height: 3px;
-    width: 8vw;
+    width: 12vw;
     background-color: #6c47ff;
     margin: 10px auto 0;
 }
@@ -146,7 +146,6 @@
     gap: 1vw;
     justify-content: center;
     align-items: center;
-    padding: 0 10vw;
     box-sizing: border-box;
     height: 100%;
 }
@@ -163,9 +162,9 @@
     gap: 1vw;
 }
 
-.double .dept_container .dept,
-.double .position_container .position {
-    width: 100%;
+.double .dept,
+.double .position {
+    flex-grow: 1;
 }
 
 .placeholder_text {
@@ -176,11 +175,20 @@
     font-size: 0.8rem;
 }
 
+.double .position_text {
+    position: absolute;
+    color: #222;
+    top: 10%;
+    right: 44%;
+    transform: translateX(50%);
+    font-size: 0.8rem;
+}
+
 .double .postal_text {
     position: absolute;
     color: #222;
     top: 10%;
-    right: 21%;
+    right: 24%;
     transform: translateX(50%);
     font-size: 0.8rem;
 }

@@ -6,89 +6,89 @@ import profile from '../Navbar/img/profile.png';
 const List_member = () => {
 
   const [searchOption, setSearchOption] = useState('');
-  const personalInfo = [
-    {
-      empno: "E2412001",
-      file: `${profile}`,
-      name: "김개똥1",
-      position: "사원",
-      dept_id: "영업1팀",
-      tel: "010-2222-3333",
-      email: "개빡친다@gmail.com"
-    },
-    {
-      empno: "E2412003",
-      file: `${profile}`,
-      name: "김개똥2",
-      position: "사원",
-      dept_id: "영업2팀",
-      tel: "010-3547-9844",
-      email: "개빡친다@gmail.com"
-    },
-    {
-      empno: "E2412007",
-      file: `${profile}`,
-      name: "김개똥3",
-      position: "사원",
-      dept_id: "영업3팀",
-      tel: "010-3572-6548",
-      email: "개빡친다@gmail.com"
-    },
-    {
-      empno: "E2412005",
-      file: `${profile}`,
-      name: "김개똥4",
-      position: "사원",
-      dept_id: "영업4팀",
-      tel: "010-8953-5376",
-      email: "개빡친다@gmail.com"
-    },
-    {
-      empno: "E2403002",
-      file: `${profile}`,
-      name: "김개똥5",
-      position: "사원",
-      dept_id: "운영1팀",
-      tel: "010-7253-2375",
-      email: "개빡친다@gmail.com"
-    },
-    {
-      empno: "E1506003",
-      file: `${profile}`,
-      name: "김개똥6",
-      position: "사원",
-      dept_id: "운영2팀",
-      tel: "010-2222-3333",
-      email: "개빡친다@gmail.com"
-    },
-    {
-      empno: "E1506005",
-      file: `${profile}`,
-      name: "김개똥7",
-      position: "사원",
-      dept_id: "운영3팀",
-      tel: "010-2222-3333",
-      email: "개빡친다@gmail.com"
-    },
-    {
-      empno: "E1509002",
-      file: `${profile}`,
-      name: "김개똥8",
-      position: "팀장",
-      dept_id: "운영3팀",
-      tel: "010-2222-3333",
-      email: "개빡친다@gmail.com"
-    },
-    {
-      empno: "E1811032",
-      file: `${profile}`,
-      name: "김개똥9",
-      position: "팀장",
-      dept_id: "운영3팀",
-      tel: "010-2222-3333",
-      email: "개빡친다@gmail.com"
-    },
-  ]
+  // const personalInfo = [
+  //   {
+  //     empno: "E2412001",
+  //     file: `${profile}`,
+  //     name: "김개똥1",
+  //     position: "사원",
+  //     dept_id: "영업1팀",
+  //     tel: "010-2222-3333",
+  //     email: "개빡친다@gmail.com"
+  //   },
+  //   {
+  //     empno: "E2412003",
+  //     file: `${profile}`,
+  //     name: "김개똥2",
+  //     position: "사원",
+  //     dept_id: "영업2팀",
+  //     tel: "010-3547-9844",
+  //     email: "개빡친다@gmail.com"
+  //   },
+  //   {
+  //     empno: "E2412007",
+  //     file: `${profile}`,
+  //     name: "김개똥3",
+  //     position: "사원",
+  //     dept_id: "영업3팀",
+  //     tel: "010-3572-6548",
+  //     email: "개빡친다@gmail.com"
+  //   },
+  //   {
+  //     empno: "E2412005",
+  //     file: `${profile}`,
+  //     name: "김개똥4",
+  //     position: "사원",
+  //     dept_id: "영업4팀",
+  //     tel: "010-8953-5376",
+  //     email: "개빡친다@gmail.com"
+  //   },
+  //   {
+  //     empno: "E2403002",
+  //     file: `${profile}`,
+  //     name: "김개똥5",
+  //     position: "사원",
+  //     dept_id: "운영1팀",
+  //     tel: "010-7253-2375",
+  //     email: "개빡친다@gmail.com"
+  //   },
+  //   {
+  //     empno: "E1506003",
+  //     file: `${profile}`,
+  //     name: "김개똥6",
+  //     position: "사원",
+  //     dept_id: "운영2팀",
+  //     tel: "010-2222-3333",
+  //     email: "개빡친다@gmail.com"
+  //   },
+  //   {
+  //     empno: "E1506005",
+  //     file: `${profile}`,
+  //     name: "김개똥7",
+  //     position: "사원",
+  //     dept_id: "운영3팀",
+  //     tel: "010-2222-3333",
+  //     email: "개빡친다@gmail.com"
+  //   },
+  //   {
+  //     empno: "E1509002",
+  //     file: `${profile}`,
+  //     name: "김개똥8",
+  //     position: "팀장",
+  //     dept_id: "운영3팀",
+  //     tel: "010-2222-3333",
+  //     email: "개빡친다@gmail.com"
+  //   },
+  //   {
+  //     empno: "E1811032",
+  //     file: `${profile}`,
+  //     name: "김개똥9",
+  //     position: "팀장",
+  //     dept_id: "운영3팀",
+  //     tel: "010-2222-3333",
+  //     email: "개빡친다@gmail.com"
+  //   },
+  // ]
 
   const [members, setMembers] = useState([]);
   const fetchMembers = useCallback(async () => {
@@ -103,7 +103,7 @@ const List_member = () => {
         console.log("data:", data);
         setMembers(data.map(members => ({
           empno: members.empno,
-          name: members.name,
+          name: members?.name,
           email: members.email,
           tel: members.tel,
           position: members.position,
@@ -150,17 +150,17 @@ const List_member = () => {
             </select>
             <div className={styles.search_container}>
               <input type='text' className={styles.text} placeholder='검색어를 입력하세요.' />
-              <i class="fa-solid fa-magnifying-glass" />
+              <i className="fa-solid fa-magnifying-glass" />
             </div>
           </div>
         </div>
         <div className={styles.list}>
           {/* {personalInfo.map((member) => ( // 프론트 테스트용 */}
-          {members.map((member) => (  // 이걸로 사용해야함
-          <div className={styles.card}>
+          {members.map((member ) => (  // 이걸로 사용해야함
+          <div key={member.empno} className={styles.card}>
             <img src={profile} alt='' />
             <div className={styles.name}>
-              {member.name} {level[member.position]}
+            {level[member.position]} {member.name} 
             </div>
             <div className={styles.dept}>
               {member.dept_id}
@@ -171,8 +171,8 @@ const List_member = () => {
             <div className={styles.email}>
               {member.email}
             </div>
-            <Link to={`/member/edit/`} className={styles.detail}>자세히</Link>
-            {/* <Link to={`/member/edit/${member.empno}`} className={styles.detail}>자세히</Link> */}
+            {/* <Link to={`/member/edit/`} className={styles.detail}>자세히</Link> */}
+            <Link to={`/member/edit/${member.empno}`} className={styles.detail}>자세히</Link>
           </div>
           ))}
         </div>

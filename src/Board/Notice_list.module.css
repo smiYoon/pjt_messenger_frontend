@@ -66,6 +66,8 @@
 
 .button {
     padding: 10px 40px;
+    display: flex;
+    align-items: center;
     font-size: 1.2rem;
     font-weight: bold;
     text-decoration: none;
@@ -110,10 +112,10 @@
 
 }
 
-.search_box input {
+.search_box .input {
     width: 15vw;
     height: 4vh;
-    border-radius: 20px;
+    border-radius: 60px;
     border: none;
     padding: 0 20px;
     box-sizing: border-box;

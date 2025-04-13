@@ -1,79 +1,44 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styles from './Notice_list.module.css';
 import { Link } from 'react-router-dom';
 
 const Notice_list = () => {
 
     const [inputValue, setInputValue] = useState('');
-    const handlerChange = (e) => setInputValue(e.target.value);
+    const [posts, setPosts] = useState([]);
 
+    const fetchPosts = useCallback(async () => {
+        try {
+            const response = await fetch(`https://localhost:443/board`, {
+                method: 'GET',
+            });
 
-    /* 백엔드에서 데이터를 받아오기 전 리터럴 데이터 */
-    const postList = [
-        {
-            postNo: 1,
-            title: "아 졸리다 집에가고싶다1",
-            writer: "Matthew",
-            crtDate: "2025.01.11 15:00",
-            count: 10
-        },
-        {
-            postNo: 2,
-            title: "아 졸리다 집에가고싶다2",
-            writer: "Matthew",
-            crtDate: "2025.01.11 15:00",
-            count: 10
-        },
-        {
-            postNo: 3,
-            title: "아 졸리다 집에가고싶다3",
-            writer: "Matthew",
-            crtDate: "2025.01.11 15:00",
-            count: 10
-        },
-        {
-            postNo: 4,
-            title: "아 졸리다 집에가고싶다4",
-            writer: "Matthew",
-            crtDate: "2025.01.11 15:00",
-            count: 10
-        },
-        {
-            postNo: 5,
-            title: "아 졸리다 집에가고싶다5",
-            writer: "Matthew",
-            crtDate: "2025.01.11 15:00",
-            count: 10
-        },
-        {
-            postNo: 6,
-            title: "아 졸리다 집에가고싶다6",
-            writer: "Matthew",
-            crtDate: "2025.01.11 15:00",
-            count: 10
-        },
-        {
-            postNo: 7,
-            title: "아 졸리다 집에가고싶다6",
-            writer: "Matthew",
-            crtDate: "2025.01.11 15:00",
-            count: 10
-        },
-        {
-            postNo: 8,
-            title: "아 졸리다 집에가고싶다6",
-            writer: "Matthew",
-            crtDate: "2025.01.11 15:00",
-            count: 10
-        },
-        {
-            postNo: 9,
-            title: "아 졸리다 집에가고싶다6",
-            writer: "Matthew",
-            crtDate: "2025.01.11 15:00",
-            count: 10
-        },
-    ]
+            if (response.ok) {
+                const data = await response.json();
+                console.log("data:", data);
+                const formattedData = data.map(posts => ({
+                    id: posts.id,
+                    title: posts.title,
+                    author: posts.employee.name,
+                    count: posts.count,
+                    crtDate: posts.crtDate,
+                }));
+
+                // 기본적으로 id 기준 내림차순으로 정렬
+                const sortedData = formattedData.sort((a, b) => b.id - a.id);
+                setPosts(sortedData);
+
+            } else {
+                console.error('불러오기 실패', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    });
+
+    useEffect(() => {
+        fetchPosts();
+    }, []);
 
     return (
         <div className={styles.container}>
@@ -85,7 +50,7 @@ const Notice_list = () => {
                     <Link to={`/board/feedback/list`} className={styles.feedback}>
                         건의 게시판
                     </Link>
-            
+
                 </div>
             </div>
             <div className={styles.list_Page}>
@@ -99,14 +64,13 @@ const Notice_list = () => {
                             <select
                                 name='searchWord'
                                 className={styles.select}
-                                onChange={handlerChange}
                             >
                                 <option value="">제목</option>
                                 <option value="">작성자</option>
                             </select>
                             <div className={styles.input_box}>
                                 <input name='searchText' type='text' className={styles.input} placeholder='검색'></input>
-                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <i className="fa-solid fa-magnifying-glass"></i>
                             </div>
                         </div>
                     </div>
@@ -120,11 +84,11 @@ const Notice_list = () => {
                         </div>
                         <table className={styles.Board_table}>
                             <tbody>
-                                {postList.map((post) => (
-                                    <tr>
-                                        <td className={styles.number}>{post.postNo}</td>
+                                {posts.map((post) => (
+                                    <tr key={post.id}>
+                                        <td className={styles.number}>{post.id}</td>
                                         <td className={styles.postTitle}>{post.title}</td>
-                                        <td className={styles.writer}>{post.writer}</td>
+                                        <td className={styles.writer}>{post.author}</td>
                                         <td className={styles.writeTime}>{post.crtDate}</td>
                                         <td className={styles.views}>{post.count}</td>
                                     </tr>

@@ -112,13 +112,14 @@
 
 .input_box .addressbox {
     position: relative;
-    width: 100%;
+    width: 70%;
 }
 
 
 .input_box .zipcodebox {
+    display: flex;
     position: relative;
-    width: 100%;
+    width: 30%;
 }
 
 
@@ -177,7 +178,7 @@
     position: absolute;
     color: #222;
     top: 10%;
-    margin-left: 150px;
+    /* margin-left: 150px; */
     font-size: 0.8rem;
 }
 
@@ -207,25 +208,17 @@
     height: 6vh;
 }
 
-/* ===========  이름 & 휴대폰 input ============== */
-
-
-.two_input input {
-    display: flex;
-    width: 100%;
-}
-
 /* ===========  주소 & 우편번호 input ============== */
 
 .two_input .largeinput {
     position: absolute;
-    width: 150%;
+    width: 100%;
     border: 1px solid #6c47ff;
 }
 
 .two_input .smallinput {
     position: absolute;
-    width: 50%;
+    width: 100%;
     right: 0;
 
     border: 1px solid #6c47ff;
