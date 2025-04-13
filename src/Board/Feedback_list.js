@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import styles from './Feedback_boardList.module.css';
+import styles from './Feedback_list.module.css';
 import { Link } from 'react-router-dom';
 
-const Feedback_boardList = () => {
+const Feedback_list = () => {
 
     const [inputValue, setInputValue] = useState('');
     const handlerChange = (e) => setInputValue(e.target.value);
@@ -106,7 +106,7 @@ const Feedback_boardList = () => {
                             </select>
                             <div className={styles.input_box}>
                                 <input name='searchText' type='text' className={styles.input} placeholder='검색'></input>
-                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <i className="fa-solid fa-magnifying-glass"></i>
                             </div>
                         </div>
                     </div>
@@ -139,4 +139,4 @@ const Feedback_boardList = () => {
     )
 }
 
-export default Feedback_boardList
+export default Feedback_list

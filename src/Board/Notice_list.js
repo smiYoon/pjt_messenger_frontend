@@ -40,6 +40,8 @@ const Notice_list = () => {
         fetchPosts();
     }, []);
 
+    
+
     return (
         <div className={styles.container}>
             <div className={styles.side_bar}>
@@ -56,7 +58,7 @@ const Notice_list = () => {
             <div className={styles.list_Page}>
                 <div className={styles.list_container}>
                     <div className={styles.header}>
-                        Notification Board
+                        Notification
                     </div>
                     <div className={styles.option_box}>
                         <Link to={`/board/notice/create`} className={styles.button}>등록</Link>

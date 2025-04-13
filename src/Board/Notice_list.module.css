@@ -41,19 +41,19 @@
     box-sizing: border-box;
 }
 
-.list_Page .header {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #222;
-    margin-bottom: 30px;
-}
-
 .list_container {
     display: flex;
     position: relative;
     flex-direction: column;
     width: 70%;
     height: 80%;
+}
+
+.list_container .header {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 30px;
 }
 
 .option_box {
@@ -66,6 +66,8 @@
 
 .button {
     padding: 10px 40px;
+    display: flex;
+    align-items: center;
     display: flex;
     align-items: center;
     font-size: 1.2rem;
@@ -112,6 +114,7 @@
 
 }
 
+.search_box .input {
 .search_box .input {
     width: 15vw;
     height: 4vh;
