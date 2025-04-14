@@ -1,139 +1,138 @@
 .overlay {
-    position: fixed;
-    inset: 0;
-    /* 화면전체를 덮는다. 숫자가 커질 수록 여백이 생긴다.*/
-    background: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  inset: 0;
+  /* 화면전체를 덮는다. 숫자가 커질 수록 여백이 생긴다.*/
+  background: rgba(0, 0, 0, 0.3);
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    --primary-color: #6C47FF;
-  }
-  
-  .popup {
-    
-    position: relative;
+  --primary-color: #6C47FF;
+}
 
-    width: 30%;
-    height: 58%;
-    left: 1.5vw;
-    background: #e6ddf6;
-    border-radius: 12px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+.popup {
+  
+  position: relative;
 
-    justify-items: center;
-    /*자식 필드들을 중앙정렬 */
+  width: 30%;
+  height: 58%;
+  left: 1.5vw;
+  background: #e6ddf6;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 
-    overflow: hidden;
-    white-space: inherit;
-  }
-  
-  .clsX {
-    position: absolute;
-    top: 16px;
-    right: 20px;
-    font-size: 20px;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .title {
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 32px;
-    margin-top: 50px;
-  }
-  
-  .field {
-    margin-bottom: 20px;
-    width: 70%;
-    height: 13%;
-  }
-  
-  .field label {
-    display: block;
-    font-weight: 500;
-    margin-bottom: 8px;
-  }
-  
-  .field input,
-  .field select {
-    width: 100%;
-    padding: 12px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    box-sizing: border-box;
-  }
-  
-  .inviteRow {
-    display: flex;
-  }
-  
-  .inviteRow input {
-    flex: 1;
-  }
-  
-  .inviteRow button {
-    margin-left: 3%;
-    padding: 3px 12px;
-    background-color: #6C47FF;
-    color: white;
-    font-size: 33px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
+  justify-items: center;
+  /*자식 필드들을 중앙정렬 */
 
-  .inviteRow button:hover{
-    background-color: #4A1DFF;
-  }
-  
-  .avatarRow {
-    display: flex;
-    gap: 8px;
-    margin: 16px 0;
+  overflow: hidden;
+  white-space: inherit;
+}
 
-  }
-  
-  .avatarBox{
-    display: flex;
-    gap: 8px;
- }
-  .avatar {
-    width: 40px;
-    height: 40px;
-    background: #ccc;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 14px;
-  }
-  
-  .mkBtn {
-    position: absolute;
-    padding: 10px 40px;
-    background-color:#6C47FF;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
+.clsX {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
 
-    cursor: pointer;
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 32px;
+  margin-top: 50px;
+}
 
-    left: 40%;
-    bottom: 5%;
+.field {
+  margin-bottom: 20px;
+  width: 70%;
+  height: 13%;
+}
 
-    overflow: hidden;
-    white-space: nowrap;
-  }
+.field label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
 
-  .mkBtn:hover{
-    background-color: #4A1DFF;
-  }
-  
+.field input,
+.field select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.inviteRow {
+  display: flex;
+}
+
+.inviteRow input {
+  flex: 1;
+}
+
+.inviteRow button {
+  margin-left: 3%;
+  padding: 3px 12px;
+  background-color: #6C47FF;
+  color: white;
+  font-size: 33px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.inviteRow button:hover{
+  background-color: #4A1DFF;
+}
+
+.avatarRow {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+
+}
+
+.avatarBox{
+  display: flex;
+  gap: 8px;
+}
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.mkBtn {
+  position: absolute;
+  padding: 10px 40px;
+  background-color:#6C47FF;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  left: 40%;
+  bottom: 5%;
+
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.mkBtn:hover{
+  background-color: #4A1DFF;
+}

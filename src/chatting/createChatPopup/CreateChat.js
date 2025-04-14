@@ -3,73 +3,56 @@ import styles from './CreateChat.module.css';
 
 const CreateChat = ({ onCloseClick }) => {
   const [roomName, setRoomName] = useState(""); //채팅방이름
-  const [selectPj, setSelectPj] = useState("AI 협업메신저"); //프로젝트 
+
   const [inviteName, setInviteName] = useState(""); //초대할 리스트
+
   const [invitedList, setInvitedList] = useState([]); //초대된 리스트
+  
+  const [selectPj, setSelectPj] = useState(""); //프로젝트 
   const [selectPjs, setSelectPjs] = useState([]);
-  // const selectPjs =[]; //프로젝트 리스트가 되어야하는 것 아닌가
+  const [employees, setEmployees] = useState([]);//백에서 받아온 사원들리스트
 
   useEffect(() => {
-    // 예: fetch 또는 axios 사용
-    fetch("/api/selectPj") //json 받을 url
+  
+    fetch("https://localhost:443/api/selectPj") //json 받을 url
       .then((res) => res.json())
-      .then((data) => setSelectPj(data));
-  }, []);
+      .then((data) => {
+        console.log("전체 data:", data);    
+        console.log("불러온 프로젝트들:", data.pjList);
+        console.log("불러온 사원들:", data.empList);
+        setSelectPjs(data.pjList);
+        setEmployees(data.empList);
+  })     
+      .catch((err) => console.error("불러오기 실패:", err))
+},[]);
 
   const handleAddInvite = () => {
-    // if (inviteName.trim() != ""){ //조직도에서 리스트로 받아오지 못하는 것 같음.
-    //     setInvitedList([...invitedList,inviteName]);
-    //     setInviteName("")//추가 했으니 빈문자로 바꿔 중복 선택 되는가?
-    // }//if 첫번째
 
-    // const names=inviteName.split(",").map((name)=>name.trim()).filter((name) => name !== "");
-    // if (names.length >0){
-    //     setInvitedList([...invitedList,...names]);
-    //     setInviteName(""); //추가하고 빈칸으로 만들기
-    // }; 두번째
+    const names = inviteName.split(",").map((name) => name.trim()).filter(Boolean);
+    const newIds=[];
 
-
-    const names = inviteName
-      .split(",")
-      .map((name) => name.trim())
-      .filter(Boolean);
-    const newNames = names.filter((id) => !invitedList.includes(id));
-    //중복된 id제거        
-    setInvitedList([...invitedList, ...newNames]);
+    names.forEach(name=> {
+      const emp = employees.find(e => e.name === name);
+      if (emp && !invitedList.includes(emp.empno)){
+        newIds.push(emp.empno);
+      }      
+    })
+    setInvitedList([...invitedList, ...newIds]);
     setInviteName("");
-
-
-    //     <ul>
-    // {invitedList.map(({ id, name }) => (
-    //   <li key={id}>{name}</li>
-    // ))}
-    // </ul>
-
+    console.log("초되된 리스트:", invitedList);
+    console.log("초대할 이름:", inviteName);
   };//handleAddInvite
 
   const handleCreateRoom = () => {
     const chatRoomData = {
       roomName: roomName
-      , project: selectPj // 서버로는 ID 보내기
-      , members: invitedList
+      , project: {id: parseInt(selectPj,10)} // 서버로는 ID 보내기
+      , members: invitedList.map(id => ({id}))
     };//chatRoomData
 
     console.log("채팅방 데이터(json):", JSON.stringify(chatRoomData));
     //json으로 가는 모습으로 콘솔 확인하기
   }//HandleCreateRoom
-
-  //둘 비교 해보기
-  // const handleCreateRoom = () => {
-  //     const data = {
-  //       roomName,
-  //       projectId: selectedProject, // 서버로는 ID 보내기
-  //       members: invitedList,
-  //     };
-  //     console.log("보낼 데이터:", data);invitedList
-  //   };
-
-
-
 
 
   return (
@@ -80,40 +63,33 @@ const CreateChat = ({ onCloseClick }) => {
         <h2 className={styles.title}>채팅방 만들기</h2>
 
 
-        {/* div 1 */}
+        {/* 채팅방이름 */}
         <div className={styles.field}>
-          <label
-          // className={styles.mkChatT}
-          >채팅방 이름</label>
+          <label>채팅방 이름</label>
           <input
             type="text"
             value={roomName}
             onChange={(e) => setRoomName(e.target.value)}
-            // className={styles.inputN}
             placeholder="채팅방 이름을 적으세요"
           />
-        </div> {/*mkName*/}
+        </div>    {/* 채팅방이름 */}
 
 
-        {/* div 2 */}
+        {/* 프로젝트선택 */}
         <div className={styles.field}>
-          <label
-          // className={styles.pjT}
-          >연관프로젝트</label>
+          <label>연관프로젝트</label>
           <select
             value={selectPj}
-            onChange={(e) => setSelectPj(e.target.value)}
-          // className={styles.selecPj}
-          >
+            onChange={(e) => setSelectPj(e.target.value)}>
             <option value="" disabled selected hidden>프로젝트를 선택하세요</option>
             {selectPjs.map((pj) => (
               <option key={pj.id} value={pj.id}>{pj.name}</option>
             ))};
           </select>
-        </div>{/*mkPj*/}
+        </div>{/*프로젝트선택*/}
 
 
-        {/* div 3 */}
+        {/* 인원 초대 */}
         <div className={styles.field}>
           <label>인원 초대</label>
           <div className={styles.inviteRow}>
