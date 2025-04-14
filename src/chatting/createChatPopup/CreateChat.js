@@ -26,55 +26,66 @@ const CreateChat = ({ onCloseClick }) => {
       .catch((err) => console.error("불러오기 실패:", err))
 },[]);
 
+
   const handleAddInvite = () => {
 
     const names = inviteName.split(",").map((name) => name.trim()).filter(Boolean);
     const newIds=[];
 
-    names.forEach(name=> {
-      const emp = employees.find(e => e.name === name);
-      if (emp && !invitedList.includes(emp.empno)){
-        newIds.push(emp.empno);
-      }      
-    })
+
+    names.forEach((raw) => {
+      const empno = raw.split("-")[0]; // "1001-홍길동-과장" → "1001"
+           
+      const emp = employees.find(e => e.empno === empno);
+        if (emp && !invitedList.includes(emp.empno)) {
+          newIds.push(emp.empno);
+        }
+        console.log("초되된 리스트:", invitedList);
+      }
+     
+    );
     setInvitedList([...invitedList, ...newIds]);
     setInviteName("");
     console.log("초되된 리스트:", invitedList);
     console.log("초대할 이름:", inviteName);
   };//handleAddInvite
 
+
+  //FromData버전
+
   const handleCreateRoom = async () => {
-    const chatRoomData = {
-      roomName: roomName
-      , project: {id: parseInt(selectPj,10)} // 서버로는 ID 보내기
-      , members: invitedList.map(id => ({id}))
-    };//chatRoomData
-
-    console.log("채팅방 데이터(json):", JSON.stringify(chatRoomData));
-    //json으로 가는 모습으로 콘솔 확인하기
-
-    //백으로 보내는 코드
-    try{
-      const response= await fetch("chat", {
+    const formData = new FormData();
+  
+    formData.append("roomName", roomName);
+    formData.append("projectId", selectPj); // 문자열이라도 백에서 파싱하면 OK
+  
+    invitedList.forEach((id, index) => {
+      formData.append(`members[${index}].id`, id); // 백에서 List<MemberDTO>로 받을 수 있도록
+    });
+  
+    console.log("📦 보낼 FormData:");
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+  
+    try {
+      const response = await fetch("https://localhost:443/chat", {
         method: "POST",
-        headers:{
-          "Content-Type" : "application/json"
-        },
-        body: JSON.stringify(chatRoomData)
+        body: formData // headers에 Content-Type 안 넣는다! 브라우저가 자동으로 multipart 붙임
       });
-      if (!response.ok){
+  
+      if (!response.ok) {
         throw new Error("서버 응답 실패: " + response.status);
       }
-    const result = await response.json();
-    console.log("서버 응답:", result);
-    alert("채팅방 생성 성공!");
-    }catch (err){
-      console.error("채팅방생성실패 !", err);
-      alert("채팅방 생성중 오류 발생!");
+  
+      const result = await response.json();
+      console.log("서버 응답:", result);
+      alert("채팅방 생성 성공!");
+    } catch (err) {
+      console.error("채팅방 생성 실패!", err);
+      alert("채팅방 생성 중 오류 발생!");
     }
-    
-  }//HandleCreateRoom
-
+  };
 
   return (
     <div className={styles.overlay}>
@@ -113,37 +124,45 @@ const CreateChat = ({ onCloseClick }) => {
         {/* 인원 초대 */}
         <div className={styles.field}>
           <label>인원 초대</label>
+          
           <div className={styles.inviteRow}>
             <input
+              list="empName"
               type="text"
               value={inviteName}
               placeholder="초대 이름"
               onChange={(e) => setInviteName(e.target.value)}
-              // className={styles.ivtNs}
               onKeyDown={(e) => {
-                if (/[^a-zA-z가~-힣\s]/.test(e.key)) {
+                if (/[^a-zA-z가~-힣]/.test(e.key)) {
                   e.preventDefault();
                 } else if (e.key === "Enter") {
                   handleAddInvite();
                 }
-              }}
-
-            />
+              }}/>
+              <datalist id="empName">
+                {employees.map((emp)=>(
+                  <option key={emp.empno} 
+                  // value={emp.name} //이름만 검색
+                  // value={'${emp.name}(${emp.position})'}//직급도 검색
+                  value={`${emp.empno}-${emp.name}-${emp.position}`}
+                  />
+                ))}
+              </datalist>
             <button onClick={handleAddInvite}>+</button>
           </div> {/*inviteRow*/}
-        </div>{/*field*/}
+
+        </div>{/* 인원 초대 */}
 
 
         {/* 아바타들 */}
         <div className={styles.avatarRow} >
-
-          {/* <div className={styles.avatarBox}> */}
-            {invitedList.slice(0, 5).map((name, index) => (
+        <div className={styles.avatarBox}> 
+        {invitedList.slice(0, 5).map((id, index) => (
               <div
                 key={index}
                 className={styles.avatar}
               >
-                {name}
+                {id}
                 {/* 이름이 아니고 사진으로 */}
               </div>
             ))}
@@ -152,11 +171,10 @@ const CreateChat = ({ onCloseClick }) => {
                  +{invitedList.length - 5}
               </div>
             )}
-          {/* </div> avatarBox */}
-
-
-
+</div>
         </div> {/*avatarRow */}
+
+
         <div>
         <button onClick={handleCreateRoom} className={styles.mkBtn}>만들기</button>
         </div>
