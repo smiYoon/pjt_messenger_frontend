@@ -1,0 +1,243 @@
+.cover {
+    width: 96vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 70%;
+    height: 80vh;
+    display: flex;
+    gap: 1.5vw;
+    position: relative;
+}
+
+.left_panel {
+    border-radius: 20px;
+    color: #444;
+    font-weight: bold;
+    background-color: #E5E1F5;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, .15);
+
+    input {
+        border: none;
+        font-size: 1.5rem;
+        background-color: transparent;
+        /* text-align: center; */
+        padding: 0 0 0 30px;
+        box-sizing: border-box;
+        /* width: 10vw; */
+    }
+}
+
+.left_panel input:focus {
+    outline: none;
+}
+
+.left_panel input:focus {
+    outline: none;
+}
+
+.pic {
+    top: 10%;
+    position: absolute;
+
+    img {
+        width: 200px;
+        border: 4px solid #6c47ff;
+        box-sizing: border-box;
+        border-radius: 50%;
+    }
+
+    input[type='file'] {
+        display: none;
+    }
+
+    .camera {
+        color: #444;
+        font-size: 2rem;
+        position: absolute;
+        bottom: 0;
+        right: 10%;
+        cursor: pointer;
+    }
+}
+
+.name {
+    top: 45%;
+    position: absolute;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.name::after {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 8vw;
+    background-color: #6c47ff;
+    margin: 10px auto 0;
+}
+
+.article {
+    top: 60%;
+    position: absolute;
+    font-size: 1.5rem;
+}
+
+.article .user_id,
+.article .empno {
+    display: flex;
+    gap: 1vw;
+    margin-bottom: 1vw;
+    justify-content: space-between;
+}
+
+.user_id div,
+.empno div {
+    text-align: center;
+}
+
+.user_id div::after,
+.empno div::after {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 10vw;
+    background-color: #6c47ff;
+    margin: 10px auto 0;
+}
+
+.right_panel {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    position: relative;
+    right: 0;
+    gap: 1.5vw;
+    height: inherit;
+}
+
+.right_panel .title {
+    border-radius: 15px;
+    background-color: #E5E1F5;
+    padding: 40px 60px;
+    box-sizing: border-box;
+    color: #444;
+    font-size: 2rem;
+    font-weight: bold;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, .15);
+}
+
+.right_panel .form {
+    flex-grow: 8;
+}
+
+.right_panel .input {
+    border-radius: 20px;
+    background-color: #E5E1F5;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, .15);
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10vw;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.input .single {
+    width: 25vw;
+    position: relative;
+}
+
+.input .double {
+    display: flex;
+    position: relative;
+    width: 25vw;
+    gap: 1vw;
+}
+
+.double .dept_container .dept,
+.double .position_container .position {
+    width: 100%;
+}
+
+.placeholder_text {
+    position: absolute;
+    color: #222;
+    top: 10%;
+    margin-left: 10px;
+    font-size: 0.8rem;
+}
+
+.double .postal_text {
+    position: absolute;
+    color: #222;
+    top: 10%;
+    right: 21%;
+    transform: translateX(50%);
+    font-size: 0.8rem;
+}
+
+.double .address {
+    width: 70%;
+}
+
+.double .postal {
+    width: 30%;
+}
+
+.right_panel .input input {
+    height: 6vh;
+    font-size: 1.2rem;
+    /* text-align: center; */
+    border: 1px solid #6c47ff;
+    border-radius: 10px;
+    padding: 20px 0 5px 10px;
+    box-sizing: border-box;
+}
+
+.input input:focus {
+    outline: none;
+}
+
+.buttons {
+    display: flex;
+    gap: 4vw;
+    margin-top: 1.2vw;
+}
+
+.buttons button {
+    width: 8vw;
+    padding: 10px 0px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 1px solid #6c47ff;
+}
+
+.buttons .modify {
+    color: white;
+    background-color: #6c47ff;
+    cursor: pointer;
+}
+
+.buttons .modify:hover {
+    background-color: #4a1dff;
+    transition: background-color 0.1s ease;
+}
+
+.buttons .cancel {
+    background-color: white;
+    cursor: pointer;
+}

@@ -1,0 +1,98 @@
+.mainchat{
+    width: 100%;
+    height: 80%;
+    background-color: #E5E1F5;
+
+    border-radius: 20px;
+
+    /* 가로 중앙 정렬 */
+    justify-items: center;
+
+    box-shadow: 4px 4px 10px rgba(0, 0,0,.25);
+}
+
+.SearchBar {
+    position: relative;
+    
+    top: 25px;
+
+    width: 60%;
+    height: 5%;
+    
+    background-color: white;
+
+    border-radius: 20px;
+
+    /* display: flex; */
+    /* justify-content: center; */
+}
+
+.searchInput {
+    position: relative;
+
+    width: 80%;
+
+    border: none;
+    outline: none;
+}
+
+.searchInput::placeholder {
+    font-size: 15px;
+
+}
+
+.IoSearch {
+    position: relative;
+
+    margin-top: 5px;
+    left: 20px;
+
+    font-size: 25px;
+}
+
+
+.MessageInputBox {
+    position: relative;
+    top: 580px;
+
+    width: 725px;
+    height: 60px;
+
+    border-radius: 10px;
+    background-color: white;
+}
+
+
+.fileIcon {
+    position: relative;
+    top: 12px;
+    left: 15px;
+
+    font-size: 35px;
+    transform: rotate(35deg);
+
+    cursor: pointer;
+}
+
+.messageInput {
+    position: relative;
+
+    left: 30px;
+    top: 2px;
+
+    width: 500px;
+    height: 30px;
+
+    border: none;
+    outline: none;
+
+    font-size: 20px;
+}
+
+.sendMessagIcon {
+    position: relative;
+
+    top: 10px;
+    left: 130px;
+    font-size: 30px;
+}

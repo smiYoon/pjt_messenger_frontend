@@ -1,0 +1,309 @@
+.container {
+    position: relative;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    width: 96vw;
+    height: 100vh;
+
+}
+
+.left_panel {
+    width: 50%;
+    height: 100vh;
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+}
+
+.register_title {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    font-weight: bolder;
+    font-size: 5rem;
+    top: 20%;
+    right: 23%;
+    color: #222;
+    
+
+}
+
+.register_img {
+    position: absolute;
+    width: 60%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.right_panel {
+    width: 50%;
+    /* height: 100vh; */
+    background-color: #E5E1F5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    height: 100%;
+    gap: 5vh;
+
+}
+
+.right_panel .input_box {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 30vw;
+    height: 80%;
+    gap: 1.5vw;
+
+    input {
+        font-size: 1rem;
+        text-align: left;
+        border: 1px solid #6c47ff;
+        border-radius: 10px;
+        height: 6vh;
+        box-sizing: border-box;
+        padding: 25px 10px 10px;
+    }
+
+    input:focus {
+        outline: none;
+    }
+}
+
+/* ===========  input 감싸는 박스 ============== */
+
+.input_box .idbox {
+    position: relative;
+    width: 100%;
+}
+
+
+.input_box .passwdbox {
+    position: relative;
+    width: 100%;
+}
+
+
+.input_box .namebox {
+    position: relative;
+    width: 100%;
+}
+
+
+.input_box .phonebox {
+    position: relative;
+    width: 100%;
+}
+
+
+.input_box .addressbox {
+    position: relative;
+    width: 100%;
+}
+
+
+.input_box .zipcodebox {
+    position: relative;
+    width: 100%;
+}
+
+
+.input_box .emailbox {
+    position: relative;
+    width: 100%;
+}
+
+
+.placeholder_text {
+    position: absolute;
+    color: #222;
+    top: 10%;
+    margin-left: 10px;
+    font-size: 0.8rem;
+}
+
+
+.placeholder_pswd {
+    position: absolute;
+    color: #222;
+    top: 10%;
+    margin-left: 10px;
+    font-size: 0.8rem;
+}
+
+
+.placeholder_name {
+    position: absolute;
+    color: #222;
+    top: 10%;
+    margin-left: 10px;
+    font-size: 0.8rem;
+}
+
+
+.placeholder_phone {
+    position: absolute;
+    color: #222;
+    top: 10%;
+    margin-left: 10px;
+    font-size: 0.8rem;
+}
+
+
+.placeholder_address {
+    position: absolute;
+    color: #222;
+    top: 10%;
+    margin-left: 10px;
+    font-size: 0.8rem;
+}
+
+
+.placeholder_zipcode {
+    position: absolute;
+    color: #222;
+    top: 10%;
+    margin-left: 150px;
+    font-size: 0.8rem;
+}
+
+
+.placeholder_email {
+    position: absolute;
+    color: #222;
+    top: 10%;
+    margin-left: 10px;
+    font-size: 0.8rem;
+}
+
+
+/* ===========  inputbox ============== */
+
+
+.input_box .single {
+    width: 100%;
+    height: 6vh;
+}
+
+.two_input {
+    position: relative;
+    display: flex;
+    width: 100%;
+    gap: 1vw;
+    height: 6vh;
+}
+
+/* ===========  이름 & 휴대폰 input ============== */
+
+
+.two_input input {
+    display: flex;
+    width: 100%;
+}
+
+/* ===========  주소 & 우편번호 input ============== */
+
+.two_input .largeinput {
+    position: absolute;
+    width: 150%;
+    border: 1px solid #6c47ff;
+}
+
+.two_input .smallinput {
+    position: absolute;
+    width: 50%;
+    right: 0;
+
+    border: 1px solid #6c47ff;
+}
+
+/* ===========  부서 & 직급 ============== */
+
+.role_box {
+    display: flex;
+    width: 100%;
+    height: 6vh;
+    gap: 2vh;
+}
+
+.Department {
+width: 30vw;
+    border-radius: 7px;
+    border: 1px solid #6c47ff;
+    /* box-sizing: border-box; */
+    padding: 0 10px;
+    font-size: 1rem;
+}
+
+.Department:focus {
+    outline: none;
+}
+
+
+.Position {
+    width: 30vw;
+    border-radius: 7px;
+    border: 1px solid #6c47ff;
+    /* box-sizing: border-box; */
+    padding: 0 10px;
+    font-size: 1rem;
+}
+
+.Position:focus {
+    outline: none;
+}
+
+
+/* ===========  등록 & 수정 ============== */
+
+.button_box {
+    display: flex;
+    gap: 2vw;
+}
+
+.button_box button {
+    padding: 15px 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+    border: 1px solid #6c47ff;
+}
+
+.button_box .register {
+    color: white;
+    background-color: #6c47ff;
+    transition: background-color 0.3s ease-in;
+    cursor: pointer;
+}
+
+.button_box .cancel {
+    background-color: white;
+    transition: background-color 0.3s ease-in;
+    cursor: pointer;
+}
+
+
+.register:hover {
+    background-color: #4a1dff;
+}
+
+
+
+.cancel:hover {
+    background-color: #d5d5d5;
+}
