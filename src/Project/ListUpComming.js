@@ -48,7 +48,7 @@ const ListUpComming = (project) => {
 
             {isOpen && <P_Modify closeModal={closeProjectModify} />}
             
-            <div className={styles.name}>프로젝트명</div>
+            <div className={styles.name}>프로젝트명 프로젝트 프로젝트 프로젝트 프로젝트 프로젝트</div>
 
             <div className={styles.content}>
 

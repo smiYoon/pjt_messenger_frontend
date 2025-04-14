@@ -44,9 +44,14 @@ const List = () => {
 
           <div className={styles.subContainerTitle}>곧 종료되는 프로젝트</div>
 
-          <P_ListUpComming />
-          <P_ListUpComming />
+          <div className={styles.upCommingContent}>
+            <P_ListUpComming />
+            <P_ListUpComming />
+          </div>
         </div>
+
+
+        {isOpen && <P_Create closeModal={closeProjectRegister} />}
 
 
         <div className={styles.listContainer}>
@@ -65,9 +70,6 @@ const List = () => {
               </div>
 
             </div>
-
-
-            {isOpen && <P_Create closeModal={closeProjectRegister} />}
 
             <div className={styles.searchBar}>
               <div className={styles.input_box}>
@@ -88,7 +90,19 @@ const List = () => {
             <P_ListUnit />
             <P_ListUnit />
             <P_ListUnit />
+          </div>
 
+          <div className={styles.pageBar}>
+
+            <div className={styles.pageBox}>
+              <div> ◀ </div>
+              <div> 1 </div>
+              <div> 2 </div>
+              <div> 3 </div>
+              <div> 4 </div>
+              <div> 5 </div>
+              <div> ▶ </div>
+            </div>
 
           </div>
 

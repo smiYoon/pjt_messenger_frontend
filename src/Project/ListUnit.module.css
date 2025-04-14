@@ -9,10 +9,10 @@
 
 
 .content {
-    padding: 20px 30px ;
+    padding: 20px 30px 15px;
     border-radius: 10px;
     border: 1px solid #6c47ff;
-    height: 33vh;
+    height: 35vh;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -81,9 +81,9 @@
     font-weight: bold;
 }
 .pjtDetail {
-    height: 60px;
+    height: 40px;
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* 최대 줄 수 */
+    -webkit-line-clamp: 2; /* 최대 줄 수 */
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
