@@ -49,9 +49,35 @@ const CreateChat = ({ onCloseClick }) => {
 
   //  console.log("selectPjs 담겼냐:",selectPjs);
 
+
+
+// const handleAddInvite = () => {
+//   const values = inviteName
+//     .split(",")
+//     .map((val) => val.trim())
+//     .filter(Boolean);
+
+//   const newIds = [];
+
+//   values.forEach((val) => {
+//     const [empnoStr] = val.split("-"); // 첫 번째 값이 empno
+//     const empno = parseInt(empnoStr, 10);
+
+//     const emp = employees.find((e) => e.empno === empno);
+//     if (emp && !invitedList.includes(emp.empno)) {
+//       newIds.push(emp.empno);
+//     }
+//   });
+
+//   setInvitedList((prev) => [...prev, ...newIds]); // 최신 상태 기준 누적
+//   setInviteName("");
+
+//   console.log("✅ 추가된 사원 번호들:", newIds);
+// };
   const handleAddInvite = () => {
 
     const names = inviteName.split(",").map((name) => name.trim()).filter(Boolean);
+<<<<<<< Updated upstream
     const newIds =[];
   
     names.forEach(name=> {
@@ -60,6 +86,22 @@ const CreateChat = ({ onCloseClick }) => {
       newIds.push(emp.empno);
     }
      
+=======
+    const newIds=[];
+
+
+    names.forEach((raw) => {
+      const empno = raw.split("-")[0]; // "1001-홍길동-과장" → "1001"
+           
+      const emp = employees.find(e => e.empno === empno);
+        if (emp && !invitedList.includes(emp.empno)) {
+          newIds.push(emp.empno);
+        }
+        console.log("초되된 리스트:", invitedList);
+      }
+     
+    );
+>>>>>>> Stashed changes
     setInvitedList([...invitedList, ...newIds]);
     // setInvitedList(prev => [...prev, ...newIds]);
     setInviteName("");
@@ -71,6 +113,7 @@ const CreateChat = ({ onCloseClick }) => {
 //이름 + enter하면 실행됨. 누적 안됨.
 
 
+<<<<<<< Updated upstream
   const handleCreateRoom = () => {
     const chatRoomData = {
       name: roomName
@@ -82,6 +125,77 @@ const CreateChat = ({ onCloseClick }) => {
     //json으로 가는 모습으로 콘솔 확인하기
   }//HandleCreateRoom
 
+=======
+
+
+  // const handleCreateRoom = async () => {
+  //   const chatRoomData = {
+  //     roomName: roomName
+  //     , project: {id: parseInt(selectPj,10)} // 서버로는 ID 보내기
+  //     , members: invitedList.map(id => ({id}))
+  //   };//chatRoomData
+
+  //   console.log("채팅방 데이터(json):", JSON.stringify(chatRoomData));
+  //   //json으로 가는 모습으로 콘솔 확인하기
+
+  //   //백으로 보내는 코드
+  //   try{
+  //     const response= await fetch("https://localhost:443/chat", {
+  //       method: "POST",
+  //       headers:{
+  //         "Content-Type" : "application/json"
+  //       },
+  //       body: JSON.stringify(chatRoomData)
+  //     });
+  //     if (!response.ok){
+  //       throw new Error("서버 응답 실패: " + response.status);
+  //     }
+  //   const result = await response.json();
+  //   console.log("서버 응답:", result);
+  //   alert("채팅방 생성 성공!");
+  //   }catch (err){
+  //     console.error("채팅방생성실패 !", err);
+  //     alert("채팅방 생성중 오류 발생!");
+  //   }
+    
+  // }//HandleCreateRoom
+
+  //FromData버전
+
+  const handleCreateRoom = async () => {
+    const formData = new FormData();
+  
+    formData.append("roomName", roomName);
+    formData.append("projectId", selectPj); // 문자열이라도 백에서 파싱하면 OK
+  
+    invitedList.forEach((id, index) => {
+      formData.append(`members[${index}].id`, id); // 백에서 List<MemberDTO>로 받을 수 있도록
+    });
+  
+    console.log("📦 보낼 FormData:");
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+  
+    try {
+      const response = await fetch("https://localhost:443/chat", {
+        method: "POST",
+        body: formData // headers에 Content-Type 안 넣는다! 브라우저가 자동으로 multipart 붙임
+      });
+  
+      if (!response.ok) {
+        throw new Error("서버 응답 실패: " + response.status);
+      }
+  
+      const result = await response.json();
+      console.log("서버 응답:", result);
+      alert("채팅방 생성 성공!");
+    } catch (err) {
+      console.error("채팅방 생성 실패!", err);
+      alert("채팅방 생성 중 오류 발생!");
+    }
+  };
+>>>>>>> Stashed changes
 
 
 
@@ -157,9 +271,14 @@ const CreateChat = ({ onCloseClick }) => {
 
         {/* 아바타들 */}
         <div className={styles.avatarRow} >
+<<<<<<< Updated upstream
 
           {/* <div className={styles.avatarBox}> */}
             {invitedList.slice(0, 5).map((id, index) => (
+=======
+        <div className={styles.avatarBox}> 
+        {invitedList.slice(0, 5).map((id, index) => (
+>>>>>>> Stashed changes
               <div
                 key={index}
                 className={styles.avatar}
@@ -173,11 +292,10 @@ const CreateChat = ({ onCloseClick }) => {
                  +{invitedList.length - 5}
               </div>
             )}
-          {/* </div> avatarBox */}
-
-
-
+</div>
         </div> {/*avatarRow */}
+
+
         <div>
         <button onClick={handleCreateRoom} className={styles.mkBtn}>만들기</button>
         </div>
