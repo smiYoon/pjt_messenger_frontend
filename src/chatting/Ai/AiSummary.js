@@ -18,17 +18,17 @@ const AiSummary = () => {
                             <span className={styles.todaySummaryTxt}>오늘 하루 요약</span>
                         </div>
                         
-                        <div className={styles.summaryAllBox}>
 
                             <div className={styles.dateSetManually}>
                                 <span className={styles.dateSetManuallyTxt}>요약할 날짜 선택</span>
                             </div>
 
                             <div className={styles.startDateBox}>
+                               
                                 <div className={styles.startDate}>
                                     <span className={styles.startDateTxt}>시작일</span>
-                                    <div className={styles.startCalendar}>
-                                    <div>
+                                </div>
+                                <div className={styles.startDatePickerBox}>
                                         <DatePicker
                                         className={styles.startDatePicker}
                                         selected={startDate}
@@ -42,14 +42,13 @@ const AiSummary = () => {
                                         endDate={endDate}
                                         dateFormat="yyyy년 MM월 dd일"
                                         />
-                                    </div>
-                                    </div>
                                 </div>
                             </div>
 
                             <div className={styles.endDateBox}>
                                 <div className={styles.endDate}>
                                     <span className={styles.endDateTxt}>종료일</span>
+                                </div>
                                     <div className={styles.endCalendar}>
                                     <div>
                                         <DatePicker
@@ -62,7 +61,6 @@ const AiSummary = () => {
                                         dateFormat="yyyy년 MM월 dd일"
                                         />
                                     </div>
-                                    </div>
                                 </div>
                             </div>
 
@@ -70,7 +68,6 @@ const AiSummary = () => {
                                 <span className={styles.summaryTxt}>요약하기</span>
                             </div>
                             
-                        </div>
 
                         <div className={styles.summaryBox}/>
                         
