@@ -14,7 +14,7 @@ const CreateChat = ({ onCloseClick }) => {
 
   useEffect(() => {
   
-    fetch("https://localhost:443/api/selectPj") //json 받을 url
+    fetch("https://localhost:443/chat/init") //json 받을 url
       .then((res) => res.json())
       .then((data) => {
         console.log("전체 data:", data);    
@@ -43,7 +43,7 @@ const CreateChat = ({ onCloseClick }) => {
     console.log("초대할 이름:", inviteName);
   };//handleAddInvite
 
-  const handleCreateRoom = () => {
+  const handleCreateRoom = async () => {
     const chatRoomData = {
       roomName: roomName
       , project: {id: parseInt(selectPj,10)} // 서버로는 ID 보내기
@@ -52,6 +52,27 @@ const CreateChat = ({ onCloseClick }) => {
 
     console.log("채팅방 데이터(json):", JSON.stringify(chatRoomData));
     //json으로 가는 모습으로 콘솔 확인하기
+
+    //백으로 보내는 코드
+    try{
+      const response= await fetch("chat", {
+        method: "POST",
+        headers:{
+          "Content-Type" : "application/json"
+        },
+        body: JSON.stringify(chatRoomData)
+      });
+      if (!response.ok){
+        throw new Error("서버 응답 실패: " + response.status);
+      }
+    const result = await response.json();
+    console.log("서버 응답:", result);
+    alert("채팅방 생성 성공!");
+    }catch (err){
+      console.error("채팅방생성실패 !", err);
+      alert("채팅방 생성중 오류 발생!");
+    }
+    
   }//HandleCreateRoom
 
 
