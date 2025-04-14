@@ -83,7 +83,7 @@
     text-align: center  ;
 }
 
-.container button {
+.buttonBox > button {
     display: inline-flex;
     padding: 3.5px 20px;
     margin-left: 15px;
@@ -97,15 +97,15 @@
     cursor: pointer;
     transition: background-color 0.3s ease-in;
 }
-.container button:hover {
+.buttonBox > button:hover {
     background-color: #4a1dff;
     transition: background-color 0.3s ease-in;
 }
 
-.container button.btnStyle_gray {
+.buttonBox > button.btnStyle_gray {
     border: #bbb;
     background-color: #bbb;
 }
-.container button.btnStyle_gray:hover {
+.buttonBox > button.btnStyle_gray:hover {
     background-color: #888;   
 }

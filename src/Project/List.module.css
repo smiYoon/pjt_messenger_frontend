@@ -123,7 +123,7 @@
     
 }
 
-.container button {
+.listBar button {
     display: inline-flex;
     padding: 5.2px 25px;
     margin-left: 15px;
@@ -137,16 +137,16 @@
     cursor: pointer;
     transition: background-color 0.3s ease-in;
 }
-.container button:hover {
+.listBar button:hover {
     background-color: #4a1dff;
     transition: background-color 0.3s ease-in;
 }
 
-.container .btnStyle_yg {
+.listBar .btnStyle_yg {
     border: #4FC765;
     background-color: #4FC765;
 }
-.container .btnStyle_yg:hover {
+.listBar .btnStyle_yg:hover {
     background-color: #39b851;    
 }
 

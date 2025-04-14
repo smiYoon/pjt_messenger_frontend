@@ -12,7 +12,7 @@
     padding: 20px 30px 15px;
     border-radius: 10px;
     border: 1px solid #6c47ff;
-    height: 35vh;
+    height: 34vh;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -47,8 +47,7 @@
 }
 
 .status {
-    width: 110px;
-    padding: 7px 20px;
+    padding: 5px 20px;
 
     border-radius: 50px;
     border: 1px solid #6c47ff;
