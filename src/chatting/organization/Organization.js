@@ -31,7 +31,7 @@ import styles from './Organization.module.css';
 //   );
 // };
 
-const Organization = ({ data, onCloseOrganClick }) => {
+const Organization = ({ onCloseOrganClick }) => {
   
   const [translate, setTranslate] = useState({ x: 0, y: 0 }); //드래그앤드랍
   const [treeData, setTreeData] = useState(null);
