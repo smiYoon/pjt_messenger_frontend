@@ -9,7 +9,7 @@
 
 .buttons {
     position: absolute;
-    top: 30%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
@@ -24,12 +24,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 60px;
-    height: 60px;
-    font-size: 1rem;
+    width: 3vw;
+    height: 3vw;
+    font-size: 0.9rem;
     font-weight: bold;
     text-decoration: none;
-    color: #444;
+    color: #222;
     border-radius: 50%;
     /* transform: rotate(0deg); */
     /* border-radius: 50%; */

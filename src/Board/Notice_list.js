@@ -1,10 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './Notice_list.module.css';
 import { Link } from 'react-router-dom';
 
 const Notice_list = () => {
-
-    const [inputValue, setInputValue] = useState('');
     const [posts, setPosts] = useState([]);
 
     const fetchPosts = useCallback(async () => {
@@ -16,12 +14,12 @@ const Notice_list = () => {
             if (response.ok) {
                 const data = await response.json();
                 console.log("data:", data);
-                const formattedData = data.map(posts => ({
-                    id: posts.id,
-                    title: posts.title,
-                    author: posts.employee.name,
-                    count: posts.count,
-                    crtDate: posts.crtDate,
+                const formattedData = data.map(post => ({
+                    id: post.id,
+                    title: post.title,
+                    author: post.employee.name,
+                    count: post.count,
+                    crtDate: post.crtDate,
                 }));
 
                 // 기본적으로 id 기준 내림차순으로 정렬
@@ -37,22 +35,24 @@ const Notice_list = () => {
     });
 
     useEffect(() => {
-        fetchPosts();
+        fetchPosts(); // 활성화된 탭에 따라 데이터 가져오기
     }, []);
-
-    
 
     return (
         <div className={styles.container}>
             <div className={styles.side_bar}>
                 <div className={styles.menu}>
-                    <div className={styles.notice}>
+                    <div
+                        className={styles.notice}
+                    >
                         공지사항 게시판
                     </div>
-                    <Link to={`/board/feedback/list`} className={styles.feedback}>
+                    <Link
+                        className={styles.feedback}
+                        to={`/board/feedback/list`}
+                    >
                         건의 게시판
                     </Link>
-
                 </div>
             </div>
             <div className={styles.list_Page}>
@@ -63,16 +63,14 @@ const Notice_list = () => {
                     <div className={styles.option_box}>
                         <Link to={`/board/notice/create`} className={styles.button}>등록</Link>
                         <div className={styles.search_box}>
-                            <select
-                                name='searchWord'
-                                className={styles.select}
-                            >
-                                <option value="">제목</option>
-                                <option value="">작성자</option>
+                            <select name='searchWord' className={styles.select}>
+                                <option value="">검색조건</option>
+                                <option value="title">제목</option>
+                                <option value="author">작성자</option>
                             </select>
                             <div className={styles.input_box}>
                                 <input name='searchText' type='text' className={styles.input} placeholder='검색'></input>
-                                <i className="fa-solid fa-magnifying-glass"></i>
+                                <i className="fa-solid fa-magnifying-glass" />
                             </div>
                         </div>
                     </div>
@@ -84,25 +82,27 @@ const Notice_list = () => {
                             <div className={styles.writeTime}>작성 날짜</div>
                             <div className={styles.views}>조회수</div>
                         </div>
-                        <table className={styles.Board_table}>
-                            <tbody>
-                                {posts.map((post) => (
-                                    <tr key={post.id}>
-                                        <td className={styles.number}>{post.id}</td>
-                                        <td className={styles.postTitle}>{post.title}</td>
-                                        <td className={styles.writer}>{post.author}</td>
-                                        <td className={styles.writeTime}>{post.crtDate}</td>
-                                        <td className={styles.views}>{post.count}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                        {posts.map((post) => (
+                            <Link key={post.id} to={`/board/notice/detail/${post.id}`} className={styles.tr}>
+                                <table className={styles.Board_table}>
+                                    <tbody>
+                                        <tr>
+                                            <td className={styles.number}>{post.id}</td>
+                                            <td className={styles.postTitle}>{post.title}</td>
+                                            <td className={styles.writer}>{post.author}</td>
+                                            <td className={styles.writeTime}>{post.crtDate}</td>
+                                            <td className={styles.views}>{post.count}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </Link>
+                        ))}
                     </div>
                     <div className={styles.Board_paging}>페이징 1, 2, 3</div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Notice_list;

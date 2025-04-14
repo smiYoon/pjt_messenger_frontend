@@ -21,12 +21,12 @@ const App = () => {
 
           <Route path="/board/notice/list" element={<Notice_list />} />
           <Route path="/board/notice/create" element={<Notice_create />} />
-          <Route path="/board/notice/detail" element={<Notice_detail />} />
+          <Route path="/board/notice/detail/:id" element={<Notice_detail />} />
           <Route path="/board/notice/update" element={<Notice_update />} />
 
           <Route path="/board/feedback/list" element={<Feedback_list />} />
           <Route path="/board/feedback/create" element={<Feedback_create />} />
-          <Route path="/board/feedback/detail" element={<Feedback_detail />} />
+          <Route path="/board/feedback/detail/:id" element={<Feedback_detail />} />
           <Route path="/board/feedback/update" element={<Feedback_update />} />
         </Routes>
       </div>

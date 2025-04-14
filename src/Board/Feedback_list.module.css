@@ -11,38 +11,44 @@
     width: 10%;
     height: 100vh;
     background-color: burlywood;
-    display: flex;
-    flex-direction: column;
     position: relative;
-    box-sizing: border-box;
-    padding: 0 1vw;
 }
 
 .side_bar .menu {
+    display: flex;
+    flex-direction: column;
     position: absolute;
-    top: 10%;
-}
-
-
-.side_bar .notice {
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-decoration: none;
-    color: #222;
-}
-
-
-.side_bar .feedback {
-    margin: 50px 0;
     text-align: right;
+    top: 10%;
+    right: 0;
+}
+
+
+.menu .notice,
+.menu .feedback {
     font-size: 1.3rem;
+    text-decoration: none;
+    text-align: right;
     color: #222;
+    padding: 20px 1vw;
+    margin: 10px 0;
+    background-color: transparent;
+    font-weight: normal;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    transition: background-color 0.3s ease, font-weight 0.3s ease;
+}
+
+.menu .feedback {
+    background-color: white;
+    font-weight: bold;
+    pointer-events: none;
 }
 
 .list_Page {
     width: 90%;
     height: 100%;
-    background-color: rgb(255, 255, 255);
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,16 +86,16 @@
     font-weight: bold;
     text-decoration: none;
     border-radius: 7px;
-    border: #6c47ff;
-    background-color: #FFEBB8;
-    color: black;
+    background-color: #6c47ff;
+    color: white;
     cursor: pointer;
     transition: background-color 0.1s ease-in;
 }
 
 .button:hover {
     background-color: #4a1dff;
-    transition: background-color 0.1s ease-in;
+    color: white;
+    transition: all 0.1s ease-in;
 }
 
 
@@ -104,6 +110,7 @@
     width: 5vw;
     height: 4vh;
     border: 1px solid #6c47ff;
+    border-radius: 5px;
     padding: 10px;
     
 }
@@ -146,9 +153,9 @@
 }
 
 .Board_title {
-    background-color: #FFEBB8;
+    background-color: #e5e1f5;
     height: 60px;
-    border-radius: 10px;
+    border-radius: 5px;
     display: flex;
     position: relative;
     align-items: center;
@@ -158,9 +165,13 @@
     color: #444;
 }
 
-.Board_table tbody tr {
+.Board_table {
     height: 50px;
     color: #222;
+}
+
+.tr {
+    text-decoration: none;
 }
 
 .Board_table tbody td {

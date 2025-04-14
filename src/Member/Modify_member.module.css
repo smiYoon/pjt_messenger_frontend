@@ -134,7 +134,7 @@
 }
 
 .right_panel .form {
-    flex-grow: 8;
+    flex-grow: 1;
 }
 
 .right_panel .input {
@@ -164,7 +164,7 @@
 
 .double .dept,
 .double .position {
-    flex-grow: 1;
+    width: 100%;
 }
 
 .placeholder_text {
@@ -188,7 +188,7 @@
     position: absolute;
     color: #222;
     top: 10%;
-    right: 24%;
+    right: 22%;
     transform: translateX(50%);
     font-size: 0.8rem;
 }
@@ -203,7 +203,7 @@
 
 .right_panel .input input {
     height: 6vh;
-    font-size: 1.2rem;
+    font-size: 1rem;
     /* text-align: center; */
     border: 1px solid #6c47ff;
     border-radius: 10px;
