@@ -52,7 +52,7 @@ const Create = ({closeModal}) => {
 
           <div className={styles.contentItem}>
             <label>종괄 담당자</label>
-            <select name='manager' className={styles.select}>
+            <select name='managerEmpno' className={styles.select}>
               <option value="">== 종괄 담당자를 선택하세요. ==</option>
               <option value="1">담당자1</option>
             </select>
@@ -60,7 +60,7 @@ const Create = ({closeModal}) => {
 
           <div className={styles.contentItem}>
             <label>진행상태</label>
-            <select name='manager' className={styles.select}>
+            <select name='status' className={styles.select}>
               <option value="">== 진행상태를 선택하세요. ==</option>
               <option value="1">진행예정</option>
             </select>
