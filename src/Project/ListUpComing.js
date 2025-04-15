@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
 import { P_Modify } from '.';
 
-import styles from "./ListUpComming.module.css";
+import styles from "./ListUpComing.module.css";
 import { RxLapTimer } from "react-icons/rx";
 
-console.groupCollapsed("src/Project/ListUpComming.js");console.groupEnd();
+console.groupCollapsed("src/Project/ListUpComing.js");console.groupEnd();
 
-const ListUpComming = (project) => {
+const ListUpComing = (project) => {
     console.group("ListUpcommig() invoked."); console.groupEnd();
     
         // 모달 상태
@@ -87,4 +87,4 @@ const ListUpComming = (project) => {
     );
 };
 
-export default ListUpComming;
+export default ListUpComing;

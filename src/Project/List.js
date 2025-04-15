@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './List.module.css';
 
-import { P_ListUpComming, P_ListUnit, P_Create } from './'
+import { P_ListUpComing, P_ListUnit, P_Create } from './'
 
 console.groupCollapsed('src/Project/List.js'); console.groupEnd();
 
@@ -31,6 +31,11 @@ const List = () => {
     const openProjectRegister = () => setIsOpen(true);
     const closeProjectRegister = () => setIsOpen(false);
 
+  
+    //upComing
+
+
+
 
 
   return (
@@ -40,13 +45,13 @@ const List = () => {
 
         <div className={styles.pageTitle}>Project List</div>
 
-        <div className={styles.upCommingContainer}>
+        <div className={styles.upComingContainer}>
 
           <div className={styles.subContainerTitle}>곧 종료되는 프로젝트</div>
 
-          <div className={styles.upCommingContent}>
-            <P_ListUpComming />
-            <P_ListUpComming />
+          <div className={styles.upComingContent}>
+            <P_ListUpComing />
+            <P_ListUpComing />
           </div>
         </div>
 
