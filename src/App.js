@@ -8,9 +8,6 @@ import { Notice_list, Notice_update, Notice_create, Notice_detail, Feedback_boar
 import { P_List, P_Create, P_Modify } from './Project/';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
-import { P_List } from './Project'; 
-
-
 console.groupCollapsed('src/App.js'); console.groupEnd();
 
 const App = () => {
