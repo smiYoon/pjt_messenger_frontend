@@ -9,14 +9,14 @@
 
 
 .content {
-    padding: 10px 30px 30px ;
+    padding: 20px 30px 15px;
     border-radius: 10px;
     border: 1px solid #6c47ff;
-    height: 32vh;
+    height: 34vh;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
 
     position: relative;
 }
@@ -27,16 +27,13 @@
     width: 80px;
     font-weight: bold;
 }
-
-.content hr {
-    width: 100%;
+.content > hr {
     border: 1px solid #6c47ff;
     margin: 0;
 }
 .content .icon {
     vertical-align: text-top;
 }
-
 
 
 .header {
@@ -50,8 +47,7 @@
 }
 
 .status {
-    width: 110px;
-    padding: 7px 20px;
+    padding: 5px 20px;
 
     border-radius: 50px;
     border: 1px solid #6c47ff;
@@ -77,15 +73,16 @@
 
     font-size: 1.5rem;
     letter-spacing: 1px;
+    cursor: pointer;
 }
 .pjtName {
     font-size: 1.3rem;
     font-weight: bold;
 }
 .pjtDetail {
-    height: 60px;
+    height: 40px;
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* 최대 줄 수 */
+    -webkit-line-clamp: 2; /* 최대 줄 수 */
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -95,19 +92,22 @@
 .timeline {
 
 }
-
 .deadline {
     width: 100%;
     font-size: 1.2rem;
     font-weight: bold;
     color: #4016eb;
-    text-align: right;
+
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 5px;
 }
 
 
 .editMenu {
     position:absolute;
-    top:55px;
+    top:48px;
     right: 30px;
 
     z-index: 30;

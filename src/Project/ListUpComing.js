@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
 import { P_Modify } from '.';
 
-import styles from "./ListUpComming.module.css";
+import styles from "./ListUpComing.module.css";
 import { RxLapTimer } from "react-icons/rx";
 
-console.groupCollapsed("src/Project/ListUpComming.js");console.groupEnd();
+console.groupCollapsed("src/Project/ListUpComing.js");console.groupEnd();
 
-const ListUpComming = (project) => {
-    console.group("ListUpcommig() invoked."); console.groupEnd();
+const ListUpComing = ({project}) => {
+    console.group("ListUpcommig(", project, ") invoked."); console.groupEnd();
     
         // 모달 상태
         const [isOpen, setIsOpen] = useState(false);
@@ -48,25 +48,35 @@ const ListUpComming = (project) => {
 
             {isOpen && <P_Modify closeModal={closeProjectModify} />}
             
-            <div className={styles.name}>프로젝트명</div>
+            <div className={styles.name}>{project.name}</div>
 
             <div className={styles.content}>
 
                 <div className={styles.manager}>
-                    <label>담당자</label>김태영 팀장
+                    <label>담당자</label>{project.pjtManager.name} {project.pjtManager.position}
                 </div>
 
                 <div className={styles.detail}>
-                    <label>상세정보</label>상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보
+                    <label>상세정보</label>{project.detail}
                 </div>
 
             </div>
 
             <div className={styles.timeline}>
 
-                <div className={styles.status}>진행 중</div>
+                <div className={styles.status}>{project.status}</div>
 
-                <div className={styles.deadline}><RxLapTimer className={styles.icon} /> D-2</div>
+                {
+                    project.endDday === 0 ? (
+                        <div className={styles.deadline} style={{color: 'red'}}><RxLapTimer className={styles.icon} /> D-day</div>
+                    ) : project.endDday >= -3 && project.endDday < 0 ? (
+                        <div className={styles.deadline} style={{color: 'red'}}><RxLapTimer className={styles.icon} /> D{project.endDday}</div>
+                    ) : project.endDday < -3 ? (
+                        <div className={styles.deadline} style={{color: 'blue'}}><RxLapTimer className={styles.icon} /> D{project.endDday}</div>
+                    ) : project.endDday > 0 ? (
+                        <div className={styles.deadline} style={{color: 'blue'}}><RxLapTimer className={styles.icon} /> D+{project.endDday}</div>
+                    ) : null
+                }
 
             </div>
 
@@ -87,4 +97,4 @@ const ListUpComming = (project) => {
     );
 };
 
-export default ListUpComming;
+export default ListUpComing;
