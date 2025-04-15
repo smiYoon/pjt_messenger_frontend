@@ -7,21 +7,21 @@ import { useNavigate, useParams } from 'react-router-dom';
 const Modify_member = () => {
     const navigate = useNavigate();
     const handleCancelClick = () => {
-         Swal.fire({
-                    icon: 'warning',
-                    title: '사원 수정을 취소하시겠습니까?',
-                    text: '확인을 누르면 입력한 정보가 삭제됩니다.',
-                    allowOutsideClick: false,
-                    confirmButtonText: '확인',
-                    showCancelButton: true,
-                    cancelButtonText: '취소',
-                }).then(result => {
-                   if(result.isConfirmed) { 
-                    navigate(-1);
-                   } else if(result.isDismissed){
-        
-                   } // 이전 페이지로 이동
-                });
+        Swal.fire({
+            icon: 'warning',
+            title: '사원 수정을 취소하시겠습니까?',
+            text: '확인을 누르면 입력한 정보가 삭제됩니다.',
+            allowOutsideClick: false,
+            confirmButtonText: '확인',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+        }).then(result => {
+            if (result.isConfirmed) {
+                navigate(-1);
+            } else if (result.isDismissed) {
+
+            } // 이전 페이지로 이동
+        });
     }
 
     const { empno } = useParams();
@@ -62,7 +62,7 @@ const Modify_member = () => {
             if (memberForm.upfiles) {
                 formData.append('upfiles', memberForm.upfiles); // 새 파일 추가
             }
-            
+
             console.log("memberForm:", memberForm);
 
             const response = await fetch(`https://localhost:443/employee/${empno}`, {
@@ -71,8 +71,13 @@ const Modify_member = () => {
             });
 
             if (response.ok) {
-                alert('사원 정보가 성공적으로 수정되었습니다.');
-                navigate('/member/list'); // 이전 페이지로 이동
+                Swal.fire({
+                    icon: 'success',
+                    title: '사원 정보가 성공적으로 수정되었습니다.',
+                    confirmButtonText: '확인',
+                }).then(() => {
+                    navigate('/member/list');
+                });
             } else {
                 console.error('수정 실패:', response.statusText);
                 alert('사원 정보 수정에 실패했습니다.');
@@ -198,35 +203,35 @@ const Modify_member = () => {
                                 />
                                 <div className={styles.position_text}>직급</div> */}
                                 <select
-                                name='department'
-                                className={styles.dept}
-                                value={memberForm.department || ''}
-                                onChange={(e) => handleChange(e.target.name, e.target.value)}
-                            >
-                                <option value="">부서를 선택해주세요.</option>
-                                {deptId.map((dept) => (
-                                    // <span style={{ paddingLeft: `${id.depth} * 50`, boxSizing: "border-box" }}></span>
-                                    <option key={dept.id} value={dept.id}>
-                                        {dept.name}
-                                    </option>
-                                ))}
-                            </select>
-                            <div className={styles.placeholder_text}>부서</div>
+                                    name='department'
+                                    className={styles.dept}
+                                    value={memberForm.department || ''}
+                                    onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                >
+                                    <option value="">부서를 선택해주세요.</option>
+                                    {deptId.map((dept) => (
+                                        // <span style={{ paddingLeft: `${id.depth} * 50`, boxSizing: "border-box" }}></span>
+                                        <option key={dept.id} value={dept.id}>
+                                            {dept.name}
+                                        </option>
+                                    ))}
+                                </select>
+                                <div className={styles.placeholder_text}>부서</div>
 
-                            <select
-                                name='position'
-                                className={styles.position}
-                                value={memberForm.position}
-                                onChange={(e) => handleChange(e.target.name, e.target.value)}
-                            >
-                                <option value="">직급을 선택해주세요.</option>
-                                <option value="1">팀원</option>
-                                <option value="2">팀장</option>
-                                <option value="3">부서장</option>
-                                <option value="4">CEO</option>
-                                <option value="5">인사담당자</option>
-                            </select>
-                            <div className={styles.position_text}>직급</div>
+                                <select
+                                    name='position'
+                                    className={styles.position}
+                                    value={memberForm.position}
+                                    onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                >
+                                    <option value="">직급을 선택해주세요.</option>
+                                    <option value="1">팀원</option>
+                                    <option value="2">팀장</option>
+                                    <option value="3">부서장</option>
+                                    <option value="4">CEO</option>
+                                    <option value="5">인사담당자</option>
+                                </select>
+                                <div className={styles.position_text}>직급</div>
                             </div>
 
                             <div className={styles.single}>

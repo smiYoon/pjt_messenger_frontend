@@ -54,14 +54,27 @@ const Notice_detail = () => {
     })
   }
 
-  const handleCancelClick = () => {
-    navigate("/board/notice/list");
+  const handleUpdateClick = () => {
+    navigate(`/board/notice/update/${ id }`);
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.side_bar}>
-        
+        <div className={styles.menu}>
+          <Link
+            className={styles.notice}
+            to={`/board/notice/list`}
+          >
+            공지사항 게시판
+          </Link>
+          <Link
+            className={styles.feedback}
+            to={`/board/feedback/list`}
+          >
+            건의 게시판
+          </Link>
+        </div>
       </div>
       <div className={styles.main}>
         <div className={styles.right_panel}>
@@ -104,7 +117,7 @@ const Notice_detail = () => {
             {post.detail}
           </div>
           <div className={styles.buttonContainer}>
-            <button onClick={handleCancelClick} className={styles.edit} >수정</button>
+            <button onClick={handleUpdateClick} className={styles.edit} >수정</button>
             <button onClick={handleClick} className={styles.cancel}>삭제</button>
           </div>
         </div>

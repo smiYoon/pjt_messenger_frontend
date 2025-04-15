@@ -15,7 +15,7 @@ const List_member = () => {
         method: 'GET',
       });
 
-      if(response.ok) {
+      if (response.ok) {
         const data = await response.json();
         console.log("data:", data);
         const formattedData = data.map(members => ({
@@ -34,20 +34,21 @@ const List_member = () => {
       } else {
         console.error('불러오기 실패', response.statusText);
       }
-    } catch(error) {
+    } catch (error) {
       console.error('Error fetching data:', error);
-    }});
+    }
+  });
 
-    useEffect(() => {
-      fetchMembers();
-    }, []);
+  useEffect(() => {
+    fetchMembers();
+  }, []);
 
-    const level = {
-      "1": "팀원",
-      "2": "팀장",
-      "3": "부서장",
-      "4": "CEO",
-    };
+  const level = {
+    "1": "팀원",
+    "2": "팀장",
+    "3": "부서장",
+    "4": "CEO",
+  };
 
   return (
     <div className={styles.container}>
@@ -78,24 +79,27 @@ const List_member = () => {
         </div>
         <div className={styles.list}>
           {/* {personalInfo.map((member) => ( // 프론트 테스트용 */}
-          {members.map((member ) => (  // 이걸로 사용해야함
-          <div key={member.empno} className={styles.card}>
-            <img src={profile} alt='' />
-            <div className={styles.name}>
-            {level[member.position]} {member.name} 
+          {members.map((member) => (  // 이걸로 사용해야함
+            <div key={member.empno} className={styles.card}>
+              <img src={profile} alt='' />
+              <div className={styles.name}>
+                {level[member.position]}
+              </div>
+              <div className={styles.name}>
+                {member.name}
+              </div>
+              <div className={styles.dept}>
+                {member.dept_id}
+              </div>
+              <div className={styles.phone}>
+                {member.tel}
+              </div>
+              <div className={styles.email}>
+                {member.email}
+              </div>
+              {/* <Link to={`/member/edit/`} className={styles.detail}>자세히</Link> */}
+              <Link to={`/member/edit/${member.empno}`} className={styles.detail}>자세히</Link>
             </div>
-            <div className={styles.dept}>
-              {member.dept_id}
-            </div>
-            <div className={styles.phone}>
-              {member.tel}
-            </div>
-            <div className={styles.email}>
-              {member.email}
-            </div>
-            {/* <Link to={`/member/edit/`} className={styles.detail}>자세히</Link> */}
-            <Link to={`/member/edit/${member.empno}`} className={styles.detail}>자세히</Link>
-          </div>
           ))}
         </div>
         <div className={styles.paging}>

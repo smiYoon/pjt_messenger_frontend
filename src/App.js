@@ -22,12 +22,11 @@ const App = () => {
           <Route path="/member/list" element={<Member_list />} />
           <Route path="/member/edit/:empno" element={<Member_modify />} />
           <Route path="/member/register" element={<Member_register />} />
-          <Route path="/member/edit/" element={<Member_modify />} />
 
           <Route path="/board/notice/list" element={<Notice_list />} />
           <Route path="/board/notice/create" element={<Notice_create />} />
           <Route path="/board/notice/detail/:id" element={<Notice_detail />} />
-          <Route path="/board/notice/update" element={<Notice_update />} />
+          <Route path="/board/notice/update/:id" element={<Notice_update />} />
 
           <Route path="/board/feedback/list" element={<Feedback_list />} />
           <Route path="/board/feedback/create" element={<Feedback_create />} />
