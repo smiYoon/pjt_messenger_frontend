@@ -11,28 +11,7 @@
     background: #f9f9f9;
   }
   
-  .nodeCard {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    background: white;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-  }
-  
-  .nodeName {
-    font-size: 16px;
-    font-weight: bold;
-  }
-  
-  .nodeRole {
-    color: #666;
-    font-size: 12px;
-  }
-  
+ 
   .inviteButton {
     margin-top: 8px;
     padding: 4px 8px;
