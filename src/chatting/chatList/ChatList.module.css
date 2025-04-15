@@ -4,7 +4,7 @@
     height: 72%;
     background-color: #E5E1F5;
 
-    border-radius: 15px;
+    border-radius: 25px;
 
     justify-items: center;
 
@@ -84,8 +84,10 @@
 }
 
 .projecticon{
+    color: aquamarine;
 }
 
 .chatname{
-    font-size: 20px;
+    font-size: 25px;
+    font-weight: bold;
 }

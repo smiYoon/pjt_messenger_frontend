@@ -3,7 +3,7 @@
     height: 80%;
     background-color: #E5E1F5;
 
-    border-radius: 20px;
+    border-radius: 25px;
 
     /* 가로 중앙 정렬 */
     justify-items: center;
@@ -23,8 +23,7 @@
 
     border-radius: 20px;
 
-    /* display: flex; */
-    /* justify-content: center; */
+
 }
 
 .searchInput {

@@ -13,13 +13,21 @@ const Organization = ({ onCloseOrganClick }) => {
 
   const treeContainer = useRef(null);
 
+  const convertOrgaToChildren = (node) => {
+    const { orga, ...rest } = node;
+    return {
+      ...rest,
+      children: orga?.map(convertOrgaToChildren) || []
+    };
+  };
 
   useEffect(() =>{
     fetch("https://localhost:443/department/tree")
       .then((res) => res.json())
       .then((data) => {
       console.log("우리조직 data:", data); 
-      setTreeData([data]) //react-d3-tree는 반드시 배열로 감싸야 함
+      const converted = convertOrgaToChildren(data);
+      setTreeData([converted]);  //react-d3-tree는 반드시 배열로 감싸야 함
     })   
       .catch((err) => console.error("불러오기 실패:", err))
   },[]);
@@ -32,6 +40,7 @@ const Organization = ({ onCloseOrganClick }) => {
   }, []);
 
   if (!treeData) return <div>로딩중 ...</div>
+
 
 
 
