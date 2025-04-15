@@ -11,7 +11,7 @@
     box-shadow: 4px 4px 10px rgba(0, 0,0,.25);
 }
 
-.SearchBar {
+/* .SearchBar {
     position: relative;
     
     top: 25px;
@@ -24,9 +24,9 @@
     border-radius: 20px;
 
 
-}
+} */
 
-.searchInput {
+/* .searchInput {
     position: relative;
 
     width: 80%;
@@ -47,22 +47,32 @@
     left: 20px;
 
     font-size: 25px;
-}
+} */
 
 
 .MessageInputBox {
     position: relative;
     top: 580px;
 
-    width: 725px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 90%;
     height: 60px;
+
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
 
     border-radius: 10px;
     background-color: white;
+    /* overflow: hidden; */
+
+    padding: 0 10px;
+    /* box-sizing: border-box; */
 }
 
 
-.fileIcon {
+/* .fileIcon {
     position: relative;
     top: 12px;
     left: 15px;
@@ -71,15 +81,13 @@
     transform: rotate(35deg);
 
     cursor: pointer;
-}
+} */
 
 .messageInput {
-    position: relative;
+    
+    /* text-align: center; */
 
-    left: 30px;
-    top: 2px;
-
-    width: 500px;
+    width: 80%;
     height: 30px;
 
     border: none;
@@ -89,9 +97,9 @@
 }
 
 .sendMessagIcon {
-    position: relative;
 
-    top: 10px;
-    left: 130px;
+    position: absolute;
+    top: 25%;
+    right: 5%;
     font-size: 30px;
 }

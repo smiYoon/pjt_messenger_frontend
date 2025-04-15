@@ -1,44 +1,81 @@
-.header{
-    width: 100%;
-    height: 10%;
-    background-color: #E5E1F5;
-    margin-bottom: 30px;
+.header {
+  position: relative;
+  width: 100%;
+  height: 10%;
+  background-color: #E5E1F5;
+  margin-bottom: 30px;
 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* padding: 0 32px; */
+
+  border-radius: 25px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+/*반응형*/
+@media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      height: auto;
+      padding: 16px;
+      gap: 12px;
+    }
+  
+    .chatname {
+      font-size: 1.5rem;
+    }
+  
+    .iconbox {
+      justify-content: center;
+      gap: 10px;
+    }
+  }
+
+.chatname {
+  display: flex;
+  padding-left: 5%;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+
+.iconbox {
     display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+    gap: 10px;
+    /* margin-right: 200px; */
+    margin-right: 22%;
+  }
+  
+  @media (max-width: 768px) {
+    .iconbox {
+      margin-right: 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .iconbox {
+      margin-right: 8px;
+    }
+  }
 
-    border-radius: 25px;
-
-    box-shadow: 4px 4px 10px rgba(0, 0,0,.25);
+/* 사원 아이콘 */
+.empicon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #6C47FF;
+  display: inline-block;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-.chatname{
-    font-size: 24px;
-    font-weight: 700;
-}
-
-/* ////////////////////////////////// */
-
-.iconbox{
-    display: flex;
-
-}
-
-.empicon{
-    width: 50px;
-    height: 50px;
-
-    margin-right: 20px;
-
-    border-radius: 50%;
-
-    background-color: #6C47FF;
-}
-
-/* ////////////////////////////////// */
-
-.projecticon{
-    font-size: 24px;
-    font-weight: 700;
+/* 프로젝트 텍스트 */
+.projecticon {
+  padding-right: 5%;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #444;
 }
