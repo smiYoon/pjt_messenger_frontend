@@ -1,7 +1,8 @@
 import './App.css';
 import Navbar from './Navbar/Navbar';
+import Login from './Login/Login';
 import { Member_register, Member_modify, Member_list } from './Member';
-import { Notice_list, Notice_update, Notice_create, Notice_detail, Feedback_list , Feedback_create , Feedback_update, Feedback_detail } from './Board';
+import { Notice_list, Notice_update, Notice_create, Notice_detail, Feedback_list, Feedback_create, Feedback_update, Feedback_detail } from './Board';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 
@@ -9,11 +10,15 @@ console.groupCollapsed('src/App.js'); console.groupEnd();
 
 const App = () => {
   console.group('App() invoked.'); console.groupEnd();
+  const location = useLocation(); // 현재 경로를 가져옴
+  const excludedRoutes = ['/']; // Navbar를 숨길 경로 목록
+  
   return (
     <div className="App">
       <div className='main'>
-        <Navbar />
+        {!excludedRoutes.includes(location.pathname) && <Navbar />}
         <Routes>
+          <Route path="/" element={<Login />} />
           <Route path="/member/list" element={<Member_list />} />
           <Route path="/member/edit/:empno" element={<Member_modify />} />
           <Route path="/member/register" element={<Member_register />} />
