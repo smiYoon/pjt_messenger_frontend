@@ -55,8 +55,15 @@ const Chatting = ({id}) => {
     }, [id]);
 
     const sendMessage = (msg) => {
+        
+        const messageObj = {
+            "detail": msg,
+            "chatId": id,            // 현재 채팅방 ID
+            "empno": "E2012004"            // 로그인한 사용자 ID, 실제 로그인 정보에서 가져와야 함
+        };
+
         if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-        socketRef.current.send(msg);
+            socketRef.current.send(JSON.stringify(messageObj));
         }
     };
 
