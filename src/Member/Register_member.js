@@ -1,53 +1,128 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Register_member.module.css';
-import  Register  from './img/Register.png';
+import Register from './img/Register.png';
 
 const Register_member = () => {
-    const [inputId, setInputId] = useState('');
-    const [inputPasswd, setInputPasswd] = useState('');
-    const [inputName, setInputName] = useState('');
-    const [inputPhoneNum, setInputPhoneNum] = useState('');
-    const [inputEmail, setInputEmail] = useState('');
-    const [inputValue, setInputValue] = useState('');
+
     const navigate = useNavigate();
-    
-    const handlerIdChange = (e) => setInputId(e.target.value);
-    const handlerPasswdChange = (e) => setInputPasswd(e.target.value);
-    const handlerNameChange = (e) => setInputName(e.target.value);
-    const handlerPhoneNumChange = (e) => setInputPhoneNum(e.target.value);
-    const handlerEmailChange = (e) => setInputEmail(e.target.value);
-    const handlerChange = (e) => setInputValue(e.target.value);
+
+
     const handleCancelClick = () => {
-      navigate(-1); // 이전 페이지로 이동
+        Swal.fire({
+            icon: 'warning',
+            title: '사원 등록을 취소하시겠습니까?',
+            text: '확인을 누르면 입력한 정보가 삭제됩니다.',
+            allowOutsideClick: false,
+            confirmButtonText: '확인',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+        }).then(result => {
+           if(result.isConfirmed) { 
+            navigate(-1);
+           } else if(result.isDismissed){
+
+           } // 이전 페이지로 이동
+        });
     };
+
     const handleRegisterClick = () => {
         navigate(`/member/list`);
     };
 
-    // 번호 포멧팅 함수
-    function formatPhoneNumber(tel) {
-        const telStr = tel.toString();
-        return `${telStr.slice(0, 3)}-${telStr.slice(3, 7)}-${telStr.slice(7, 11)}`;
+    const [deptId, setDeptId] = useState([]);
+    const [registerForm, setRegisterForm] = useState({
+        loginId: "",
+        password: "",
+        name: "",
+        tel: "",
+        address: "",
+        zipCode: "",
+        email: "",
+        department: "",
+        position: "",
+    });
+
+    const handleChange = (field, value) => {
+        setRegisterForm((prevData) => ({
+            ...prevData,
+            [field]: value,
+        }));
+    };
+
+    useEffect(() => {
+        const fetchDeptId = async () => {
+            try {
+                const response = await fetch('https://localhost:443/department', {
+                    method: 'GET'
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('data: ', data);
+                    setDeptId(data);
+                } else {
+                    console.log('부서 정보를 불러오는데 실패했습니다.');
+                }
+            } catch (error) {
+                console.error('오류발생:', error);
+            }
+        };
+        fetchDeptId();
+    }, []);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        if (!registerForm.loginId || !registerForm.password || !registerForm.name || !registerForm.tel || !registerForm.email) {
+            Swal.fire({
+                icon: 'warning',
+                title: '입력 오류',
+                text: '빈칸을 모두 기입해주세요.',
+            });
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append("loginId", registerForm.loginId);
+            formData.append("password", registerForm.password);
+            formData.append("name", registerForm.name);
+            formData.append("tel", registerForm.tel);
+            formData.append("address", registerForm.address);
+            formData.append("zipCode", registerForm.zipCode);
+            formData.append("email", registerForm.email);
+            formData.append("deptId", registerForm.department);
+            formData.append("position", registerForm.position);
+
+            console.log("registerForm:", registerForm);
+
+            const response = await fetch('https://localhost:443/employee/register', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                const data = await response.text();
+                console.log(data);
+                Swal.fire({
+                    icon: 'success',
+                    title: data,
+                    confirmButtonText: '확인',
+                }).then(() => {
+                    handleRegisterClick();
+                })
+            } else {
+                alert('사원 등록에 실패했습니다.');
+                console.error(response.statusText);
+                // console.log(response);
+            }
+        } catch (error) {
+            alert('오류가 발생했습니다. 다시 시도해주세요.');
+            console.error(error);
+        }
     }
-
-
-//     <div className={styles.dept_container}>
-//     <input type='text' value={member.dept} className={styles.dept} placeholder='' />
-//     <div className={styles.placeholder_text}>부서</div>
-// </div>
-
-    const member = [{
-        loginId: 'xptmxm123',
-        password: 'Nice1512',
-        name: '이현희',
-        phoneNumber: '1023234521',
-        address: '서울특별시',
-        zipcode: '12942',
-        email: 'dlgusgml99gmailcom'
-    }]
-
-
 
     return (
         <div className={styles.container}>
@@ -55,98 +130,145 @@ const Register_member = () => {
                 <div className={styles.register_title}>REGISTER</div>
                 <img src={Register} className={styles.register_img} />
             </div>
-            {member.map((members) => (
+
             <div className={styles.right_panel}>
-                <div className={styles.input_box}>
+                <form onSubmit={handleSubmit}>
+                    <div className={styles.input_box}>
+                        <div className={styles.idbox}>
+                            <input
+                                type='text'
+                                name='loginId'
+                                className={styles.single}
+                                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                placeholder=''
+                            />
 
-                    <div className={styles.idbox}>
-                        <input type='text' value={member.loginId} className={styles.single} onChange={handlerIdChange} placeholder='' />
-
-                        <div className={styles.placeholder_text}>아이디</div>
-                    </div>
-
-                    <div className={styles.passwdbox}>
-                        <input type='text' value={member.password} className={styles.single} onChange={handlerPasswdChange} placeholder='' />
-                        <div className={styles.placeholder_pswd}>비밀번호</div>
-                    </div> 
-
-
-                    <div className={styles.two_input}>
-
-                        <div className={styles.namebox}>
-                            <input type='text' value={member.name} onChange={handlerNameChange} placeholder='' />
-                            <div className={styles.placeholder_name}>이름</div>
+                            <div className={styles.placeholder_text}>아이디</div>
                         </div>
 
-                        <div className={styles.phonebox}>
-                            <input type='number' value={member.phoneNumber} onChange={handlerPhoneNumChange} placeholder='' />
-                            <div className={styles.placeholder_phone}>휴대폰 번호</div>
-                        </div>
-                    </div>  {/*  two_input */}
-
-
-
-                    <div className={styles.two_input}> 
-
-
-                        <div className={styles.addressbox}>
-                            <input type='text' value={member.address} className={styles.largeinput} placeholder='' />
-                            <div className={styles.placeholder_address}>주소</div>
+                        <div className={styles.passwdbox}>
+                            <input
+                                type='password'
+                                name='password'
+                                className={styles.single}
+                                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                placeholder=''
+                            />
+                            <div className={styles.placeholder_pswd}>비밀번호</div>
                         </div>
 
-                        <div className={styles.zipcodebox}>
-                            <input value={member.zipcode} className={styles.smallinput} placeholder='' />
-                            <div className={styles.placeholder_zipcode}>우편번호</div>
-                        </div>
+
+                        <div className={styles.two_input}>
+
+                            <div className={styles.namebox}>
+                                <input
+                                    type='text'
+                                    name='name'
+                                    onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                    placeholder=''
+                                />
+                                <div className={styles.placeholder_name}>이름</div>
+                            </div>
+
+                            <div className={styles.phonebox}>
+                                <input
+                                    type='text'
+                                    name='tel'
+                                    onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                    placeholder=''
+                                />
+                                <div className={styles.placeholder_phone}>휴대폰번호(-를 포함하여 입력해주세요.)</div>
+                            </div>
+                        </div>  {/*  two_input */}
+
+
+
+                        <div className={styles.two_input}>
+
+                            <div className={styles.addressbox}>
+                                <input
+                                    type='text'
+                                    name='address'
+                                    onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                    className={styles.largeinput}
+                                    placeholder=''
+                                />
+                                <div className={styles.placeholder_address}>주소</div>
+                            </div>
+
+                            <div className={styles.zipcodebox}>
+                                <input
+                                    type='number'
+                                    name='zipCode'
+                                    onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                    className={styles.smallinput}
+                                    placeholder=''
+                                />
+                                <div className={styles.placeholder_zipcode}>우편번호</div>
+                            </div>
 
 
                         </div> {/*  two_input */}
 
 
                         <div className={styles.emailbox}>
-                            <input type='text' value={member.email} className={styles.single} onChange={handlerEmailChange} placeholder='' />
+                            <input
+                                type='text'
+                                name='email'
+                                className={styles.single}
+                                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                placeholder=''
+                            />
                             <div className={styles.placeholder_email}>이메일</div>
                         </div>
 
-
-
-                    <div className={styles.role_box}>
-                        <select
-                            name='Department'
-                            className={styles.Department}
-                            onChange={handlerChange}
-                        >
-                            <option value="">부서</option>
-                            <option value="1">개발</option>
-                            <option value="2">운영</option>
-                            <option value="3">인사</option>
-                            <option value="4">회계</option>
-                            <option value="5">마케팅</option>
-                        </select>
-                        <select
-                            name='Position'
-                            className={styles.Position}
-                            onChange={handlerChange}
-                        >
-                            <option value="">직급</option>
-                            <option value="1">팀원</option>
-                            <option value="2">팀장</option>
-                            <option value="3">부서장</option>
-                            <option value="4">CEO</option>
-                            <option value="5">인사담당자</option>
-                        </select>
-                    </div>
-                    <div className={styles.button_box}>
-                        <div>
-                            <button onClick={handleRegisterClick} className={styles.register}>등록</button>
+                        <div className={styles.role_box}>
+                            <select
+                                name='department'
+                                className={styles.Department}
+                                // onChange={(e) => {
+                                //     const selectedDepartmentId = e.target.value;
+                                //     handleChange("department", selectedDepartmentId);
+                                // }}
+                                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                            >
+                                <option value="">부서</option>
+                                {deptId.map((dept) => (
+                                    // <span style={{ paddingLeft: `${id.depth} * 50`, boxSizing: "border-box" }}></span>
+                                    <option key={dept.id} value={dept.id}>
+                                        {dept.name}
+                                    </option>
+                                ))}
+                            </select>
+                            <select
+                                name='position'
+                                className={styles.Position}
+                                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                            >
+                                <option value="">직급</option>
+                                <option value="1">팀원</option>
+                                <option value="2">팀장</option>
+                                <option value="3">부서장</option>
+                                <option value="4">CEO</option>
+                                <option value="5">인사담당자</option>
+                            </select>
                         </div>
-                        <div>
-                            <button onClick={handleCancelClick} className={styles.cancel} >취소</button>
+                        <div className={styles.button_box}>
+                            <div>
+                                <button
+                                    type='submit'
+                                    // onClick={handleRegisterClick} // 지우기!
+                                    className={styles.register}>
+                                    등록
+                                </button>
+                            </div>
+                            <div>
+                                <button onClick={handleCancelClick} className={styles.cancel} >취소</button>
+                            </div>
                         </div>
-                    </div>
-                 </div> {/* input_box */}
-            </div> 
-            ))}
+                    </div> {/* input_box */}
+                </form>
+            </div>
         </div>
     )
 }

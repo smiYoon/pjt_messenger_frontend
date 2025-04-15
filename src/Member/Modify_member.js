@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 import styles from './Modify_member.module.css';
 import profile from '../Navbar/img/profile.png';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -6,11 +7,34 @@ import { useNavigate, useParams } from 'react-router-dom';
 const Modify_member = () => {
     const navigate = useNavigate();
     const handleCancelClick = () => {
-        navigate(`/member/list`);
+         Swal.fire({
+                    icon: 'warning',
+                    title: '사원 수정을 취소하시겠습니까?',
+                    text: '확인을 누르면 입력한 정보가 삭제됩니다.',
+                    allowOutsideClick: false,
+                    confirmButtonText: '확인',
+                    showCancelButton: true,
+                    cancelButtonText: '취소',
+                }).then(result => {
+                   if(result.isConfirmed) { 
+                    navigate(-1);
+                   } else if(result.isDismissed){
+        
+                   } // 이전 페이지로 이동
+                });
     }
 
     const { empno } = useParams();
-    const [memberForm, setMemberForm] = useState([]);
+    const [memberForm, setMemberForm] = useState({
+        password: "",
+        tel: "",
+        address: "",
+        zipCode: "",
+        email: "",
+        department: "",
+        position: "",
+    });
+    const [deptId, setDeptId] = useState([]);
 
     const handleChange = (field, value) => {
         setMemberForm((prevData) => ({
@@ -25,19 +49,21 @@ const Modify_member = () => {
 
         try {
             const formData = new FormData();
-            formData.append('name', memberForm.department.name);
-            formData.append('tel', memberForm.position);
-            formData.append('courseId', memberForm.password);
-            formData.append('status', memberForm.tel);
-            formData.append('enabled', memberForm.address);
-            formData.append('enabled', memberForm.zipCode);
-            formData.append('enabled', memberForm.email);
+            formData.append("loginId", memberForm.loginId);
+            formData.append("password", memberForm.password);
+            formData.append("name", memberForm.name);
+            formData.append("tel", memberForm.tel);
+            formData.append("address", memberForm.address);
+            formData.append("zipCode", memberForm.zipCode);
+            formData.append("email", memberForm.email);
+            formData.append("deptId", memberForm.department);
+            formData.append("position", memberForm.position);
 
             if (memberForm.upfiles) {
                 formData.append('upfiles', memberForm.upfiles); // 새 파일 추가
             }
-
-            console.log("formData:", formData);
+            
+            console.log("memberForm:", memberForm);
 
             const response = await fetch(`https://localhost:443/employee/${empno}`, {
                 method: 'PUT', // 수정 요청은 PUT 메서드 사용
@@ -75,7 +101,7 @@ const Modify_member = () => {
                         name: data.name,
                         loginId: data.loginId,
                         empno: data.empno,
-                        department: data.department.name,
+                        department: data.department.id,
                         position: data.position,
                         password: data.password,
                         tel: data.tel,
@@ -91,8 +117,27 @@ const Modify_member = () => {
             }
         };
 
+        const fetchDeptId = async () => {
+            try {
+                const response = await fetch('https://localhost:443/department', {
+                    method: 'GET'
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('data: ', data);
+                    setDeptId(data);
+                } else {
+                    console.log('부서 정보를 불러오는데 실패했습니다.');
+                }
+            } catch (error) {
+                console.error('오류발생:', error);
+            }
+        };
+
         fetchMemberData();
-    }, []);
+        fetchDeptId();
+    }, [empno]);
 
     const level = {
         "1": "팀원",
@@ -134,7 +179,7 @@ const Modify_member = () => {
                     <form onSubmit={handleSubmit} className={styles.form}>
                         <div className={styles.input}>
                             <div className={styles.double}>
-                                <input
+                                {/* <input
                                     type='text'
                                     className={styles.dept}
                                     placeholder=''
@@ -151,7 +196,37 @@ const Modify_member = () => {
                                     value={level[memberForm.position]}
                                     onChange={(e) => handleChange(e.target.name, e.target.value)}
                                 />
-                                <div className={styles.position_text}>직급</div>
+                                <div className={styles.position_text}>직급</div> */}
+                                <select
+                                name='department'
+                                className={styles.dept}
+                                value={memberForm.department || ''}
+                                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                            >
+                                <option value="">부서를 선택해주세요.</option>
+                                {deptId.map((dept) => (
+                                    // <span style={{ paddingLeft: `${id.depth} * 50`, boxSizing: "border-box" }}></span>
+                                    <option key={dept.id} value={dept.id}>
+                                        {dept.name}
+                                    </option>
+                                ))}
+                            </select>
+                            <div className={styles.placeholder_text}>부서</div>
+
+                            <select
+                                name='position'
+                                className={styles.position}
+                                value={memberForm.position}
+                                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                            >
+                                <option value="">직급을 선택해주세요.</option>
+                                <option value="1">팀원</option>
+                                <option value="2">팀장</option>
+                                <option value="3">부서장</option>
+                                <option value="4">CEO</option>
+                                <option value="5">인사담당자</option>
+                            </select>
+                            <div className={styles.position_text}>직급</div>
                             </div>
 
                             <div className={styles.single}>

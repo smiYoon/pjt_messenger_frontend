@@ -101,14 +101,19 @@ const List_member = () => {
       if(response.ok) {
         const data = await response.json();
         console.log("data:", data);
-        setMembers(data.map(members => ({
+        const formattedData = data.map(members => ({
+          crtDate: members.crtDate,
           empno: members.empno,
           name: members?.name,
           email: members.email,
           tel: members.tel,
           position: members.position,
           dept_id: members.department.name,
-        })));
+        }));
+
+        const sortedData = formattedData.sort((a, b) => b.position - a.position);
+        setMembers(sortedData);
+
       } else {
         console.error('불러오기 실패', response.statusText);
       }
