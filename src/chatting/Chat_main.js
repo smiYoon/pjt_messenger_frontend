@@ -43,7 +43,7 @@ const Chat_main = () => {
         } catch (error) {
           console.error("채팅방 조회 실패:", error);
         }
-      };
+    };
 
 
 
@@ -52,7 +52,7 @@ const Chat_main = () => {
             
             <div className={styles.leftbox}>
                 
-                <Invite onOrgaClick={()=> {setShowOrga(true); console.log("zz");}} />
+                <Invite onOrgaClick={()=> {setShowOrga(true)}} />
                 <ChatList onCreateClick={() => setShowCreateChat(true)} onChatClick={(chatId) => handleChatRoomClick(chatId)} />
 
             </div>

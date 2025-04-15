@@ -8,15 +8,18 @@ const ChatList = ({ onCreateClick,onChatClick }) => {
 
     // 채팅방 리스트 받아오기 (채팅방이름, 등록한사람 아이콘, 프로젝트 유무)
     useEffect(() => {
-        fetch("https://localhost:443/chat")
-            .then(res => res.json())
-            .then(data => {
+        const fetchChatrooms = async () => {
+            try {
+                const response = await fetch("https://localhost:443/chat");
+                const data = await response.json();
                 setChatrooms(data);
                 console.log("data", data);
-            })
-            .catch(err => {
+            } catch (err) {
                 console.error("채팅방 리스트 불러오기 실패:", err);
-                });
+            }
+        };
+    
+        fetchChatrooms();
     }, []);
     
 
