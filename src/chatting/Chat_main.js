@@ -15,29 +15,7 @@ import styles from './Chat_main.module.css';
 
 
 const Chat_main = () => {
-    const treeData = {
-        name: '대표 홍길동(CEO)',
-        attributes: {role: 'CEO',},
-        children: [{
-            name: '김미영(부서장)', 
-            attributes: {
-                role: '팀장',
-                },
-            children: [{
-                name: '이준호(팀장)',
-                attributes: {
-                    role: '프론트엔드',
-                    },                    
-                children: [{
-                     name: '박지수(팀원)',
-                     attributes: {
-                     role: '백엔드',
-                        },
-                    //  children: []
-                },],
-            },],
-        },],
-    };//   db에서 받기전 더미 ceo를 선택하면 칠드런들도 다 선택되게 해야함
+
 
     const [showCreateChat, setShowCreateChat] = useState(false);
     const [showOrga, setShowOrga]=useState(false);//조직도
@@ -62,7 +40,7 @@ const Chat_main = () => {
               
             </div>
 
-            {showOrga && <Organization data={treeData} onCloseOrganClick={() => setShowOrga(false)} />}
+            {showOrga && <Organization  onCloseOrganClick={() => setShowOrga(false)} />}
             {showCreateChat && <CreateChat onCloseClick={() => setShowCreateChat(false)} />}
             
 

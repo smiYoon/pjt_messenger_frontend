@@ -4,33 +4,25 @@ import styles from './Organization.module.css';
 
 
 
-// //데이터베이스에서 부서 정보 가져오기:
-// //팝업 UI:
-// //부서/팀 선택:
-// // 초대 기능:
 
-// //정보 가져오기
-// 커스텀 노드 렌더링 함수
-const renderCustomNode = ({ nodeDatum }) => {
-  return (
-    <foreignObject width="200" height="100" x="-100" y="-50">
-      <div className={styles.nodeCard}>
-        <div className={styles.nodeName}>{nodeDatum.name}</div>
-        <div className={styles.nodeRole}>{nodeDatum.attributes?.role}</div>
-        <button
-          className={styles.inviteButton}
-          onClick={() => alert(`${nodeDatum.name} 초대!`)}
-        >
-          초대
-        </button>
-      </div>
-    </foreignObject>
-  );
-};
 
-const Organization = ({ data, onCloseOrganClick }) => {
+const Organization = ({ onCloseOrganClick }) => {
+  
+  const [translate, setTranslate] = useState({ x: 0, y: 0 }); //드래그앤드랍
+  const [treeData, setTreeData] = useState(null);
+
   const treeContainer = useRef(null);
-  const [translate, setTranslate] = useState({ x: 0, y: 0 });
+
+
+  useEffect(() =>{
+    fetch("https://localhost:443/department/tree")
+      .then((res) => res.json())
+      .then((data) => {
+      console.log("우리조직 data:", data); 
+      setTreeData([data]) //react-d3-tree는 반드시 배열로 감싸야 함
+    })   
+      .catch((err) => console.error("불러오기 실패:", err))
+  },[]);
 
   useEffect(() => {
     if (treeContainer.current) {
@@ -39,19 +31,22 @@ const Organization = ({ data, onCloseOrganClick }) => {
     }
   }, []);
 
+  if (!treeData) return <div>로딩중 ...</div>
+
+
+
   return (
-    <div ref={treeContainer} className={styles.treeContainer}>
+        <div className={styles.treeContainer}>
       <button onClick={onCloseOrganClick}>❌ 닫기</button>
-      <Tree
-        data={data}
-        orientation="vertical"
-        translate={translate}
-        pathFunc="elbow"
-        renderCustomNodeElement={renderCustomNode}
-        zoomable
-        collapsible={false}
-      />
+    <div style={{ width: '100%', height: '600px' }}>
+      <Tree data={treeData} orientation="vertical" />
     </div>
+    </div>//treeContainer
   );
+
+
+
+
+
 };
 export default Organization;

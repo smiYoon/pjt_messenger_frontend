@@ -18,9 +18,6 @@ const Invite = ({ onOrgaClick }) => {
     setInviteName("");
   }; //handleAddInvite
 
-  // const handleOpenOrgan=()=>{
-  //     return onOrgaClick;
-  // };//handleOpenOrgan 조직도
 
   return (
     <div className={styles.invite}>
