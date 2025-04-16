@@ -5,11 +5,12 @@
     height: auto;
 
     background-color: rgb(181,116,245);
-    box-shadow: 4px 4px 10px rgba(255, 0, 0, 0.25);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
 
     justify-items: center;
 
     border-radius: 10px;
+    
 
     z-index: 2;
 }

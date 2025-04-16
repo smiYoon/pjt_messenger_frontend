@@ -16,8 +16,6 @@
 }
 
 
-
-
  /* 아바타들 */
  /* 초대된인원들이 */
 .avatarRow {
@@ -78,19 +76,18 @@
     margin-right: 5%;
 }
 .inviteRow input{
-    /* display: flex; */
-    /* 의미없는듯?*/
+
     flex: 1;
-    /**/
-    font-size: 16px;
-    border-radius: 6px;
+
+    font-size: 20px;
+    border-radius: 10px;
     padding: 5px 10px;
-    border: none;
+    border: #ccc solid 1px;
     outline: none;
     min-width: 50px
     /*  flex안에서 기본값이 215px라서 줄임 */
 }
-.inviteRow button{
+/* .inviteRow button{
     margin-left: 2%;
     padding: 2px 11px;
     background-color: #6C47FF;
@@ -104,7 +101,7 @@
 
 .inviteRow button:hover{
     background-color: #4A1DFF;
-  }
+  } */
 
 /* 버튼들 */
 .inviteBtn {
@@ -128,8 +125,9 @@
   }
 
 .opOrga {
-    /* position:absolute; */
-    width: 90%;
+    /*width: 90%;
+    기존 width를 꽉채운 피그마랑 달라서 */
+    width:30%;
     padding: 5px;
     background-color: #6C47FF;
     color: white;

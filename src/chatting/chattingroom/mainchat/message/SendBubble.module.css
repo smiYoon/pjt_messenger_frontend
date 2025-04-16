@@ -1,0 +1,29 @@
+/* 공통 */
+.sendBubble {
+    max-width: 60%;
+    padding: 10px 15px;
+    margin: 8px;
+    border-radius: 15px;
+    position: relative;
+    font-size: 16px;
+    line-height: 1.4;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bubble.right {
+    background-color: #ffe14f;
+    color: black;
+    align-self: flex-end;
+  }
+  
+  .bubble.right::after {
+    content: "";
+    position: absolute;
+    right: -10px;
+    top: 10px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #ffe14f;
+  }

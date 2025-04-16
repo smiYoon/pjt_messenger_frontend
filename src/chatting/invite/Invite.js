@@ -51,15 +51,11 @@ const Invite = ({ onOrgaClick }) => {
           onChange={(e) => setInviteName(e.target.value)}
           onKeyDown={(e) => {
             if (/\d/.test(e.key)) {
-              e.preventDefault();
-              {
-                /*숫자키면 예방한다중단한다.*/
-              }
+              e.preventDefault();                
             } else if (e.key === "Enter") handleAddInvite();
           }}
-          placeholder="직원 검색"
-        />
-        <button onClick={handleAddInvite}>+</button>
+          placeholder="직원 검색"/>
+        {/* <button onClick={handleAddInvite}>+</button> */}
       </div>
       {/*inviteRow*/}
       <button onClick={onOrgaClick} className={styles.opOrga}>

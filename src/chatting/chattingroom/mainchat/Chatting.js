@@ -8,18 +8,18 @@ import { BsArrowUpCircleFill } from "react-icons/bs";
 const Chatting = () => {
 
         
-    const fileInputRef = useRef(null);
+    // const fileInputRef = useRef(null);
     
     // const handleFileRef = () => {
     //     fileInputRef.current.click();
     // };
     
-    const hadleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            console.log('전송 파일 : ', file.name);
-        }
-    }
+    // const hadleFileChange = (e) => {
+    //     const file = e.target.files[0];
+    //     if (file) {
+    //         console.log('전송 파일 : ', file.name);
+    //     }
+    // }
     
     //  const [ serchTerm, setSearchTerm ] = useState('');
     //  const item = []
@@ -39,12 +39,12 @@ const Chatting = () => {
                 </div> */}
 
                 <div className={styles.MessageInputBox}>
-                    <input
+                    {/* <input
                     type="file"
                     ref={fileInputRef}
                     onChange={hadleFileChange}
                     style={{ display: 'none' }}
-                    />
+                    /> */}
                     {/* <MdOutlineAttachFile className={styles.fileIcon}
                                          onClick={handleFileRef}/> */}
 
