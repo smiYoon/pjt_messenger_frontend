@@ -9,10 +9,14 @@ const List_member = () => {
 
   const [members, setMembers] = useState([]);
   const fetchMembers = useCallback(async () => {
-
+  const token = localStorage.getItem("jwt"); // 수정점
     try {
       const response = await fetch(`https://localhost:443/employee`, {
         method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        } // 수정점. 04.16
       });
 
       if (response.ok) {
