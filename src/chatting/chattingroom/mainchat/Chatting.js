@@ -28,6 +28,23 @@ const Chatting = ({id}) => {
     const socketRef = useRef(null);
 
     useEffect(() => {
+        const fetchMessages = async () => {
+            try {
+                const response = await fetch(`https://localhost:443/message?chatId=${id}`);
+                const data = await response.json();
+                setMessages(data);
+            } catch (error) {
+                console.error('초기 메시지 불러오기 실패:', error);
+            }
+        };
+    
+        if (id) {
+            fetchMessages();
+        }
+    }, [id]);
+
+
+    useEffect(() => {
         if (!id) return; // chatId가 undefined면 연결하지 않음
 
         const socket = new WebSocket(`wss://localhost:443/chatroom?chatId=${id}`);
@@ -80,11 +97,25 @@ const Chatting = ({id}) => {
                     />
                 </div>
 
-                <ul>
-                    {messages.map((msg, idx) => (
-                        <li key={idx}>{msg}</li>
-                    ))}
-                </ul>
+                <div className={styles.chatMessages}>
+                    {messages.map((msg, idx) => {
+                        let parsedMsg = msg;
+                        if (typeof msg === 'string') {
+                            try {
+                                parsedMsg = JSON.parse(msg);
+                            } catch (e) {
+                                console.warn("JSON 파싱 실패:", msg);
+                            }
+                        }
+
+                        return (
+                            <div key={idx} className={styles.messageBubble}>
+                                <div className={styles.senderName}>{parsedMsg.employee?.name || '알 수 없음'}</div>
+                                <div className={styles.messageText}>{parsedMsg.detail}</div>
+                            </div>
+                        );
+                    })}
+                </div>
 
                 <div className={styles.MessageInputBox}>
                     <input
