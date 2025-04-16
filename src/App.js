@@ -1,5 +1,4 @@
 import './App.css';
-import ChatRoom from './chatting/chattingroom/Chatroom';
 import Navbar from './Navbar/Navbar';
 import { Member_register, Member_modify, Member_list } from './Member';
 import { Chat_main } from './chatting';
