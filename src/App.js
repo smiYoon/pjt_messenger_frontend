@@ -1,5 +1,4 @@
 import './App.css';
-import ChatRoom from './chatting/chattingroom/Chatroom';
 import Navbar from './Navbar/Navbar';
 import { Member_register, Member_modify, Member_list } from './Member';
 import { Chat_main } from './chatting';
@@ -23,7 +22,6 @@ const App = () => {
           <Route path="/member/register" element={<Member_register />} />
 
           <Route path="/chat" element={<Chat_main />} />
-          <Route path="/chat/room" element={<ChatRoom />} />
 
           <Route path="/work" element={<W_List/>}/>
           <Route path="/work/create" element={<W_Create/>}/>

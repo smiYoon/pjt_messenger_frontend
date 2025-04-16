@@ -6,8 +6,6 @@ import {ChatList} from './chatList';
 import {Invite} from './invite';
 import CreateChat from './createChatPopup/CreateChat';
 
-import Organization from './organization/Organization';
-
 import styles from './Chat_main.module.css';
 
 
@@ -66,7 +64,6 @@ const Chat_main = () => {
                <AiSummary/>
             </div>
 
-            {showOrga && <Organization onCloseOrganClick={() => setShowOrga(false)} />}
             {showCreateChat && <CreateChat onCloseClick={() => setShowCreateChat(false)} />}
             
 
