@@ -1,5 +1,6 @@
 import './App.css';
 import Navbar from './Navbar/Navbar';
+import Login from './Login/Login.js';
 import { Member_register, Member_modify, Member_list } from './Member';
 import { Chat_main } from './chatting';
 import { W_List, W_Create, W_Detail } from './Work/index.js';
@@ -17,6 +18,7 @@ const App = () => {
       <div className='main'>
         <Navbar/>
         <Routes>
+          <Route path="/" element={<Login />} />
           <Route path="/member/list" element={<Member_list />} />
           <Route path="/member/edit/" element={<Member_modify />} />
           <Route path="/member/register" element={<Member_register />} />
