@@ -6,6 +6,7 @@ import { Chat_main } from './chatting';
 import { W_List, W_Create, W_Detail } from './Work/index.js';
 import { Notice_list, Notice_update, Notice_create, Notice_detail, Feedback_boardList , Feedback_create , Feedback_update, Feedback_detail } from './Board';
 import { P_List, P_Create, P_Modify } from './Project/';
+import Organization from './Organization/Organization.js';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 console.groupCollapsed('src/App.js'); console.groupEnd();
@@ -41,6 +42,8 @@ const App = () => {
           <Route path="/project/list" element={<P_List/>}/>
           <Route path="/project/create" element={<P_Create/>}/>
           <Route path="/project/edit" element={<P_Modify/>}/>
+
+          <Route path="/organization/:deptNum" element={<Organization/>}/>
         </Routes>
       </div>
     </div>
