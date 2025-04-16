@@ -144,6 +144,8 @@ const Register_member = () => {
                             />
 
                             <div className={styles.placeholder_text}>아이디</div>
+                            <button className={styles.checkId}>중복확인</button>
+
                         </div>
 
                         <div className={styles.passwdbox}>
@@ -168,6 +170,7 @@ const Register_member = () => {
                                     placeholder=''
                                 />
                                 <div className={styles.placeholder_name}>이름</div>
+                                
                             </div>
 
                             <div className={styles.phonebox}>
