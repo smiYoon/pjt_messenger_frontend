@@ -124,6 +124,37 @@ const Register_member = () => {
         }
     }
 
+  
+    const handleCheckId = async () => {
+
+        console.log("중복확인 요청 ID:", registerForm.loginId); 
+
+        try {
+            const response = await fetch(`https://localhost:443/employee/checkId?loginId=${registerForm.loginId}`,{
+                method: 'GET'
+            }
+            )
+            
+
+            if(response.ok) {
+                const data = await response.json();
+                console.log("받은 데이터: ", data);
+                
+                
+
+                if(data[registerForm.loginId]) {
+                    alert('이미 사용중인 아이디입니다.');
+                } else {
+                    alert('사용 가능한 아이디 입니다.');
+                }
+
+                
+            } 
+        } catch (err) {
+            console.log('중복확인 오류', err);
+        }
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.left_panel}>
@@ -144,7 +175,7 @@ const Register_member = () => {
                             />
 
                             <div className={styles.placeholder_text}>아이디</div>
-                            <button className={styles.checkId}>중복확인</button>
+                            <button type='button' className={styles.checkId} onClick={handleCheckId}>중복확인</button>
 
                         </div>
 
