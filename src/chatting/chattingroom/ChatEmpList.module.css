@@ -9,18 +9,20 @@
 
     justify-items: center;
 
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
 
     z-index: 2;
 }
 
 .chatname{
-    width: 50%;
-    aspect-ratio: 10 / 2;
+    width: 100%;
+    aspect-ratio: 7 / 1;
 
     display: flex;
     align-items: center;
     justify-content: center;
+
+    background-color: bisque;
 }
 
 .emplist{
