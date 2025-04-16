@@ -36,21 +36,34 @@ const Login = () => {
             const response = await fetch('https://localhost:443/auth/login', {
                 method: 'POST',
                 body: formData,
+
             });
 
-            const text = await response.text();
-            console.log("서버 응답:", text);
+            const result = await response.json(); // json 파싱
+
+            // 로컬 스토리지에 저장 : 브라우저 닫아도 토큰 유지
+            // localStorage.setItem("jwt", token); 
+
+            // 세션 스토리지에 저장: 탭 닫으면 토큰 사라짐
+            // sessionStorage.setItem("jwt", token);
+
+
+            
+            
 
             if (response.ok) {
                 // 로그인 성공 시 처리
+                const token = result.token; // 진짜 토큰만 꺼냄.
                 console.log("로그인 성공");
-                setMessage(text);
+                setMessage(token);
+                localStorage.setItem("jwt", token); 
+                console.log("서버 응답:", token);
                 navigate("/member/list");
 
             } else {
                 // 로그인 실패 시 처리
                 console.log("로그인 실패");
-                setMessage(text);
+                
             }
         } catch (error) {
             console.error("로그인 오류:", error);
