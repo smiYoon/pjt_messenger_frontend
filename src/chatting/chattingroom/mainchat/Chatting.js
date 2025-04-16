@@ -76,7 +76,7 @@ const Chatting = ({id}) => {
         const messageObj = {
             "detail": msg,
             "chatId": id,            // 현재 채팅방 ID
-            "empno": "E2012004"            // 로그인한 사용자 ID, 실제 로그인 정보에서 가져와야 함
+            "empno": "E2005003"            // 로그인한 사용자 ID, 실제 로그인 정보에서 가져와야 함
         };
 
         if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
@@ -84,6 +84,8 @@ const Chatting = ({id}) => {
         }
     };
 
+    const currentEmpno = "E2012004"; // 실제 로그인한 사용자 empno
+    
     return (         
             
             <div className={styles.mainchat}>
@@ -108,9 +110,16 @@ const Chatting = ({id}) => {
                             }
                         }
 
+                        const isMine = parsedMsg?.employee?.empno === currentEmpno;
+
                         return (
-                            <div key={idx} className={styles.messageBubble}>
-                                <div className={styles.senderName}>{parsedMsg.employee?.name || '알 수 없음'}</div>
+                            <div
+                                key={idx}
+                                className={`${styles.messageBubble} ${isMine ? styles.myMessage : styles.otherMessage}`}
+                            >
+                                {!isMine && (
+                                    <div className={styles.senderName}>{parsedMsg.employee?.name || '알 수 없음'}</div>
+                                )}
                                 <div className={styles.messageText}>{parsedMsg.detail}</div>
                             </div>
                         );

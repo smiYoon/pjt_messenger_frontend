@@ -3,7 +3,7 @@
     width: 100%;
     height: 80%;
     background-color: #E5E1F5;
-
+    overflow-y: auto;
     border-radius: 20px;
 
     /* 가로 중앙 정렬 */
@@ -54,21 +54,30 @@
 /* //////////////////////////////////////////////////////////// */
 
 .chatMessages {
-    position: relative;
     display: flex;
     flex-direction: column;
     gap: 10px;
     padding: 10px;
-    overflow-y: auto;
   }
   
   .messageBubble {
-    position: relative;
-    background-color: #f0f0f0;
+    max-width: 60%;
     border-radius: 16px;
     padding: 10px 15px;
-    
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    word-wrap: break-word;
+  }
+  
+  .myMessage {
+    align-self: flex-end;
+    background-color: #d0f0ff; /* 연한 파랑 */
+    border-bottom-right-radius: 0;
+  }
+  
+  .otherMessage {
+    align-self: flex-start;
+    background-color: #f0f0f0;
+    border-bottom-left-radius: 0;
   }
   
   .senderName {
@@ -81,7 +90,6 @@
   .messageText {
     font-size: 1rem;
     color: #222;
-    word-wrap: break-word;
   }
 
   /* //////////////////////////////////////////////////////////// */
@@ -128,10 +136,6 @@
     /* outline: none; */
 
     font-size: 20px;
-}
-
-.messageInput:focus{
-    /* outline: none; */
 }
 
 .sendMessagIcon {
