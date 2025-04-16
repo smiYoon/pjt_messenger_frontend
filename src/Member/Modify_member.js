@@ -64,10 +64,14 @@ const Modify_member = () => {
             }
 
             console.log("memberForm:", memberForm);
-
+            const token = localStorage.getItem("jwt"); // 수정점 04.16
             const response = await fetch(`https://localhost:443/employee/${empno}`, {
                 method: 'PUT', // 수정 요청은 PUT 메서드 사용
                 body: formData,
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    // 'Content-Type': 'application/json'
+                  } // 수정점. 04.16
             });
 
             if (response.ok) {
