@@ -9,7 +9,7 @@ const Feedback_list = () => {
     
     const fetchPosts = useCallback(async () => {
             try {
-                const response = await fetch(`https://localhost:443/board`, {
+                const response = await fetch(`https://localhost:443/board/Feedback`, {
                     method: 'GET',
                 });
     

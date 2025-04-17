@@ -14,7 +14,7 @@ const Notice_detail = () => {
     const fetchPostData = async () => {
 
       try {
-        const response = await fetch(`https://localhost:443/board/${id}`, {
+        const response = await fetch(`https://localhost:443/board/Notice/${id}`, {
           method: 'GET',
         });
 
