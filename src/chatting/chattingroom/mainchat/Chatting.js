@@ -7,10 +7,11 @@ import { BsArrowUpCircleFill } from "react-icons/bs";
 
 const Chatting = ({id}) => {
 
+    const [inputValue, setInputValue] = useState("");
     const [messages, setMessages] = useState([]);
     const socketRef = useRef(null);
     const messagesEndRef = useRef(null);
-
+    
     useEffect(() => {
         const fetchMessages = async () => {
             try {
@@ -66,8 +67,9 @@ const Chatting = ({id}) => {
         if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
             socketRef.current.send(JSON.stringify(messageObj));
         }
+        setInputValue("");
     };
-
+    // E2005003
     const currentEmpno = "E2012004"; // 실제 로그인한 사용자 empno
     
     useEffect(() => {
@@ -114,10 +116,12 @@ const Chatting = ({id}) => {
 
                     <input className={styles.messageInput}
                         type="text"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
                         onKeyDown={(e) => {
-                            if (e.key === "Enter") sendMessage(e.target.value);
+                            if (e.key === "Enter") sendMessage(inputValue);
                     }}/>
-                    <BsArrowUpCircleFill className={styles.sendMessagIcon}/>
+                    <BsArrowUpCircleFill className={styles.sendMessagIcon} onClick={() => {if(inputValue.trim() !== "") {sendMessage(inputValue);}}}/>
 
                 </div>
                         

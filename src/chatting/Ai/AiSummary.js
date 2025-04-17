@@ -1,13 +1,31 @@
 import styles from './AiSummary.module.css';
 import { BsMagic } from "react-icons/bs";
 import React, { useState } from 'react';
+import { IoExitOutline } from "react-icons/io5";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const AiSummary = () => {
+const AiSummary = ({id}) => {
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+
+    const empno = "E2005003";
+
+    const handleExit = async() => {
+        const formData = new FormData;
+        formData.append("empno", empno);
+        try  {
+            // 1. 퇴장 요청 서버로 보내기
+            await fetch(`https://localhost:443/chat/${id}`,{
+                method : 'DELETE',
+                body: formData
+            });
+                console.log("퇴장 처리 완료");
+        } catch (error) {
+                console.log("퇴장 처리 실패, 에러 발생!",error);
+        }
+    }
 
 
     return (
@@ -68,6 +86,7 @@ const AiSummary = () => {
                                 <span className={styles.summaryTxt}>요약하기</span>
                             </div>
                             
+                            <IoExitOutline className={styles.exitButton} onClick={handleExit}/>
 
                         <div className={styles.summaryBox}/>
                         

@@ -61,7 +61,7 @@ const Chat_main = () => {
             </div>
 
             <div className={styles.rightbox}>
-               <AiSummary/>
+               <AiSummary id={selectedChatRoom?.id}/>
             </div>
 
             {showCreateChat && <CreateChat onCloseClick={() => setShowCreateChat(false)} />}

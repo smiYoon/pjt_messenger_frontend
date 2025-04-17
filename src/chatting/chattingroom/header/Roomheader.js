@@ -41,7 +41,7 @@ const Roomheader = ({ selectedChatRoom }) => {
                             <div className={styles.empicon} onClick={onEmplist}></div>
                         </div>
 
-                        <div className={styles.projecticon}>{selectedChatRoom?.project?.name || "프로젝트 이름"}</div>
+                        <div className={styles.projecticon}>{selectedChatRoom?.project?.name || ""}</div>
                 </div>
 
                 {showEmpList && (

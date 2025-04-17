@@ -23,11 +23,14 @@ const CreateChat = ({ onCloseClick }) => {
 
   //FromData버전
 
+  const empno = "E2005003";
+
   const handleCreateRoom = async () => {
     const formData = new FormData();
   
     formData.append("name", roomName);
     formData.append("projectId", selectPj); // 문자열이라도 백에서 파싱하면 OK
+    formData.append("empno", empno); // 토큰에서 가져오는 empno
 
     try {
       const response = await fetch("https://localhost:443/chat", {
@@ -42,6 +45,7 @@ const CreateChat = ({ onCloseClick }) => {
       const result = await response.json();
       console.log("서버 응답:", result);
       alert("채팅방 생성 성공!");
+      onCloseClick?.();
     } catch (err) {
       console.error("채팅방 생성 실패!", err);
       alert("채팅방 생성 중 오류 발생!");
@@ -72,7 +76,7 @@ const CreateChat = ({ onCloseClick }) => {
           <label>연관프로젝트</label>
           <select
             value={selectPj}
-            onChange={(e) => setSelectPj(e.target.value)}>
+            onChange={(e) => {setSelectPj(e.target.value)}}>
             <option value="" disabled selected hidden>프로젝트를 선택하세요</option>
             {selectPjs.map((pj) => (
               <option key={pj.id} value={pj.id}>{pj.name}</option>

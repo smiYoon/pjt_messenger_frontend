@@ -26,7 +26,7 @@ const Login = () => {
 
     // 로그인 버튼 클릭 시 백엔드에 로그인 데이터 전송
     const handleLogin = async () => {
-
+        
         // 백엔드로 데이터 전송
         try {
             const formData = new FormData();

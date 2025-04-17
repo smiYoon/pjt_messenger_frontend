@@ -196,3 +196,7 @@
     position: relative;
     
 }
+
+.exitButton{
+    cursor: pointer;
+}
