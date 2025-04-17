@@ -9,7 +9,7 @@ import { RxLapTimer } from "react-icons/rx";
 console.groupCollapsed("src/Project/ListUnit.js");
 console.groupEnd();
 
-const ListUnit = ({ project, statusMapping, onDelete}) => {
+const ListUnit = ({ project, statusMapping, onDelete }) => {
     // console.group('ListUnit(', project, statusMapping, ') invoked.'); console.groupEnd();
 
     const statusColor = (status) => {
@@ -55,25 +55,25 @@ const ListUnit = ({ project, statusMapping, onDelete}) => {
             setShowEditMenu(index);
         }
     };
-    
-        function checkDeleteConfirm() {
-            Swal.fire({
-                title: "프로젝트를 삭제하시겠습니까?",
-                text: " ",
-                icon: "warning",
-                showCancelButton: true,
-                cancelButtonColor: "#999",
-                confirmButtonText: "확인",
-                cancelButtonText: "취소",
-                allowOutsideClick: false,
-                draggable: true,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    console.log("checkDeleteConfirm() invoked => yes ");
-                    onDelete(project.id);
-                }
-            });
-        };
+
+    function checkDeleteConfirm() {
+        Swal.fire({
+            title: "프로젝트를 삭제하시겠습니까?",
+            text: " ",
+            icon: "warning",
+            showCancelButton: true,
+            cancelButtonColor: "#999",
+            confirmButtonText: "확인",
+            cancelButtonText: "취소",
+            allowOutsideClick: false,
+            draggable: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log("checkDeleteConfirm() invoked => yes ");
+                onDelete(project.id);
+            }
+        });
+    };
 
     return (
         <div className={styles.body}>
