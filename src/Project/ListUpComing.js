@@ -6,8 +6,8 @@ import { RxLapTimer } from "react-icons/rx";
 
 console.groupCollapsed("src/Project/ListUpComing.js");console.groupEnd();
 
-const ListUpComing = ({project}) => {
-    console.group("ListUpcommig(", project, ") invoked."); console.groupEnd();
+const ListUpComing = ({project, statusMapping}) => {
+    // console.group("ListUpcommig(", project, statusMapping, ") invoked."); console.groupEnd();
     
         // 모달 상태
         const [isOpen, setIsOpen] = useState(false);
@@ -64,7 +64,7 @@ const ListUpComing = ({project}) => {
 
             <div className={styles.timeline}>
 
-                <div className={styles.status}>{project.status}</div>
+                <div className={styles.status}>{statusMapping[project.status]}</div>
 
                 {
                     project.endDday === 0 ? (

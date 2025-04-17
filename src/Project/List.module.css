@@ -1,7 +1,7 @@
 .body {
     margin: 0;
     padding: 0;
-    width: 96vw;
+    width: calc(100% - 120px);
     height: 100vh;  
     color: #222; 
 }
@@ -62,7 +62,7 @@
 }
 
 .searchBar {
-    width: 50%;
+    width: 40%;
     display: flex;
     justify-content: right;
     align-items: center;
@@ -97,6 +97,18 @@
 
 
 
+.searchBar .dropdown {
+    margin-right: 15px;
+    height: 3.6vh;
+    border: 1px solid #6c47ff;
+    border-radius: 5px;
+    padding: 0 10px;
+}
+
+.searchBar .dropdown:focus {
+    outline: none;
+}
+
 .input_box {
     width: 50%;
     position: relative;
@@ -114,14 +126,15 @@
 .input_box input {
     width: 100%;
     height: 3.5vh;
-    border-radius: 20px;
-    border: none;
+    border-radius: 5px;
     padding: 0 20px 0 40px;
     box-sizing: border-box;
-    outline: 1px solid #6c47ff;
-    transition: outline 0.5s ease-in-out;
-    
+    border: 1px solid #6c47ff;
 }
+.input_box input:focus {
+    outline: none;
+}
+
 
 .listBar button {
     display: inline-flex;

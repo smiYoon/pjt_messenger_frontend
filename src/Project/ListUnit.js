@@ -7,8 +7,17 @@ import { RxLapTimer } from "react-icons/rx";
 
 console.groupCollapsed('src/Project/ListUnit.js'); console.groupEnd();
 
-const ListUnit = (project) => {
-    console.group('ListUnit() invoked.'); console.groupEnd();
+const ListUnit = ({project, statusMapping}) => {
+    // console.group('ListUnit(', project, statusMapping, ') invoked.'); console.groupEnd();
+
+    const statusColor = (status) => {
+        switch (status) {
+            case 1: return  { backgroundColor: '#AADCFF' };
+            case 2: return  { backgroundColor: '#FFF5AA' };
+            case 3: return  { backgroundColor: '#4FC765' };
+            default: return { backgroundColor: '#6c47ff' };
+        }
+    };
 
     // 모달 상태
     const [isOpen, setIsOpen] = useState(false);
@@ -56,7 +65,7 @@ const ListUnit = (project) => {
                     <div className={styles.header}>
 
                         <div className={styles.pjtStatus}>
-                            <div className={`${styles.status} ${styles.status1}`}>진행예정</div>
+                            <div className={`${styles.status}`} style={statusColor(project.status)}>{statusMapping[project.status]}</div>
                         </div>
 
                         <div className={styles.dotBox}>
@@ -73,27 +82,32 @@ const ListUnit = (project) => {
 
                     
 
-                    <div className={styles.pjtName}>프로젝트명</div>
+                    <div className={styles.pjtName}>{project.name}</div>
 
-                    <div className={styles.pjtDetail}>
-                        상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보 상세정보111 상세정보1111111111112222222222222222 
-                    </div>
+                    <div className={styles.pjtDetail}>{project.detail}</div>
 
                     <div className={styles.manager}>
-                        <label>담당자</label>김태영 팀장
+                        <label>담당자</label>{project.pjtManager.name} {project.pjtManager.position}
                     </div>
 
 
                     <div className={styles.timeline}>
-                        <label>기간</label> 2023.10.01 ~ 2023.10.31
+                        <label>기간</label> {project.startDate} ~ {project.endDate}
                     </div>
 
                     <hr/>
 
-                    <div className={styles.deadline}>
-                        <RxLapTimer className={styles.icon} /> D-2
-                    </div>
-
+                        {
+                            project.endDday === 0 ? (
+                                <div className={styles.deadline} style={{color: 'red'}}><RxLapTimer className={styles.icon} /> D-day</div>
+                            ) : project.endDday >= -3 && project.endDday < 0 ? (
+                                <div className={styles.deadline} style={{color: 'red'}}><RxLapTimer className={styles.icon} /> D{project.endDday}</div>
+                            ) : project.endDday < -3 ? (
+                                <div className={styles.deadline} style={{color: '#6c47ff'}}><RxLapTimer className={styles.icon} /> D{project.endDday}</div>
+                            ) : project.endDday > 0 ? (
+                                <div className={styles.deadline} style={{color: '#6c47ff'}}><RxLapTimer className={styles.icon} /> D+{project.endDday}</div>
+                            ) : null
+                        }
                 </div>
 
             </div>

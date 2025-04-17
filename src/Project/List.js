@@ -18,24 +18,38 @@ const List = () => {
   const [list, setList] = useState([]);
 
   // list paging 정보
-  const [currPage, setCurrPage] = useState(0);
+  const [currPage, setCurrPage] = useState(1);
   const [pageSize] = useState(8);
-
+  
   // list 검색 상태
+  const [totalPageCnt, setTotalPageCnt] = useState(0);
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPageCnt; i++) {
+    pageNumbers.push(i);
+  }
   const [searchData, setSearchData] = useState({
     status: "",
     searchWord: "",
     searchText: "",
   });
 
+  useEffect(() => {
+    console.log("searchData:", searchData);
+  }, [searchData]);
+
   // list 검색 함수
-  const handleSearchData = () => {
-    console.log("검색 버튼 클릭됨");
+  const handleSearchData = (field, value) => {
+    setSearchData((prevData) => ({
+        ...prevData,
+        [field]: value,
+    }));
   };
 
   // list 검색 엔터키 이벤트
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") handleSearchData();
+    if (e.key === 'Enter') {
+      handleGetList(1);
+    }
   };
 
   // 모달 상태
@@ -43,8 +57,8 @@ const List = () => {
   const openProjectRegister = () => setIsOpen(true);
   const closeProjectRegister = () => setIsOpen(false);
 
-  //project upComing 리스트 data 가져오기
-  const getUpComingList = useCallback(async () => {
+  //project 상단 upComing 리스트 data 가져오기
+  const handleGetUpComingList = useCallback(async () => {
     try {
       const response = await fetch(`https://localhost:443/project/upComing`, {
         method: "GET",
@@ -63,10 +77,57 @@ const List = () => {
     }
   }, []);
 
+  //project 하단 리스트 data 가져오기
+  const handleGetList = useCallback(async (page = currPage, state = searchData.status) => {
+    
+    console.log("state:", state);
+    setCurrPage(page);
+    handleSearchData("status", state);
+    
+    console.log("state:", searchData.status);
+    
+    const params = new URLSearchParams({
+      currPage: page,
+      pageSize: 8,
+      status: state,
+      searchWord: searchData.searchWord,  
+      searchText: searchData.searchText,
+    });
+    console.log("params:", params.toString());
+
+    try {
+      const response = await fetch(`https://localhost:443/project?${params.toString()}`, {
+        method: "GET",
+      });
+
+      if (!response.ok) throw new Error("서버 응답 오류");
+
+      const listJson = await response.json();
+      const listData = listJson.content.map((data) => ({
+        ...data
+      }));
+
+      console.log("listData:", listData);
+
+      setList(listData);
+
+      setTotalPageCnt(Math.ceil(listJson.totalElements / 10) + 1);
+
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }, [searchData, currPage]);
+
   // 컴포넌트 마운트 시 첫 데이터 로드
   useEffect(() => {
     console.log("List useEffect() invoked.");
-    getUpComingList();
+
+    handleGetUpComingList();
+
+    handleSearchData("status", "");
+    handleSearchData("searchWord", "");
+    handleSearchData("searchText", "");
+    handleGetList(1);
   }, []);
 
   //project 전체 리스트 data 가져오기
@@ -81,7 +142,7 @@ const List = () => {
 
           <div className={styles.upComingContent}>
             {upComingList.map((project) => (
-              <P_ListUpComing project={project} />
+              <P_ListUpComing project={project} statusMapping={statusMapping} />
             ))}
           </div>
         </div>
@@ -95,24 +156,39 @@ const List = () => {
             <div className={styles.statusBar}>
 
               <div className={styles.statusBox}>
-                <div>ALL</div>
+                <div onClick={() => handleGetList(1,'')} className={ searchData.status === ''  ? styles.active : '' }>ALL</div>
                 {Object.entries(statusMapping).map(([sKey, sValue]) => (
-                  <div>{sKey}:{sValue}</div>
+                  <div key={sKey} onClick={() => handleGetList(1, sKey)} className={ sKey === searchData.status ? styles.active : '' }>{sValue}</div>
                 ))}
               </div>
 
             </div>
 
             <div className={styles.searchBar}>
+              <select
+                name='searchWord'
+                className={styles.dropdown}
+                value={searchData.searchWord}
+                onChange={(e) => handleSearchData("searchWord", e.target.value)}
+              >
+                <option value="">검색조건</option>
+                <option value="name">프로젝트명</option>
+                <option value="detail">상세정보</option>
+              </select>
+
               <div className={styles.input_box}>
                 <input
-                  type="text"
+                  type="searchText"
                   className={styles.input}
-                  placeholder="검색"
+                  value={searchData.searchText}
+                  placeholder="검색어를 입력하세요."
+                  onChange={(e) => handleSearchData("searchText", e.target.value)}
+                  onKeyUp={handleKeyPress}
                 ></input>
                 <i class="fa-solid fa-magnifying-glass"></i>
               </div>
-              <button className={styles.btnStyle_yg} onClick={handleSearchData}>
+
+              <button className={styles.btnStyle_yg} onClick={handleGetList}>
                 검색
               </button>
               <button onClick={openProjectRegister}>등록</button>
@@ -120,23 +196,18 @@ const List = () => {
           </div>
 
           <div className={styles.listBox}>
-            <P_ListUnit />
-            <P_ListUnit />
-            <P_ListUnit />
-            <P_ListUnit />
-            <P_ListUnit />
-            <P_ListUnit />
-            <P_ListUnit />
+            {list.map((project) => (
+              <P_ListUnit project={project} statusMapping={statusMapping} />
+            ))}
           </div>
 
           <div className={styles.pageBar}>
             <div className={styles.pageBox}>
+              {currPage} / {totalPageCnt}
               <div> ◀ </div>
-              <div> 1 </div>
-              <div> 2 </div>
-              <div> 3 </div>
-              <div> 4 </div>
-              <div> 5 </div>
+              {pageNumbers.map((num) => (
+                <div key={num} onClick={() => handleGetList(num)} style={{ color: num === currPage ? 'red' : 'normal' }}> {num} </div>
+              ))}
               <div> ▶ </div>
             </div>
           </div>

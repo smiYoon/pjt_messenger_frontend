@@ -3,7 +3,7 @@
     top: 0;
     left:3.98vw;
 
-    width: 96.02vw;
+    width: calc(100% - 120px);
     height: 100vh;
 
     background-color: rgba(255, 255, 255, 0.4);
