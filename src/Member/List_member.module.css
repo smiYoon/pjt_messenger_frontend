@@ -45,11 +45,16 @@
     transition: background-color 0.3s ease-in;
 }
 
-.main .search {
+
+
+
+.main .searchBar {
     display: flex;
     position: relative;
     margin-left: auto;
 }
+
+
 
 .search .dropdown {
     margin-right: 20px;
