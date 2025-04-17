@@ -19,11 +19,11 @@ const Register_member = () => {
             showCancelButton: true,
             cancelButtonText: '취소',
         }).then(result => {
-           if(result.isConfirmed) { 
-            navigate(-1);
-           } else if(result.isDismissed){
+            if (result.isConfirmed) {
+                navigate(-1);
+            } else if (result.isDismissed) {
 
-           } // 이전 페이지로 이동
+            } // 이전 페이지로 이동
         });
     };
 
@@ -54,14 +54,15 @@ const Register_member = () => {
     useEffect(() => {
         const fetchDeptId = async () => {
             try {
-                const response = await fetch('https://localhost:443/department', {
+                const response = await fetch('https://localhost/department/filter', {
                     method: 'GET'
                 });
 
                 if (response.ok) {
                     const data = await response.json();
                     console.log('data: ', data);
-                    setDeptId(data);
+                    const sortedData = data.sort((a, b) => a.id - b.id);
+                    setDeptId(sortedData);
                 } else {
                     console.log('부서 정보를 불러오는데 실패했습니다.');
                 }
@@ -98,7 +99,7 @@ const Register_member = () => {
 
             console.log("registerForm:", registerForm);
 
-            const response = await fetch('https://localhost:443/employee/register', {
+            const response = await fetch('https://localhost/employee/register', {
                 method: 'POST',
                 body: formData,
             });
@@ -124,32 +125,47 @@ const Register_member = () => {
         }
     }
 
-  
+
     const handleCheckId = async () => {
 
-        console.log("중복확인 요청 ID:", registerForm.loginId); 
+        console.log("중복확인 요청 ID:", registerForm.loginId);
 
         try {
-            const response = await fetch(`https://localhost:443/employee/checkId?loginId=${registerForm.loginId}`,{
+            const response = await fetch(`https://localhost/employee/checkId?loginId=${registerForm.loginId}`, {
                 method: 'GET'
             }
             )
-            
 
-            if(response.ok) {
-                const data = await response.json();
-                console.log("받은 데이터: ", data);
-                
-                
 
-                if(data[registerForm.loginId]) {
-                    alert('이미 사용중인 아이디입니다.');
-                } else {
-                    alert('사용 가능한 아이디 입니다.');
+            if (response.ok) {
+                const text = await response.text();
+
+                if (!text) {
+                    console.error("응답 본문이 비어있습니다.")
+                    alert("서버로부터 응답이 없습니다.");
+                    return;
                 }
 
-                
-            } 
+                const isDuplicate = text == 'true';
+                console.log("받은 데이터: ", isDuplicate);
+
+
+                if (isDuplicate) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '이미 사용중인 아이디입니다.',
+                        confirmButtonText: '확인',
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '사용 가능한 아이디 입니다.',
+                        confirmButtonText: '확인',
+                    });
+                }
+
+
+            }
         } catch (err) {
             console.log('중복확인 오류', err);
         }
@@ -201,7 +217,7 @@ const Register_member = () => {
                                     placeholder=''
                                 />
                                 <div className={styles.placeholder_name}>이름</div>
-                                
+
                             </div>
 
                             <div className={styles.phonebox}>
@@ -211,7 +227,7 @@ const Register_member = () => {
                                     onChange={(e) => handleChange(e.target.name, e.target.value)}
                                     placeholder=''
                                 />
-                                <div className={styles.placeholder_phone}>휴대폰번호(-를 포함하여 입력해주세요.)</div>
+                                <div className={styles.placeholder_phone}>휴대폰번호('-' 포함)</div>
                             </div>
                         </div>  {/*  two_input */}
 
