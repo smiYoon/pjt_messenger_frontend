@@ -1,4 +1,6 @@
 import { useCallback, useState, useEffect } from "react";
+import Swal from 'sweetalert2';
+
 import styles from "./List.module.css";
 
 import { P_ListUpComing, P_ListUnit, P_Create } from "./";
@@ -78,14 +80,10 @@ const List = () => {
   }, []);
 
   //project 하단 리스트 data 가져오기
-  const handleGetList = useCallback(async (page = currPage, state = searchData.status) => {
+  const handleGetList = useCallback(async (page = 1, state = searchData.status) => {
     
     setCurrPage(page);
     handleSearchData("status", state);
-    
-    console.log("state:", searchData.status);
-    console.log("searchWord:", searchData.searchWord);
-    console.log("searchText:", searchData.searchText);
     
     const params = new URLSearchParams({
       currPage: page,
@@ -132,7 +130,63 @@ const List = () => {
     handleGetList(1);
   }, []);
 
-  //project 전체 리스트 data 가져오기
+
+
+  //project data 삭제
+    const handleProjectDelete = useCallback(async (pjtId) => {
+        console.log("handleProjectDelete(", pjtId, ") invoked ");
+        try {
+            const response = await fetch(`https://localhost:443/project/${pjtId}`, {
+                method: 'DELETE',
+            });
+
+            console.log("response: ", response);
+            console.log("currPage: ", currPage);
+            console.log("searchData.status: ", searchData.status);
+
+            if (response.ok) {
+                const data = await response.json();
+                successAlert("프로젝트가 삭제되었습니다.");
+
+                handleGetList(currPage, searchData.status);
+            } else {
+                console.error('삭제 실패:', response.statusText);
+                errorAlert('프로젝트 삭제가 실패하였습니다.')
+            }
+        } catch (error) {
+            console.error('요청 중 오류 발생:', error);
+            errorAlert('오류가 발생했습니다. 다시 시도해주세요.');
+        }
+    }, [searchData, currPage]);
+    
+    function successAlert(msg) {
+        Swal.fire({
+            title: msg,
+            text: " ",
+            icon: "success",
+            confirmButtonText: "확인",
+            allowOutsideClick: false,
+            draggable: true,
+        });
+    };
+    
+    function errorAlert(msg) {
+        Swal.fire({
+            title: msg,
+            text: " ",
+            icon: "error",
+            confirmButtonText: "확인",
+            allowOutsideClick: false,
+            draggable: true,
+        });
+    };
+
+
+
+
+
+
+
 
   return (
     <div className={styles.body}>
@@ -180,7 +234,7 @@ const List = () => {
 
               <div className={styles.input_box}>
                 <input
-                  type="searchText"
+                  name="searchText"
                   className={styles.input}
                   value={searchData.searchText}
                   placeholder="검색어를 입력하세요."
@@ -190,7 +244,7 @@ const List = () => {
                 <i class="fa-solid fa-magnifying-glass"></i>
               </div>
 
-              <button className={styles.btnStyle_yg} onClick={handleGetList}>
+              <button className={styles.btnStyle_yg} onClick={() => handleGetList(1)}>
                 검색
               </button>
               <button onClick={openProjectRegister}>등록</button>
@@ -199,7 +253,7 @@ const List = () => {
 
           <div className={styles.listBox}>
             {list.map((project) => (
-              <P_ListUnit project={project} statusMapping={statusMapping} />
+              <P_ListUnit project={project} statusMapping={statusMapping} onDelete={handleProjectDelete} />
             ))}
           </div>
 

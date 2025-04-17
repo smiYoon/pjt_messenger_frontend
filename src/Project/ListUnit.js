@@ -9,7 +9,7 @@ import { RxLapTimer } from "react-icons/rx";
 console.groupCollapsed("src/Project/ListUnit.js");
 console.groupEnd();
 
-const ListUnit = ({ project, statusMapping }) => {
+const ListUnit = ({ project, statusMapping, onDelete}) => {
     // console.group('ListUnit(', project, statusMapping, ') invoked.'); console.groupEnd();
 
     const statusColor = (status) => {
@@ -55,73 +55,25 @@ const ListUnit = ({ project, statusMapping }) => {
             setShowEditMenu(index);
         }
     };
-
-    const handleProjectDelete = useCallback(async (pjtId = project.id) => {
-        console.log("handleProjectDelete(", pjtId, ") invoked ");
-        try {
-            const response = await fetch(`https://localhost:443/project/${pjtId}`, {
-                method: 'DELETE',
+    
+        function checkDeleteConfirm() {
+            Swal.fire({
+                title: "프로젝트를 삭제하시겠습니까?",
+                text: " ",
+                icon: "warning",
+                showCancelButton: true,
+                cancelButtonColor: "#999",
+                confirmButtonText: "확인",
+                cancelButtonText: "취소",
+                allowOutsideClick: false,
+                draggable: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log("checkDeleteConfirm() invoked => yes ");
+                    onDelete(project.id);
+                }
             });
-
-            console.log("response: ", response);
-
-            if (response.ok) {
-                const data = await response.json();
-                successAlert(data);
-                // navigate(-1);
-            } else {
-                console.error('삭제 실패:', response.statusText);
-                errorAlert('프로젝트 삭제가 실패하였습니다.')
-            }
-        } catch (error) {
-            console.error('요청 중 오류 발생:', error);
-            errorAlert('오류가 발생했습니다. 다시 시도해주세요.');
-        }
-    }, []);
-
-    function checkDeleteConfirm() {
-        Swal.fire({
-            title: "프로젝트를 삭제하시겠습니까?",
-            text: " ",
-            icon: "warning",
-            showCancelButton: true,
-            cancelButtonColor: "#999",
-            confirmButtonText: "확인",
-            cancelButtonText: "취소",
-            allowOutsideClick: false,
-            draggable: true,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                console.log("checkDeleteConfirm() invoked => yes ");
-                handleProjectDelete(project.id);
-            }
-        });
-    };
-    
-    function successAlert(msg) {
-        Swal.fire({
-            title: msg,
-            text: " ",
-            icon: "success",
-            confirmButtonText: "확인",
-            allowOutsideClick: false,
-            draggable: true,
-        });
-    };
-    
-    function errorAlert(msg) {
-        Swal.fire({
-            title: msg,
-            text: " ",
-            icon: "error",
-            confirmButtonText: "확인",
-            allowOutsideClick: false,
-            draggable: true,
-        });
-    };
-
-
-
+        };
 
     return (
         <div className={styles.body}>
