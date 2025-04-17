@@ -1,5 +1,6 @@
 import styles from './List_member.module.css';
 import React, { useState, useEffect, useCallback } from 'react';
+import Organization from '../Organization/Organization';
 import { Link, useNavigate } from 'react-router-dom';
 import profile from '../Navbar/img/profile.png';
 
@@ -9,7 +10,7 @@ const List_member = () => {
 
   const [members, setMembers] = useState([]);
   const fetchMembers = useCallback(async () => {
-  const token = localStorage.getItem("jwt"); // 수정점 04.16
+    const token = localStorage.getItem("jwt"); // 수정점 04.16
     try {
       const response = await fetch(`https://localhost:443/employee`, {
         method: 'GET',
@@ -110,9 +111,9 @@ const List_member = () => {
           1 2 3
         </div>
       </div>
-      <div className={styles.right_panel}>
-        조직도자리
-      </div>
+      {/* <div className={styles.right_panel}> */}
+          <Organization />
+      {/* </div> */}
     </div>
   )
 }

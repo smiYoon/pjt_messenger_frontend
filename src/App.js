@@ -1,9 +1,9 @@
 import './App.css';
 import Navbar from './Navbar/Navbar';
 import Login from './Login/Login';
+import Organization from './Organization/Organization.js';
 import { Member_register, Member_modify, Member_list } from './Member';
 import { Notice_list, Notice_update, Notice_create, Notice_detail, Feedback_list , Feedback_create , Feedback_update, Feedback_detail } from './Board';
-import Organization from './Organization/Organization.js';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 
@@ -33,7 +33,7 @@ const App = () => {
           <Route path="/board/feedback/create" element={<Feedback_create />} />
           <Route path="/board/feedback/detail/:id" element={<Feedback_detail />} />
           <Route path="/board/feedback/update" element={<Feedback_update />} />
-
+          
           <Route path="/organization/:deptNum" element={<Organization/>}/>
         </Routes>
       </div>

@@ -40,7 +40,13 @@ const Organization = () => {
 
   return (
     <div className={styles.container}>
-      <Tree data={treeData}/>
+      <Tree 
+        data={treeData} 
+        // rowHeight={40}
+        width={400}
+        height={900}
+        className={styles.arborist}
+      />
     </div>
   );
 
@@ -85,6 +91,7 @@ const convertToSortableTree = (node) => {
     name: node.name,
     isDepartment: true,
     depth: node.depth,
-    children: [...sortedData, ...sortedDept]
+    // children: [...sortedData, ...sortedDept]
+    children: [...sortedDept]
   };
 } // ConvertToSortableTree

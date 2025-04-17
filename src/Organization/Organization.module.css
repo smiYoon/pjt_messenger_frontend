@@ -1,12 +1,11 @@
 .container {
+  box-sizing: border-box;
+  padding: 10px;
     position: relative;
-    width: 100%;
+    width: 450px;
+    height: 100vh;
 
-    border: 1px solid #6C47FF;
-    border-radius: 8px;
     background-color: #E5E1F5;
-    overflow-x: scroll;
-    word-wrap: none;
   }
   
  
