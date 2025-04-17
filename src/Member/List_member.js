@@ -8,121 +8,46 @@ import SearchBar from '../SearchBar/SearchBar.js';
 
 const List_member = () => {
 
-  // const [searchOption, setSearchOption] = useState('');
-  // const personalInfo = [
-  //   {
-  //     empno: "E2412001",
-  //     file: `${profile}`,
-  //     name: "김개똥1",
-  //     position: "사원",
-  //     dept_id: "영업1팀",
-  //     tel: "010-2222-3333",
-  //     email: "개빡친다@gmail.com"
-  //   },
-  //   {
-  //     empno: "E2412003",
-  //     file: `${profile}`,
-  //     name: "김개똥2",
-  //     position: "사원",
-  //     dept_id: "영업2팀",
-  //     tel: "010-3547-9844",
-  //     email: "개빡친다@gmail.com"
-  //   },
-  //   {
-  //     empno: "E2412007",
-  //     file: `${profile}`,
-  //     name: "김개똥3",
-  //     position: "사원",
-  //     dept_id: "영업3팀",
-  //     tel: "010-3572-6548",
-  //     email: "개빡친다@gmail.com"
-  //   },
-  //   {
-  //     empno: "E2412005",
-  //     file: `${profile}`,
-  //     name: "김개똥4",
-  //     position: "사원",
-  //     dept_id: "영업4팀",
-  //     tel: "010-8953-5376",
-  //     email: "개빡친다@gmail.com"
-  //   },
-  //   {
-  //     empno: "E2403002",
-  //     file: `${profile}`,
-  //     name: "김개똥5",
-  //     position: "사원",
-  //     dept_id: "운영1팀",
-  //     tel: "010-7253-2375",
-  //     email: "개빡친다@gmail.com"
-  //   },
-  //   {
-  //     empno: "E1506003",
-  //     file: `${profile}`,
-  //     name: "김개똥6",
-  //     position: "사원",
-  //     dept_id: "운영2팀",
-  //     tel: "010-2222-3333",
-  //     email: "개빡친다@gmail.com"
-  //   },
-  //   {
-  //     empno: "E1506005",
-  //     file: `${profile}`,
-  //     name: "김개똥7",
-  //     position: "사원",
-  //     dept_id: "운영3팀",
-  //     tel: "010-2222-3333",
-  //     email: "개빡친다@gmail.com"
-  //   },
-  //   {
-  //     empno: "E1509002",
-  //     file: `${profile}`,
-  //     name: "김개똥8",
-  //     position: "팀장",
-  //     dept_id: "운영3팀",
-  //     tel: "010-2222-3333",
-  //     email: "개빡친다@gmail.com"
-  //   },
-  //   {
-  //     empno: "E1811032",
-  //     file: `${profile}`,
-  //     name: "김개똥9",
-  //     position: "팀장",
-  //     dept_id: "운영3팀",
-  //     tel: "010-2222-3333",
-  //     email: "개빡친다@gmail.com"
-  //   },
-  // ]
-
 
     // 검색바 용
-    const [searchWord, setSearchWord] = useState('name');// title /author, projectName, manager
+    const [searchWord, setSearchWord] = useState('name');
     const [searchText, setSearchText] = useState('');
     
     const handleOptionChange = (e) => setSearchWord(e.target.value);
     const handleTextChange = (e) => setSearchText(e.target.value);
     
+  //전체 리스트 받아오기
+    const [members, setMembers] = useState([]);
+    useEffect(() => {
+
+      fetch("https://localhost:443/employee/all") //json 받을 url
+        .then((res) => res.json())
+        .then((data) =>  setMembers(data.content));
+    }, []);
+  
+    useEffect(() => {
+      console.log("members 상태:", members);
+    }, [members]);
+
+
+    //검색 내용 요청하기
     const handleSearch = () => {
       fetch(`https://localhost:443/employee/search?searchWord=${searchWord}&searchText=${searchText}`)
       .then(res => res.json())
       .then(data => {
-        console.log("🔍 검색 결과:", data);
-        setMembers(data)});
+        console.log("🔍 검색 결과:", data.content);
+        setMembers(data.content)});
       console.log("검색하는 내용:",'${searchWord} : ${searchText}');
-      //검색 내용
     };
 
-    const [members, setMembers] = useState([]);
-      useEffect(() => {
- 
-        fetch("https://localhost:443/employee/all") //json 받을 url
-          .then((res) => res.json())
-          .then((data) => setMembers(data));
-      }, []);
-    
-      useEffect(() => {
-        console.log("members 상태:", members);
-      }, [members]);
+    const options = [
+      { value: "name", label: "이름" },
+      { value: "tel", label: "전화번호" }
+    ];
 
+
+
+    
 
   // const [members, setMembers] = useState([]);
   // const fetchMembers = useCallback(async () => {
@@ -163,12 +88,7 @@ const List_member = () => {
     "", 
     "", 
     "시스템관리자"];
-    // const level = {
-    //   "1": "팀원",
-    //   "2": "팀장",
-    //   "3": "부서장",
-    //   "4": "CEO",
-    // };
+
 
   return (
     <div className={styles.container}>
@@ -193,26 +113,10 @@ const List_member = () => {
                 searchText={searchText}
                 onTextChange={handleTextChange}
                 onSearch={handleSearch}
+                options={options}
               />
 
             </div>
-
-          {/* <div className={styles.search}>
-            <select
-              name='searchWord'
-              className={styles.dropdown}
-              value={searchOption}
-              onChange={(e) => setSearchOption(e.target.value)}
-            >
-              <option value="">검색조건</option>
-              <option value="name">이름</option>
-              <option value="phone">전화번호</option>
-            </select>
-            <div className={styles.search_container}>
-              <input type='text' className={styles.text} placeholder='검색어를 입력하세요.' />
-              <i class="fa-solid fa-magnifying-glass" />
-            </div>
-          </div> */}
 
 
         </div>
