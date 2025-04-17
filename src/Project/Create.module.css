@@ -103,8 +103,8 @@
 }
 
 .buttonBox > button.btnStyle_gray {
-    border: #bbb;
-    background-color: #bbb;
+    border: #999;
+    background-color: #999;
 }
 .buttonBox > button.btnStyle_gray:hover {
     background-color: #888;   

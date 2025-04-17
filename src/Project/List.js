@@ -19,7 +19,7 @@ const List = () => {
 
   // list paging 정보
   const [currPage, setCurrPage] = useState(1);
-  const [pageSize] = useState(8);
+  const [pageSize] = useState(4);
   
   // list 검색 상태
   const [totalPageCnt, setTotalPageCnt] = useState(0);
@@ -80,15 +80,16 @@ const List = () => {
   //project 하단 리스트 data 가져오기
   const handleGetList = useCallback(async (page = currPage, state = searchData.status) => {
     
-    console.log("state:", state);
     setCurrPage(page);
     handleSearchData("status", state);
     
     console.log("state:", searchData.status);
+    console.log("searchWord:", searchData.searchWord);
+    console.log("searchText:", searchData.searchText);
     
     const params = new URLSearchParams({
       currPage: page,
-      pageSize: 8,
+      pageSize: pageSize,
       status: state,
       searchWord: searchData.searchWord,  
       searchText: searchData.searchText,
@@ -111,7 +112,7 @@ const List = () => {
 
       setList(listData);
 
-      setTotalPageCnt(Math.ceil(listJson.totalElements / 10) + 1);
+      setTotalPageCnt(listJson.totalPages);
 
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -127,6 +128,7 @@ const List = () => {
     handleSearchData("status", "");
     handleSearchData("searchWord", "");
     handleSearchData("searchText", "");
+    
     handleGetList(1);
   }, []);
 
@@ -147,7 +149,7 @@ const List = () => {
           </div>
         </div>
 
-        {isOpen && <P_Create closeModal={closeProjectRegister} />}
+        {isOpen && <P_Create closeModal={closeProjectRegister} statusMapping={statusMapping} />}
 
         <div className={styles.listContainer}>
           <div className={styles.subContainerTitle}>전체 프로젝트 리스트</div>
@@ -202,8 +204,8 @@ const List = () => {
           </div>
 
           <div className={styles.pageBar}>
+          {currPage} / {totalPageCnt}
             <div className={styles.pageBox}>
-              {currPage} / {totalPageCnt}
               <div> ◀ </div>
               {pageNumbers.map((num) => (
                 <div key={num} onClick={() => handleGetList(num)} style={{ color: num === currPage ? 'red' : 'normal' }}> {num} </div>

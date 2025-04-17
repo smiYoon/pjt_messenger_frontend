@@ -1,21 +1,27 @@
-import { useState, useRef, useEffect } from 'react';
-import { P_Modify } from '.';
+import { useState, useRef, useEffect, useCallback } from "react";
+import Swal from 'sweetalert2';
+import { P_Modify } from ".";
 
-import styles from './ListUnit.module.css';
+import styles from "./ListUnit.module.css";
 
 import { RxLapTimer } from "react-icons/rx";
 
-console.groupCollapsed('src/Project/ListUnit.js'); console.groupEnd();
+console.groupCollapsed("src/Project/ListUnit.js");
+console.groupEnd();
 
-const ListUnit = ({project, statusMapping}) => {
+const ListUnit = ({ project, statusMapping }) => {
     // console.group('ListUnit(', project, statusMapping, ') invoked.'); console.groupEnd();
 
     const statusColor = (status) => {
         switch (status) {
-            case 1: return  { backgroundColor: '#AADCFF' };
-            case 2: return  { backgroundColor: '#FFF5AA' };
-            case 3: return  { backgroundColor: '#4FC765' };
-            default: return { backgroundColor: '#6c47ff' };
+            case 1:
+                return { backgroundColor: "#AADCFF" };
+            case 2:
+                return { backgroundColor: "#FFF5AA" };
+            case 3:
+                return { backgroundColor: "#4FC765" };
+            default:
+                return { backgroundColor: "#6c47ff" };
         }
     };
 
@@ -35,10 +41,10 @@ const ListUnit = ({project, statusMapping}) => {
                 setShowEditMenu(null);
             }
         };
-        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener("mousedown", handleClickOutside);
 
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [showEditMenu]);
 
@@ -50,71 +56,152 @@ const ListUnit = ({project, statusMapping}) => {
         }
     };
 
+    const handleProjectDelete = useCallback(async (pjtId = project.id) => {
+        console.log("handleProjectDelete(", pjtId, ") invoked ");
+        try {
+            const response = await fetch(`https://localhost:443/project/${pjtId}`, {
+                method: 'DELETE',
+            });
+
+            console.log("response: ", response);
+
+            if (response.ok) {
+                const data = await response.json();
+                successAlert(data);
+                // navigate(-1);
+            } else {
+                console.error('삭제 실패:', response.statusText);
+                errorAlert('프로젝트 삭제가 실패하였습니다.')
+            }
+        } catch (error) {
+            console.error('요청 중 오류 발생:', error);
+            errorAlert('오류가 발생했습니다. 다시 시도해주세요.');
+        }
+    }, []);
+
+    function checkDeleteConfirm() {
+        Swal.fire({
+            title: "프로젝트를 삭제하시겠습니까?",
+            text: " ",
+            icon: "warning",
+            showCancelButton: true,
+            cancelButtonColor: "#999",
+            confirmButtonText: "확인",
+            cancelButtonText: "취소",
+            allowOutsideClick: false,
+            draggable: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log("checkDeleteConfirm() invoked => yes ");
+                handleProjectDelete(project.id);
+            }
+        });
+    };
+    
+    function successAlert(msg) {
+        Swal.fire({
+            title: msg,
+            text: " ",
+            icon: "success",
+            confirmButtonText: "확인",
+            allowOutsideClick: false,
+            draggable: true,
+        });
+    };
+    
+    function errorAlert(msg) {
+        Swal.fire({
+            title: msg,
+            text: " ",
+            icon: "error",
+            confirmButtonText: "확인",
+            allowOutsideClick: false,
+            draggable: true,
+        });
+    };
+
+
 
 
     return (
-
         <div className={styles.body}>
-
             {isOpen && <P_Modify closeModal={closeProjectModify} />}
 
             <div className={styles.listUnit}>
-
                 <div className={styles.content}>
-
                     <div className={styles.header}>
-
                         <div className={styles.pjtStatus}>
-                            <div className={`${styles.status}`} style={statusColor(project.status)}>{statusMapping[project.status]}</div>
+                            <div
+                                className={`${styles.status}`}
+                                style={statusColor(project.status)}
+                            >
+                                {statusMapping[project.status]}
+                            </div>
                         </div>
 
                         <div className={styles.dotBox}>
-                            <div onClick={() => handleEditButton(project.id)} className={styles.dot}>···</div>
+                            <div
+                                onClick={() => handleEditButton(project.id)}
+                                className={styles.dot}
+                            >
+                                ···
+                            </div>
                             {showEditMenu === project.id && (
                                 <div ref={editMenuRef} className={styles.editMenu}>
-                                    <div className={styles.dotBtnEdit} onClick={openProjectModify}>수정</div>
+                                    <div
+                                        className={styles.dotBtnEdit}
+                                        onClick={openProjectModify}
+                                    >
+                                        수정
+                                    </div>
                                     <hr></hr>
-                                    <div className={styles.dotBtnDelete}>삭제</div>
+                                    <div
+                                        className={styles.dotBtnDelete}
+                                        onClick={checkDeleteConfirm}
+                                    >
+                                        삭제
+                                    </div>
                                 </div>
                             )}
                         </div>
                     </div>
-
-                    
 
                     <div className={styles.pjtName}>{project.name}</div>
 
                     <div className={styles.pjtDetail}>{project.detail}</div>
 
                     <div className={styles.manager}>
-                        <label>담당자</label>{project.pjtManager.name} {project.pjtManager.position}
+                        <label>담당자</label>
+                        {project.pjtManager.name} {project.pjtManager.position}
                     </div>
-
 
                     <div className={styles.timeline}>
                         <label>기간</label> {project.startDate} ~ {project.endDate}
                     </div>
 
-                    <hr/>
+                    <hr />
 
-                        {
-                            project.endDday === 0 ? (
-                                <div className={styles.deadline} style={{color: 'red'}}><RxLapTimer className={styles.icon} /> D-day</div>
-                            ) : project.endDday >= -3 && project.endDday < 0 ? (
-                                <div className={styles.deadline} style={{color: 'red'}}><RxLapTimer className={styles.icon} /> D{project.endDday}</div>
-                            ) : project.endDday < -3 ? (
-                                <div className={styles.deadline} style={{color: '#6c47ff'}}><RxLapTimer className={styles.icon} /> D{project.endDday}</div>
-                            ) : project.endDday > 0 ? (
-                                <div className={styles.deadline} style={{color: '#6c47ff'}}><RxLapTimer className={styles.icon} /> D+{project.endDday}</div>
-                            ) : null
-                        }
+                    {project.endDday === 0 ? (
+                        <div className={styles.deadline} style={{ color: "red" }}>
+                            <RxLapTimer className={styles.icon} /> D-day
+                        </div>
+                    ) : project.endDday >= -3 && project.endDday < 0 ? (
+                        <div className={styles.deadline} style={{ color: "red" }}>
+                            <RxLapTimer className={styles.icon} /> D{project.endDday}
+                        </div>
+                    ) : project.endDday < -3 ? (
+                        <div className={styles.deadline} style={{ color: "#6c47ff" }}>
+                            <RxLapTimer className={styles.icon} /> D{project.endDday}
+                        </div>
+                    ) : project.endDday > 0 ? (
+                        <div className={styles.deadline} style={{ color: "#6c47ff" }}>
+                            <RxLapTimer className={styles.icon} /> D+{project.endDday}
+                        </div>
+                    ) : null}
                 </div>
-
             </div>
-
         </div>
     );
-}
-
+};
 
 export default ListUnit;

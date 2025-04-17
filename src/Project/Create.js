@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 console.groupCollapsed('src/Project/Create.js'); console.groupEnd();
 
-const Create = ({closeModal}) => {
+const Create = ({closeModal, statusMapping}) => {
   console.group('Create() invoked.'); console.groupEnd();
 
   const onClose = () => {
@@ -62,7 +62,9 @@ const Create = ({closeModal}) => {
             <label>진행상태</label>
             <select name='manager' className={styles.select}>
               <option value="">== 진행상태를 선택하세요. ==</option>
-              <option value="1">진행예정</option>
+              {Object.entries(statusMapping).map(([sKey, sValue]) => (
+                  <option value={sKey}>{sValue}</option>
+                ))}
             </select>
           </div>
 
