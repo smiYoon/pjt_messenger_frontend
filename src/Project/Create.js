@@ -21,7 +21,7 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
 
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-  const [registerForm, setRegisterForm] = useState({
+  const [formData, setFormData] = useState({
     name: "",
     startDate: "",
     endDate: "",
@@ -29,19 +29,16 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
     detail: "",
     managerEmpno: "",
   });
-  useEffect(() => {
-    console.log("startDate:", startDate, ", endDate:", endDate);
-  }, [startDate, endDate]);
-  useEffect(() => {
-    console.log("11registerForm:", registerForm);
-  }, [registerForm]);
+
+  // useEffect(() => {
+  //   console.log("startDate:", startDate, ", endDate:", endDate);
+  // }, [startDate, endDate]);
+  // useEffect(() => {
+  //   console.log("formData:", formData);
+  // }, [formData]);
 
   const handleChange = (e) => {
-    console.log("e: ", e);
-    console.log("e.target: ", e.target);
-    console.log("e.target.name: ", e.target.name);
-    console.log("e.target.value: ", e.target.value);
-    setRegisterForm({ ...registerForm, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
@@ -68,23 +65,23 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
     e.preventDefault();
 
     try {
-      registerForm.startDate = startDate;
-      registerForm.endDate = endDate;
+      formData.startDate = startDate;
+      formData.endDate = endDate;
       
-      console.log("registerForm: ", registerForm);
+      // console.log("formData: ", formData);
 
       if (
-        !registerForm.name ||
-        !registerForm.startDate ||
-        !registerForm.endDate ||
-        !registerForm.managerEmpno ||
-        !registerForm.status
+        !formData.name ||
+        !formData.startDate ||
+        !formData.endDate ||
+        !formData.managerEmpno ||
+        !formData.status
       ) {
         infoAlert("warning", "", "프로젝트명, 진행기간, 담당자, 진행상태를 입력하세요");
         return;
       }
 
-      const params = new URLSearchParams(registerForm);
+      const params = new URLSearchParams(formData);
 
       const response = await fetch(
           `https://localhost:443/project?${params.toString()}`,
@@ -121,7 +118,7 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
       draggable: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        setRegisterForm({
+        formData({
           name: "",
           startDate: "",
           endDate: "",
@@ -137,11 +134,7 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
   return (
     <div className={styles.back}>
       <div className={styles.body}>
-        <form
-          name="projectForm"
-          id="projectForm"
-          method="post"
-        >
+        <form>
           {/* onSubmit={handleSubmit} */}
           <div className={styles.container}>
             <div className={styles.pageTitle}>Project Create</div>
@@ -194,6 +187,7 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
               >
                 <option value="">== 종괄 담당자를 선택하세요. ==</option>
                 <option value="E2110002">Benyamin Taber</option>
+                <option value="E2206011">Claribel Poetz</option>
               </select>
             </div>
 
@@ -218,7 +212,7 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
                 name="detail"
                 className={styles.textarea}
                 placeholder="내용을 입력하세요."
-                value={registerForm.detail}
+                // value={formData.detail}
                 onChange={handleChange}
               />
             </div>

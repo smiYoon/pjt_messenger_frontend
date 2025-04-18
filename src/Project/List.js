@@ -187,6 +187,9 @@ const List = () => {
                 project={project}
                 statusMapping={statusMapping}
                 onDelete={handleProjectDelete}
+                infoAlert={infoAlert}
+                handleGetList={handleGetList}
+                handleGetUpComingList={handleGetUpComingList}
               />
             ))}
           </div>
@@ -196,7 +199,7 @@ const List = () => {
           <P_Create
             closeModal={closeProjectRegister}
             statusMapping={statusMapping}
-            fAlert={infoAlert}
+            infoAlert={infoAlert}
             handleGetList={handleGetList}
             handleGetUpComingList={handleGetUpComingList}
           />
@@ -268,6 +271,9 @@ const List = () => {
                 project={project}
                 statusMapping={statusMapping}
                 onDelete={handleProjectDelete}
+                infoAlert={infoAlert}
+                handleGetList={handleGetList}
+                handleGetUpComingList={handleGetUpComingList}
               />
             ))}
           </div>

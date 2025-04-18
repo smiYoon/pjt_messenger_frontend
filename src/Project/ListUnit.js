@@ -9,7 +9,7 @@ import { RxLapTimer } from "react-icons/rx";
 console.groupCollapsed("src/Project/ListUnit.js");
 console.groupEnd();
 
-const ListUnit = ({ project, statusMapping, onDelete }) => {
+const ListUnit = ({ project, statusMapping, onDelete, infoAlert, handleGetUpComingList, handleGetList }) => {
   // console.group('ListUnit(', project, statusMapping, ') invoked.'); console.groupEnd();
 
   const statusColor = (status) => {
@@ -77,7 +77,16 @@ const ListUnit = ({ project, statusMapping, onDelete }) => {
 
   return (
     <div className={styles.body}>
-      {isOpen && <P_Modify closeModal={closeProjectModify} />}
+      {isOpen && (
+        <P_Modify
+          closeModal={closeProjectModify}
+          statusMapping={statusMapping}
+          project={project}
+          infoAlert={infoAlert}
+          handleGetList={handleGetList}
+          handleGetUpComingList={handleGetUpComingList}
+        />
+      )}
 
       <div className={styles.listUnit}>
         <div className={styles.content}>
