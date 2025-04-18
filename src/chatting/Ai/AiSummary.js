@@ -13,8 +13,10 @@ const AiSummary = ({id}) => {
     const empno = "E2005003";
 
     const handleExit = async() => {
+
         const formData = new FormData;
         formData.append("empno", empno);
+
         try  {
             // 1. 퇴장 요청 서버로 보내기
             await fetch(`https://localhost:443/chat/${id}`,{
@@ -23,7 +25,26 @@ const AiSummary = ({id}) => {
             });
                 console.log("퇴장 처리 완료");
         } catch (error) {
-                console.log("퇴장 처리 실패, 에러 발생!",error);
+                console.log("퇴장 처리 실패",error);
+        }
+    }
+
+    const handleSummary = async() => {
+
+        const formData = new FormData;
+        formData.append("empno", empno);
+        formData.append("start", startDate);
+        formData.append("end",endDate);
+
+        try  {
+            // 1. 퇴장 요청 서버로 보내기
+            await fetch(`https://localhost:443/chat/${id}/summary`,{
+                method : 'POST',
+                body: formData
+            });
+                console.log("요약 처리 완료");
+        } catch (error) {
+                console.log("요약 처리 실패",error);
         }
     }
 
