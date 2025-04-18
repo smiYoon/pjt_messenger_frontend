@@ -7,18 +7,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 const AiSummary = ({id}) => {
 
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
-
     const empno = "E2005003";
 
-    const handleExit = async() => {
+    const handleExit = async() => { // 퇴장
 
         const formData = new FormData;
         formData.append("empno", empno);
 
-        try  {
-            // 1. 퇴장 요청 서버로 보내기
+        try  { 
             await fetch(`https://localhost:443/chat/${id}`,{
                 method : 'DELETE',
                 body: formData
@@ -29,20 +25,41 @@ const AiSummary = ({id}) => {
         }
     }
 
-    const handleSummary = async() => {
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+
+    const formatDateToYMDHM = (date) => { // 날짜 포멧 변경
+        const d = new Date(date);
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0'); // 1월 → 01
+        const day = String(d.getDate()).padStart(2, '0');
+        const hours = String(d.getHours()).padStart(2, '0');
+        const minutes = String(d.getMinutes()).padStart(2, '0');
+      
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
+    };
+
+    const [summaryText, setSummaryText] = useState("");
+
+    const handleSummary = async() => { // 요약
 
         const formData = new FormData;
         formData.append("empno", empno);
-        formData.append("start", startDate);
-        formData.append("end",endDate);
+        formData.append("start", formatDateToYMDHM(startDate));
+        formData.append("end",formatDateToYMDHM(endDate));
 
         try  {
             // 1. 퇴장 요청 서버로 보내기
-            await fetch(`https://localhost:443/chat/${id}/summary`,{
+            const response = await fetch(`https://localhost:443/message/${id}/summarize`,{
                 method : 'POST',
                 body: formData
             });
-                console.log("요약 처리 완료");
+
+            if (!response.ok) throw new Error("서버 응답 오류");
+
+            const text = await response.text(); // or response.json() if JSON
+            setSummaryText(text); // 상태에 저장
+            console.log("요약 처리 완료");
         } catch (error) {
                 console.log("요약 처리 실패",error);
         }
@@ -79,34 +96,31 @@ const AiSummary = ({id}) => {
                                         selelctStart
                                         startDate={startDate}
                                         endDate={endDate}
-                                        dateFormat="yyyy년 MM월 dd일"
+                                        dateFormat="yyyy-MM-dd HH:mm"
                                         />
                                 </div>
                             </div>
 
-                            <div className={styles.endDateBox}>
-                                <div className={styles.endDate}>
-                                    <span className={styles.endDateTxt}>종료일</span>
+                            <div className={styles.startDateBox}>
+                                <div className={styles.startDate}>
+                                    <span className={styles.startDateTxt}>종료일</span>
                                 </div>
-                                    <div className={styles.endCalendar}>
-                                    <div>
+                                    <div className={styles.startDatePickerBox}>
+                                   
                                         <DatePicker
-                                        className={styles.endDatePicker}
+                                        className={styles.startDatePicker}
                                         selected={endDate}
                                         onChange={(date) => setEndDate(date)}
                                         startDate={startDate}
                                         endDate={endDate}
                                         minDate={startDate}
-                                        dateFormat="yyyy년 MM월 dd일"
+                                        dateFormat="yyyy-MM-dd HH:mm"
                                         />
-                                    </div>
                                 </div>
                             </div>
 
-                            <div className={styles.summary}>
-                                <span className={styles.summaryTxt}>요약하기</span>
-                            </div>
-                            
+                            <div className={styles.summaryInfo}>{summaryText}</div>
+                            <div className={styles.summaryButton} onClick={handleSummary}>요약하기</div>
                             <IoExitOutline className={styles.exitButton} onClick={handleExit}/>
 
                         <div className={styles.summaryBox}/>
