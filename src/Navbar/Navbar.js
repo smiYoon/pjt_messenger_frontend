@@ -8,21 +8,21 @@ const Navbar = ({ userRole }) => {
   console.group('Navbar() invoked.'); console.groupEnd();
 
   const handleLogout = async () => {
-  
-    try {
-        const response = await fetch('https://localhost/logout', {
-            method: 'POST'
-        });
 
-        if(response.ok) {
-            console.log('logout Successful');
-            window.location.href = '/'; // 로그아웃 성공 시 리다이렉트( 프론트 주소 입력해야 함.)
-        } else {
-            console.error('로그아웃 실패! ', response.status);
-        }
+    try {
+      const response = await fetch('https://localhost/logout', {
+        method: 'POST'
+      });
+
+      if (response.ok) {
+        console.log('logout Successful');
+        window.location.href = '/'; // 로그아웃 성공 시 리다이렉트( 프론트 주소 입력해야 함.)
+      } else {
+        console.error('로그아웃 실패! ', response.status);
+      }
 
     } catch (error) {
-        console.error('Error during logout:', error);
+      console.error('Error during logout:', error);
     } // try
 
   } // handlelogout
@@ -45,26 +45,30 @@ const Navbar = ({ userRole }) => {
           <div className={styles.text}>채팅</div>
         </Link>
 
-        <Link className={styles.flip}>
-          <i className={`${styles.icon} fas fa-file-pen`} />
-          <div className={styles.text}>업무</div>
-        </Link>
+        {userRole != '4' && (
+          <Link className={styles.flip}>
+            <i className={`${styles.icon} fas fa-file-pen`} />
+            <div className={styles.text}>업무</div>
+          </Link>
+        )}
 
         <Link to={`/board/notice/list`} className={styles.flip}>
           <i className={`${styles.icon} fas fa-chalkboard`} />
           <div className={styles.text}>게시판</div>
         </Link>
 
-        <Link className={styles.flip}>
-          <i className={`${styles.icon} fa-solid fa-list-check`} />
-          <div className={styles.text}>프로젝트</div>
-        </Link>
+        {userRole != '1' && (
+          <Link className={styles.flip}>
+            <i className={`${styles.icon} fa-solid fa-list-check`} />
+            <div className={styles.text}>프로젝트</div>
+          </Link>
+        )}
       </div>
 
       <div className={styles.profile}>
         <img src={profile} alt='' className={styles.profileImg} />
         <div className={styles.logout}>
-          <FontAwesomeIcon icon={faArrowRightFromBracket} onClick={handleLogout}/>
+          <FontAwesomeIcon icon={faArrowRightFromBracket} onClick={handleLogout} />
         </div>
       </div>
     </div>
