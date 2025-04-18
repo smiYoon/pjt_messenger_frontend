@@ -339,7 +339,7 @@ const List = () => {
               ).map((pageNum) => (
                 <div
                   key={pageNum}
-                  className={currPage === pageNum ? styles.activePage : ""}
+                  className={currPage === pageNum ? styles.activePage : styles.pageNum}
                   onClick={() => handleGetList(pageNum)} // ← 이 부분에서 currPage 변경됨
                 >
                   {pageNum}

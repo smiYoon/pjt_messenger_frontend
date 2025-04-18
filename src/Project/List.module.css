@@ -1,15 +1,18 @@
 .body {
     margin: 0;
     padding: 0;
-    width: calc(100% - 120px);
+    width: 100vw;
     height: 100vh;  
-    color: #222; 
+    color: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .container {
-    margin: 4vh auto;
-    width: 90%;
+    width: calc(90vw - 150px);
     height: 92vh;
+    margin-left: 8vw;
 }
 
 .pageTitle {
@@ -62,7 +65,7 @@
 }
 
 .searchBar {
-    width: 40%;
+    width: 50%;
     display: flex;
     justify-content: right;
     align-items: center;
@@ -92,10 +95,8 @@
     background-color: #4FC765;
     position:relative;
     top: 50%;
-    bottom: -42px;
+    bottom: -39px;
 }
-
-
 
 .searchBar .dropdown {
     margin-right: 15px;
@@ -182,20 +183,21 @@
 .pageBar { 
     height: 3vh;
 }
-.pageBox {   
+.pageBox {
     margin: 0 auto;
-    width: 50%;
+    /* width: 50%; */
     line-height: 3vh;
 
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-
+    justify-content: center;
+    align-items: center; 
+   
 }
 .pageBox .pageNum {
     padding:0 10px;
 }
 .activePage{
+    padding:0 10px;
     color:red;
     font-size: 1.2rem;
 }
