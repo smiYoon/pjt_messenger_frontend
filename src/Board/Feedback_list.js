@@ -9,7 +9,7 @@ const Feedback_list = () => {
     
     const fetchPosts = useCallback(async () => {
             try {
-                const response = await fetch(`https://localhost:443/board/Feedback`, {
+                const response = await fetch(`https://localhost/board/Feedback`, {
                     method: 'GET',
                 });
     
@@ -65,12 +65,13 @@ const Feedback_list = () => {
                                 className={styles.select}
                                 onChange={handleChange}
                             >
-                                <option value="">제목</option>
-                                <option value="">작성자?</option>
+                                <option value="">검색조건</option>
+                                <option value="title">제목</option>
+                                <option value="author">작성자</option>
                             </select>
                             <div className={styles.input_box}>
                                 <input name='searchText' type='text' className={styles.input} placeholder='검색'></input>
-                                <i className="fa-solid fa-magnifying-glass"></i>
+                                <i className="fa-solid fa-magnifying-glass" />
                             </div>
                         </div>
                     </div>
@@ -89,7 +90,7 @@ const Feedback_list = () => {
                                         <tr>
                                             <td className={styles.number}>{post.id}</td>
                                             <td className={styles.postTitle}>{post.title}</td>
-                                            <td className={styles.writer}>{post.writer}</td>
+                                            <td className={styles.writer}>{post.author}</td>
                                             <td className={styles.writeTime}>{post.crtDate}</td>
                                             <td className={styles.views}>{post.count}</td>
                                         </tr>

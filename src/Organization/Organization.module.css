@@ -1,13 +1,12 @@
 .container {
   box-sizing: border-box;
-  padding: 10px;
-    position: relative;
-    width: 450px;
-    height: 100vh;
+  /* padding: 30px; */
+  position: relative;
+  width: 430px;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 
-    background-color: #E5E1F5;
-  }
-  
- 
-
-  
+  background-color: #E5E1F5;
+}

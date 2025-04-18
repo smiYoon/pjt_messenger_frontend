@@ -3,11 +3,13 @@ import styles from './Notice_list.module.css';
 import { Link } from 'react-router-dom';
 
 const Notice_list = () => {
+    const [inputValue, setInputValue] = useState();
     const [posts, setPosts] = useState([]);
+    const handleChange = (e) => setInputValue(e.target.value);
 
     const fetchPosts = useCallback(async () => {
         try {
-            const response = await fetch(`https://localhost:443/board/Notice`, {
+            const response = await fetch(`https://localhost/board/Notice`, {
                 method: 'GET',
             });
 
@@ -63,7 +65,11 @@ const Notice_list = () => {
                     <div className={styles.option_box}>
                         <Link to={`/board/notice/create`} className={styles.button}>등록</Link>
                         <div className={styles.search_box}>
-                            <select name='searchWord' className={styles.select}>
+                            <select 
+                                name='searchWord' 
+                                className={styles.select}
+                                onChange={handleChange}
+                            >
                                 <option value="">검색조건</option>
                                 <option value="title">제목</option>
                                 <option value="author">작성자</option>

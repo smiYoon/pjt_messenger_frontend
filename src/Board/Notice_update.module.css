@@ -3,12 +3,12 @@
     display: flex;
     margin: 0;
     padding: 0;
-    width: 96vw;
+    width: 100vw;
     height: 100vh;
 }
 
 .side_bar {
-    width: 10%;
+    width: 20%;
     height: 100vh;
     background-color: burlywood;
     position: relative;

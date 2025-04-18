@@ -10,7 +10,7 @@ const Navbar = ({ userRole }) => {
   const handleLogout = async () => {
   
     try {
-        const response = await fetch('https://localhost:443/logout', {
+        const response = await fetch('https://localhost/logout', {
             method: 'POST'
         });
 

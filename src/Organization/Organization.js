@@ -21,7 +21,7 @@ const Organization = () => {
   useEffect(() =>{
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://localhost:443/department/${DepartmentNumber}`);
+        const response = await fetch(`https://localhost/department/${DepartmentNumber}`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -44,7 +44,7 @@ const Organization = () => {
         data={treeData} 
         // rowHeight={40}
         width={400}
-        height={900}
+        height={850}
         className={styles.arborist}
       />
     </div>
@@ -91,7 +91,7 @@ const convertToSortableTree = (node) => {
     name: node.name,
     isDepartment: true,
     depth: node.depth,
-    // children: [...sortedData, ...sortedDept]
-    children: [...sortedDept]
+    children: [...sortedData, ...sortedDept]
+    // children: [...sortedDept]
   };
 } // ConvertToSortableTree

@@ -5,7 +5,7 @@
     top: 50vh;
     left: 50px;
     transform: translateY(-50%);
-    width: 120px;
+    width: 100px;
     height: 80vh;
     border-radius: 30px;
     background-color: #373737;
@@ -30,11 +30,11 @@
 }
 
 .buttons .flip {
-    background-color: #373737;
     display: flex;
     align-items: center;
     justify-content: center;
-    /* width: 3vw;
+    /* background-color: #373737;
+    width: 3vw;
     height: 3vw;
     border-radius: 50%; */
     font-size: 0.9rem;
@@ -43,8 +43,6 @@
     color: white;
     display: flex;
     flex-direction: column;
-    /* transform: rotate(0deg); */
-    /* border-radius: 50%; */
     border: none;
     transition: color 0.5s ease-in-out;
 }
