@@ -8,7 +8,7 @@ import { RxLapTimer } from "react-icons/rx";
 console.groupCollapsed("src/Project/ListUpComing.js");
 console.groupEnd();
 
-const ListUpComing = ({ project, statusMapping, onDelete }) => {
+const ListUpComing = ({ project, statusMapping, onDelete, infoAlert, handleGetUpComingList, handleGetList }) => {
   // console.group("ListUpcommig(", project, statusMapping, ") invoked."); console.groupEnd();
 
   // 모달 상태
@@ -63,7 +63,16 @@ const ListUpComing = ({ project, statusMapping, onDelete }) => {
 
   return (
     <div className={styles.body}>
-      {isOpen && <P_Modify closeModal={closeProjectModify} />}
+      {isOpen && (
+        <P_Modify
+          closeModal={closeProjectModify}
+          statusMapping={statusMapping}
+          project={project}
+          infoAlert={infoAlert}
+          handleGetList={handleGetList}
+          handleGetUpComingList={handleGetUpComingList}
+        />
+      )}
 
       <div className={styles.name}>{project.name}</div>
 
@@ -83,19 +92,19 @@ const ListUpComing = ({ project, statusMapping, onDelete }) => {
         <div className={styles.status}>{statusMapping[project.status]}</div>
 
         {project.endDday === 0 ? (
-          <div className={styles.deadline} style={{ color: "red" }}>
+          <div className={styles.deadline} style={{ color: "#ee311d" }}>
             <RxLapTimer className={styles.icon} /> D-day
           </div>
         ) : project.endDday >= -3 && project.endDday < 0 ? (
-          <div className={styles.deadline} style={{ color: "red" }}>
+          <div className={styles.deadline} style={{ color: "#ee311d" }}>
             <RxLapTimer className={styles.icon} /> D{project.endDday}
           </div>
         ) : project.endDday < -3 ? (
-          <div className={styles.deadline} style={{ color: "blue" }}>
+          <div className={styles.deadline} style={{ color: "#053869" }}>
             <RxLapTimer className={styles.icon} /> D{project.endDday}
           </div>
         ) : project.endDday > 0 ? (
-          <div className={styles.deadline} style={{ color: "blue" }}>
+          <div className={styles.deadline} style={{ color: "#053869" }}>
             <RxLapTimer className={styles.icon} /> D+{project.endDday}
           </div>
         ) : null}

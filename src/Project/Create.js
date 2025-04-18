@@ -45,7 +45,7 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
     const fetchSelectManagerList = async () => {
       try {
         const response = await fetch(
-          "https://localhost:443/employee/selectList",
+          "https://localhost:443/employee/selectlist",
           { method: "GET" }
         );
         if (response.ok) {
@@ -162,7 +162,6 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
                 dateFormat="yyyy-MM-dd"
                 className={styles.inputDate}
                 placeholder="시작일자을 입력하세요."
-                // value={registerForm.startDate}
               />
               <span className={styles.tilde}>~</span>
               <DatePicker
@@ -174,7 +173,6 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
                 dateFormat="yyyy-MM-dd"
                 className={styles.inputDate}
                 placeholder="종료일자을 입력하세요."
-                // value={endDate}
               />
             </div>
 
@@ -185,9 +183,10 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
                 className={styles.select}
                 onChange={handleChange}
               >
-                <option value="">== 종괄 담당자를 선택하세요. ==</option>
-                <option value="E2110002">Benyamin Taber</option>
-                <option value="E2206011">Claribel Poetz</option>
+                <option value="">== 총괄 담당자를 선택하세요. ==</option>
+                {selectList.map((emp) => (
+                  <option value={emp.empno}>{emp.department.name} {emp.position} {emp.name}</option>
+                ))}
               </select>
             </div>
 
@@ -196,12 +195,11 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
               <select
                 name="status"
                 className={styles.select}
-                // selected={registerForm.status}
                 onChange={handleChange}
               >
-                <option value="">== 진행상태를 선택하세요. ==</option>
+                <option value="" key={""}>== 진행상태를 선택하세요. ==</option>
                 {Object.entries(statusMapping).map(([sKey, sValue]) => (
-                  <option value={sKey}>{sValue}</option>
+                  <option value={sKey} key={sKey}>{sValue}</option>
                 ))}
               </select>
             </div>

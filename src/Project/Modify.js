@@ -40,7 +40,7 @@ const Modify = ({ closeModal, statusMapping, infoAlert, project, handleGetUpComi
     const fetchSelectManagerList = async () => {
       try {
         const response = await fetch(
-          "https://localhost:443/employee/selectList",
+          "https://localhost:443/employee/selectlist",
           { method: "GET" }
         );
         if (response.ok) {
@@ -173,9 +173,10 @@ const Modify = ({ closeModal, statusMapping, infoAlert, project, handleGetUpComi
               <select name="managerEmpno" className={styles.select}
                 onChange={handleChange}
               >
-                <option value="">== 종괄 담당자를 선택하세요. ==</option>
-                <option value="E2110002" selected={"E2110002" === formData.managerEmpno}>Benyamin Taber</option>
-                <option value="E2206011" selected={"E2206011" === formData.managerEmpno}>Claribel Poetz</option>
+                <option value="">== 총괄 담당자를 선택하세요. ==</option>
+                {selectList.map((emp) => (
+                  <option value={emp.empno} selected={emp.empno === formData.managerEmpno}>{emp.department.name} {emp.position} {emp.name}</option>
+                ))}
               </select>
             </div>
 

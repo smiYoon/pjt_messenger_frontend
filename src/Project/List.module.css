@@ -184,11 +184,18 @@
 }
 .pageBox {   
     margin: 0 auto;
-    width: 500px;
+    width: 50%;
     line-height: 3vh;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
 
+}
+.pageBox .pageNum {
+    padding:0 10px;
+}
+.activePage{
+    color:red;
+    font-size: 1.2rem;
 }

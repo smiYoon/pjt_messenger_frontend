@@ -22,9 +22,22 @@ const List = () => {
   // list paging 정보
   const [currPage, setCurrPage] = useState(1);
   const [pageSize] = useState(4);
+  const [blockSize] = useState(10);
+  const [totalPageCnt, setTotalPageCnt] = useState(0);
+  const [currBlock, setCurrBlock] = useState(Math.floor(currPage / blockSize));
+
+  const [startPage, setStartPage] = useState(currBlock * blockSize);
+  const [endPage, setEndPage] = useState(
+    Math.min(startPage + blockSize, totalPageCnt)
+  );
+
+  useEffect(() => {
+    setCurrBlock(Math.floor(currPage / blockSize));
+    setStartPage(currBlock * blockSize);
+    setEndPage(Math.min(startPage + blockSize, totalPageCnt));
+  }, [currPage, totalPageCnt, currBlock, startPage, endPage]);
 
   // list 검색 상태
-  const [totalPageCnt, setTotalPageCnt] = useState(0);
   const pageNumbers = [];
   for (let i = 1; i <= totalPageCnt; i++) {
     pageNumbers.push(i);
@@ -109,6 +122,10 @@ const List = () => {
           ...data,
         }));
 
+        setCurrBlock(Math.floor(currPage / blockSize));
+        setStartPage(currBlock * blockSize);
+        setEndPage(Math.min(startPage + blockSize, totalPageCnt));
+
         console.log("listData:", listData);
 
         setList(listData);
@@ -184,6 +201,7 @@ const List = () => {
           <div className={styles.upComingContent}>
             {upComingList.map((project) => (
               <P_ListUpComing
+                key={project.id}
                 project={project}
                 statusMapping={statusMapping}
                 onDelete={handleProjectDelete}
@@ -268,6 +286,7 @@ const List = () => {
           <div className={styles.listBox}>
             {list.map((project) => (
               <P_ListUnit
+                key={project.id}
                 project={project}
                 statusMapping={statusMapping}
                 onDelete={handleProjectDelete}
@@ -279,20 +298,73 @@ const List = () => {
           </div>
 
           <div className={styles.pageBar}>
-            {currPage} / {totalPageCnt}
+            {currPage} / {totalPageCnt} / {startPage} / {endPage}
             <div className={styles.pageBox}>
-              <div> ◀ </div>
-              {pageNumbers.map((num) => (
+              <div
+                className={styles.pageNum}
+                onClick={() => handleGetList(1)}
+                disabled={currPage === 1}
+              >
+                <i className="fas fa-angles-left"></i>
+              </div>
+
+              {/* <div className={styles.pageNum} onClick={() => handleGetList(startPage-1)} disabled={currPage <= 9}>
+                <i className="fas fa-angle-left"></i>
+              </div> */}
+
+              <div
+                className={styles.pageNum}
+                onClick={() => handleGetList(currPage - 1)}
+                style={{ display: currPage === 1 ? "none" : "" }}
+              >
+                <i className="fas fa-angle-left"></i>
+              </div>
+
+              {/* {pageNumbers.map((num) => (
                 <div
                   key={num}
                   onClick={() => handleGetList(num)}
                   style={{ color: num === currPage ? "red" : "normal" }}
+                  className={styles.pageNum}
                 >
-                  {" "}
-                  {num}{" "}
+                  {num}
+                </div>
+              ))} */}
+
+
+              {/* 페이지 블럭 마지막 페이비 클릭 시 오류!!!!!!!! */}
+              {Array.from(
+                { length: endPage - startPage },
+                (_, i) => startPage + i + 1
+              ).map((pageNum) => (
+                <div
+                  key={pageNum}
+                  className={currPage === pageNum ? styles.activePage : ""}
+                  onClick={() => handleGetList(pageNum)} // ← 이 부분에서 currPage 변경됨
+                >
+                  {pageNum}
                 </div>
               ))}
-              <div> ▶ </div>
+
+              <div
+                className={styles.pageNum}
+                onClick={() => handleGetList(currPage + 1)}
+                disabled={currPage >= totalPageCnt}
+              >
+                <i className="fas fa-angle-right"></i>
+              </div>
+
+              {/* <div className={styles.pageNum} onClick={() => handleGetList(endPage)} disabled={currPage >= totalPageCnt}>
+                <i className="fas fa-angle-right"></i>
+              </div> */}
+
+              <div
+                className={styles.pageNum}
+                onClick={() => handleGetList(totalPageCnt)}
+                disabled={currPage >= totalPageCnt}
+              >
+                <i className="fas fa-angles-right"></i>
+              </div>
             </div>
           </div>
         </div>

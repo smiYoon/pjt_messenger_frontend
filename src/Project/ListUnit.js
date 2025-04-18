@@ -143,19 +143,19 @@ const ListUnit = ({ project, statusMapping, onDelete, infoAlert, handleGetUpComi
           <hr />
 
           {project.endDday === 0 ? (
-            <div className={styles.deadline} style={{ color: "red" }}>
+            <div className={styles.deadline} style={{ color: "#ee311d" }}>
               <RxLapTimer className={styles.icon} /> D-day
             </div>
           ) : project.endDday >= -3 && project.endDday < 0 ? (
-            <div className={styles.deadline} style={{ color: "red" }}>
+            <div className={styles.deadline} style={{ color: "#ee311d" }}>
               <RxLapTimer className={styles.icon} /> D{project.endDday}
             </div>
           ) : project.endDday < -3 ? (
-            <div className={styles.deadline} style={{ color: "#6c47ff" }}>
+            <div className={styles.deadline} style={{ color: "#053869" }}>
               <RxLapTimer className={styles.icon} /> D{project.endDday}
             </div>
           ) : project.endDday > 0 ? (
-            <div className={styles.deadline} style={{ color: "#6c47ff" }}>
+            <div className={styles.deadline} style={{ color: "#053869" }}>
               <RxLapTimer className={styles.icon} /> D+{project.endDday}
             </div>
           ) : null}
