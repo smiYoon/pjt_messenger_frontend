@@ -14,7 +14,7 @@ const Feedback_detail = () => {
       const fetchPostData = async () => {
   
         try {
-          const response = await fetch(`https://localhost:443/board/${id}`, {
+          const response = await fetch(`https://localhost:443/board/Feedback/${id}`, {
             method: 'GET',
           });
   
@@ -54,8 +54,8 @@ const Feedback_detail = () => {
           })
       }
 
-  const handleCancelClick = () => {
-    navigate("/board/feedback/list");
+  const handleUpdateClick = () => {
+    navigate(`/board/feedback/update/${ id }`);
   };
 
 
@@ -105,7 +105,7 @@ const Feedback_detail = () => {
               {post.detail}
             </div>
             <div className={styles.buttonContainer}>
-              <button onClick={handleCancelClick} className={styles.edit} >수정</button>
+              <button onClick={handleUpdateClick} className={styles.edit} >수정</button>
               <button onClick={handleClick} className={styles.cancel}>삭제</button>
             </div>
           </div>

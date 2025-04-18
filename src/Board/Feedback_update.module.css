@@ -67,14 +67,23 @@
     font-size: 2rem;
     font-weight: bold;
     color: #444;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.right_panel .form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .title {
+    all: unset;
     width: 80%;
     border: none;
     outline: none;
     font-size: 1.3rem;
+    font-weight: bold;
     text-align: left;
     margin-bottom: 10px;
     padding-left: 10px;
@@ -89,38 +98,54 @@
 }
 
 .textbox_container .textbox {
+    font-family: 'Pretendard-Regular', sans-serif;
     width: 100%;
-    height: 40vh;
+    height: 50vh;
     border: 1px solid #6C47FF;
     border-radius: 10px;
     font-size: 1rem;
+    line-height: 1rem;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 20px;
     resize: none;
+    white-space: pre-line;
 }
 
 .textbox_container .textbox:focus {
     outline: none;
 }
 
-.right_panel .submit {
-    width: 10vw;
-    padding: 10px 0;
+.buttons {
     margin-left: auto;
+}
 
+.buttons .submit,
+.buttons .cancel {
+    width: 8vw;
+    padding: 10px 0;
+    margin-left: 2vw;
+    
     font-size: 1.5rem;
     font-weight: bold;
-    text-decoration: none;
     text-align: center;
 
     border-radius: 10px;
-    border: 1px solid #FFEBB8;
-    color: black;
-    background-color: #FFEBB8;
     cursor: pointer;
 }
 
-.right_panel .submit:hover {
+.buttons .submit {
+    border: 1px solid #6C47FF;
+    color: white;
+    background-color: #6C47FF;
+}
+
+.buttons .submit:hover {
     background-color: #4a1dff;
     transition: background-color 0.2s ease;
+}
+
+.buttons .cancel {
+    background-color: white;
+    color: #222;
+    border: 1px solid #4a1dff;
 }
