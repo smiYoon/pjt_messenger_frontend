@@ -15,12 +15,6 @@ body {
   font-family: 'Pretendard-Regular', sans-serif;
 }
 
-.navbar{
-  width: 5vw;
-  height: 100vh;
-  background-color: #666;
-}
-
 .main {
   display: flex;
   position: relative;

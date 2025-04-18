@@ -1,0 +1,148 @@
+.body {
+    width: 22.7%;
+    color: #222; 
+}
+
+.listUnit {
+
+}
+
+
+.content {
+    padding: 20px 30px 15px;
+    border-radius: 10px;
+    border: 1px solid #6c47ff;
+    height: 34vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    position: relative;
+}
+
+
+.content label {
+    display: inline-block;
+    width: 80px;
+    font-weight: bold;
+}
+.content > hr {
+    border: 1px solid #6c47ff;
+    margin: 0;
+}
+.content .icon {
+    vertical-align: text-top;
+}
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.pjtStatus {
+}
+
+.status {
+    padding: 5px 20px;
+
+    border-radius: 50px;
+    border: 1px solid #6c47ff;
+
+    text-align: center;
+    box-sizing: border-box;
+}
+.status1 {
+    background-color: #AADCFF;
+}
+.status2 {
+    background-color: #FFF5AA;
+}
+.status3 {
+    background-color: #4FC765;
+}
+
+
+.dotBox {
+}
+.dot {
+    width: 10%;
+
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+.pjtName {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+.pjtDetail {
+    height: 40px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 최대 줄 수 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.manager {
+    
+}
+.timeline {
+
+}
+.deadline {
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #4016eb;
+
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 5px;
+}
+
+
+.editMenu {
+    position:absolute;
+    top:48px;
+    right: 30px;
+
+    z-index: 30;
+
+    border-radius: 5px;
+}
+.editMenu hr {
+    margin: 0;
+}
+
+
+.dotBtnEdit {
+    background-color: #aea2df;
+    padding: 12px 25px;
+    cursor: pointer;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.dotBtnEdit:hover  {    
+    background-color: #593ad6;
+    color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.dotBtnDelete {
+    background-color: #aea2df;
+    padding: 12px 25px;
+    cursor: pointer;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.dotBtnDelete:hover  {    
+    background-color: #593ad6;
+    color: white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+

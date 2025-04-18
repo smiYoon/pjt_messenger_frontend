@@ -2,6 +2,7 @@ import styles from './Navbar.module.css';
 import profile from './img/profile.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   console.group('Navbar() invoked.'); console.groupEnd();
@@ -9,33 +10,29 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.buttons}>
-        <div className={styles.chat}>
-          <button className={styles.flip}>
+          <Link to={`/member/list`} className={styles.flip}>
+            회원관리
+          </Link>
+
+          <Link to={`/chat`} className={styles.flip}>
             채팅
-          </button>
-        </div>
+          </Link>
 
-        <div className={styles.work}>
-          <button className={styles.flip}>
+          <Link to={`/work`} className={styles.flip}>
             업무
-          </button>
-        </div>
+          </Link>
 
-        <div className={styles.board}>
-          <button className={styles.flip}>
+          <Link to={`/board/notice/list`} className={styles.flip}>
             게시판
-          </button>
-        </div>
+          </Link>
 
-        <div className={styles.project}>
-          <button className={styles.flip}>
+          <Link to={`/project/list`} className={styles.flip}>
             프로젝트
-          </button>
-        </div>
+          </Link>
       </div>
 
       <div className={styles.profile}>
-        <img src={profile} alt='' />
+        <img src={ profile } alt='' className={styles.profileImg} />
         <div className={styles.logout}>
           <FontAwesomeIcon icon={faArrowRightFromBracket} />
         </div>

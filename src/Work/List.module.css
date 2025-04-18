@@ -1,0 +1,172 @@
+
+.body {
+    margin: 4vh auto;
+    width: 90%;
+    height: 80%;
+    padding: 0;
+    text-align: left;
+}
+
+
+
+.pageTitle {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+
+
+
+.pageMiddle {
+    margin: 4vh 0;
+    font-size: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.middleLeft {
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+.empPlusButton{
+    width: 5vh;
+    height: 5vh;
+    border-radius: 50%;
+    border: 0;
+}
+
+.empPlusButton:hover{
+    background-color: #E5E1F5;
+}
+
+
+
+.middleRight {
+    text-align: right;
+    display: flex;
+    font-size: 1rem;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1vw;
+}
+
+.toggleWrapper{
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+}
+
+
+.toggle_container{
+    width: 3vw; 
+    height: 2vh; 
+    background-color: #E5E1F5;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid #6C47FF;
+}
+
+.toggle_container:hover{
+    .toggle_button{
+        background-color: #4A1DFF;
+    }
+}
+
+.toggle_button{
+    width: 0.8vw;
+    height: 80%;
+    background-color: #6C47FF;
+    border-radius: 50%;
+    position: absolute;
+    transition: all 0.3s ease;
+    margin: 0 2px;
+}
+
+.managed {
+    left: 0;
+}
+  
+.requested {
+    left: calc(100% - 1vw);
+}
+
+.addButton{
+    height: 5vh;
+    padding: 0 1vw;
+    border-radius: 20px 20px;
+    background-color: #6C47FF;
+    color: white;
+    border: 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.addButton:hover{
+    background-color: #4A1DFF;
+}
+
+
+
+
+.pageBottom {
+    margin: 0;
+    font-size: 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.pageBottom_Box{
+    width: 22vw;
+    transition: all 0.3s ease;
+}
+
+.hr{
+    background-color: #616264;
+    height: 3px;
+    transition: all 0.3s ease;
+}
+
+.pageBottom_Box:hover{
+    color: #6C47FF;
+
+    .bottomNumber{
+        background-color: #6C47FF;
+    }
+
+    .hr{
+        background-color: #6C47FF;
+    }
+}
+
+.bottomNumber{
+    height: 5vh;
+    padding: 0 1vw;
+    border-radius: 20px 20px;
+    background-color: #616264;
+    color: white;
+    border: 0;
+    transition: all 0.3s ease;
+}
+
+
+.bottom_background{
+    background-color: #E5E1F5;
+    border-radius: 10px;
+    height: 60vh;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+    padding: 2vh;
+}
+
+.WorkBox{
+    height: 20vh;
+    padding: 1vh;
+    margin: 1vh;
+}
