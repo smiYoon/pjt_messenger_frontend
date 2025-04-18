@@ -4,7 +4,7 @@ import Organization from '../Organization/Organization';
 import { Link, useNavigate } from 'react-router-dom';
 import profile from '../Navbar/img/profile.png';
 
-import SearchBar from '../SearchBar/SearchBar.js';
+const List_member = () => {
 
   const [searchOption, setSearchOption] = useState('');
 
@@ -56,56 +56,6 @@ import SearchBar from '../SearchBar/SearchBar.js';
     "5": "인사담당자",
   };
 
-    const options = [
-      { value: "name", label: "이름" },
-      { value: "tel", label: "전화번호" }
-    ];
-
-
-
-    
-
-  // const [members, setMembers] = useState([]);
-  // const fetchMembers = useCallback(async () => {
-
-  //   try {
-  //     const response = await fetch(`https://localhost:443/employee`, {
-  //       method: 'GET',
-  //     });
-
-  //     if(response.ok) {
-  //       const data = await response.json();
-  //       console.log("data:", data);
-  //       setMembers(data.map(members => ({
-  //         empno: members.empno,
-  //         name: members.name,
-  //         email: members.email,
-  //         tel: members.tel,
-  //         position: members.position,
-  //         dept_id: members.department.name,
-  //       })));
-  //     } else {
-  //       console.error('불러오기 실패', response.statusText);
-  //     }
-  //   } catch(error) {
-  //     console.error('Error fetching data:', error);
-  //   }});
-
-  //   useEffect(() => {
-  //     fetchMembers();
-  //   }, []);
-
-  const level = ["", 
-    "팀원", 
-    "팀장", 
-    "부서장", 
-    "CEO", 
-    "인사", 
-    "", 
-    "", 
-    "시스템관리자"];
-
-
   return (
     <div className={styles.container}>
       <div className={styles.left_panel}>
@@ -131,8 +81,7 @@ import SearchBar from '../SearchBar/SearchBar.js';
               <input type='text' className={styles.text} placeholder='검색어를 입력하세요.' />
               <i className="fa-solid fa-magnifying-glass" />
             </div>
-
-
+          </div>
         </div>
         <div className={styles.list}>
           {/* {personalInfo.map((member) => ( // 프론트 테스트용 */}

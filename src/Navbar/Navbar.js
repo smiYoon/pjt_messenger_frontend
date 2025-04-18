@@ -40,12 +40,12 @@ const Navbar = ({ userRole }) => {
           </Link>
         )}
 
-        <Link className={styles.flip}>
+        <Link to={`/chat`} className={styles.flip}>
           <i className={`${styles.icon} fas fa-comment-dots`} />
           <div className={styles.text}>채팅</div>
         </Link>
 
-        <Link className={styles.flip}>
+        <Link to={`/work`} className={styles.flip}>
           <i className={`${styles.icon} fas fa-file-pen`} />
           <div className={styles.text}>업무</div>
         </Link>
@@ -55,7 +55,7 @@ const Navbar = ({ userRole }) => {
           <div className={styles.text}>게시판</div>
         </Link>
 
-        <Link className={styles.flip}>
+        <Link to={`/project/list`} className={styles.flip}>
           <i className={`${styles.icon} fa-solid fa-list-check`} />
           <div className={styles.text}>프로젝트</div>
         </Link>
