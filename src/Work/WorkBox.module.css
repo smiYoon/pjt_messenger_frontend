@@ -8,6 +8,8 @@
     display: flex;
     flex-direction: column;
     gap: 1vh;
+
+    font-size: 1.2rem;
 }
 
 .workBoxTop{
@@ -25,6 +27,8 @@
     background-color: #6C47FF;
     color: white;
     border: 0;
+
+    font-size: 1.3rem;
 }
 
 .arrow{

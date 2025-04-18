@@ -31,6 +31,13 @@
     text-align: left;
     display: flex;
     align-items: center;
+    gap: 1vw;
+}
+
+.nameCircle{
+    border: solid 2px #6C47FF;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
 .empPlusButton{
@@ -158,11 +165,15 @@
 
 
 .bottom_background{
+    display: flex;
+    flex-direction: column;
     background-color: #E5E1F5;
+    overflow-y: auto;
     border-radius: 10px;
     height: 60vh;
     box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
     padding: 2vh;
+    gap: 1vh;
 }
 
 .WorkBox{

@@ -25,7 +25,7 @@ const App = () => {
 
           <Route path="/work" element={<W_List/>}/>
           <Route path="/work/create" element={<W_Create/>}/>
-          <Route path="/work/detail" element={<W_Detail/>}/>
+          <Route path="/work/detail/:workId" element={<W_Detail/>}/>
 
           <Route path="/board/notice/create" element={<Notice_create />} />
           <Route path="/board/notice/detail" element={<Notice_detail />} />
