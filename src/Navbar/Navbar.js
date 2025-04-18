@@ -7,6 +7,29 @@ import { Link } from 'react-router-dom';
 const Navbar = ({ userRole }) => {
   console.group('Navbar() invoked.'); console.groupEnd();
 
+  const handleLogout = async () => {
+  
+    try {
+        const response = await fetch('https://localhost:443/logout', {
+            method: 'POST'
+        });
+
+        if(response.ok) {
+            console.log('logout Successful');
+            window.location.href = '/'; // 로그아웃 성공 시 리다이렉트( 프론트 주소 입력해야 함.)
+        } else {
+            console.error('로그아웃 실패! ', response.status);
+        }
+
+    } catch (error) {
+        console.error('Error during logout:', error);
+    } // try
+
+  } // handlelogout
+
+
+
+
   return (
     <div className={styles.container}>
       <div className={styles.buttons}>
@@ -41,7 +64,7 @@ const Navbar = ({ userRole }) => {
       <div className={styles.profile}>
         <img src={profile} alt='' className={styles.profileImg} />
         <div className={styles.logout}>
-          <FontAwesomeIcon icon={faArrowRightFromBracket} />
+          <FontAwesomeIcon icon={faArrowRightFromBracket} onClick={handleLogout}/>
         </div>
       </div>
     </div>
