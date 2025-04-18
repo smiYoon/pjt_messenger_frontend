@@ -40,7 +40,7 @@ const App = () => {
 
           <Route path="/work" element={<W_List/>}/>
           <Route path="/work/create" element={<W_Create/>}/>
-          <Route path="/work/detail" element={<W_Detail/>}/>
+          <Route path="/work/detail/:workId" element={<W_Detail/>}/>
 
           <Route path="/project/list" element={<P_List/>}/>
           <Route path="/project/create" element={<P_Create/>}/>
