@@ -155,3 +155,40 @@
     width: 20%;
     background-color: #d5d5d5;
 }
+
+
+
+.paging { 
+    display: flex;
+    gap: 1px; /* 버튼 사이 여백 */
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    
+}
+
+.activePage {
+    display: flex;
+    background-color: #5a5;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+.btn {
+    cursor: pointer;
+    /**
+    width: 32px;     
+    height: 32px;    
+    display: flex;   
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 0; 
+    **/
+}
