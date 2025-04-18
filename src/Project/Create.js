@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 console.groupCollapsed("src/Project/Create.js");
 console.groupEnd();
 
-const Create = ({ closeModal, statusMapping }) => {
+const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, handleGetList }) => {
   console.group("Create() invoked.");
   console.groupEnd();
 
@@ -17,14 +17,10 @@ const Create = ({ closeModal, statusMapping }) => {
     closeModal();
   };
 
-  const reloadPage = () => {
-    window.location.reload(); // 브라우저 전체 새로고침
-  };
+  const [selectList, setSelectList] = useState([]);
 
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-
-  const [selectList, setSelectList] = useState([]);
   const [registerForm, setRegisterForm] = useState({
     name: "",
     startDate: "",
@@ -33,21 +29,19 @@ const Create = ({ closeModal, statusMapping }) => {
     detail: "",
     managerEmpno: "",
   });
-
   useEffect(() => {
     console.log("startDate:", startDate, ", endDate:", endDate);
   }, [startDate, endDate]);
-  
-  const handleChange = (e) => {
-    setRegisterForm({ ...registerForm, [e.target.name]: e.target.value });
-  };
+  useEffect(() => {
+    console.log("11registerForm:", registerForm);
+  }, [registerForm]);
 
-  const handleManagerChange = (e) => {
-    const selectedValue = e.target.value;
-    setRegisterForm((prev) => ({
-      ...prev,
-      managerEmpno: selectedValue,
-    }));
+  const handleChange = (e) => {
+    console.log("e: ", e);
+    console.log("e.target: ", e.target);
+    console.log("e.target.name: ", e.target.name);
+    console.log("e.target.value: ", e.target.value);
+    setRegisterForm({ ...registerForm, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
@@ -70,49 +64,47 @@ const Create = ({ closeModal, statusMapping }) => {
     fetchSelectManagerList();
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handlePostSaveCheck = async (e) => {
     e.preventDefault();
 
-    registerForm.startDate = startDate;
-    registerForm.endDate = endDate;
-
-    if (
-      !registerForm.name ||
-      !registerForm.startDate ||
-      !registerForm.endDate ||
-      !registerForm.managerEmpno
-    ) {
-      alert(" 프로젝트명, 시작일시, 종료일시, 총괄담당자 입력하세요");
-      return;
-    }
-
-    console.log("registerForm: ", registerForm);
-
     try {
-      const formData = new FormData();
-      formData.append("name", registerForm.name);
-      formData.append("startDate", registerForm.startDate);
-      formData.append("endDate", registerForm.endDate);
-      formData.append("status", registerForm.status);
-      formData.append("detail", registerForm.detail);
-      formData.append("managerEmpno", registerForm.managerEmpno);
+      registerForm.startDate = startDate;
+      registerForm.endDate = endDate;
+      
+      console.log("registerForm: ", registerForm);
 
-      const response = await fetch("https://localhost:443/project", {
-        method: "POST",
-        body: formData,
-      });
+      if (
+        !registerForm.name ||
+        !registerForm.startDate ||
+        !registerForm.endDate ||
+        !registerForm.managerEmpno ||
+        !registerForm.status
+      ) {
+        infoAlert("warning", "", "프로젝트명, 진행기간, 담당자, 진행상태를 입력하세요");
+        return;
+      }
+
+      const params = new URLSearchParams(registerForm);
+
+      const response = await fetch(
+          `https://localhost:443/project?${params.toString()}`,
+          {
+            method: "POST",
+          });
 
       if (response.ok) {
-        successAlert("프로젝트 등록이 완료되었습니다.");
-        console.log(response);
-        reloadPage();
+        infoAlert("success", "프로젝트 등록이 완료되었습니다.", " ");
+        
+        handleGetUpComingList();
+        handleGetList(1, '');
+
         onClose();
       } else {
-        errorAlert("프로젝트 등록에 실패했습니다.");
+        infoAlert("error", "프로젝트 등록에 실패했습니다.", " ");
         console.log(response);
       }
     } catch (error) {
-      errorAlert("error: ", error);
+      infoAlert("error", "프로젝트 등록에 실패했습니다.", error);
     }
   };
 
@@ -142,126 +134,109 @@ const Create = ({ closeModal, statusMapping }) => {
     });
   };
 
-
-  function successAlert(msg) {
-    Swal.fire({
-      title: msg,
-      text: " ",
-      icon: "success",
-      confirmButtonText: "확인",
-      allowOutsideClick: false,
-      draggable: true,
-    });
-  };
-
-  function errorAlert(msg) {
-    Swal.fire({
-      title: msg,
-      text: " ",
-      icon: "error",
-      confirmButtonText: "확인",
-      allowOutsideClick: false,
-      draggable: true,
-    });
-  };
-
   return (
     <div className={styles.back}>
       <div className={styles.body}>
+        <form
+          name="projectForm"
+          id="projectForm"
+          method="post"
+        >
+          {/* onSubmit={handleSubmit} */}
+          <div className={styles.container}>
+            <div className={styles.pageTitle}>Project Create</div>
 
-      <form onSubmit={handleSubmit}>
+            <div className={styles.contentItem}>
+              <label>프로젝트명</label>
+              <input
+                type="text"
+                name="name"
+                className={styles.input}
+                placeholder="프로젝트명을 입력하세요."
+                // value={registerForm.name}
+                onChange={handleChange}
+              />
+            </div>
 
-        <div className={styles.container}>
-          <div className={styles.pageTitle}>Project Create</div>
+            <div className={styles.contentItem}>
+              <label>기간</label>
+              <DatePicker
+                name="startDate"
+                selected={startDate}
+                onChange={(date) =>
+                  setStartDate(date ? date.toISOString().slice(0, 10) : "")
+                }
+                dateFormat="yyyy-MM-dd"
+                className={styles.inputDate}
+                placeholder="시작일자을 입력하세요."
+                // value={registerForm.startDate}
+              />
+              <span className={styles.tilde}>~</span>
+              <DatePicker
+                name="endDate"
+                selected={endDate}
+                onChange={(date) =>
+                  setEndDate(date ? date.toISOString().slice(0, 10) : "")
+                }
+                dateFormat="yyyy-MM-dd"
+                className={styles.inputDate}
+                placeholder="종료일자을 입력하세요."
+                // value={endDate}
+              />
+            </div>
 
-          <div className={styles.contentItem}>
-            <label>프로젝트명</label>
-            <input
-              type="text"
-              name="name"
-              className={styles.input}
-              placeholder="프로젝트명을 입력하세요."
-              // value={registerForm.name}
-              onChange={handleChange}
-            />
+            <div className={styles.contentItem}>
+              <label>종괄 담당자</label>
+              <select
+                name="managerEmpno"
+                className={styles.select}
+                onChange={handleChange}
+              >
+                <option value="">== 종괄 담당자를 선택하세요. ==</option>
+                <option value="E2110002">Benyamin Taber</option>
+              </select>
+            </div>
+
+            <div className={styles.contentItem}>
+              <label>진행상태</label>
+              <select
+                name="status"
+                className={styles.select}
+                // selected={registerForm.status}
+                onChange={handleChange}
+              >
+                <option value="">== 진행상태를 선택하세요. ==</option>
+                {Object.entries(statusMapping).map(([sKey, sValue]) => (
+                  <option value={sKey}>{sValue}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className={styles.contentItem}>
+              <label>내용</label>
+              <textarea
+                name="detail"
+                className={styles.textarea}
+                placeholder="내용을 입력하세요."
+                value={registerForm.detail}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className={styles.buttonBox}>
+              <button onClick={handlePostSaveCheck}>저장</button>
+              <button
+                onClick={handleCancelClick}
+                className={styles.btnStyle_gray}
+              >
+                취소
+              </button>
+            </div>
           </div>
-
-          <div className={styles.contentItem}>
-            <label>기간</label>
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              dateFormat="yyyy-MM-dd"
-              className={styles.inputDate}
-              placeholder="시작일자을 입력하세요."
-              // value={registerForm.startDate}
-            />
-            <span className={styles.tilde}>~</span>
-            <DatePicker
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
-              dateFormat="yyyy-MM-dd"
-              className={styles.inputDate}
-              placeholder="종료일자을 입력하세요."
-              // value={endDate}
-            />
-          </div>
-
-          <div className={styles.contentItem}>
-            <label>종괄 담당자</label>
-            <select 
-              name="managerEmpno" 
-              className={styles.select}              
-              onChange={handleManagerChange}
-            >
-              <option value="">== 종괄 담당자를 선택하세요. ==</option>
-              <option value="E2110002">Benyamin Taber</option>
-            </select>
-          </div>
-
-          <div className={styles.contentItem}>
-            <label>진행상태</label>
-            <select 
-              name="status" 
-              className={styles.select}
-              // selected={registerForm.status}
-              onChange={handleChange}
-            >
-              <option value="">== 진행상태를 선택하세요. ==</option>
-              {Object.entries(statusMapping).map(([sKey, sValue]) => (
-                <option value={sKey}>{sValue}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className={styles.contentItem}>
-            <label>내용</label>
-            <textarea
-              name="detail"
-              className={styles.textarea}
-              placeholder="내용을 입력하세요."
-              value={registerForm.detail}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className={styles.buttonBox}>
-            <button type="submit">저장</button>
-            <button
-              onClick={handleCancelClick}
-              className={styles.btnStyle_gray}
-            >
-              취소
-            </button>
-          </div>
-
-        </div>
-          
         </form>
-        
       </div>
     </div>
   );
-}
+};
 
 export default Create;
