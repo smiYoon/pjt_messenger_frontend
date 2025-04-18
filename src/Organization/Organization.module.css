@@ -1,14 +1,12 @@
 .container {
-    position: relative;
-    width: 100%;
+  box-sizing: border-box;
+  /* padding: 30px; */
+  position: relative;
+  width: 430px;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 
-    border: 1px solid #6C47FF;
-    border-radius: 8px;
-    background-color: #E5E1F5;
-    overflow-x: scroll;
-    word-wrap: none;
-  }
-  
- 
-
-  
+  background-color: #E5E1F5;
+}
