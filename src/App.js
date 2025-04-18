@@ -12,7 +12,7 @@ console.groupCollapsed('src/App.js'); console.groupEnd();
 const App = () => {
   console.group('App() invoked.'); console.groupEnd();
   const location = useLocation(); // 현재 경로를 가져옴
-  const excludedRoutes = ['/']; // Navbar를 숨길 경로 목록
+  const excludedRoutes = ['/', '/member/register']; // Navbar를 숨길 경로 목록
   
   return (
     <div className="App">

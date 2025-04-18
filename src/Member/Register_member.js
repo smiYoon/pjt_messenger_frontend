@@ -313,7 +313,7 @@ const Register_member = () => {
                                 </button>
                             </div>
                             <div>
-                                <button onClick={handleCancelClick} className={styles.cancel} >취소</button>
+                                <button type='button' onClick={handleCancelClick} className={styles.cancel} >취소</button>
                             </div>
                         </div>
                     </div> {/* input_box */}

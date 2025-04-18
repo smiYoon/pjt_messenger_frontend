@@ -148,16 +148,16 @@ const Modify_member = () => {
         fetchDeptId();
     }, [empno]);
 
-    const level = {
-        "1": "팀원",
-        "2": "팀장",
-        "3": "부서장",
-        "4": "CEO",
-    };
+    // const level = {
+    //     "1": "팀원",
+    //     "2": "팀장",
+    //     "3": "부서장",
+    //     "4": "CEO",
+    // };
 
     return (
         <div className={styles.cover}>
-            <div key={memberForm.empno} className={styles.container}>
+            <div className={styles.container}>
                 <div className={styles.left_panel}>
                     <div className={styles.pic}>
                         <img src={profile} alt='' />
@@ -240,10 +240,11 @@ const Modify_member = () => {
 
                             <div className={styles.single}>
                                 <input
-                                    type='text'
+                                    type='password'
                                     className={styles.single}
                                     placeholder='변경할 비밀번호를 입력해주세요.'
                                     name='password'
+                                    value={memberForm.password}
                                     onChange={(e) => handleChange(e.target.name, e.target.value)}
                                 />
                                 <div className={styles.placeholder_text}>비밀번호</div>

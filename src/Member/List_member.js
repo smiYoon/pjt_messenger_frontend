@@ -111,9 +111,9 @@ const List_member = () => {
           1 2 3
         </div>
       </div>
-      {/* <div className={styles.right_panel}> */}
+      <div className={styles.right_panel}>
           <Organization />
-      {/* </div> */}
+      </div>
     </div>
   )
 }
