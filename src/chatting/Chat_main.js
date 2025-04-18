@@ -5,6 +5,7 @@ import {Chatting, Roomheader} from './chattingroom';
 import {ChatList} from './chatList';
 import {Invite} from './invite';
 import CreateChat from './createChatPopup/CreateChat';
+import Organization2 from './invite/Organization2';
 
 import styles from './Chat_main.module.css';
 
@@ -50,7 +51,7 @@ const Chat_main = () => {
             
             <div className={styles.leftbox}>
                 
-                <Invite onOrgaClick={()=> {setShowOrga(true)}} />
+                <Invite onOrgaClick={()=> {setShowOrga(true)}} id={selectedChatRoom?.id}/>
                 <ChatList onCreateClick={() => setShowCreateChat(true)} onChatClick={(chatId) => handleChatRoomClick(chatId)} />
 
             </div>
@@ -64,6 +65,7 @@ const Chat_main = () => {
                <AiSummary id={selectedChatRoom?.id}/>
             </div>
 
+            {showOrga && <Organization2 onCloseOrgaClick={()=> {setShowOrga(false)}}/>}
             {showCreateChat && <CreateChat onCloseClick={() => setShowCreateChat(false)} />}
             
 

@@ -1,31 +1,38 @@
 import React, { useState } from "react";
 import styles from "./Invite.module.css";
 
-const Invite = ({ onOrgaClick }) => {
-  const [inviteName, setInviteName] = useState(""); //초대할 리스트
+const Invite = ({ onOrgaClick, id }) => {
+  const empno = "E2005003";
   const [invitedList, setInvitedList] = useState([]); //초대된 리스트
 
-  //버튼들의 이 눌리면 작동하는 것들
+  const handleAddInvite = async () => {
+    const formData = new FormData();
 
-  const handleAddInvite = () => {
-    const names = inviteName
-      .split(",")
-      .map((name) => name.trim())
-      .filter(Boolean);
+    formData.append("empno", invitedList);
+    try {
+      const response = await fetch(`https://localhost:443/chat/${id}`, {
+        method: "PUT",
+        body: formData
+      });
+  
+      if (!response.ok) {
+        throw new Error("서버 응답 실패: " + response.status);
+      }
+  
+      const result = await response.json();
+      console.log("서버 응답:", result);
+      if(result == true) alert("채팅방 생성 성공!");
+      else alert("채팅방 생성 실패");
+    } catch (err) {
+      console.error("채팅방 생성 실패!", err);
+      alert("채팅방 생성 중 오류 발생!");
+    }
+  }
 
-    const newNames = names.filter((id) => !invitedList.includes(id));
-    setInvitedList([...invitedList, ...newNames]);
-    setInviteName("");
-  }; //handleAddInvite
-
-  // const handleOpenOrgan=()=>{
-  //     return onOrgaClick;
-  // };//handleOpenOrgan 조직도
 
   return (
     <div className={styles.invite}>
 
-      
       {/* 아바타들 */}
       <div className={styles.avatarRow}>
         <div class={styles.avatarBox}>
@@ -44,26 +51,6 @@ const Invite = ({ onOrgaClick }) => {
         </button>
       </div>
       {/* avatarRow */}
-
-
-      {/* 직원 검색 */}
-      <div className={styles.inviteRow}>
-        <input
-          type="text"
-          value={inviteName}
-          onChange={(e) => setInviteName(e.target.value)}
-          onKeyDown={(e) => {
-            if (/\d/.test(e.key)) {
-              e.preventDefault();
-              {
-                /*숫자키면 예방한다중단한다.*/
-              }
-            } else if (e.key === "Enter") handleAddInvite();
-          }}
-          placeholder="직원 검색"
-        />
-        <button onClick={handleAddInvite}>+</button>
-      </div>
       {/*inviteRow*/}
       <button onClick={onOrgaClick} className={styles.opOrga}>
         조직도 보기
