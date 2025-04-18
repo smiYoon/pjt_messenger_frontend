@@ -1,51 +1,65 @@
 .container {
     margin: 0;
     padding: 0px;
-    position: relative;
-    width: 4vw;
-    height: 100vh;
-    background-color: #d5d5d5;
+    position: fixed;
+    top: 50vh;
+    left: 50px;
+    transform: translateY(-50%);
+    width: 100px;
+    height: 80vh;
+    border-radius: 30px;
+    background-color: #373737;
+    z-index: 2;
+
+    /* background-image: url("./img/wall.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat; */
 }
 
 .buttons {
     position: absolute;
-    top: 30%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 5vh;
 }
 
 .buttons .flip {
-    background-color: skyblue;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 60px;
-    height: 60px;
-    font-size: 1rem;
+    /* background-color: #373737;
+    width: 3vw;
+    height: 3vw;
+    border-radius: 50%; */
+    font-size: 0.9rem;
     font-weight: bold;
     text-decoration: none;
-    color: #444;
-    border-radius: 50%;
-    /* transform: rotate(0deg); */
-    /* border-radius: 50%; */
+    color: white;
+    display: flex;
+    flex-direction: column;
     border: none;
-    transition: all .3s ease;
-}
-
-.project .flip {
-    font-size: 0.7rem;
+    transition: color 0.5s ease-in-out;
 }
 
 .buttons .flip:hover {
-    /* transform: rotate(360deg); */
-    border-radius: 7px;
-    /* transition: all .7s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
-    transition: all .3s ease;
+    /* border-radius: 7px;
+    transition: all .3s ease; */
+    color: greenyellow;
+}
+
+.flip .icon {
+    display: block;
+    font-size: 1.3rem;
+}
+
+.flip .text {
+    margin-top: 5px;
 }
 
 .profile {
@@ -56,16 +70,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 30px;
 }
 
 .profileImg {
-    width: 50px;
+    width: 2vw;
     border-radius: 50%;
     border: 3px solid red;
 }
 
 .logout {
     font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
 }
-

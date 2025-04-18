@@ -47,6 +47,7 @@
 }
 
 .status {
+    width: 100px;
     padding: 5px 20px;
 
     border-radius: 50px;
@@ -54,15 +55,6 @@
 
     text-align: center;
     box-sizing: border-box;
-}
-.status1 {
-    background-color: #AADCFF;
-}
-.status2 {
-    background-color: #FFF5AA;
-}
-.status3 {
-    background-color: #4FC765;
 }
 
 
