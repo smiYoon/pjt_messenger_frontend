@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from './CreateChat.module.css';
+import { jwtDecode } from 'jwt-decode';
 
 const CreateChat = ({ onCloseClick }) => {
   const [roomName, setRoomName] = useState(""); //채팅방이름
@@ -23,7 +24,15 @@ const CreateChat = ({ onCloseClick }) => {
 
   //FromData버전
 
-  const empno = "E2005003";
+  const [empno, setEmpno] = useState(null);
+
+    useEffect(() => {
+        const token = localStorage.getItem("jwt");
+        if (token) {
+            const decoded = jwtDecode(token);
+            setEmpno(decoded.empno);
+        }
+    }, []);
 
   const handleCreateRoom = async () => {
     const formData = new FormData();

@@ -9,11 +9,7 @@ import CreateChat from './createChatPopup/CreateChat';
 import styles from './Chat_main.module.css';
 
 
-
-
-
 const Chat_main = () => {
-
 
     const [showCreateChat, setShowCreateChat] = useState(false);
     const [showOrga, setShowOrga]=useState(false);      //조직도
@@ -48,11 +44,9 @@ const Chat_main = () => {
     return (
         <div className={styles.main}>
             
-            <div className={styles.leftbox}>
-                
+            <div className={styles.leftbox}>      
                 <Invite onOrgaClick={()=> {setShowOrga(true)}} id={selectedChatRoom?.id} inviteList={inviteList} onInviteChange={(newList) => setInviteList(newList)}/>
                 <ChatList onCreateClick={() => setShowCreateChat(true)} onChatClick={(chatId) => handleChatRoomClick(chatId)} />
-
             </div>
 
             <div className={styles.centerbox}>
@@ -67,7 +61,6 @@ const Chat_main = () => {
             {showOrga && <Organization2 onCloseOrgaClick={()=> {setShowOrga(false)}} inviteList={inviteList} onInviteChange={(newList) => setInviteList(newList)}/>}
             {showCreateChat && <CreateChat onCloseClick={() => setShowCreateChat(false)} />}
             
-
         </div>
     )
 }

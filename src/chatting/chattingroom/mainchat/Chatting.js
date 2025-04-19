@@ -1,7 +1,5 @@
 import styles from './Chatting.module.css';
 import React, { useState, useRef , useEffect} from 'react';
-import { IoSearch } from "react-icons/io5";
-import { MdOutlineAttachFile } from "react-icons/md";
 import { BsArrowUpCircleFill } from "react-icons/bs";
 
 
@@ -61,7 +59,7 @@ const Chatting = ({id}) => {
         const messageObj = {
             "detail": msg,
             "chatId": id,            // 현재 채팅방 ID
-            "empno": "E2005003"            // 로그인한 사용자 ID, 실제 로그인 정보에서 가져와야 함
+            "empno": "E2012004"            // 로그인한 사용자 ID, 실제 로그인 정보에서 가져와야 함
         };
 
         if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
