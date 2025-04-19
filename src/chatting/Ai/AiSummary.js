@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { jwtDecode } from 'jwt-decode';
 
-const AiSummary = ({id}) => {
+const AiSummary = ({id, setChatrooms, setSelectedChatRoom , selectedChatRoom}) => {
 
     const [empno, setEmpno] = useState(null);
 
@@ -24,11 +24,17 @@ const AiSummary = ({id}) => {
         formData.append("empno", empno);
 
         try  { 
-            await fetch(`https://localhost:443/chat/${id}`,{
+            const response = await fetch(`https://localhost:443/chat/${id}`,{
                 method : 'DELETE',
                 body: formData
             });
                 console.log("퇴장 처리 완료");
+                const deletedChat = await response.json();
+                setChatrooms((prev) => prev.filter((room) => room.id !== deletedChat.id));
+                // 현재 보고 있던 방이 이 방이라면 초기화
+                if (selectedChatRoom?.id === deletedChat.id) {
+                    setSelectedChatRoom(null);
+                }
         } catch (error) {
                 console.log("퇴장 처리 실패",error);
         }

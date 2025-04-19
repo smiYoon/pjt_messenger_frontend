@@ -1,21 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { jwtDecode } from 'jwt-decode';
+import React, { useEffect, useState ,useContext} from "react";
+import { AuthContext } from "../../AuthContext";
 
 import styles from './ChatList.module.css';
 
-const ChatList = ({ onCreateClick,onChatClick }) => {
+const ChatList = ({ onCreateClick,onChatClick, chatrooms, setChatrooms, }) => {
 
-    const [empno, setEmpno] = useState(null);
-
-    useEffect(() => {
-        const token = localStorage.getItem("jwt");
-        if (token) {
-            const decoded = jwtDecode(token);
-            setEmpno(decoded.empno);
-        }
-    }, []);
-
-    const [chatrooms, setChatrooms] = useState([]);
+    const { empno } = useContext(AuthContext);
 
     // 채팅방 리스트 받아오기 (채팅방이름, 등록한사람 아이콘, 프로젝트 유무)
     useEffect(() => {
