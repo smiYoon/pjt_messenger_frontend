@@ -8,7 +8,7 @@
 }
 
 .side_bar {
-    width: 10%;
+    width: 20%;
     height: 100vh;
     background-color: burlywood;
     position: relative;
@@ -38,7 +38,7 @@
     transition: background-color 0.3s ease, font-weight 0.3s ease;
 }
 
-.menu .notice {
+.menu .feedback {
     background-color: white;
     font-weight: bold;
     pointer-events: none;

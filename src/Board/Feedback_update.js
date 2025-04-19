@@ -80,7 +80,7 @@ const Feedback_update = () => {
   
         console.log("post:", post);
   
-        const response = await fetch(`https://localhost:443/board/Feedback/${id}`, {
+        const response = await fetch(`https://localhost/board/feedback/${id}`, {
           method: 'PUT', // 수정 요청은 PUT 메서드 사용
           body: formData,
         });

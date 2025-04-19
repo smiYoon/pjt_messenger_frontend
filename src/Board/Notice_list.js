@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom';
 const Notice_list = () => {
     const [inputValue, setInputValue] = useState();
     const [posts, setPosts] = useState([]);
-    const { decodedToken } = useLoadScript();
+    const { decodedToken, role_level } = useLoadScript();
     const handleChange = (e) => setInputValue(e.target.value);
-    
+
     console.log('사용자정보(공지사항):', decodedToken);
     const fetchPosts = useCallback(async () => {
         try {
@@ -66,10 +66,12 @@ const Notice_list = () => {
                         Notification
                     </div>
                     <div className={styles.option_box}>
-                        <Link to={`/board/notice/create`} className={styles.button}>등록</Link>
+                        {role_level[decodedToken.roles] != 1 && (
+                            <Link to={`/board/notice/create`} className={styles.button}>등록</Link>
+                        )}
                         <div className={styles.search_box}>
-                            <select 
-                                name='searchWord' 
+                            <select
+                                name='searchWord'
                                 className={styles.select}
                                 onChange={handleChange}
                             >

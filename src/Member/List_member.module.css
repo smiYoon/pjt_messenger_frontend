@@ -102,7 +102,7 @@
     column-gap: calc((100% - (14vw * 4)) / 3);
     flex-wrap: wrap;
     justify-content: flex-start;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
     padding: 10px;
 }
 

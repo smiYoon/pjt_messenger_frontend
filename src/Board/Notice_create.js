@@ -32,11 +32,8 @@ const Notice_create = () => {
   };
 
   const [registerForm, setRegisterForm] = useState({
-    id: '',
     title: '',
     detail: '',
-    crtDate: '',
-    count: '',
   });
 
   const handleChange = (field, value) => {
