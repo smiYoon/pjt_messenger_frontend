@@ -33,17 +33,19 @@ const Navbar = ({ userRole }) => {
   return (
     <div className={styles.container}>
       <div className={styles.buttons}>
-        {userRole === '5' || '1' && (
+        {(userRole === '5') && (
           <Link to={`/member/list`} className={styles.flip}>
             <i className={`${styles.icon} fas fa-user`} />
             <div className={styles.text}>회원관리</div>
           </Link>
         )}
 
-        <Link className={styles.flip}>
-          <i className={`${styles.icon} fas fa-comment-dots`} />
-          <div className={styles.text}>채팅</div>
-        </Link>
+        {userRole != '5' && (
+          <Link className={styles.flip}>
+            <i className={`${styles.icon} fas fa-comment-dots`} />
+            <div className={styles.text}>채팅</div>
+          </Link>
+        )}
 
         {userRole != '4' && (
           <Link className={styles.flip}>
