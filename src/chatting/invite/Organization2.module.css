@@ -16,3 +16,7 @@
     display: inline-block ;
     white-space: nowrap 
 }
+
+.inviteList{
+    width: 150px;
+}

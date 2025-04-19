@@ -17,8 +17,8 @@ const Chat_main = () => {
 
 
     const [showCreateChat, setShowCreateChat] = useState(false);
-    const [showOrga, setShowOrga]=useState(false);//조직도
-    
+    const [showOrga, setShowOrga]=useState(false);      //조직도
+    const [inviteList, setInviteList] = useState([]); // 초대할 직원 id들 저장
     
     ////////////////////////////////////////////////////////////////////
     const [selectedChatRoom, setSelectedChatRoom] = useState(null);  // 선택된 채팅방
@@ -51,7 +51,7 @@ const Chat_main = () => {
             
             <div className={styles.leftbox}>
                 
-                <Invite onOrgaClick={()=> {setShowOrga(true)}} id={selectedChatRoom?.id}/>
+                <Invite onOrgaClick={()=> {setShowOrga(true)}} id={selectedChatRoom?.id} inviteList={inviteList} onInviteChange={(newList) => setInviteList(newList)}/>
                 <ChatList onCreateClick={() => setShowCreateChat(true)} onChatClick={(chatId) => handleChatRoomClick(chatId)} />
 
             </div>
@@ -65,7 +65,7 @@ const Chat_main = () => {
                <AiSummary id={selectedChatRoom?.id}/>
             </div>
 
-            {showOrga && <Organization2 onCloseOrgaClick={()=> {setShowOrga(false)}}/>}
+            {showOrga && <Organization2 onCloseOrgaClick={()=> {setShowOrga(false)}} inviteList={inviteList} onInviteChange={(newList) => setInviteList(newList)}/>}
             {showCreateChat && <CreateChat onCloseClick={() => setShowCreateChat(false)} />}
             
 
