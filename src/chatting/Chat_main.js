@@ -3,10 +3,8 @@ import React, { useState ,useEffect } from 'react';
 import {AiSummary} from './Ai';
 import {Chatting, Roomheader} from './chattingroom';
 import {ChatList} from './chatList';
-import {Invite} from './invite';
+import {Invite, Organization2} from './invite';
 import CreateChat from './createChatPopup/CreateChat';
-import Organization2 from './invite/Organization2';
-
 
 import styles from './Chat_main.module.css';
 
