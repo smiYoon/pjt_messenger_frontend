@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './Login.module.css';
+import { useLoadScript } from '../LoadScriptContext';
 
 const Login = () => {
     console.log("Login() invoked.");
 
     const navigate = useNavigate();
     const [message, setMessage] = useState();
+
+    const { updateToken } = useLoadScript();
 
     // 상태 관리: 입력값을 저장하는 상태 변수
     const [loginData, setLoginData] = useState({
@@ -49,15 +52,12 @@ const Login = () => {
             // sessionStorage.setItem("jwt", token);
 
             
-            
-            
-            
             if (response.ok) {
                 // 로그인 성공 시 처리
                 const token = result.token; // 진짜 토큰만 꺼냄.
-                console.log("로그인 성공");
-                setMessage(token);
-                localStorage.setItem("jwt", token); 
+                // console.log("로그인 성공");
+                // setMessage(token);
+                updateToken(token);
                 console.log("서버 응답:", token);
                 navigate("/member/list");
                 
@@ -78,7 +78,6 @@ const Login = () => {
             handleLogin();
         }
     };
-
 
     return (
         <div className={styles.login}>

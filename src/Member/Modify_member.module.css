@@ -176,7 +176,7 @@
     position: absolute;
     color: #222;
     top: -10%;
-    right: 44%;
+    right: 45%;
     transform: translateX(50%);
     font-size: 0.9rem;
 }
@@ -224,6 +224,8 @@
     /* border-radius: 10px; */
     border: none;
     border-bottom: 1px solid #6c47ff;
+    display: flex;
+    align-items: center;
     background-color: transparent;
     padding: 15px 0 5px 0;
     box-sizing: border-box;

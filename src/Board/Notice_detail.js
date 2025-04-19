@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import styles from './Notice_detail.module.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useLoadScript } from '../LoadScriptContext';
 
 
 const Notice_detail = () => {
 
+  const { decodedToken, role_level } = useLoadScript();
   const navigate = useNavigate();
   const [post, setPost] = useState([]);
   const { id } = useParams();
@@ -14,7 +16,7 @@ const Notice_detail = () => {
     const fetchPostData = async () => {
 
       try {
-        const response = await fetch(`https://localhost:443/board/Notice/${id}`, {
+        const response = await fetch(`https://localhost/board/notice/${id}`, {
           method: 'GET',
         });
 
@@ -40,6 +42,10 @@ const Notice_detail = () => {
     fetchPostData();
   }, []);
 
+  const handleCancelClick = () => {
+    navigate(`/board/notice/list`);
+  };
+
   const handleClick = () => {
     Swal.fire({
       title: '삭제하시겠습니까?',
@@ -52,10 +58,10 @@ const Notice_detail = () => {
         navigate('/board/notice/list');
       }
     })
-  }
+  };
 
   const handleUpdateClick = () => {
-    navigate(`/board/notice/update/${ id }`);
+    navigate(`/board/notice/update/${id}`);
   };
 
   return (
@@ -117,8 +123,13 @@ const Notice_detail = () => {
             {post.detail}
           </div>
           <div className={styles.buttonContainer}>
-            <button onClick={handleUpdateClick} className={styles.edit} >수정</button>
-            <button onClick={handleClick} className={styles.cancel}>삭제</button>
+            <button onClick={handleCancelClick} className={styles.cancel}>뒤로</button>
+            {decodedToken.name === post.author && (
+              <>
+                <button onClick={handleUpdateClick} className={styles.edit} >수정</button>
+                <button onClick={handleClick} className={styles.cancel}>삭제</button>
+              </>
+            )}
           </div>
         </div>
       </div>

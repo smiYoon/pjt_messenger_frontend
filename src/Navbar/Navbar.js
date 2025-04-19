@@ -3,8 +3,11 @@ import profile from './img/profile.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { useLoadScript } from '../LoadScriptContext';
 
-const Navbar = ({ userRole }) => {
+const Navbar = () => {
+const { role_level, decodedToken } = useLoadScript();
+
   console.group('Navbar() invoked.'); console.groupEnd();
 
   const handleLogout = async () => {
@@ -33,21 +36,21 @@ const Navbar = ({ userRole }) => {
   return (
     <div className={styles.container}>
       <div className={styles.buttons}>
-        {(userRole === '5') && (
+        {role_level[decodedToken.roles] === 5 && (
           <Link to={`/member/list`} className={styles.flip}>
             <i className={`${styles.icon} fas fa-user`} />
             <div className={styles.text}>회원관리</div>
           </Link>
         )}
 
-        {userRole != '5' && (
+        {role_level[decodedToken.roles] != 5 && (
           <Link className={styles.flip}>
             <i className={`${styles.icon} fas fa-comment-dots`} />
             <div className={styles.text}>채팅</div>
           </Link>
         )}
 
-        {userRole != '4' && (
+        {role_level[decodedToken.roles] != 4 && (
           <Link className={styles.flip}>
             <i className={`${styles.icon} fas fa-file-pen`} />
             <div className={styles.text}>업무</div>
@@ -59,7 +62,7 @@ const Navbar = ({ userRole }) => {
           <div className={styles.text}>게시판</div>
         </Link>
 
-        {userRole != '1' && (
+        {role_level[decodedToken.roles] != 1 && (
           <Link className={styles.flip}>
             <i className={`${styles.icon} fa-solid fa-list-check`} />
             <div className={styles.text}>프로젝트</div>

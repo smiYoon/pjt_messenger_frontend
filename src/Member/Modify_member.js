@@ -3,8 +3,11 @@ import Swal from 'sweetalert2';
 import styles from './Modify_member.module.css';
 import profile from '../Navbar/img/profile.png';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useLoadScript } from '../LoadScriptContext';
 
 const Modify_member = () => {
+
+    const { decodedToken, role_level } = useLoadScript();
     const navigate = useNavigate();
     const handleCancelClick = () => {
         Swal.fire({
@@ -71,7 +74,7 @@ const Modify_member = () => {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     // 'Content-Type': 'application/json'
-                  } // 수정점. 04.16
+                } // 수정점. 04.16
             });
 
             if (response.ok) {
@@ -148,12 +151,13 @@ const Modify_member = () => {
         fetchDeptId();
     }, [empno]);
 
-    // const level = {
-    //     "1": "팀원",
-    //     "2": "팀장",
-    //     "3": "부서장",
-    //     "4": "CEO",
-    // };
+    const level = {
+        "1": "팀원",
+        "2": "팀장",
+        "3": "부서장",
+        "4": "CEO",
+        "5": "인사담당자"
+    };
 
     return (
         <div className={styles.cover}>
@@ -222,19 +226,23 @@ const Modify_member = () => {
                                 </select>
                                 <div className={styles.placeholder_text}>부서</div>
 
-                                <select
-                                    name='position'
-                                    className={styles.position}
-                                    value={memberForm.position}
-                                    onChange={(e) => handleChange(e.target.name, e.target.value)}
-                                >
-                                    <option value="">직급을 선택해주세요.</option>
-                                    <option value="1">팀원</option>
-                                    <option value="2">팀장</option>
-                                    <option value="3">부서장</option>
-                                    <option value="4">CEO</option>
-                                    <option value="5">인사담당자</option>
-                                </select>
+                                {role_level[decodedToken.roles] === 5 ? (
+                                    <select
+                                        name='position'
+                                        className={styles.position}
+                                        value={memberForm.position}
+                                        onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                    >
+                                        <option value="">직급을 선택해주세요.</option>
+                                        <option value="1">팀원</option>
+                                        <option value="2">팀장</option>
+                                        <option value="3">부서장</option>
+                                        <option value="4">CEO</option>
+                                        <option value="5">인사담당자</option>
+                                    </select>
+                                ) : (
+                                    <div className={styles.position}>{level[memberForm.position]}</div>
+                                )}
                                 <div className={styles.position_text}>직급</div>
                             </div>
 
@@ -242,9 +250,9 @@ const Modify_member = () => {
                                 <input
                                     type='password'
                                     className={styles.single}
-                                    placeholder='변경할 비밀번호를 입력해주세요.'
+                                    placeholder='기존 비밀번호 혹은 새로운 비밀번호를 입력해주세요.'
                                     name='password'
-                                    value={memberForm.password}
+                                    // value={memberForm.password}
                                     onChange={(e) => handleChange(e.target.name, e.target.value)}
                                 />
                                 <div className={styles.placeholder_text}>비밀번호</div>

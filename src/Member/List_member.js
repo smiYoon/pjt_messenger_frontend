@@ -3,16 +3,20 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Organization from '../Organization/Organization';
 import { Link, useNavigate } from 'react-router-dom';
 import profile from '../Navbar/img/profile.png';
+import { useLoadScript } from '../LoadScriptContext';
+import { decode } from 'punycode';
 
 const List_member = () => {
-
+  
+  const { decodedToken } = useLoadScript();
+  console.log('사용자정보(사원관리):', decodedToken);
   const [searchOption, setSearchOption] = useState('');
 
   const [members, setMembers] = useState([]);
   const fetchMembers = useCallback(async () => {
     const token = localStorage.getItem("jwt"); // 수정점 04.16
     try {
-      const response = await fetch(`https://localhost:443/employee`, {
+      const response = await fetch(`https://localhost/employee`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,

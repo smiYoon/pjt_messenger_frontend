@@ -3,8 +3,9 @@ import Navbar from './Navbar/Navbar';
 import Login from './Login/Login';
 import Organization from './Organization/Organization.js';
 import { Member_register, Member_modify, Member_list } from './Member';
-import { Notice_list, Notice_update, Notice_create, Notice_detail, Feedback_list , Feedback_create , Feedback_update, Feedback_detail } from './Board';
+import { Notice_list, Notice_update, Notice_create, Notice_detail, Feedback_list, Feedback_create, Feedback_update, Feedback_detail } from './Board';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { LoadScriptProvider } from './LoadScriptContext.js';
 
 
 console.groupCollapsed('src/App.js'); console.groupEnd();
@@ -13,7 +14,7 @@ const App = () => {
   console.group('App() invoked.'); console.groupEnd();
   const location = useLocation(); // 현재 경로를 가져옴
   const excludedRoutes = ['/', '/member/register']; // Navbar를 숨길 경로 목록
-  
+
   return (
     <div className="App">
       <div className='main'>
@@ -33,8 +34,8 @@ const App = () => {
           <Route path="/board/feedback/create" element={<Feedback_create />} />
           <Route path="/board/feedback/detail/:id" element={<Feedback_detail />} />
           <Route path="/board/feedback/update/:id" element={<Feedback_update />} />
-          
-          <Route path="/organization/:deptNum" element={<Organization/>}/>
+
+          <Route path="/organization/:deptNum" element={<Organization />} />
         </Routes>
       </div>
     </div>
@@ -42,9 +43,11 @@ const App = () => {
 }
 
 const RootApp = () => (
-  <Router>
-    <App />
-  </Router>
+    <LoadScriptProvider>
+      <Router>
+        <App />
+      </Router>
+    </LoadScriptProvider>
 );
 
 export default RootApp;
