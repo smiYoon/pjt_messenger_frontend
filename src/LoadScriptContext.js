@@ -8,6 +8,7 @@ export const LoadScriptProvider = ({ children }) => {
 
     const [decodedToken, setDecodedToken] = useState([]);
 
+    
     useEffect(() => {
         const loadToken = () => {
             try {

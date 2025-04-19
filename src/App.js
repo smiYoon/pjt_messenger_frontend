@@ -15,6 +15,7 @@ const App = () => {
   const location = useLocation(); // 현재 경로를 가져옴
   const excludedRoutes = ['/', '/member/register']; // Navbar를 숨길 경로 목록
 
+  
   return (
     <div className="App">
       <div className='main'>
