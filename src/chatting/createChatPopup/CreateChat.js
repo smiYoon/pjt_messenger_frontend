@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from './CreateChat.module.css';
 import { jwtDecode } from 'jwt-decode';
 
-const CreateChat = ({ onCloseClick }) => {
+const CreateChat = ({ onCloseClick, setChatrooms }) => {
   const [roomName, setRoomName] = useState(""); //채팅방이름
   const [selectPj, setSelectPj] = useState(""); //프로젝트 
   const [selectPjs, setSelectPjs] = useState([]);
@@ -10,7 +10,7 @@ const CreateChat = ({ onCloseClick }) => {
   useEffect(() => {
     const fetchCreateRoom = async () => {
         try {
-            const response = await fetch("https://localhost:443/chat/project");
+            const response = await fetch("https://localhost:443/project/status");
             const data = await response.json();
             setSelectPjs(data);
             console.log("data", data);
@@ -54,6 +54,7 @@ const CreateChat = ({ onCloseClick }) => {
       const result = await response.json();
       console.log("서버 응답:", result);
       alert("채팅방 생성 성공!");
+      setChatrooms((prev) => [...prev, result]);
       onCloseClick?.();
     } catch (err) {
       console.error("채팅방 생성 실패!", err);
