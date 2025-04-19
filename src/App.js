@@ -8,6 +8,7 @@ import { W_List, W_Create, W_Detail } from './Work';
 import { P_List, P_Create, P_Modify } from './Project';
 import Organization from './Organization/Organization.js';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { LoadScriptProvider } from './LoadScriptContext.js';
 
 console.groupCollapsed('src/App.js'); console.groupEnd();
 
@@ -15,6 +16,7 @@ const App = () => {
   console.group('App() invoked.'); console.groupEnd();
   const location = useLocation(); // 현재 경로를 가져옴
   const excludedRoutes = ['/', '/member/register']; // Navbar를 숨길 경로 목록
+
   
   return (
     <div className="App">
@@ -54,9 +56,11 @@ const App = () => {
 }
 
 const RootApp = () => (
-  <Router>
-    <App />
-  </Router>
+    <LoadScriptProvider>
+      <Router>
+        <App />
+      </Router>
+    </LoadScriptProvider>
 );
 
 export default RootApp;
