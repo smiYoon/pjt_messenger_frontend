@@ -1,22 +1,15 @@
 import styles from './AiSummary.module.css';
 import { BsMagic } from "react-icons/bs";
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { IoExitOutline } from "react-icons/io5";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { jwtDecode } from 'jwt-decode';
+import {useLoadScript} from "../../LoadScriptContext";
 
 const AiSummary = ({id, setChatrooms, setSelectedChatRoom , selectedChatRoom}) => {
 
-    const [empno, setEmpno] = useState(null);
-
-    useEffect(() => {
-        const token = localStorage.getItem("jwt");
-        if (token) {
-            const decoded = jwtDecode(token);
-            setEmpno(decoded.empno);
-        }
-    }, []);
+    const { decodedToken } = useLoadScript();
+    const empno = decodedToken.empno;
 
     const handleExit = async() => { // 퇴장
 
@@ -29,6 +22,7 @@ const AiSummary = ({id, setChatrooms, setSelectedChatRoom , selectedChatRoom}) =
                 body: formData
             });
                 console.log("퇴장 처리 완료");
+                alert("퇴장했습니다");
                 const deletedChat = await response.json();
                 setChatrooms((prev) => prev.filter((room) => room.id !== deletedChat.id));
                 // 현재 보고 있던 방이 이 방이라면 초기화

@@ -52,7 +52,7 @@ const Chat_main = () => {
             </div>
 
             <div className={styles.centerbox}>
-                <Roomheader selectedChatRoom={selectedChatRoom}/>
+                <Roomheader selectedChatRoom={selectedChatRoom} />
                 <Chatting selectedChatRoom={selectedChatRoom} id={selectedChatRoom?.id}/>
             </div>
 

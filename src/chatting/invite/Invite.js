@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./Invite.module.css";
 
 const Invite = ({ onOrgaClick, id, inviteList ,onInviteChange, selectedChatRoom, setSelectedChatRoom}) => {
-  const empno = "E2005003";
 
   const handleAddInvite = async () => {
     const formData = new FormData();
