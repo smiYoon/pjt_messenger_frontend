@@ -1,12 +1,44 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import styles from './Feedback_detail.module.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 
 const Feedback_detail = () => {
 
   const navigate = useNavigate();
+  const [post, setPost] = useState([]);
+  const { id } = useParams();
+
+  useEffect(() => {
+      const fetchPostData = async () => {
+  
+        try {
+          const response = await fetch(`https://localhost:443/board/Feedback/${id}`, {
+            method: 'GET',
+          });
+  
+          if (response.ok) {
+            const data = await response.json();
+            console.log('게시글 정보:', data);
+  
+            setPost({
+              title: data.title,
+              crtDate: data.crtDate,
+              author: data.employee.name,
+              count: data.count,
+              detail: data.detail,
+            });
+          } else {
+            console.error('게시글 정보 불러오기 실패:', response.statusText);
+          }
+        } catch (error) {
+          console.error('오류발생:', error);
+        }
+      };
+  
+      fetchPostData();
+    }, []);
 
    const handleClick = () => {
           Swal.fire({
@@ -17,23 +49,15 @@ const Feedback_detail = () => {
               cancelButtonText: '취소'
           }).then((result) => {
               if(result.isConfirmed) {
-                  navigate('/board/notice/list');
+                  navigate('/board/feedback/list');
               }
           })
       }
 
-  const handleCancelClick = () => {
-    navigate("/board/notice/list");
+  const handleUpdateClick = () => {
+    navigate(`/board/feedback/update/${ id }`);
   };
 
-  const notice = [{
-    id: "123",
-    title: "제에에에에에에에에에에에에에에에에에목",
-    empno: "작성자",
-    count: 2,
-    detail: "내애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애애용",
-    crtDate: "2025.03.24",
-  }];
 
   return (
     <div className={styles.container}>
@@ -41,10 +65,9 @@ const Feedback_detail = () => {
 
       </div>
       <div className={styles.main}>
-        {notice.map((post) => (
           <div className={styles.right_panel}>
             <div className={styles.header}>
-              공지사항 조회
+              게시글 조회
             </div>
             <table className={styles.info}>
               <tbody>
@@ -67,7 +90,7 @@ const Feedback_detail = () => {
                     작성자
                   </td>
                   <td className={styles.author}>
-                    {post.empno}
+                    {post.author}
                   </td>
                   <td className={styles.label}>
                     조회수
@@ -82,11 +105,10 @@ const Feedback_detail = () => {
               {post.detail}
             </div>
             <div className={styles.buttonContainer}>
-              <button onClick={handleCancelClick} className={styles.edit} >수정</button>
+              <button onClick={handleUpdateClick} className={styles.edit} >수정</button>
               <button onClick={handleClick} className={styles.cancel}>삭제</button>
             </div>
           </div>
-        ))}
       </div>
 
     </div>

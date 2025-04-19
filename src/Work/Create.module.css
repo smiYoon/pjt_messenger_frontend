@@ -84,6 +84,11 @@
     border-radius: 20px 20px;
     background-color: rgb(245, 198, 87);
     color: white;
+
+}
+
+.status1.on{
+    border: solid 5px #4A1DFF;
 }
 
 .status1:hover{
@@ -103,6 +108,10 @@
     color: white;
 }
 
+.status2.on{
+    border: solid 5px #4A1DFF;
+}
+
 .status2:hover{
     background-color: #b94927;
 }
@@ -118,6 +127,10 @@
     border-radius: 20px 20px;
     background-color: #12ab8c;
     color: white;
+}
+
+.status3.on{
+    border: solid 5px #4A1DFF;
 }
 
 .status3:hover{
@@ -137,6 +150,10 @@
     color: white;
 }
 
+.status4.on{
+    border: solid 5px #4A1DFF;
+}
+
 .status4:hover{
     background-color: #001b1e;
 }
@@ -153,6 +170,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.type.on{
+    border: solid 5px black;
 }
 
 .type:hover{

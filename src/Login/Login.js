@@ -12,7 +12,7 @@ const Login = () => {
     // 상태 관리: 입력값을 저장하는 상태 변수
     const [loginData, setLoginData] = useState({
         loginId: '',
-        password: ''
+        password: '',
     });
 
     // 입력값 상태 업데이트
@@ -26,7 +26,9 @@ const Login = () => {
 
     // 로그인 버튼 클릭 시 백엔드에 로그인 데이터 전송
     const handleLogin = async () => {
-        
+
+        console.log('id:', loginData.loginId, 'password:', loginData.password);
+
         // 백엔드로 데이터 전송
         try {
             const formData = new FormData();
@@ -48,9 +50,6 @@ const Login = () => {
             // sessionStorage.setItem("jwt", token);
 
 
-            
-            
-
             if (response.ok) {
                 // 로그인 성공 시 처리
                 const token = result.token; // 진짜 토큰만 꺼냄.
@@ -58,12 +57,11 @@ const Login = () => {
                 setMessage(token);
                 localStorage.setItem("jwt", token); 
                 console.log("서버 응답:", token);
-                navigate("/member/list");
-
+                navigate("/member/list");   
             } else {
                 // 로그인 실패 시 처리
-                console.log("로그인 실패");
-                
+                setMessage( result.error );
+                console.log("로그인 실패", result);               
             }
         } catch (error) {
             console.error("로그인 오류:", error);

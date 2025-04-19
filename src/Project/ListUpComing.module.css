@@ -19,7 +19,9 @@
     width: 25%;
     font-size: 1.3rem;
     font-weight: bold;
-    line-height: 7.5vh;
+    
+    display: flex;
+    align-items: center;
 
     overflow:hidden; 
     text-overflow:ellipsis;
