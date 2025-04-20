@@ -152,7 +152,7 @@ const List_member = () => {
             onClick={() => fetchMembers(currPage - 1)}
             disabled={currPage === 0}
           >
-            -1<i className="fas fa-angle-left"></i>
+            <i className="fas fa-angle-left"></i>-1
           </button>
 
           {Array.from({ length: endPage - startPage }, (_, i) => startPage + i).map((pageNum) => (
@@ -190,7 +190,7 @@ const List_member = () => {
           </button>
         </div>
 
-        
+
       </div>
 
       <div className={styles.right_panel}>
