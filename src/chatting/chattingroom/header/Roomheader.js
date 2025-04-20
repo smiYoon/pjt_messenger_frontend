@@ -7,7 +7,7 @@ const Roomheader = ({ selectedChatRoom }) => {
     const toggleBtnRef = useRef(null); // 토글 버튼용 ref
 
     // 채팅방 인원 리스트
-    const [showEmpList, setShowEmpList] = useState(false);
+    const [showEmpList, setShowEmpList] = useState(null);
 
     const onToggleEmpList = () => {
         setShowEmpList(prev => !prev);
@@ -57,7 +57,7 @@ const Roomheader = ({ selectedChatRoom }) => {
 
                 {showEmpList && (
                     <div ref={empListRef}>
-                        <ChatEmpList employees={selectedChatRoom.chatEmployees}/>
+                        <ChatEmpList employees={Array.isArray(selectedChatRoom?.chatEmployees) ? selectedChatRoom.chatEmployees : []} />
                     </div>
                 )}
             </>

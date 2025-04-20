@@ -1,82 +1,47 @@
-.aibox{
+.aibox {
     position: relative;
     width: 80%;
-    height: 92%;
+    height: 86%;
     background-color: #e5e1f5;
-
     border-radius: 20px;
-
-    box-shadow: 4px 4px 10px rgba(0, 0,0,.25);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    overflow-y: auto;
 }
 
-.summaryAllBox {
-    position: relative;
-    width: 100%;
-    height: 150px;
-}
-
-/* todaySummary */
 .todaySummary {
-    position: relative;
-
-    top: 3%;
-    left: 6%;
-    
-    padding-top: 1%;
-    padding-left: 5%;
-    padding-right: 2%;
-
+    display: flex;
+    align-items: center;
     justify-content: center;
+    gap: 0.5rem;
 
-    width: 40%;
-    height: 40px;
+    width: 45%;
+    height: 45px;
 
     font-size: 18px;
+    font-weight: bold;
 
-    cursor: pointer;
-
-    /* design */
-    
-    color: #ffff;
+    color: white;
     background-color: #6C47FF;
-    
-    border-radius: 20px;
-    overflow: hidden;
 
-}
-
-.todaySummary:hover .magicWand,
-.todaySummary:hover .todaySummaryTxt {
-    opacity: 0.7;
-}
-
-
-.magicWand {
+    border-radius: 12px;
+    cursor: pointer;
     position: relative;
-
-    top: 8%;
-    
-    margin-right: 3%;
-
-    font-size: 140%;
-}
-
-
-/* effect */
-
-.todaySummary:active {
-    box-shadow: 5px 5px 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
 }
 
 .todaySummary::before {
+    content: '';
     position: absolute;
-    content: ' ';
     top: -180px;
     left: 0;
     width: 30px;
     height: 100%;
-    background-color: #ffff;
-    
+    background-color: white;
     animation: shiny 4.0s ease-in-out infinite;
 }
 
@@ -85,142 +50,108 @@
     80% { transform: scale(0) rotate(45deg); opacity: 0.5; }
     81% { transform: scale(4) rotate(45deg); opacity: 1; }
     100% { transform: scale(50) rotate(45deg); opacity: 0; }
-  }
+}
 
+.magicWand {
+    font-size: 22px;
+}
 
 .dateSetManually {
-    position: relative;
     display: flex;
-
-    margin-left: 6%;
-    margin-top: 15%;
-
-    padding: 0;
-
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
-    width: 40%;
-    height: 5%;
+    width: 97%;
+    height: 40px;
 
+    background-color: white;
+    border-radius: 10px;
 
-    background-color: #ffff;
-    border-radius: 15px;
-}
-
-.dateSetManuallyTxt {
-    position: relative;
-    display: inline-block;
-
-
-
-    width: fit-content;
-    height: fit-content;
-
+    font-weight: bold;
     color: #6C47FF;
+    margin-top: 1rem;
 }
 
-.startDateBox{
-    position: relative;
+.startDateBox {
     display: flex;
-
-    margin-top: 5%;
-    margin-left: 6%;
-
-    width: 88%;
-    height: 5%;
-}
-
-.startDate{
-    position: relative;
-    display: flex;
-
-    margin-top: 1%;
-
-    padding: 0;
-
-    justify-content: center;
     align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
 
-    width: 25%;
+.startDate {
+    width: 35%;
     height: 100%;
-
-
-    background-color: #ffff;
+    background-color: white;
     border-radius: 15px;
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-.startDateTxt{
-    position: relative;
-    display: inline-block;
-
-    width: fit-content;
-    height: fit-content;
-
+    font-weight: bold;
     color: #6C47FF;
 }
-
-/* 캘린더 - 시작일 */
 
 .startDatePickerBox {
-    position: relative;
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    width: 100%;
-    height: 100%;
+    flex-grow: 1;
 }
-
-.react-datepicker-wrapper {
-    width: 100%; /* wrapper에 100% 너비 적용 */
-    height: 100%;
-    display: flex; /* 콘텐츠를 flexbox로 배치 */
-    align-items: center;
-    justify-content: center;
-  }
 
 .startDatePicker {
-    position: relative;
-    
-
-    height: 100%;
-
-    background-color: #ffff;
-    border: solid transparent;
+    width: 100%;
+    height: 40px;
+    padding: 0.5rem;
+    background-color: white;
+    border: 1px solid #ccc;
     border-radius: 15px;
-}
-
-.dateInput{
-    position: relative;
-    
-}
-
-.summaryInfo{
-    background-color: #d2c8f8;
-
-    height: 50%;
-    padding: 1rem;
-    margin-top: 1rem;
-
-
-}
-
-.summaryButton{
-    
-    height: 4%;
-    cursor: pointer;
-    background-color: #ffff;
-    
-    align-content: center;
+    font-size: 14px;
     text-align: center;
 }
 
-.exitButton{
-    font-size: 40px;
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
+.startDatePicker:hover{
+    border-color: #6C47FF;
     cursor: pointer;
+}
+
+.summaryInfo {
+    background-color: #d2c8f8;
+    color: #333;
+    border-radius: 10px;
+
+    height: 40%;
+    padding: 1rem;
+    overflow-y: auto;
+    white-space: pre-wrap;
+}
+
+.summaryButton {
+    width: 30%;
+    height: 45px;
+    
+    background-color: white;
+    border-radius: 20px;
+    font-weight: bold;
+    color: #6C47FF;
+    text-align: center;
+    line-height: 45px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.summaryButton:hover {
+    background-color: #f1ecff;
+    box-shadow: 0 0 8px rgba(108, 71, 255, 0.3);
+}
+
+.exitButton {
+    font-size: 36px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    color: #6C47FF;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.exitButton:hover {
+    transform: scale(1.1);
 }

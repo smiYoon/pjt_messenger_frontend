@@ -1,8 +1,7 @@
 import React from "react";
 import styles from "./Invite.module.css";
 
-const Invite = ({ onOrgaClick, id, inviteList ,onInviteChange, selectedChatRoom, setSelectedChatRoom}) => {
-  const empno = "E2005003";
+const Invite = ({ onOrgaClick, id, inviteList ,onInviteChange,setInviteList}) => {
 
   const handleAddInvite = async () => {
     const formData = new FormData();
@@ -20,8 +19,7 @@ const Invite = ({ onOrgaClick, id, inviteList ,onInviteChange, selectedChatRoom,
   
       const result = await response.json();
       console.log("서버 응답:", result);
-      if(result == true) {alert("초대 성공!"); onInviteChange([]);}
-      else alert("초대 실패");
+      setInviteList([]);
     } catch (err) {
       console.error("초대 실패!", err);
       alert("초대 중 오류 발생!");
@@ -32,25 +30,22 @@ const Invite = ({ onOrgaClick, id, inviteList ,onInviteChange, selectedChatRoom,
   return (
     <div className={styles.invite}>
 
-      {/* 아바타들 */}
       <div className={styles.avatarRow}>
         <div class={styles.avatarBox}>
           {inviteList.slice(0, 3).map((name, index) => (
             <div key={index} className={styles.avatar}>
-              {name} {/* 이름이 아니고 사진으로 */}
+              {name} 
             </div>
           ))}
           {inviteList.length > 3 && (
             <div className={styles.avatar}>+{inviteList.length - 3}</div>
           )}
         </div>
-        {/* avatarBox */}
-        <button onClick={handleAddInvite} className={styles.inviteBtn}>
+        <button onClick={handleAddInvite}  disabled={inviteList.length === 0} className={styles.inviteBtn}>
           초대하기
         </button>
       </div>
-      {/* avatarRow */}
-      {/*inviteRow*/}
+
       <button onClick={onOrgaClick} className={styles.opOrga}>
         조직도 보기
       </button>
