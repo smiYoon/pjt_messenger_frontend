@@ -69,7 +69,7 @@ const Navbar = () => {
       </div>
 
       <div className={styles.profile}>
-        <Link to={`/member/edit/${decodedToken.empno}`} className={styles.profile}>
+        <Link to={`/member/edit/${decodedToken.empno}`} className={styles.profile_link}>
           <img src={profile} alt='' className={styles.profileImg} />
         </Link>
         <div className={styles.logout}>

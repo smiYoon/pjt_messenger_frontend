@@ -50,6 +50,15 @@ const Modify_member = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        if (!memberForm.loginId || !memberForm.password || !memberForm.name || !memberForm.tel || !memberForm.email) {
+            Swal.fire({
+                icon: 'warning',
+                title: '입력 오류',
+                text: '빈칸을 모두 기입해주세요.',
+            });
+            return;
+        }
+
         try {
             const formData = new FormData();
             formData.append("loginId", memberForm.loginId);
@@ -110,7 +119,6 @@ const Modify_member = () => {
                         empno: data.empno,
                         department: data.department.id,
                         position: data.position,
-                        password: data.password,
                         tel: data.tel,
                         address: data.address,
                         zipCode: data.zipCode,
