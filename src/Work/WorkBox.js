@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import styles from "./WorkBox.module.css";
+import { useLoadScript } from '../LoadScriptContext.js';
 
 console.groupCollapsed("src/Work/WorkBox.js");console.groupEnd();
 
