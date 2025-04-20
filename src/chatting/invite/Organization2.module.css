@@ -1,3 +1,12 @@
+.loading{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: #FFF;
+}
+
 .container {
     position: fixed;
     left: 50%;
@@ -22,16 +31,17 @@
 .tree {
     flex: 1;
     overflow-y: auto;
-    background-color: white;
+    background-color: #FFF;
     border-radius: 8px;
     padding: 10px;
     box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+    height: 500px;
 }
 
 .inviteList {
     width: 200px;
     height: 500px;
-    background-color: white;
+    background-color: #FFF;
     border-radius: 8px;
     padding: 10px;
     overflow-y: auto;
@@ -68,7 +78,7 @@
     border-bottom: none;
 }
 
-.container > div:first-child {
+.Xbutton {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -83,8 +93,43 @@
     text-align: center;
     line-height: 28px;
     transition: background-color 0.2s;
+    z-index: 1000;
 }
 
-.container > div:first-child:hover {
+.Xbutton:hover {
     background-color: #f2f2f2;
+}
+
+.inviteBox {
+    position: relative;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inviteBtn {
+    width: 90%;
+    padding: 10px 0;
+    background-color: #6C47FF;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+    transition: background-color 0.2s, transform 0.1s ease-in-out;
+}
+
+.inviteBtn:hover {
+    background-color: #4A1DFF;
+    transform: translateY(-2px);
+}
+
+.inviteBtn:active {
+    background-color: #3711d6;
+    transform: translateY(0px);
 }

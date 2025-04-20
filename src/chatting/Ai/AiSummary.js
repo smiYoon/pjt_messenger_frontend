@@ -134,6 +134,7 @@ const AiSummary = ({id, setChatrooms, setSelectedChatRoom , selectedChatRoom}) =
                                         selelctStart
                                         startDate={startDate}
                                         endDate={endDate}
+                                        showTimeSelect
                                         dateFormat="yyyy-MM-dd HH:mm"
                                         />
                                 </div>
@@ -152,6 +153,7 @@ const AiSummary = ({id, setChatrooms, setSelectedChatRoom , selectedChatRoom}) =
                                         startDate={startDate}
                                         endDate={endDate}
                                         minDate={startDate}
+                                        showTimeSelect
                                         dateFormat="yyyy-MM-dd HH:mm"
                                         />
                                 </div>

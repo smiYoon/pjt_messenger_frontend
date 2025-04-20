@@ -61,7 +61,7 @@
     align-items: center;
     justify-content: center;
 
-    width: 97%;
+    width: 92%;
     height: 40px;
 
     background-color: white;
@@ -80,7 +80,7 @@
 }
 
 .startDate {
-    width: 35%;
+    width: 30%;
     height: 100%;
     background-color: white;
     border-radius: 15px;
