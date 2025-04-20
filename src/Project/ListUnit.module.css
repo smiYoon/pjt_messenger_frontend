@@ -137,4 +137,15 @@
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
+.dotBtnNone {
+    background-color: #aea2df;
+    padding: 12px 25px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.dotBtnNone:hover  {    
+    background-color: #593ad6;
+    color: white;
+}
+
 

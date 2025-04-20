@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import styles from "./List.module.css";
 
 import { P_ListUpComing, P_ListUnit, P_Create } from "./";
+import { useLoadScript } from '../LoadScriptContext';
 
 console.groupCollapsed("src/Project/List.js");
 console.groupEnd();
@@ -11,6 +12,10 @@ console.groupEnd();
 const List = () => {
   console.group("List() invoked.");
   console.groupEnd();
+
+
+    const { decodedToken, role_level } = useLoadScript();
+  console.log('로그인 사용자정보:', decodedToken);
 
   // 상태 및 타입 매핑
   const statusMapping = { 1: "진행예정", 2: "진행중", 3: "종료" };
@@ -24,7 +29,7 @@ const List = () => {
   const [pageSize] = useState(4);
   const [blockSize] = useState(10);
   const [totalPageCnt, setTotalPageCnt] = useState(0);
-  const [currBlock, setCurrBlock] = useState(Math.floor(currPage / blockSize));
+  const [currBlock, setCurrBlock] = useState(Math.floor((currPage-1) / blockSize));
 
   const [startPage, setStartPage] = useState(currBlock * blockSize);
   const [endPage, setEndPage] = useState(
@@ -32,7 +37,7 @@ const List = () => {
   );
 
   useEffect(() => {
-    setCurrBlock(Math.floor(currPage / blockSize));
+    setCurrBlock(Math.floor((currPage-1) / blockSize));
     setStartPage(currBlock * blockSize);
     setEndPage(Math.min(startPage + blockSize, totalPageCnt));
   }, [currPage, totalPageCnt, currBlock, startPage, endPage]);
@@ -122,7 +127,7 @@ const List = () => {
           ...data,
         }));
 
-        setCurrBlock(Math.floor(currPage / blockSize));
+        setCurrBlock(Math.floor((currPage-1) / blockSize));
         setStartPage(currBlock * blockSize);
         setEndPage(Math.min(startPage + blockSize, totalPageCnt));
 
@@ -279,7 +284,9 @@ const List = () => {
               >
                 검색
               </button>
-              <button onClick={openProjectRegister}>등록</button>
+              {role_level[decodedToken.roles] === 3 ? (
+                <button onClick={openProjectRegister}>등록</button>
+              ) : (<div></div>)}
             </div>
           </div>
 
@@ -298,19 +305,25 @@ const List = () => {
           </div>
 
           <div className={styles.pageBar}>
-            {currPage} / {totalPageCnt} / {startPage} / {endPage}
+
+          {/* currPage: {currPage} / totalPageCnt:{totalPageCnt} / startPage:{startPage} / endPage:{endPage} */}
+            
             <div className={styles.pageBox}>
               <div
                 className={styles.pageNum}
                 onClick={() => handleGetList(1)}
-                disabled={currPage === 1}
+                style={{ display: currPage === 1 ? "none" : "" }}
+              >
+                처음
+              </div>
+
+              <div 
+                className={styles.pageNum} 
+                onClick={() => handleGetList(startPage-blockSize+1)} 
+                style={{ display: currPage <= 10 ? "none" : "" }}
               >
                 <i className="fas fa-angles-left"></i>
               </div>
-
-              {/* <div className={styles.pageNum} onClick={() => handleGetList(startPage-1)} disabled={currPage <= 9}>
-                <i className="fas fa-angle-left"></i>
-              </div> */}
 
               <div
                 className={styles.pageNum}
@@ -320,19 +333,6 @@ const List = () => {
                 <i className="fas fa-angle-left"></i>
               </div>
 
-              {/* {pageNumbers.map((num) => (
-                <div
-                  key={num}
-                  onClick={() => handleGetList(num)}
-                  style={{ color: num === currPage ? "red" : "normal" }}
-                  className={styles.pageNum}
-                >
-                  {num}
-                </div>
-              ))} */}
-
-
-              {/* 페이지 블럭 마지막 페이비 클릭 시 오류!!!!!!!! */}
               {Array.from(
                 { length: endPage - startPage },
                 (_, i) => startPage + i + 1
@@ -349,22 +349,28 @@ const List = () => {
               <div
                 className={styles.pageNum}
                 onClick={() => handleGetList(currPage + 1)}
-                disabled={currPage >= totalPageCnt}
+                style={{ display: currPage === totalPageCnt ? "none" : "" }}
               >
                 <i className="fas fa-angle-right"></i>
               </div>
 
-              {/* <div className={styles.pageNum} onClick={() => handleGetList(endPage)} disabled={currPage >= totalPageCnt}>
-                <i className="fas fa-angle-right"></i>
-              </div> */}
+              <div 
+                className={styles.pageNum} 
+                onClick={() => handleGetList(endPage+1)} 
+                style={{ display: (endPage+1) > totalPageCnt ? "none" : "" }}
+              >
+                <i className="fas fa-angles-right"></i>
+              </div>
 
               <div
                 className={styles.pageNum}
                 onClick={() => handleGetList(totalPageCnt)}
-                disabled={currPage >= totalPageCnt}
+                style={{ display: currPage === totalPageCnt ? "none" : "" }}
               >
-                <i className="fas fa-angles-right"></i>
+                마지막
               </div>
+
+
             </div>
           </div>
         </div>

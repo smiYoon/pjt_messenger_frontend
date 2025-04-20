@@ -5,12 +5,16 @@ import { P_Modify } from ".";
 import styles from "./ListUnit.module.css";
 
 import { RxLapTimer } from "react-icons/rx";
+import { useLoadScript } from '../LoadScriptContext';
 
 console.groupCollapsed("src/Project/ListUnit.js");
 console.groupEnd();
 
 const ListUnit = ({ project, statusMapping, onDelete, infoAlert, handleGetUpComingList, handleGetList }) => {
   // console.group('ListUnit(', project, statusMapping, ') invoked.'); console.groupEnd();
+
+  const { decodedToken, role_level } = useLoadScript();
+  console.log('로그인 사용자정보:', decodedToken);
 
   const statusColor = (status) => {
     switch (status) {
@@ -107,23 +111,31 @@ const ListUnit = ({ project, statusMapping, onDelete, infoAlert, handleGetUpComi
               >
                 ···
               </div>
-              {showEditMenu === project.id && (
-                <div ref={editMenuRef} className={styles.editMenu}>
-                  <div
-                    className={styles.dotBtnEdit}
-                    onClick={openProjectModify}
-                  >
-                    수정
-                  </div>
-                  <hr></hr>
-                  <div
-                    className={styles.dotBtnDelete}
-                    onClick={checkDeleteConfirm}
-                  >
-                    삭제
-                  </div>
-                </div>
-              )}
+              {showEditMenu === project.id 
+                && (
+                  decodedToken.empnp === project.pjtCreator.empno || decodedToken.empnp === project.pjtManager.empno ? (
+                      <div ref={editMenuRef} className={styles.editMenu}>
+                        <div
+                          className={styles.dotBtnEdit}
+                          onClick={openProjectModify}
+                        >
+                          수정
+                        </div>
+                        <hr></hr>
+                        <div
+                          className={styles.dotBtnDelete}
+                          onClick={checkDeleteConfirm}
+                        >
+                          삭제
+                        </div>
+                      </div>
+                  ) : ( 
+                      <div ref={editMenuRef} className={styles.editMenu}>
+                        <div className={styles.dotBtnNone}>권한없음</div>
+                      </div> 
+                  )
+                )
+              }
             </div>
           </div>
 
