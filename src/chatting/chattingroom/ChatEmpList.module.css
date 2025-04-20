@@ -1,57 +1,59 @@
-.container{
+.container {
     position: absolute;
+    width: 250px;
+    max-height: 300px;
+    overflow-y: auto;
 
-    width: 20%;
-    height: auto;
+    background-color: #fff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 12px 12px;
 
-    background-color: rgb(181,116,245);
-    box-shadow: 4px 4px 10px rgba(0, 0,0,.25);
-
-    justify-items: center;
-
-    border-radius: 10px;
-
-    z-index: 2;
+    z-index: 10;
+    animation: fadeIn 0.2s ease-in-out;
 }
 
-.chatname{
-    width: 50%;
-    aspect-ratio: 10 / 2;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.emplist{
-    width:100%;
-}
-
-.emp{
+.chatname {
     width: 100%;
-    aspect-ratio: 10 / 2;
-    /* background-color: blue; */
+    padding: 12px 0;
+    background-color: #b574f5;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 0 0 0 0;
+}
 
-    /* border: solid red 1px; */
+.emplist {
+    width: 100%;
+}
 
+.emp {
     display: flex;
     align-items: center;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-.emp:hover{
-    background-color: #666;
+.emp:hover {
+    background-color: #f2f2f2;
 }
 
-.empimg{
-    width: 50px;
-    height: 50px;
-
-    margin: 0px 20px;
-    background-color: yellow;
-
+.empimg {
+    width: 40px;
+    height: 40px;
+    background-color: #eee;
     border-radius: 50%;
+    margin-right: 12px;
+    border: 1px solid #ccc;
 }
 
-.empname{
-    
+.empname {
+    font-size: 15px;
+    color: #333;
 }

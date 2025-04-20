@@ -9,7 +9,7 @@
 
 .side_bar {
     width: 20%;
-    height: 100vh;
+    height: 100%;
     background-color: burlywood;
     position: relative;
 }
@@ -22,6 +22,7 @@
     top: 10%;
     right: 0;
 }
+
 
 .menu .notice,
 .menu .feedback {
@@ -54,19 +55,19 @@
     box-sizing: border-box;
 }
 
+.list_Page .header {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 30px;
+}
+
 .list_container {
     display: flex;
     position: relative;
     flex-direction: column;
     width: 70%;
     height: 80%;
-}
-
-.list_container .header {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #222;
-    margin-bottom: 30px;
 }
 
 .option_box {
@@ -103,7 +104,7 @@
 .search_box { 
     display: flex;
     align-items: center;
-    gap: 1vw;
+    gap: 0.5vw;
 }
 
 .select {
@@ -125,7 +126,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    color: #444;
+
 }
 
 .search_box .input {
@@ -148,9 +149,6 @@
 .Board_table {
     border-collapse: collapse;
     width: 100%;
-    height: 50px;
-    color: #222;
-    overflow: hidden;
 }
 
 .Board_title {
@@ -163,6 +161,11 @@
     text-align: center;
     box-sizing: border-box;
     font-weight: bold;
+    color: #444;
+}
+
+.Board_table {
+    height: 50px;
     color: #222;
 }
 

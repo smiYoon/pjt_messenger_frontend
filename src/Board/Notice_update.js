@@ -45,7 +45,7 @@ const Notice_update = () => {
     const fetchPostData = async () => {
 
       try {
-        const response = await fetch(`https://localhost:443/board/Notice/${id}`, {
+        const response = await fetch(`https://localhost:443/board/notice/${id}`, {
           method: 'GET',
         });
 
@@ -79,7 +79,7 @@ const Notice_update = () => {
 
       console.log("post:", post);
 
-      const response = await fetch(`https://localhost:443/board/Notice/${id}`, {
+      const response = await fetch(`https://localhost:443/board/notice/${id}`, {
         method: 'PUT', // 수정 요청은 PUT 메서드 사용
         body: formData,
       });
@@ -145,7 +145,7 @@ const Notice_update = () => {
             </div>
 
             <div className={styles.buttons}>
-              <button type='submit' className={styles.submit}>등록</button>
+              <button type='submit' className={styles.submit}>확인</button>
               <button type='button' className={styles.cancel} onClick={handleCancelClick}>취소</button>
             </div>
           </form>

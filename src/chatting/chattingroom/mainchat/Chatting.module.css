@@ -1,8 +1,8 @@
 .mainchat{
+    position: relative;
     width: 100%;
     height: 80%;
     background-color: #E5E1F5;
-
     border-radius: 20px;
 
     /* 가로 중앙 정렬 */
@@ -14,7 +14,7 @@
 .SearchBar {
     position: relative;
     
-    top: 25px;
+    top: 3%;
 
     width: 60%;
     height: 5%;
@@ -38,7 +38,6 @@
 
 .searchInput::placeholder {
     font-size: 15px;
-
 }
 
 .IoSearch {
@@ -50,38 +49,85 @@
     font-size: 25px;
 }
 
+/* //////////////////////////////////////////////////////////// */
+
+.messagebox{
+  position: relative;
+  top: 5%;
+
+  width: 80%;
+  height: 85%;
+
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.chatMessages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+  }
+  
+  .messageBubble {
+    max-width: 60%;
+    border-radius: 16px;
+    padding: 10px 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    word-wrap: break-word;
+  }
+  
+  .myMessage {
+    align-self: flex-end;
+    background-color: #d0f0ff; 
+    border-bottom-right-radius: 0;
+  }
+  
+  .otherMessage {
+    align-self: flex-start;
+    background-color: #f0f0f0;
+    border-bottom-left-radius: 0;
+  }
+  
+  .senderName {
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #555;
+  }
+  
+  .messageText {
+    font-size: 1rem;
+    color: #222;
+  }
+
+  /* //////////////////////////////////////////////////////////// */
 
 .MessageInputBox {
-    position: relative;
-    top: 580px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    width: 725px;
-    height: 60px;
+    left: 50%;
+    bottom: 3%;
+
+    transform: translateX(-50%);
+
+    width: 80%;
+    height: 6%;
 
     border-radius: 10px;
     background-color: white;
 }
 
-
-.fileIcon {
-    position: relative;
-    top: 12px;
-    left: 15px;
-
-    font-size: 35px;
-    transform: rotate(35deg);
-
-    cursor: pointer;
-}
-
 .messageInput {
     position: relative;
+    
+    width: 90%;
+    height: 60%;
 
-    left: 30px;
-    top: 2px;
-
-    width: 500px;
-    height: 30px;
+    resize: none;
 
     border: none;
     outline: none;
@@ -92,7 +138,8 @@
 .sendMessagIcon {
     position: relative;
 
-    top: 10px;
-    left: 130px;
+    left: 1%;
     font-size: 30px;
+
+    cursor: pointer;
 }

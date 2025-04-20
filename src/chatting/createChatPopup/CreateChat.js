@@ -1,76 +1,59 @@
 import React, { useState, useEffect } from "react";
 import styles from './CreateChat.module.css';
+import {useLoadScript} from "../../LoadScriptContext";
 
-const CreateChat = ({ onCloseClick }) => {
+const CreateChat = ({ onCloseClick, setChatrooms }) => {
   const [roomName, setRoomName] = useState(""); //채팅방이름
-  const [selectPj, setSelectPj] = useState("AI 협업메신저"); //프로젝트 
-  const [inviteName, setInviteName] = useState(""); //초대할 리스트
-  const [invitedList, setInvitedList] = useState([]); //초대된 리스트
+  const [selectPj, setSelectPj] = useState(""); //프로젝트 
   const [selectPjs, setSelectPjs] = useState([]);
-  // const selectPjs =[]; //프로젝트 리스트가 되어야하는 것 아닌가
 
   useEffect(() => {
-    // 예: fetch 또는 axios 사용
-    fetch("/api/selectPj") //json 받을 url
-      .then((res) => res.json())
-      .then((data) => setSelectPj(data));
-  }, []);
+    const fetchCreateRoom = async () => {
+        try {
+            const response = await fetch("https://localhost:443/project/status");
+            const data = await response.json();
+            setSelectPjs(data);
+            console.log("data", data);
+        } catch (err) {
+            console.error("프로젝트 리스트 불러오기 실패:", err);
+        }
+    };
 
-  const handleAddInvite = () => {
-    // if (inviteName.trim() != ""){ //조직도에서 리스트로 받아오지 못하는 것 같음.
-    //     setInvitedList([...invitedList,inviteName]);
-    //     setInviteName("")//추가 했으니 빈문자로 바꿔 중복 선택 되는가?
-    // }//if 첫번째
+    fetchCreateRoom();
+}, []);
 
-    // const names=inviteName.split(",").map((name)=>name.trim()).filter((name) => name !== "");
-    // if (names.length >0){
-    //     setInvitedList([...invitedList,...names]);
-    //     setInviteName(""); //추가하고 빈칸으로 만들기
-    // }; 두번째
+  //FromData버전
 
+  const { decodedToken } = useLoadScript();
+  const empno = decodedToken.empno;
 
-    const names = inviteName
-      .split(",")
-      .map((name) => name.trim())
-      .filter(Boolean);
-    const newNames = names.filter((id) => !invitedList.includes(id));
-    //중복된 id제거        
-    setInvitedList([...invitedList, ...newNames]);
-    setInviteName("");
+  const handleCreateRoom = async () => {
+    const formData = new FormData();
+  
+    formData.append("name", roomName);
+    formData.append("projectId", selectPj); // 문자열이라도 백에서 파싱하면 OK
+    formData.append("empno", empno); // 토큰에서 가져오는 empno
 
-
-    //     <ul>
-    // {invitedList.map(({ id, name }) => (
-    //   <li key={id}>{name}</li>
-    // ))}
-    // </ul>
-
-  };//handleAddInvite
-
-  const handleCreateRoom = () => {
-    const chatRoomData = {
-      roomName: roomName
-      , project: selectPj // 서버로는 ID 보내기
-      , members: invitedList
-    };//chatRoomData
-
-    console.log("채팅방 데이터(json):", JSON.stringify(chatRoomData));
-    //json으로 가는 모습으로 콘솔 확인하기
-  }//HandleCreateRoom
-
-  //둘 비교 해보기
-  // const handleCreateRoom = () => {
-  //     const data = {
-  //       roomName,
-  //       projectId: selectedProject, // 서버로는 ID 보내기
-  //       members: invitedList,
-  //     };
-  //     console.log("보낼 데이터:", data);invitedList
-  //   };
-
-
-
-
+    try {
+      const response = await fetch("https://localhost:443/chat", {
+        method: "POST",
+        body: formData
+      });
+  
+      if (!response.ok) {
+        throw new Error("서버 응답 실패: " + response.status);
+      }
+  
+      const result = await response.json();
+      console.log("서버 응답:", result);
+      alert("채팅방 생성 성공!");
+      setChatrooms((prev) => [...prev, result]);
+      onCloseClick?.();
+    } catch (err) {
+      console.error("채팅방 생성 실패!", err);
+      alert("채팅방 생성 중 오류 발생!");
+    }
+  };
 
   return (
     <div className={styles.overlay}>
@@ -80,89 +63,34 @@ const CreateChat = ({ onCloseClick }) => {
         <h2 className={styles.title}>채팅방 만들기</h2>
 
 
-        {/* div 1 */}
+        {/* 채팅방이름 */}
         <div className={styles.field}>
-          <label
-          // className={styles.mkChatT}
-          >채팅방 이름</label>
+          <label>채팅방 이름</label>
           <input
             type="text"
             value={roomName}
             onChange={(e) => setRoomName(e.target.value)}
-            // className={styles.inputN}
             placeholder="채팅방 이름을 적으세요"
           />
-        </div> {/*mkName*/}
+        </div>
 
-
-        {/* div 2 */}
+        {/* 프로젝트선택 */}
         <div className={styles.field}>
-          <label
-          // className={styles.pjT}
-          >연관프로젝트</label>
+          <label>연관프로젝트</label>
           <select
             value={selectPj}
-            onChange={(e) => setSelectPj(e.target.value)}
-          // className={styles.selecPj}
-          >
+            onChange={(e) => {setSelectPj(e.target.value)}}>
             <option value="" disabled selected hidden>프로젝트를 선택하세요</option>
             {selectPjs.map((pj) => (
               <option key={pj.id} value={pj.id}>{pj.name}</option>
             ))};
           </select>
-        </div>{/*mkPj*/}
-
-
-        {/* div 3 */}
-        <div className={styles.field}>
-          <label>인원 초대</label>
-          <div className={styles.inviteRow}>
-            <input
-              type="text"
-              value={inviteName}
-              placeholder="초대 이름"
-              onChange={(e) => setInviteName(e.target.value)}
-              // className={styles.ivtNs}
-              onKeyDown={(e) => {
-                if (/[^a-zA-z가~-힣\s]/.test(e.key)) {
-                  e.preventDefault();
-                } else if (e.key === "Enter") {
-                  handleAddInvite();
-                }
-              }}
-
-            />
-            <button onClick={handleAddInvite}>+</button>
-          </div> {/*inviteRow*/}
-        </div>{/*field*/}
-
-
-        {/* 아바타들 */}
-        <div className={styles.avatarRow} >
-
-          {/* <div className={styles.avatarBox}> */}
-            {invitedList.slice(0, 5).map((name, index) => (
-              <div
-                key={index}
-                className={styles.avatar}
-              >
-                {name}
-                {/* 이름이 아니고 사진으로 */}
-              </div>
-            ))}
-            {invitedList.length > 5 && (
-              <div className={styles.avatar}>
-                 +{invitedList.length - 5}
-              </div>
-            )}
-          {/* </div> avatarBox */}
-
-
-
-        </div> {/*avatarRow */}
-        <div>
-        <button onClick={handleCreateRoom} className={styles.mkBtn}>만들기</button>
         </div>
+
+        <div>
+         <button onClick={handleCreateRoom} className={styles.mkBtn}>만들기</button>
+        </div>
+        
       </div>{/* popup */}
 
     </div> //overlay 

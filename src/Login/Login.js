@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './Login.module.css';
+import { useLoadScript } from '../LoadScriptContext';
 
 const Login = () => {
     console.log("Login() invoked.");
 
     const navigate = useNavigate();
     const [message, setMessage] = useState();
+
+    const { updateToken } = useLoadScript();
 
     // 상태 관리: 입력값을 저장하는 상태 변수
     const [loginData, setLoginData] = useState({
@@ -26,6 +29,7 @@ const Login = () => {
 
     // 로그인 버튼 클릭 시 백엔드에 로그인 데이터 전송
     const handleLogin = async () => {
+
         console.log('id:', loginData.loginId, 'password:', loginData.password);
 
         // 백엔드로 데이터 전송
@@ -49,23 +53,18 @@ const Login = () => {
             // sessionStorage.setItem("jwt", token);
 
             
-            
-            
-            
             if (response.ok) {
                 // 로그인 성공 시 처리
                 const token = result.token; // 진짜 토큰만 꺼냄.
-                console.log("로그인 성공");
-                setMessage(token);
-                localStorage.setItem("jwt", token); 
+                // console.log("로그인 성공");
+                // setMessage(token);
+                updateToken(token);
                 console.log("서버 응답:", token);
-                navigate("/member/list");
-                
+                navigate("/member/list");   
             } else {
                 // 로그인 실패 시 처리
                 setMessage( result.error );
-                console.log("로그인 실패", result);
-                
+                console.log("로그인 실패", result);               
             }
         } catch (error) {
             console.error("로그인 오류:", error);
@@ -78,7 +77,6 @@ const Login = () => {
             handleLogin();
         }
     };
-
 
     return (
         <div className={styles.login}>

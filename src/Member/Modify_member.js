@@ -3,8 +3,11 @@ import Swal from 'sweetalert2';
 import styles from './Modify_member.module.css';
 import profile from '../Navbar/img/profile.png';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useLoadScript } from '../LoadScriptContext';
 
 const Modify_member = () => {
+
+    const { decodedToken, role_level } = useLoadScript();
     const navigate = useNavigate();
     const handleCancelClick = () => {
         Swal.fire({
@@ -47,6 +50,15 @@ const Modify_member = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        if (!memberForm.loginId || !memberForm.password || !memberForm.name || !memberForm.tel || !memberForm.email) {
+            Swal.fire({
+                icon: 'warning',
+                title: '입력 오류',
+                text: '빈칸을 모두 기입해주세요.',
+            });
+            return;
+        }
+
         try {
             const formData = new FormData();
             formData.append("loginId", memberForm.loginId);
@@ -64,14 +76,9 @@ const Modify_member = () => {
             }
 
             console.log("memberForm:", memberForm);
-            const token = localStorage.getItem("jwt"); // 수정점 04.16
-            const response = await fetch(`https://localhost:443/employee/${empno}`, {
+            const response = await fetch(`https://localhost/employee/${empno}`, {
                 method: 'PUT', // 수정 요청은 PUT 메서드 사용
                 body: formData,
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    // 'Content-Type': 'application/json'
-                  } // 수정점. 04.16
             });
 
             if (response.ok) {
@@ -112,7 +119,6 @@ const Modify_member = () => {
                         empno: data.empno,
                         department: data.department.id,
                         position: data.position,
-                        password: data.password,
                         tel: data.tel,
                         address: data.address,
                         zipCode: data.zipCode,
@@ -148,12 +154,13 @@ const Modify_member = () => {
         fetchDeptId();
     }, [empno]);
 
-    // const level = {
-    //     "1": "팀원",
-    //     "2": "팀장",
-    //     "3": "부서장",
-    //     "4": "CEO",
-    // };
+    const level = {
+        "1": "팀원",
+        "2": "팀장",
+        "3": "부서장",
+        "4": "CEO",
+        "5": "인사담당자"
+    };
 
     return (
         <div className={styles.cover}>
@@ -222,19 +229,23 @@ const Modify_member = () => {
                                 </select>
                                 <div className={styles.placeholder_text}>부서</div>
 
-                                <select
-                                    name='position'
-                                    className={styles.position}
-                                    value={memberForm.position}
-                                    onChange={(e) => handleChange(e.target.name, e.target.value)}
-                                >
-                                    <option value="">직급을 선택해주세요.</option>
-                                    <option value="1">팀원</option>
-                                    <option value="2">팀장</option>
-                                    <option value="3">부서장</option>
-                                    <option value="4">CEO</option>
-                                    <option value="5">인사담당자</option>
-                                </select>
+                                {role_level[decodedToken.roles] === 5 ? (
+                                    <select
+                                        name='position'
+                                        className={styles.position}
+                                        value={memberForm.position}
+                                        onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                    >
+                                        <option value="">직급을 선택해주세요.</option>
+                                        <option value="1">팀원</option>
+                                        <option value="2">팀장</option>
+                                        <option value="3">부서장</option>
+                                        <option value="4">CEO</option>
+                                        <option value="5">인사담당자</option>
+                                    </select>
+                                ) : (
+                                    <div className={styles.position}>{level[memberForm.position]}</div>
+                                )}
                                 <div className={styles.position_text}>직급</div>
                             </div>
 
@@ -242,9 +253,9 @@ const Modify_member = () => {
                                 <input
                                     type='password'
                                     className={styles.single}
-                                    placeholder='변경할 비밀번호를 입력해주세요.'
+                                    placeholder='기존 비밀번호 혹은 새로운 비밀번호를 입력해주세요.'
                                     name='password'
-                                    value={memberForm.password}
+                                    // value={memberForm.password}
                                     onChange={(e) => handleChange(e.target.name, e.target.value)}
                                 />
                                 <div className={styles.placeholder_text}>비밀번호</div>

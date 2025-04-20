@@ -1,22 +1,25 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './Notice_list.module.css';
 import { Link } from 'react-router-dom';
+import { useLoadScript } from '../LoadScriptContext';
 
 const Notice_list = () => {
     const [inputValue, setInputValue] = useState();
     const [posts, setPosts] = useState([]);
+    const { decodedToken, role_level } = useLoadScript();
     const handleChange = (e) => setInputValue(e.target.value);
 
+    console.log('사용자정보(공지사항):', decodedToken);
     const fetchPosts = useCallback(async () => {
         try {
-            const response = await fetch(`https://localhost/board/Notice`, {
+            const response = await fetch(`https://localhost/board/notice`, {
                 method: 'GET',
             });
 
             if (response.ok) {
                 const data = await response.json();
                 console.log("data:", data);
-                const formattedData = data.map(post => ({
+                const formattedData = data.content.map(post => ({
                     id: post.id,
                     title: post.title,
                     author: post.employee.name,
@@ -63,10 +66,12 @@ const Notice_list = () => {
                         Notification
                     </div>
                     <div className={styles.option_box}>
-                        <Link to={`/board/notice/create`} className={styles.button}>등록</Link>
+                        {role_level[decodedToken.roles] != 1 && (
+                            <Link to={`/board/notice/create`} className={styles.button}>등록</Link>
+                        )}
                         <div className={styles.search_box}>
-                            <select 
-                                name='searchWord' 
+                            <select
+                                name='searchWord'
                                 className={styles.select}
                                 onChange={handleChange}
                             >

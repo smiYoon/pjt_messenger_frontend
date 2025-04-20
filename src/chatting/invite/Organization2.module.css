@@ -1,0 +1,135 @@
+.loading{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: #FFF;
+}
+
+.container {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+    padding: 20px;
+    background-color: #E5E1F5;
+    border: 2px solid #6C47FF;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+
+    min-width: 600px;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.tree {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #FFF;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+    height: 500px;
+}
+
+.inviteList {
+    width: 200px;
+    height: 500px;
+    background-color: #FFF;
+    border-radius: 8px;
+    padding: 10px;
+    overflow-y: auto;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+}
+
+.inviteList h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.inviteList ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.inviteList li {
+    padding: 6px 8px;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    color: #444;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .inviteList li:hover {
+    background-color: #f0c8ff;
+    color: #222;
+  }
+
+.inviteList li:last-child {
+    border-bottom: none;
+}
+
+.Xbutton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 28px;
+    transition: background-color 0.2s;
+    z-index: 1000;
+}
+
+.Xbutton:hover {
+    background-color: #f2f2f2;
+}
+
+.inviteBox {
+    position: relative;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inviteBtn {
+    width: 90%;
+    padding: 10px 0;
+    background-color: #6C47FF;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+    transition: background-color 0.2s, transform 0.1s ease-in-out;
+}
+
+.inviteBtn:hover {
+    background-color: #4A1DFF;
+    transform: translateY(-2px);
+}
+
+.inviteBtn:active {
+    background-color: #3711d6;
+    transform: translateY(0px);
+}
