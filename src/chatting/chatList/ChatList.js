@@ -1,26 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useContext} from "react";
+import { AuthContext } from "../../AuthContext";
 
 import styles from './ChatList.module.css';
 
-const ChatList = ({ onCreateClick,onChatClick }) => {
+const ChatList = ({ onCreateClick,onChatClick, chatrooms, setChatrooms, }) => {
 
-    const [chatrooms, setChatrooms] = useState([]);
+    const { empno } = useContext(AuthContext);
 
     // 채팅방 리스트 받아오기 (채팅방이름, 등록한사람 아이콘, 프로젝트 유무)
     useEffect(() => {
+        if (!empno) return;
+    
         const fetchChatrooms = async () => {
             try {
-                const response = await fetch("https://localhost:443/chat");
+                const response = await fetch(`https://localhost:443/chat/list/${empno}`);
                 const data = await response.json();
-                setChatrooms(data);
-                console.log("data", data);
+
+                if (Array.isArray(data)) {
+                    setChatrooms(data);
+                } else {
+                    console.warn("서버 응답이 배열이 아닙니다:", data);
+                    setChatrooms([]);  // fallback
+                }
             } catch (err) {
                 console.error("채팅방 리스트 불러오기 실패:", err);
+                setChatrooms([]);  // 실패 시에도 기본값 세팅
             }
         };
     
         fetchChatrooms();
-    }, []);
+    }, [empno]);
     
 
     return (

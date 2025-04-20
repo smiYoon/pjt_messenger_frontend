@@ -9,16 +9,12 @@ import CreateChat from './createChatPopup/CreateChat';
 import styles from './Chat_main.module.css';
 
 
-
-
-
 const Chat_main = () => {
 
-
     const [showCreateChat, setShowCreateChat] = useState(false);
-    const [showOrga, setShowOrga]=useState(false);      //조직도
-    const [inviteList, setInviteList] = useState([]); // 초대할 직원 id들 저장
-    
+    const [showOrga, setShowOrga]=useState(false);                  // 조직도
+    const [inviteList, setInviteList] = useState([]);               // 초대할 직원 id들 저장
+    const [chatrooms, setChatrooms] = useState([]);                 // 채팅방 리스트
     ////////////////////////////////////////////////////////////////////
     const [selectedChatRoom, setSelectedChatRoom] = useState(null);  // 선택된 채팅방
 
@@ -48,11 +44,11 @@ const Chat_main = () => {
     return (
         <div className={styles.main}>
             
-            <div className={styles.leftbox}>
-                
-                <Invite onOrgaClick={()=> {setShowOrga(true)}} id={selectedChatRoom?.id} inviteList={inviteList} onInviteChange={(newList) => setInviteList(newList)}/>
-                <ChatList onCreateClick={() => setShowCreateChat(true)} onChatClick={(chatId) => handleChatRoomClick(chatId)} />
-
+            <div className={styles.leftbox}>      
+                <Invite onOrgaClick={()=> {setShowOrga(true)}} id={selectedChatRoom?.id} inviteList={inviteList} onInviteChange={(newList) => setInviteList(newList)} 
+                            selectedChatRoom={selectedChatRoom} setSelectedChatRoom={setSelectedChatRoom}/>
+                <ChatList chatrooms={chatrooms} setChatrooms={setChatrooms} 
+                        onCreateClick={() => setShowCreateChat(true)} onChatClick={(chatId) => handleChatRoomClick(chatId)} />
             </div>
 
             <div className={styles.centerbox}>
@@ -61,13 +57,12 @@ const Chat_main = () => {
             </div>
 
             <div className={styles.rightbox}>
-               <AiSummary id={selectedChatRoom?.id}/>
+               <AiSummary id={selectedChatRoom?.id} setChatrooms={setChatrooms} selectedChatRoom={selectedChatRoom} setSelectedChatRoom={setSelectedChatRoom} />
             </div>
 
             {showOrga && <Organization2 onCloseOrgaClick={()=> {setShowOrga(false)}} inviteList={inviteList} onInviteChange={(newList) => setInviteList(newList)}/>}
-            {showCreateChat && <CreateChat onCloseClick={() => setShowCreateChat(false)} />}
+            {showCreateChat && <CreateChat onCloseClick={() => setShowCreateChat(false)} setChatrooms={setChatrooms}/>}
             
-
         </div>
     )
 }

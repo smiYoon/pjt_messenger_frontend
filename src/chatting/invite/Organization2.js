@@ -43,7 +43,7 @@ const Organization2 = ({onCloseOrgaClick, onInviteChange, inviteList}) => {
     const leafNodes = selectedNodes.filter(node => node.isLeaf);
     const ids = leafNodes.map(node => node.data.id.replace('emp-', ''));
     onInviteChange(Array.from(new Set([...inviteList, ...ids]))); 
-    console.log("초대할 직원 ID들:", inviteList); 
+    console.log("초대할 직원 ID들:", inviteList);
   };
 
   return (
