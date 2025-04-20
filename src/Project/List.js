@@ -312,12 +312,16 @@ const List = () => {
               <div
                 className={styles.pageNum}
                 onClick={() => handleGetList(1)}
-                disabled={currPage === 1}
+                style={{ display: currPage === 1 ? "none" : "" }}
               >
                 처음
               </div>
 
-              <div className={styles.pageNum} onClick={() => handleGetList(startPage-blockSize+1)} disabled={currPage <= 9}>
+              <div 
+                className={styles.pageNum} 
+                onClick={() => handleGetList(startPage-blockSize+1)} 
+                style={{ display: currPage <= 10 ? "none" : "" }}
+              >
                 <i className="fas fa-angles-left"></i>
               </div>
 
@@ -345,19 +349,23 @@ const List = () => {
               <div
                 className={styles.pageNum}
                 onClick={() => handleGetList(currPage + 1)}
-                disabled={currPage >= totalPageCnt}
+                style={{ display: currPage === totalPageCnt ? "none" : "" }}
               >
                 <i className="fas fa-angle-right"></i>
               </div>
 
-              <div className={styles.pageNum} onClick={() => handleGetList((endPage+1))} disabled={currPage >= totalPageCnt}>
+              <div 
+                className={styles.pageNum} 
+                onClick={() => handleGetList(endPage+1)} 
+                style={{ display: (endPage+1) > totalPageCnt ? "none" : "" }}
+              >
                 <i className="fas fa-angles-right"></i>
               </div>
 
               <div
                 className={styles.pageNum}
                 onClick={() => handleGetList(totalPageCnt)}
-                disabled={currPage >= totalPageCnt}
+                style={{ display: currPage === totalPageCnt ? "none" : "" }}
               >
                 마지막
               </div>

@@ -4,12 +4,16 @@ import { P_Modify } from ".";
 
 import styles from "./ListUpComing.module.css";
 import { RxLapTimer } from "react-icons/rx";
+import { useLoadScript } from '../LoadScriptContext';
 
 console.groupCollapsed("src/Project/ListUpComing.js");
 console.groupEnd();
 
 const ListUpComing = ({ project, statusMapping, onDelete, infoAlert, handleGetUpComingList, handleGetList }) => {
   // console.group("ListUpcommig(", project, statusMapping, ") invoked."); console.groupEnd();
+
+  const { decodedToken, role_level } = useLoadScript();
+  console.log('로그인 사용자정보:', decodedToken);
 
   // 모달 상태
   const [isOpen, setIsOpen] = useState(false);
@@ -117,17 +121,29 @@ const ListUpComing = ({ project, statusMapping, onDelete, infoAlert, handleGetUp
         >
           ···
         </div>
-        {showEditMenu === project.id && (
-          <div ref={editMenuRef} className={styles.editMenu}>
-            <div className={styles.dotBtnEdit} onClick={openProjectModify}>
-              수정
-            </div>
-            <hr></hr>
-            <div className={styles.dotBtnDelete} onClick={checkDeleteConfirm}>
-              삭제
-            </div>
-          </div>
-        )}
+
+        {showEditMenu === project.id  
+          && (
+              decodedToken.empnp === project.pjtCreator.empno || decodedToken.empnp === project.pjtManager.empno ? (
+                  <div ref={editMenuRef} className={styles.editMenu}>
+                    <div className={styles.dotBtnEdit} onClick={openProjectModify}>
+                      수정
+                    </div>
+                    <hr></hr>
+                    <div className={styles.dotBtnDelete} onClick={checkDeleteConfirm}>
+                      삭제
+                    </div>
+                  </div>
+              ) : ( 
+                <div ref={editMenuRef} className={styles.editMenu}>
+                  <div className={styles.dotBtnNone}>권한없음</div>
+                </div> 
+              )
+          )
+        }
+
+
+
       </div>
     </div>
   );
