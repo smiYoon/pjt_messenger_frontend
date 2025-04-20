@@ -1,5 +1,5 @@
 import styles from "./List_member.module.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Organization from "../Organization/Organization";
 import SearchBar from "../SearchBar/SearchBar.js";
@@ -8,9 +8,11 @@ import profile from "../Navbar/img/profile.png";
 const List_member = () => {
   const [searchWord, setSearchWord] = useState("name");
   const [searchText, setSearchText] = useState("");
-  const [members, setMembers] = useState([]);
+
   const [totalPages, setTotalPages] = useState(0);
   const [currPage, setCurrPage] = useState(0);
+
+  const [members, setMembers] = useState([]);
 
   const pageSize = 10;
   const currBlock = Math.floor(currPage / pageSize);
@@ -26,7 +28,7 @@ const List_member = () => {
     "9": "시스템관리자"
   };
 
-  const fetchMembers = async (page) => {
+  const fetchMembers = useCallback(async (page) => {
     const token = localStorage.getItem("jwt");
     const baseUrl = searchText
       ? `https://localhost:443/employee/search?searchWord=${searchWord}&searchText=${searchText}`
@@ -43,16 +45,33 @@ const List_member = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setMembers(data.content);
+        const formattedData = data.content.map(member => ({
+          crtDate: member.crtDate,
+          empno: member.empno,
+          name: member?.name,
+          email: member.email,
+          tel: member.tel,
+          position: member.position,
+          dept_id: member.department.name,
+        }));
+
+        //직급순으로정렬
+        const sortedData = formattedData.sort((a, b) => b.position - a.position);
+        setMembers(sortedData);
         setTotalPages(data.totalPages);
         setCurrPage(page);
+
+        // setMembers(data.content);
+        // setTotalPages(data.totalPages);
+        // setCurrPage(page);
+   
       } else {
         console.error("불러오기 실패", response.statusText);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
+  },[searchWord, searchText]);
 
   useEffect(() => {
     fetchMembers(0);
@@ -75,6 +94,8 @@ const List_member = () => {
           <Link to={`/member/register`} className={styles.register}>
             사원 등록
           </Link>
+
+
           <div className={styles.searchBar}>
             <SearchBar
               searchOption={searchWord}
@@ -85,6 +106,8 @@ const List_member = () => {
               options={options}
             />
           </div>
+
+
         </div>
 
         <div className={styles.list}>
@@ -166,6 +189,8 @@ const List_member = () => {
             <i className="fas fa-angles-right"></i>마지막
           </button>
         </div>
+
+        
       </div>
 
       <div className={styles.right_panel}>
