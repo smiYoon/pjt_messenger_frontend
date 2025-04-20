@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
+import Swal from 'sweetalert2';
 import styles from './Notice_create.module.css';
 import { Link, useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import { useLoadScript } from '../LoadScriptContext';
 
 const Notice_create = () => {
@@ -94,20 +94,49 @@ const Notice_create = () => {
   return (
     <div className={styles.container}>
       <div className={styles.side_bar}>
-
+        <div className={styles.menu}>
+          <Link
+            className={styles.notice}
+            to={`/board/notice/list`}
+          >
+            공지사항 게시판
+          </Link>
+          <Link
+            className={styles.feedback}
+            to={`/board/feedback/list`}
+          >
+            건의 게시판
+          </Link>
+        </div>
       </div>
       <div className={styles.main}>
         <div className={styles.right_panel}>
           <div className={styles.header}>
             공지사항 작성
           </div>
-          <div className={styles.title_container}>
-            <input type='text' placeholder='제목을 입력하세요' className={styles.title} />
-          </div>
-          <div className={styles.textbox_container}>
-            <textarea placeholder='내용을 입력하세요.' className={styles.textbox} />
-          </div>
-          <Link to={`/board/notice/list`} className={styles.submit}>등록</Link>
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <div className={styles.title_container}>
+              <input 
+                type='text' 
+                name='title'
+                className={styles.title}
+                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                placeholder='제목을 입력하세요' 
+              />
+            </div>
+            <div className={styles.textbox_container}>
+              <textarea 
+                name='detail'
+                className={styles.textbox}
+                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                placeholder='내용을 입력하세요.' 
+              />
+            </div>
+            <div className={styles.buttons}>
+              <button type='submit' className={styles.submit}>등록</button>
+              <button type='button' className={styles.cancel} onClick={handleCancelClick}>취소</button>
+            </div>
+          </form>
         </div>
       </div>
 

@@ -21,7 +21,7 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
 
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-  const [formData, setFormData] = useState({
+  const [postData, setPostData] = useState({
     name: "",
     startDate: "",
     endDate: "",
@@ -30,15 +30,8 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
     managerEmpno: "",
   });
 
-  // useEffect(() => {
-  //   console.log("startDate:", startDate, ", endDate:", endDate);
-  // }, [startDate, endDate]);
-  // useEffect(() => {
-  //   console.log("formData:", formData);
-  // }, [formData]);
-
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setPostData({ ...postData, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
@@ -62,36 +55,46 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
   }, []);
 
   const handlePostSaveCheck = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     try {
-      formData.startDate = startDate;
-      formData.endDate = endDate;
-      
-      // console.log("formData: ", formData);
+      postData.startDate = startDate;
+      postData.endDate = endDate;
+
+      postData.managerEmpno = "E2110002";
+
+      console.log("postData: ", postData);
+
 
       if (
-        !formData.name ||
-        !formData.startDate ||
-        !formData.endDate ||
-        !formData.managerEmpno ||
-        !formData.status
+        !postData.name ||
+        !postData.startDate ||
+        !postData.endDate ||
+        !postData.managerEmpno ||
+        !postData.status
       ) {
         infoAlert("warning", "", "프로젝트명, 진행기간, 담당자, 진행상태를 입력하세요");
         return;
       }
 
-      const params = new URLSearchParams(formData);
+      const formData = new FormData();
+      formData.append("name", postData.name);
+      formData.append("startDate", postData.startDate);
+      formData.append("endDate", postData.endDate);
+      formData.append("managerEmpno", postData.managerEmpno);
+      formData.append("status", postData.status);
+      formData.append("detail", postData.detail);
 
       const response = await fetch(
-          `https://localhost:443/project?${params.toString()}`,
-          {
-            method: "POST",
-          });
+        `https://localhost:443/project`,
+        {
+          method: "POST",
+          body: formData,
+        });
 
       if (response.ok) {
         infoAlert("success", "프로젝트 등록이 완료되었습니다.", " ");
-        
+
         handleGetUpComingList();
         handleGetList(1, '');
 
@@ -118,7 +121,7 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
       draggable: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        formData({
+        postData({
           name: "",
           startDate: "",
           endDate: "",
@@ -134,8 +137,9 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
   return (
     <div className={styles.back}>
       <div className={styles.body}>
-        <form>
-          {/* onSubmit={handleSubmit} */}
+
+        {/* <form> */}
+
           <div className={styles.container}>
             <div className={styles.pageTitle}>Project Create</div>
 
@@ -146,7 +150,6 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
                 name="name"
                 className={styles.input}
                 placeholder="프로젝트명을 입력하세요."
-                // value={registerForm.name}
                 onChange={handleChange}
               />
             </div>
@@ -210,7 +213,6 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
                 name="detail"
                 className={styles.textarea}
                 placeholder="내용을 입력하세요."
-                // value={formData.detail}
                 onChange={handleChange}
               />
             </div>
@@ -225,7 +227,7 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
               </button>
             </div>
           </div>
-        </form>
+        {/* </form> */}
       </div>
     </div>
   );

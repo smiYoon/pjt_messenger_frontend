@@ -46,7 +46,7 @@ const Feedback_update = () => {
       const fetchPostData = async () => {
   
         try {
-          const response = await fetch(`https://localhost:443/board/Feedback/${id}`, {
+          const response = await fetch(`https://localhost/board/feedback/${id}`, {
             method: 'GET',
           });
   
@@ -147,7 +147,7 @@ const Feedback_update = () => {
 
 
             <div className={styles.buttons}>
-                <button type='submit' className={styles.submit}>등록</button>
+                <button type='submit' className={styles.submit}>확인</button>
                 <button type='button' className={styles.cancel} onClick={handleCancelClick}>취소</button>
             </div>
           </form>

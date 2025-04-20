@@ -82,6 +82,8 @@
     padding: 10px 40px;
     display: flex;
     align-items: center;
+    display: flex;
+    align-items: center;
     font-size: 1.2rem;
     font-weight: bold;
     text-decoration: none;

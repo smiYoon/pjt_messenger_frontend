@@ -22,7 +22,7 @@ const Modify = ({ closeModal, statusMapping, infoAlert, project, handleGetUpComi
   const [startDate, setStartDate] = useState(project.startDate);
   const [endDate, setEndDate] = useState(project.endDate);
 
-  const [formData, setFormData] = useState({
+  const [postData, setPostData] = useState({
     id: project.id,
     name: project.name,
     startDate: project.startDate,
@@ -33,7 +33,7 @@ const Modify = ({ closeModal, statusMapping, infoAlert, project, handleGetUpComi
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setPostData({ ...postData, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
@@ -57,30 +57,37 @@ const Modify = ({ closeModal, statusMapping, infoAlert, project, handleGetUpComi
   }, []);
 
   const handlePostSaveCheck = async (e) => {
-
+    // e.preventDefault();
     try {
-      formData.startDate = startDate;
-      formData.endDate = endDate;
+      postData.startDate = startDate;
+      postData.endDate = endDate;
 
-      console.log("formData: ", formData);
+      console.log("postData: ", postData);
 
       if (
-        !formData.name ||
-        !formData.startDate ||
-        !formData.endDate ||
-        !formData.managerEmpno ||
-        !formData.status
+        !postData.name ||
+        !postData.startDate ||
+        !postData.endDate ||
+        !postData.managerEmpno ||
+        !postData.status
       ) {
         infoAlert("warning", "", "프로젝트명, 진행기간, 담당자, 진행상태를 입력하세요");
         return;
       }
 
-      const params = new URLSearchParams(formData);
+      const formData = new FormData();
+      formData.append("name", postData.name);
+      formData.append("startDate", postData.startDate);
+      formData.append("endDate", postData.endDate);
+      formData.append("managerEmpno", postData.managerEmpno);
+      formData.append("status", postData.status);
+      formData.append("detail", postData.detail);
 
       const response = await fetch(
-        `https://localhost:443/project/${formData.id}?${params.toString()}`,
+        `https://localhost:443/project/${postData.id}`,
         {
           method: "PUT",
+          body: formData,
         });
 
       if (response.ok) {
@@ -140,7 +147,7 @@ const Modify = ({ closeModal, statusMapping, infoAlert, project, handleGetUpComi
                 name="name"
                 className={styles.input}
                 placeholder="프로젝트명을 입력하세요."
-                value={formData.name}
+                value={postData.name}
                 onChange={handleChange}
               />
             </div>
@@ -175,7 +182,7 @@ const Modify = ({ closeModal, statusMapping, infoAlert, project, handleGetUpComi
               >
                 <option value="">== 총괄 담당자를 선택하세요. ==</option>
                 {selectList.map((emp) => (
-                  <option value={emp.empno} selected={emp.empno === formData.managerEmpno}>{emp.department.name} {emp.position} {emp.name}</option>
+                  <option value={emp.empno} selected={emp.empno === postData.managerEmpno}>{emp.department.name} {emp.position} {emp.name}</option>
                 ))}
               </select>
             </div>
@@ -187,7 +194,7 @@ const Modify = ({ closeModal, statusMapping, infoAlert, project, handleGetUpComi
               >
                 <option value="">== 진행상태를 선택하세요. ==</option>
                 {Object.entries(statusMapping).map(([sKey, sValue]) => (
-                  <option value={sKey} selected={sKey == formData.status}>{sValue}</option>
+                  <option value={sKey} selected={sKey == postData.status}>{sValue}</option>
                 ))}
               </select>
             </div>
@@ -198,7 +205,7 @@ const Modify = ({ closeModal, statusMapping, infoAlert, project, handleGetUpComi
                 name="detail"
                 className={styles.textarea}
                 placeholder="내용을 입력하세요."
-                value={formData.detail}
+                value={postData.detail}
                 onChange={handleChange}
               />
             </div>

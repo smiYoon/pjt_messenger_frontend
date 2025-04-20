@@ -1,11 +1,12 @@
-import React, { useEffect, useState ,useContext} from "react";
-
-import styles from './ChatList.module.css';
+import React, { useEffect} from "react";
 import { useLoadScript } from "../../LoadScriptContext";
+import styles from './ChatList.module.css';
 
-const ChatList = ({ onCreateClick,onChatClick, chatrooms, setChatrooms, }) => {
+const ChatList = ({ onCreateClick,onChatClick, chatrooms, setChatrooms}) => {
 
     const { decodedToken } = useLoadScript();
+    const empno = decodedToken.empno;
+
 
     // 채팅방 리스트 받아오기 (채팅방이름, 등록한사람 아이콘, 프로젝트 유무)
     useEffect(() => {

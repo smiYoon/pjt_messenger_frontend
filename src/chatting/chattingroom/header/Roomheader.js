@@ -7,7 +7,7 @@ const Roomheader = ({ selectedChatRoom }) => {
     const toggleBtnRef = useRef(null); // 토글 버튼용 ref
 
     // 채팅방 인원 리스트
-    const [showEmpList, setShowEmpList] = useState(false);
+    const [showEmpList, setShowEmpList] = useState(null);
 
     const onToggleEmpList = () => {
         setShowEmpList(prev => !prev);
@@ -47,7 +47,7 @@ const Roomheader = ({ selectedChatRoom }) => {
                             <div key={idx} className={styles.empicon} title={emp.name}></div>
                         ))}
 
-                        <div className={styles.empicon} onClick={onToggleEmpList}>
+                        <div className={styles.list} onClick={onToggleEmpList} ref={toggleBtnRef}>
                             +{remainingCount > 0 ? remainingCount : ""}
                         </div>
                     </div>
@@ -56,8 +56,8 @@ const Roomheader = ({ selectedChatRoom }) => {
                 </div>
 
                 {showEmpList && (
-                    <div ref={empListRef}>
-                        <ChatEmpList employees={selectedChatRoom.chatEmployees}/>
+                    <div ref={empListRef} className={styles.empListBox}>
+                        <ChatEmpList employees={Array.isArray(selectedChatRoom?.chatEmployees) ? selectedChatRoom.chatEmployees : []} />
                     </div>
                 )}
             </>
