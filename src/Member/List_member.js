@@ -29,7 +29,7 @@ const List_member = () => {
         const formattedData = data.map(members => ({
           crtDate: members.crtDate,
           empno: members.empno,
-          name: members?.name,
+          name: members.name,
           email: members.email,
           tel: members.tel,
           position: members.position,
