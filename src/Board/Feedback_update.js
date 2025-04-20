@@ -46,7 +46,7 @@ const Feedback_update = () => {
       const fetchPostData = async () => {
   
         try {
-          const response = await fetch(`https://localhost:443/board/Feedback/${id}`, {
+          const response = await fetch(`https://localhost/board/feedback/${id}`, {
             method: 'GET',
           });
   
