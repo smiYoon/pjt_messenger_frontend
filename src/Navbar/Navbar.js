@@ -49,7 +49,7 @@ const Navbar = () => {
         {/* )} */}
 
         {role_level[decodedToken.roles] != 4 && (
-          <Link className={styles.flip}>
+          <Link to={`/work`} className={styles.flip}>
             <i className={`${styles.icon} fas fa-file-pen`} />
             <div className={styles.text}>업무</div>
           </Link>
@@ -61,7 +61,7 @@ const Navbar = () => {
         </Link>
 
         {role_level[decodedToken.roles] != 1 && (
-          <Link className={styles.flip}>
+          <Link to={`/project/list`} className={styles.flip}>
             <i className={`${styles.icon} fa-solid fa-list-check`} />
             <div className={styles.text}>프로젝트</div>
           </Link>
@@ -69,7 +69,7 @@ const Navbar = () => {
       </div>
 
       <div className={styles.profile}>
-        <Link to={`/member/edit/${decodedToken.empno}`} className={styles.profile}>
+        <Link to={`/member/edit/${decodedToken.empno}`} className={styles.profile_link}>
           <img src={profile} alt='' className={styles.profileImg} />
         </Link>
         <div className={styles.logout}>

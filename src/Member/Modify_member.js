@@ -239,7 +239,7 @@ const Modify_member = () => {
                                     className={styles.single}
                                     placeholder='변경할 비밀번호를 입력해주세요.'
                                     name='password'
-                                    value={memberForm.password}
+                                    // value={memberForm.password}
                                     onChange={(e) => handleChange(e.target.name, e.target.value)}
                                 />
                                 <div className={styles.placeholder_text}>비밀번호</div>

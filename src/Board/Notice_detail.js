@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import styles from './Notice_detail.module.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useLoadScript } from '../LoadScriptContext';
 
 
 const Notice_detail = () => {
-
+  const { decodedToken } = useLoadScript();
   const navigate = useNavigate();
   const [post, setPost] = useState([]);
   const { id } = useParams();

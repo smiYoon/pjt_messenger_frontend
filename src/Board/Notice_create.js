@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './Notice_create.module.css';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { useLoadScript } from '../LoadScriptContext';
 
 const Notice_create = () => {
 
+  const { decodedToken, role_level } = useLoadScript();
+  const navigate = useNavigate();
 
   const handleCancelClick = () => {
     Swal.fire({
