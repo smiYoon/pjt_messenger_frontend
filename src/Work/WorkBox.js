@@ -33,7 +33,7 @@ const WorkBox = (props) => {
     }); // 로그인한 사람의 정보
 
     useEffect(() => { 
-        console.log("employeeData is :", employeeData);
+        // console.log("employeeData is :", employeeData);
     }, [employeeData]); // 로그인한 사람의 정보
 
     useEffect(() => {       
