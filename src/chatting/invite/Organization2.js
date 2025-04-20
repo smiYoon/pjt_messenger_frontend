@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef} from "react";
 import { useParams } from "react-router-dom";
 import { Tree } from "react-arborist";
 import styles from './Organization2.module.css';
 
 
-const Organization2 = ({onCloseOrgaClick, onInviteChange, inviteList}) => {
+const Organization2 = ({onCloseOrgaClick, onInviteChange, inviteList, id}) => {
   const { deptNum } = useParams(); // deptNum은 문자열로 들어옴
   const DepartmentNumber = Number(deptNum) || 1; // 숫자로 변환, 없으면 1
   const [data, setData] = useState([]);
   const [treeData, setTreeData] = useState([]);
-  // const [inviteList, setInviteList] = useState([]);
 
   useEffect(() => {
       console.log("data:", data); // 데이터 확인용
@@ -19,6 +18,7 @@ const Organization2 = ({onCloseOrgaClick, onInviteChange, inviteList}) => {
       console.log("treeData:", treeData); // 데이터 확인용
   }, [treeData]);
 
+  // 조직도 데이터
   useEffect(() =>{
     const fetchData = async () => {
         try {
@@ -37,34 +37,91 @@ const Organization2 = ({onCloseOrgaClick, onInviteChange, inviteList}) => {
     fetchData();
   },[]);
 
-  if (treeData.length === 0) return <div>로딩 중...</div>;
 
+  // 초대하기
+  const handleAddInvite = async () => {
+    const formData = new FormData();
+
+    formData.append("empnos", inviteList.map(emp => emp.id));
+
+    try {
+      const response = await fetch(`https://localhost:443/chat/${id}`, {
+        method: "PUT",
+        body: formData
+      });
+  
+      if (!response.ok) {
+        throw new Error("서버 응답 실패: " + response.status);
+      }
+  
+      const result = await response.json();
+      console.log("서버 응답:", result);
+      alert("초대 성공!");
+      onInviteChange([])
+      onCloseOrgaClick();
+    } catch (err) {
+      console.error("초대 실패!", err);
+      alert("초대 중 오류 발생!");
+    }
+  }
+
+  // 외부 클릭 감지
+  const containerRef = useRef(null); // 외부 클릭 감지용 ref
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (containerRef.current && !containerRef.current.contains(event.target)) {
+        onInviteChange([]);      // 리스트 비우기
+        onCloseOrgaClick();      // 닫기
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+
+  // 초대목록 설정
   const handleSelect = (selectedNodes) => {
     const leafNodes = selectedNodes.filter(node => node.isLeaf);
-    const ids = leafNodes.map(node => node.data.id.replace('emp-', ''));
+    const ids = leafNodes.map(node => {
+      return {
+        id: node.data.id.replace('emp-', ''),
+        name: node.data.name,
+      };
+    });
+    onInviteChange(
+      Array.from(new Map([...inviteList, ...ids].map(item => [item.id, item])).values())
+    );
     onInviteChange(Array.from(new Set([...inviteList, ...ids]))); 
     console.log("초대할 직원 ID들:", inviteList);
   };
 
   const handleRemoveInvite = (idToRemove) => {
-    const updatedList = inviteList.filter(id => id !== idToRemove);
-    onInviteChange(updatedList);  // 부모로 업데이트 반영
+    const updatedList = inviteList.filter(emp => emp.id !== idToRemove);
+    onInviteChange(updatedList);
   };
+  if (treeData.length === 0) return <div className={styles.loading}>로딩 중...</div>;
+
+  
 
   return (
-    <div className={styles.container}>
-        <div onClick={onCloseOrgaClick}>X</div>
+    <div ref={containerRef} className={styles.container}>
+        <div className={styles.Xbutton} onClick={() => {onCloseOrgaClick(); onInviteChange([]); }}>X</div>
         <Tree data={treeData} className={styles.tree} width={400} height={500}  onSelect={handleSelect}>
         </Tree>
-        <div className={styles.inviteList}>
-          <h3>초대할 직원 ID들:</h3>
-          <ul>
-            {inviteList.map((id) => (
-              <li key={id} onClick={() => handleRemoveInvite(id)}>
-                {id}
-              </li>
-            ))}
-          </ul>
+        <div className={styles.inviteBox}>
+          <div className={styles.inviteList}>
+            <h3>초대할 직원 ID들:</h3>
+            <ul>
+              {inviteList.map(({ id, name }) => (
+                <li key={id} onClick={() => handleRemoveInvite(id)}>
+                  {name}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <button className={styles.inviteBtn} disabled={inviteList.length === 0} onClick={handleAddInvite}>초대하기</button>
         </div>
     </div>
   );

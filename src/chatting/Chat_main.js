@@ -18,20 +18,16 @@ const Chat_main = () => {
     ////////////////////////////////////////////////////////////////////
     const [selectedChatRoom, setSelectedChatRoom] = useState(null);  // 선택된 채팅방
 
-    useEffect(() => {
-        console.log("select", selectedChatRoom)
-    },[selectedChatRoom])
-
     const handleChatRoomClick = async (chatId) => {
         try {
           const response = await fetch(`https://localhost:443/chat/${chatId}`);
-      
+            
           if (!response.ok) {
             throw new Error("서버 응답 오류");
           }
       
           const chatRoomDetail = await response.json();
-      
+
           setSelectedChatRoom(chatRoomDetail); // 상태 업데이트
           console.log("selectedChatRoom");
         } catch (error) {
@@ -39,6 +35,11 @@ const Chat_main = () => {
         }
     };
 
+    useEffect(() => {
+        if (!selectedChatRoom && chatrooms.length > 0) {
+            handleChatRoomClick(chatrooms[0].id); // 첫 번째 채팅방 자동 선택
+        }
+    }, [chatrooms]);
 
 
     return (
@@ -60,7 +61,8 @@ const Chat_main = () => {
                <AiSummary id={selectedChatRoom?.id} setChatrooms={setChatrooms} selectedChatRoom={selectedChatRoom} setSelectedChatRoom={setSelectedChatRoom} />
             </div>
 
-            {showOrga && <Organization2 onCloseOrgaClick={()=> {setShowOrga(false)}} inviteList={inviteList} onInviteChange={(newList) => setInviteList(newList)}/>}
+            {showOrga && <Organization2 onCloseOrgaClick={()=> {setShowOrga(false)}} inviteList={inviteList} onInviteChange={(newList) => setInviteList(newList)} 
+                id={selectedChatRoom?.id}/>}
             {showCreateChat && <CreateChat onCloseClick={() => setShowCreateChat(false)} setChatrooms={setChatrooms}/>}
             
         </div>

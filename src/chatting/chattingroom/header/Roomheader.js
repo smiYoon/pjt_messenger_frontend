@@ -47,7 +47,7 @@ const Roomheader = ({ selectedChatRoom }) => {
                             <div key={idx} className={styles.empicon} title={emp.name}></div>
                         ))}
 
-                        <div className={styles.empicon} onClick={onToggleEmpList}>
+                        <div className={styles.list} onClick={onToggleEmpList} ref={toggleBtnRef}>
                             +{remainingCount > 0 ? remainingCount : ""}
                         </div>
                     </div>
@@ -56,7 +56,7 @@ const Roomheader = ({ selectedChatRoom }) => {
                 </div>
 
                 {showEmpList && (
-                    <div ref={empListRef}>
+                    <div ref={empListRef} className={styles.empListBox}>
                         <ChatEmpList employees={Array.isArray(selectedChatRoom?.chatEmployees) ? selectedChatRoom.chatEmployees : []} />
                     </div>
                 )}
