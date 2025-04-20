@@ -147,7 +147,7 @@ const Feedback_update = () => {
 
 
             <div className={styles.buttons}>
-                <button type='submit' className={styles.submit}>등록</button>
+                <button type='submit' className={styles.submit}>확인</button>
                 <button type='button' className={styles.cancel} onClick={handleCancelClick}>취소</button>
             </div>
           </form>
