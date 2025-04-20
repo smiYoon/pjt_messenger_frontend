@@ -48,11 +48,13 @@
     transition: background-color 0.3s ease-in;
 }
 
-.main .search {
+
+.main .searchBar {
     display: flex;
     position: relative;
     margin-left: auto;
 }
+
 
 .search .dropdown {
     margin-right: 20px;
@@ -147,10 +149,32 @@
     transition: background-color 0.1s ease;
 }
 
-.left_panel .paging {
-     text-align: center;
-}
+
 
 .right_panel {
     width: 460px;
+}
+
+
+.paging { 
+    display: flex;
+    gap: 1px; /* 버튼 사이 여백 */
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    
+}
+
+.activePage {
+    display: flex;
+    background-color: #5a5;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+.btn {
+    cursor: pointer;
+
 }

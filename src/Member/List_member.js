@@ -1,52 +1,21 @@
-import styles from './List_member.module.css';
-import React, { useState, useEffect, useCallback } from 'react';
-import Organization from '../Organization/Organization';
-import { Link, useNavigate } from 'react-router-dom';
-import profile from '../Navbar/img/profile.png';
+import styles from "./List_member.module.css";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Organization from "../Organization/Organization";
+import SearchBar from "../SearchBar/SearchBar.js";
+import profile from "../Navbar/img/profile.png";
 
 const List_member = () => {
-
-  const [searchOption, setSearchOption] = useState('');
-
+  const [searchWord, setSearchWord] = useState("name");
+  const [searchText, setSearchText] = useState("");
   const [members, setMembers] = useState([]);
-  const fetchMembers = useCallback(async () => {
-    const token = localStorage.getItem("jwt"); // 수정점 04.16
-    try {
-      const response = await fetch(`https://localhost:443/employee`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        } // 수정점. 04.16
-      });
+  const [totalPages, setTotalPages] = useState(0);
+  const [currPage, setCurrPage] = useState(0);
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log("data:", data);
-        const formattedData = data.map(members => ({
-          crtDate: members.crtDate,
-          empno: members.empno,
-          name: members?.name,
-          email: members.email,
-          tel: members.tel,
-          position: members.position,
-          dept_id: members.department.name,
-        }));
-
-        const sortedData = formattedData.sort((a, b) => b.position - a.position);
-        setMembers(sortedData);
-
-      } else {
-        console.error('불러오기 실패', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  });
-
-  useEffect(() => {
-    fetchMembers();
-  }, []);
+  const pageSize = 10;
+  const currBlock = Math.floor(currPage / pageSize);
+  const startPage = currBlock * pageSize;
+  const endPage = Math.min(startPage + pageSize, totalPages);
 
   const level = {
     "1": "팀원",
@@ -54,69 +23,156 @@ const List_member = () => {
     "3": "부서장",
     "4": "CEO",
     "5": "인사담당자",
+    "9": "시스템관리자"
+  };
+
+  const fetchMembers = async (page) => {
+    const token = localStorage.getItem("jwt");
+    const baseUrl = searchText
+      ? `https://localhost:443/employee/search?searchWord=${searchWord}&searchText=${searchText}`
+      : "https://localhost:443/employee?";
+
+    try {
+      const response = await fetch(`${baseUrl}&currPage=${page}&pageSize=10`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setMembers(data.content);
+        setTotalPages(data.totalPages);
+        setCurrPage(page);
+      } else {
+        console.error("불러오기 실패", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchMembers(0);
+  }, []);
+
+  const options = [
+    { value: "name", label: "이름" },
+    { value: "tel", label: "전화번호" },
+  ];
+
+  const handleSearch = () => {
+    fetchMembers(0);
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.left_panel}>
-        <div className={styles.header}>
-          사원 리스트
-        </div>
+        <div className={styles.header}>사원 리스트</div>
         <div className={styles.main}>
           <Link to={`/member/register`} className={styles.register}>
             사원 등록
           </Link>
-          <div className={styles.search}>
-            <select
-              name='searchWord'
-              className={styles.dropdown}
-              value={searchOption}
-              onChange={(e) => setSearchOption(e.target.value)}
-            >
-              <option value="">검색조건</option>
-              <option value="name">이름</option>
-              <option value="phone">전화번호</option>
-            </select>
-            <div className={styles.search_container}>
-              <input type='text' className={styles.text} placeholder='검색어를 입력하세요.' />
-              <i className="fa-solid fa-magnifying-glass" />
-            </div>
+          <div className={styles.searchBar}>
+            <SearchBar
+              searchOption={searchWord}
+              onOptionChange={(e) => setSearchWord(e.target.value)}
+              searchText={searchText}
+              onTextChange={(e) => setSearchText(e.target.value)}
+              onSearch={handleSearch}
+              options={options}
+            />
           </div>
         </div>
+
         <div className={styles.list}>
-          {/* {personalInfo.map((member) => ( // 프론트 테스트용 */}
-          {members.map((member) => (  // 이걸로 사용해야함
-            <div key={member.empno} className={styles.card}>
-              <img src={profile} alt='' />
+          {members.map((member) => (
+            <div className={styles.card} key={member.empno}>
+              <img src={profile} alt="profile" />
               <div className={styles.name}>
-                {level[member.position]}
+                {member.name} ({level[member.position] || "알 수 없음"})
               </div>
-              <div className={styles.name}>
-                {member.name}
-              </div>
-              <div className={styles.dept}>
-                {member.dept_id}
-              </div>
-              <div className={styles.phone}>
-                {member.tel}
-              </div>
-              <div className={styles.email}>
-                {member.email}
-              </div>
-              {/* <Link to={`/member/edit/`} className={styles.detail}>자세히</Link> */}
-              <Link to={`/member/edit/${member.empno}`} className={styles.detail}>자세히</Link>
+              <div className={styles.dept}>{member.dept_id}</div>
+              <div className={styles.phone}>{member.tel}</div>
+              <div className={styles.email}>{member.email}</div>
+              <Link
+                to={`/member/edit/${member.empno}`}
+                className={styles.detail}
+              >
+                자세히
+              </Link>
             </div>
           ))}
         </div>
+
         <div className={styles.paging}>
-          1 2 3
+          <button
+            className={styles.btn}
+            onClick={() => fetchMembers(0)}
+            disabled={currPage === 0}
+          >
+            <i className="fas fa-angles-left"></i>처음
+          </button>
+
+          <button
+            className={styles.btn}
+            onClick={() => fetchMembers(startPage - 1)}
+            disabled={currPage <= 9}
+          >
+            <i className="fas fa-angle-left"></i>이전
+          </button>
+
+          <button
+            className={styles.btn}
+            onClick={() => fetchMembers(currPage - 1)}
+            disabled={currPage === 0}
+          >
+            -1<i className="fas fa-angle-left"></i>
+          </button>
+
+          {Array.from({ length: endPage - startPage }, (_, i) => startPage + i).map((pageNum) => (
+            <button
+              key={pageNum}
+              className={currPage === pageNum ? styles.activePage : ""}
+              onClick={() => fetchMembers(pageNum)}
+            >
+              {pageNum + 1}
+            </button>
+          ))}
+
+          <button
+            className={styles.btn}
+            onClick={() => fetchMembers(currPage + 1)}
+            disabled={currPage >= totalPages - 1}
+          >
+            +1<i className="fas fa-angle-right"></i>
+          </button>
+
+          <button
+            className={styles.btn}
+            onClick={() => fetchMembers(endPage)}
+            disabled={currPage >= totalPages - 1}
+          >
+            <i className="fas fa-angle-right"></i>이후
+          </button>
+
+          <button
+            className={styles.btn}
+            onClick={() => fetchMembers(totalPages - 1)}
+            disabled={currPage >= totalPages - 1}
+          >
+            <i className="fas fa-angles-right"></i>마지막
+          </button>
         </div>
       </div>
+
       <div className={styles.right_panel}>
-          <Organization />
+        <Organization />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default List_member;
