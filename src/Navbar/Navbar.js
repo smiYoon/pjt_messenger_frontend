@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useLoadScript } from '../LoadScriptContext';
 
 const Navbar = () => {
-const { role_level, decodedToken } = useLoadScript();
+  const { role_level, decodedToken } = useLoadScript();
 
   console.group('Navbar() invoked.'); console.groupEnd();
 
@@ -41,12 +41,12 @@ const { role_level, decodedToken } = useLoadScript();
           </Link>
         )}
 
-        {role_level[decodedToken.roles] != 5 && (
-          <Link className={styles.flip}>
-            <i className={`${styles.icon} fas fa-comment-dots`} />
-            <div className={styles.text}>채팅</div>
-          </Link>
-        )}
+        {/* {role_level[decodedToken.roles] != 5 && ( */}
+        <Link to={`/chat`} className={styles.flip}>
+          <i className={`${styles.icon} fas fa-comment-dots`} />
+          <div className={styles.text}>채팅</div>
+        </Link>
+        {/* )} */}
 
         {role_level[decodedToken.roles] != 4 && (
           <Link className={styles.flip}>
@@ -69,7 +69,9 @@ const { role_level, decodedToken } = useLoadScript();
       </div>
 
       <div className={styles.profile}>
-        <img src={profile} alt='' className={styles.profileImg} />
+        <Link to={`/member/edit/${decodedToken.empno}`} className={styles.profile}>
+          <img src={profile} alt='' className={styles.profileImg} />
+        </Link>
         <div className={styles.logout}>
           <FontAwesomeIcon icon={faArrowRightFromBracket} onClick={handleLogout} />
         </div>

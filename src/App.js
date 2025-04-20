@@ -36,7 +36,7 @@ const App = () => {
           <Route path="/board/feedback/detail/:id" element={<Feedback_detail />} />
           <Route path="/board/feedback/update/:id" element={<Feedback_update />} />
 
-          <Route path="/organization/:deptNum" element={<Organization />} />
+          <Route path="/organization/" element={<Organization />} />
         </Routes>
       </div>
     </div>
