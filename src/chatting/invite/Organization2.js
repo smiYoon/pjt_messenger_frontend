@@ -46,6 +46,11 @@ const Organization2 = ({onCloseOrgaClick, onInviteChange, inviteList}) => {
     console.log("초대할 직원 ID들:", inviteList);
   };
 
+  const handleRemoveInvite = (idToRemove) => {
+    const updatedList = inviteList.filter(id => id !== idToRemove);
+    onInviteChange(updatedList);  // 부모로 업데이트 반영
+  };
+
   return (
     <div className={styles.container}>
         <div onClick={onCloseOrgaClick}>X</div>
@@ -55,7 +60,9 @@ const Organization2 = ({onCloseOrgaClick, onInviteChange, inviteList}) => {
           <h3>초대할 직원 ID들:</h3>
           <ul>
             {inviteList.map((id) => (
-              <li key={id}>{id}</li>
+              <li key={id} onClick={() => handleRemoveInvite(id)}>
+                {id}
+              </li>
             ))}
           </ul>
         </div>

@@ -46,7 +46,7 @@ const Chat_main = () => {
             
             <div className={styles.leftbox}>      
                 <Invite onOrgaClick={()=> {setShowOrga(true)}} id={selectedChatRoom?.id} inviteList={inviteList} onInviteChange={(newList) => setInviteList(newList)} 
-                            selectedChatRoom={selectedChatRoom} setSelectedChatRoom={setSelectedChatRoom}/>
+                             setInviteList={setInviteList}/>
                 <ChatList chatrooms={chatrooms} setChatrooms={setChatrooms} 
                         onCreateClick={() => setShowCreateChat(true)} onChatClick={(chatId) => handleChatRoomClick(chatId)} />
             </div>
