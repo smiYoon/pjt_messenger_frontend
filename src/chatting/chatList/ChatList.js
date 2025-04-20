@@ -44,11 +44,11 @@ const ChatList = ({ onCreateClick,onChatClick, chatrooms, setChatrooms}) => {
             <div className={styles.roomboxes}>
 
                 {chatrooms.map((room) => (
-                    <div key={room.id} className={styles.chatroombox} onClick={() => {onChatClick(room.id); console.log("roomid", room.id)}}>
+                    <div key={room.id} className={styles.chatroombox} onClick={() => {onChatClick(room.chat.id); console.log("roomid", room.chat.id)}}>
                         <div className={styles.empicon}></div>
                         <div className={styles.rightbox}>
-                            <div className={styles.projecticon}>{room.projectBadge}</div>
-                            <div className={styles.chatname}>{room.name}</div>
+                            <div className={styles.projecticon}>{room.chat.project?.name}</div>
+                            <div className={styles.chatname}>{room.chat.name}</div>
                         </div>
                     </div>
                 ))}
