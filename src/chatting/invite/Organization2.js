@@ -4,11 +4,12 @@ import { Tree } from "react-arborist";
 import styles from './Organization2.module.css';
 
 
-const Organization2 = ({onCloseOrgaClick, onInviteChange, inviteList, id}) => {
+const Organization2 = ({onCloseOrgaClick, handleChatRoomClick, id}) => {
   const { deptNum } = useParams(); // deptNum은 문자열로 들어옴
   const DepartmentNumber = Number(deptNum) || 1; // 숫자로 변환, 없으면 1
   const [data, setData] = useState([]);
   const [treeData, setTreeData] = useState([]);
+  const [inviteList, setInviteList] = useState([]);               // 초대할 직원 id들 저장
 
   useEffect(() => {
       console.log("data:", data); // 데이터 확인용
@@ -57,8 +58,13 @@ const Organization2 = ({onCloseOrgaClick, onInviteChange, inviteList, id}) => {
       const result = await response.json();
       console.log("서버 응답:", result);
       alert("초대 성공!");
-      onInviteChange([])
+      setInviteList([]);
       onCloseOrgaClick();
+      
+      // 초대 후 채팅방 갱신
+      if (id) {
+        await handleChatRoomClick(id);
+      }
     } catch (err) {
       console.error("초대 실패!", err);
       alert("초대 중 오류 발생!");
@@ -71,7 +77,7 @@ const Organization2 = ({onCloseOrgaClick, onInviteChange, inviteList, id}) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (containerRef.current && !containerRef.current.contains(event.target)) {
-        onInviteChange([]);      // 리스트 비우기
+        setInviteList([]);      // 리스트 비우기
         onCloseOrgaClick();      // 닫기
       }
     };
@@ -90,24 +96,25 @@ const Organization2 = ({onCloseOrgaClick, onInviteChange, inviteList, id}) => {
         name: node.data.name,
       };
     });
-    onInviteChange(
+    setInviteList(
       Array.from(new Map([...inviteList, ...ids].map(item => [item.id, item])).values())
     );
-    onInviteChange(Array.from(new Set([...inviteList, ...ids]))); 
     console.log("초대할 직원 ID들:", inviteList);
   };
 
   const handleRemoveInvite = (idToRemove) => {
     const updatedList = inviteList.filter(emp => emp.id !== idToRemove);
-    onInviteChange(updatedList);
+    setInviteList(updatedList);
   };
+
+
+
   if (treeData.length === 0) return <div className={styles.loading}>로딩 중...</div>;
 
-  
 
   return (
     <div ref={containerRef} className={styles.container}>
-        <div className={styles.Xbutton} onClick={() => {onCloseOrgaClick(); onInviteChange([]); }}>X</div>
+        <div className={styles.Xbutton} onClick={() => {onCloseOrgaClick(); setInviteList([]); }}>X</div>
         <Tree data={treeData} className={styles.tree} width={400} height={500}  onSelect={handleSelect}>
         </Tree>
         <div className={styles.inviteBox}>

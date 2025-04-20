@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import styles from "./List.module.css";
 import {WorkBox} from "./index.js";
+import { useLoadScript } from '../LoadScriptContext.js';
 
 
 console.groupCollapsed("src/Work/List.js");console.groupEnd();
@@ -12,31 +13,61 @@ const List = () => {
     console.debug("List() invoked.");
 
     const navigate = useNavigate();
+    const { decodedToken } = useLoadScript();
+    const [work, setWork] = useState("managed"); // 담당업무 = managed, 요청업무 = requested
+    const [loginEmpData, setLoginEmpData] = useState({
+        userId: "",
+        userName: "",
+        userPosition: "",
+        userDeptId: "",
+    }); // 로그인한 사람
 
-    // var userId = "E2405001";
-    var userId = "E2005003";
-    // E2405001
-    // E2406002 , E2005003
-    // var userDeptId = "27"; // 8 , 27
-    // var userDeptId = "8"; // 8 , 27
-    var userDeptId = "14"; // 8 , 27
-    var userName = "홍시리";
-    var userStatus = 2; // 1, 2, 3, 4, 5, 9
+    useEffect(() => {
+        if (decodedToken) {
+            setLoginEmpData({
+                userId: decodedToken.empno,
+                userName: decodedToken.name,
+                userPosition: decodedToken.position,
+                userDeptId: decodedToken.department,
+            });
+        }
+    }, [decodedToken]); // 로그인한 사람
+
+    useEffect(() => {
+        if (loginEmpData.userId && loginEmpData.userName) {
+            setPickedEmployee({
+                empno: loginEmpData.userId,
+                name: loginEmpData.userName,
+            });
+        }
+    }, [loginEmpData]);
+    
+    
     const [loading, setLoading] = useState(false);
+    const [userData, setUserDate] = useState({ children: [] }); // 검증용 사용자 정보
     const [pickedEmployee, setPickedEmployee] = useState({
-        empno: userId,
-        name: userName,
+        empno: "",
+        name: "",
     }); // 현재 선택된 사원
-    const [work, setWork] = useState("managed");
-    // 담당업무 = managed
-    // 요청업무 = requested
-    const [employeeData, setEmployeeData] = useState([]);
-    const [userData, setUserDate] = useState({ children: [] }); // 로그인한 사람의 정보
+    const [employeeData, setEmployeeData] = useState([]); 
     const [uploadData, setUploadData] = useState({
         work: work,
-        employee: userId,
-    });
+        employee: "",
+    }); // 업로드할 데이터
     const [departmentMembers, setDepartmentMembers] = useState([]); // 부서원들
+
+    useEffect(() => {
+        // console.log("userData is :", userData);
+    }, [userData]); // useEffect
+
+    useEffect(() => {
+        // console.log("work is :", work);
+        // console.log("employeeData is :", employeeData);
+        // console.log("decodedToken is :",decodedToken);
+        // console.log("loginEmpData is :",loginEmpData);
+        // console.log("uploadData is :", uploadData);
+        // console.log("departmentMembers is :", departmentMembers);
+    }, [work, employeeData, uploadData, departmentMembers, loginEmpData]); // useEffect
     
 
     const handleToggle = () => {
@@ -57,7 +88,7 @@ const List = () => {
                 setPickedEmployee({empno:empno, name:name}); // 현재 선택된 사원
                 const params = new URLSearchParams({
                     work: work,
-                    employee: empno,
+                    employee: loginEmpData.userId,
                 });
 
                 // 서버에 데이터 전송
@@ -78,13 +109,14 @@ const List = () => {
 
     useEffect(() => {
         const fetchUserData = async () => {
+            if (!loginEmpData.userDeptId) return; // 값 없으면 실행 안함
             try {
                 setLoading(true); // 로딩 시작
                 setPickedEmployee({
-                    empno:userId,
-                    name:userName
+                    empno:loginEmpData.userId,
+                    name:loginEmpData.userName
                 }); // 현재 선택된 사원
-                const response = await fetch(`https://localhost:443/department/${userDeptId}`, { method: "GET"});
+                const response = await fetch(`https://localhost:443/department/${loginEmpData.userDeptId}`, { method: "GET"});
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
@@ -139,20 +171,17 @@ const List = () => {
             }// try-catch-finally
         };
         fetchUserData();
-    }, []); // useEffect
+    }, [loginEmpData.userDeptId]); // useEffect
 
-    useEffect(() => {
-        console.log("userData is :", userData);
-    }, [userData]); // useEffect
 
-    useEffect(() => {
-        // console.log("work is :", work);
-        console.log("employeeData is :", employeeData);
-        // console.log("uploadData is :", uploadData);
-        // console.log("departmentMembers is :", departmentMembers);
-    }, [work, employeeData, uploadData, departmentMembers]); // useEffect
-
-    useEffect(() => {       
+    useEffect(() => {    
+        if (pickedEmployee.empno) {
+            setUploadData({
+                work: work,
+                employee: pickedEmployee.empno,
+            });
+        } // if
+        
         const fetchData = async () => {
             try {
                 console.log("fetchData() invoked.");
@@ -195,7 +224,7 @@ const List = () => {
 
             <div className={styles.pageMiddle}>
                 <span className={styles.middleLeft}>
-                    <span onClick={() => handleChangePickedEmployee(userId, userName)} className={styles.nameCircle}>({userName})</span>
+                    <span onClick={() => handleChangePickedEmployee(loginEmpData.userId, loginEmpData.userName)} className={styles.nameCircle}>({loginEmpData.userName})</span>
                     {loading ? null : (
                         <>
                             {/* 최대 4개만 출력 */}
@@ -228,7 +257,7 @@ const List = () => {
                     
                     <span>
                         <button className={styles.addButton} onClick={() => {
-                                if(userStatus==1){
+                                if((loginEmpData.userPosition || 0) === 1){
                                     return alert("팀원은 업무등록을 할 수 없습니다");
                                 } else{navigate('/work/create')} // if
                                 }}> 

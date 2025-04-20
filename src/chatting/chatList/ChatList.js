@@ -7,7 +7,6 @@ const ChatList = ({ onCreateClick,onChatClick, chatrooms, setChatrooms}) => {
     const { decodedToken } = useLoadScript();
     const empno = decodedToken.empno;
 
-
     // 채팅방 리스트 받아오기 (채팅방이름, 등록한사람 아이콘, 프로젝트 유무)
     useEffect(() => {
         if (!decodedToken.empno) return;
@@ -44,14 +43,14 @@ const ChatList = ({ onCreateClick,onChatClick, chatrooms, setChatrooms}) => {
 
             <div className={styles.roomboxes}>
 
-                {chatrooms.map((room, index) => (
-                <div key={room.id} className={styles.chatroombox} onClick={() => {onChatClick(room.id); console.log("roomid", room.id)}}>
-                    <div className={styles.empicon}></div>
-                    <div className={styles.rightbox}>
-                        <div className={styles.projecticon}>{room.projectBadge}</div>
-                        <div className={styles.chatname}>{room.name}</div>
+                {chatrooms.map((room) => (
+                    <div key={room.id} className={styles.chatroombox} onClick={() => {onChatClick(room.id); console.log("roomid", room.id)}}>
+                        <div className={styles.empicon}></div>
+                        <div className={styles.rightbox}>
+                            <div className={styles.projecticon}>{room.projectBadge}</div>
+                            <div className={styles.chatname}>{room.name}</div>
+                        </div>
                     </div>
-                </div>
                 ))}
 
             </div>

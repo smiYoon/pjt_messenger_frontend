@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef  } from "react";
 import { useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { useLoadScript } from '../LoadScriptContext.js';
 
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -22,10 +23,26 @@ const Create = () => {
     const detailRef = useRef();
     const memoRef = useRef();
 
-    var userId = "E2405001";
-    const [userData, setUserDate] = useState("E2405001"); // 로그인한 사람의 정보
-        // E2405001
-        // E2406002 , E2005003
+    const { decodedToken } = useLoadScript();
+    const [isTokenLoaded, setIsTokenLoaded] = useState(false);
+    const [loginEmpData, setLoginEmpData] = useState({
+            userId: "",
+            userName: "",
+            userPosition: "",
+            userDeptId: "",
+    }); // 로그인한 사람
+
+    useEffect(() => {
+        if (decodedToken) {
+          setLoginEmpData({
+            userId: decodedToken.empno,
+            userName: decodedToken.name,
+            userPosition: decodedToken.position,
+            userDeptId: decodedToken.department,
+          });
+          setIsTokenLoaded(true);
+        }
+    }, [decodedToken]);
 
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
@@ -37,9 +54,69 @@ const Create = () => {
         type: 1,
         startDate: "",
         endDate: "",
-        employee: userId,
+        employee: loginEmpData.userId,
     });
     const [empnos, setEmpnos] = useState(["E2406002", "E2005003"]);
+
+    const [isEmpModalOpen, setIsEmpModalOpen] = useState(false);
+    const [departmentMembers, setDepartmentMembers] = useState([]);
+    const [selectedEmployees, setSelectedEmployees] = useState([]);
+
+    // 부서원 목록 가져오기
+    useEffect(() => {
+        const fetchDepartmentMembers = async () => {
+            if (!loginEmpData.userDeptId) return;
+            
+            try {
+                const response = await fetch(`https://localhost:443/department/${loginEmpData.userDeptId}`);
+                const data = await response.json();
+                
+                // List.js와 동일한 로직 적용
+                if (data.children?.length > 0) {
+                    // 각 하위 부서에서 최고 position 사원 1명 추출
+                    const topMembers = data.children.map(dept => {
+                        if (dept.employees?.length > 0) {
+                            const topEmp = dept.employees.reduce((max, emp) => 
+                            emp.position > max.position ? emp : max, 
+                            dept.employees[0]
+                            );
+                            return { empno: topEmp.empno, name: topEmp.name };
+                        } else {
+                            return { empno: null, name: null };
+                        } // if-else
+                    }); // if-else
+                    setDepartmentMembers(topMembers.filter(m => m.empno !== null)); // null 제외
+                } else {
+                    // 최고 position 제외 후 필터링
+                    const allEmployees = data.employees || [];
+                    const maxPosition = Math.max(...allEmployees.map(emp => emp.position));
+                    const filtered = allEmployees
+                    .filter(emp => emp.position !== maxPosition)
+                    .map(emp => ({ empno: emp.empno, name: emp.name }));
+                    setDepartmentMembers(filtered);
+                } // if-else
+            } catch (error) {
+                console.error("부서원 조회 오류:", error);
+            } // try-catch
+        }; // fetchDepartmentMembers
+        fetchDepartmentMembers();
+    }, [loginEmpData.userDeptId]);
+
+    // 담당자 선택 모달 핸들러
+    const handleEmployeeSelect = (emp) => {
+        setSelectedEmployees(prev => {
+            const exists = prev.some(e => e.empno === emp.empno);
+            return exists 
+                ? prev.filter(e => e.empno !== emp.empno)
+                : [...prev, emp];
+        }); // setSelectedEmployees
+    }; // handleEmployeeSelect
+
+    // 선택 완료 시
+    const handleConfirmSelection = () => {
+        setEmpnos(selectedEmployees.map(e => e.empno));
+        setIsEmpModalOpen(false);
+    }; // handleConfirmSelection
 
     useEffect(() => {
         console.info("uploadData: ", uploadData);
@@ -123,6 +200,7 @@ const Create = () => {
                     memo: memo,
                     startDate: formatDate(startDate),
                     endDate: formatDate(endDate),
+                    employee: loginEmpData.userId,
                 };
                 
                 // 서버에 데이터 전송
@@ -209,6 +287,7 @@ const Create = () => {
         }); // Swal.fire
     }; // handleCancel
 
+    if (!isTokenLoaded) return <div>사용자 정보 로딩 중...</div>; 
 
     return(
         <div className={styles.container}>
@@ -278,13 +357,61 @@ const Create = () => {
                     <div style={{display: "flex"}}>
                         <span className={styles.contentLeft}>담당자 </span>
                         <span className={styles.contentRight}>
-                            <i style={{cursor: "pointer"}} className='fas fa-circle-plus'/>
+                            <i 
+                                style={{cursor: "pointer"}} 
+                                className='fas fa-circle-plus'
+                                onClick={() => setIsEmpModalOpen(true)}
+                            />
+                            {/* 선택된 담당자 표시 */}
+                            <span className={`${styles.selectedEmployeeWrap} ${selectedEmployees.length > 0 ? styles.hasEmployee : ''}`}>
+                                {selectedEmployees.map(emp => (
+                                    <span 
+                                        key={emp.empno} 
+                                        className={styles.selectedEmployee}
+                                        onClick={() => handleEmployeeSelect(emp)} // 클릭 시 제거
+                                    >
+                                        {emp.name}
+                                    </span>
+                                ))}
+                            </span>
                         </span>
                     </div>
+                    
+                    {/* 담당자 선택 모달 */}
+                    {isEmpModalOpen && (
+                    <div className={styles.modalBackdrop}>
+                        <div className={styles.empModal}>
+                        <h3>담당자 선택 ({selectedEmployees.length}명 선택됨)</h3>
+                        <div className={styles.modalContent}>
+                            {departmentMembers.map(emp => (
+                            <div 
+                                key={emp.empno}
+                                className={`${styles.empItem} ${
+                                selectedEmployees.some(e => e.empno === emp.empno) ? styles.selected : ''
+                                }`}
+                                onClick={() => handleEmployeeSelect(emp)}
+                            >
+                                <input 
+                                type="checkbox"
+                                checked={selectedEmployees.some(e => e.empno === emp.empno)}
+                                readOnly
+                                />
+                                {emp.name}
+                            </div>
+                            ))}
+                        </div>
+                        <div className={styles.modalActions}>
+                            <button onClick={handleConfirmSelection}>선택 완료</button>
+                            <button onClick={() => setIsEmpModalOpen(false)}>취소</button>
+                        </div>
+                        </div>
+                    </div>
+                    )}
+
 
                     <div style={{display: "flex"}}>
                         <span className={styles.contentLeft}>요청자</span>
-                        <span className={styles.contentRight}>{userId}</span>
+                        <span className={styles.contentRight}>{loginEmpData.userName}</span>
                     </div>
 
                     <div className={styles.contentLeft}>상세정보</div>

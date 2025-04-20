@@ -11,6 +11,9 @@
 
     overflow: hidden;
     box-sizing: border-box;
+
+    padding: 3vh 3vw 3vh calc(3vw + 150px);
+    overflow-x: hidden;
 }
 
 .leftBox{
@@ -311,3 +314,77 @@
     color: black;
 }
 
+
+.selectedEmployeeWrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2%;
+    max-height: 120%;   /* 원하는 높이로 조절 */
+    overflow-y: auto;
+    align-items: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
+.selectedEmployeeWrap.hasEmployee {
+    border: solid 1px #6C47FF;
+}
+
+.selectedEmployee {
+    display: inline-block;
+    margin: 1%;
+    padding: 1% 2%;
+    background: #f0f0f0;
+    border-radius: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.empModal {
+    background: white;
+    padding: 3%;
+    width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.empItem {
+    padding: 1%;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.empItem:hover {
+    background: #f8f8f8;   
+}
+
+.empItem input {
+    margin-right: 2%;
+}
+
+.selected {
+    background-color: #e6f3ff;
+}
+
+.modalActions {
+    margin-top: 1vh;
+    display: flex;
+    gap: 2%;
+    justify-content: flex-end;
+}

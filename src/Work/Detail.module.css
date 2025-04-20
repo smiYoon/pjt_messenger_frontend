@@ -11,6 +11,8 @@
 
     overflow: hidden;
     box-sizing: border-box;
+    padding: 3vh 3vw 3vh calc(3vw + 150px);
+    overflow-x: hidden;
 }
 
 .leftBox{

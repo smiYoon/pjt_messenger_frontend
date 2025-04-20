@@ -1,9 +1,12 @@
 import styles from './Chatting.module.css';
 import React, { useState, useRef , useEffect} from 'react';
 import { BsArrowUpCircleFill } from "react-icons/bs";
-
+import {useLoadScript} from "../../../LoadScriptContext";
 
 const Chatting = ({id}) => {
+
+    const { decodedToken } = useLoadScript();
+    const empno = decodedToken.empno;
 
     const [inputValue, setInputValue] = useState("");
     const [messages, setMessages] = useState([]);
@@ -59,7 +62,7 @@ const Chatting = ({id}) => {
         const messageObj = {
             "detail": msg,
             "chatId": id,            // 현재 채팅방 ID
-            "empno": "E2012004"            // 로그인한 사용자 ID, 실제 로그인 정보에서 가져와야 함
+            "empno": empno           // 로그인한 사용자 ID, 실제 로그인 정보에서 가져와야 함
         };
 
         if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
@@ -68,7 +71,7 @@ const Chatting = ({id}) => {
         setInputValue("");
     };
     // E2005003
-    const currentEmpno = "E2012004"; // 실제 로그인한 사용자 empno
+    const currentEmpno = empno; // 실제 로그인한 사용자 empno
     
     useEffect(() => {
         if (messagesEndRef.current) {

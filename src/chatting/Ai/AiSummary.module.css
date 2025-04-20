@@ -101,14 +101,16 @@
     height: 40px;
     padding: 0.5rem;
     background-color: white;
-    border: 1px solid #ccc;
     border-radius: 15px;
     font-size: 14px;
     text-align: center;
+
+    border: 1px solid transparent; /* 미리 border 자리를 차지함 */
+    transition: border-color 0.2s ease;
 }
 
 .startDatePicker:hover{
-    border-color: #6C47FF;
+    border: 1px solid #6C47FF;
     cursor: pointer;
 }
 

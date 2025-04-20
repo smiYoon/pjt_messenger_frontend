@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from "sweetalert2";
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { useLoadScript } from '../LoadScriptContext.js';
 
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
