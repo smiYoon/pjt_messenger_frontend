@@ -115,7 +115,11 @@ const Register_member = () => {
                     handleRegisterClick();
                 })
             } else {
-                alert('사원 등록에 실패했습니다.');
+                Swal.fire({
+                    icon: 'warning',
+                    title: '사원 등록 실패',
+                    text: '아이디를 확인해주세요',
+                });
                 console.error(response.statusText);
                 // console.log(response);
             }
