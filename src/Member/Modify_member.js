@@ -64,14 +64,9 @@ const Modify_member = () => {
             }
 
             console.log("memberForm:", memberForm);
-            const token = localStorage.getItem("jwt"); // 수정점 04.16
-            const response = await fetch(`https://localhost:443/employee/${empno}`, {
+            const response = await fetch(`https://localhost/employee/${empno}`, {
                 method: 'PUT', // 수정 요청은 PUT 메서드 사용
                 body: formData,
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    // 'Content-Type': 'application/json'
-                  } // 수정점. 04.16
             });
 
             if (response.ok) {
@@ -244,7 +239,7 @@ const Modify_member = () => {
                                     className={styles.single}
                                     placeholder='변경할 비밀번호를 입력해주세요.'
                                     name='password'
-                                    value={memberForm.password}
+                                    // value={memberForm.password}
                                     onChange={(e) => handleChange(e.target.name, e.target.value)}
                                 />
                                 <div className={styles.placeholder_text}>비밀번호</div>

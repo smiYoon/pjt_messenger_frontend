@@ -3,21 +3,24 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Organization from '../Organization/Organization';
 import { Link, useNavigate } from 'react-router-dom';
 import profile from '../Navbar/img/profile.png';
+import { useLoadScript } from '../LoadScriptContext';
 
 const List_member = () => {
 
+  const { decodedToken } = useLoadScript();
+  console.log('사용자정보(사원관리):', decodedToken);
   const [searchOption, setSearchOption] = useState('');
-
+  const [selectedDeptId, setSelectedDeptId] = useState(null);
   const [members, setMembers] = useState([]);
-  const fetchMembers = useCallback(async () => {
-    const token = localStorage.getItem("jwt"); // 수정점 04.16
+
+  const fetchMembers = useCallback(async (deptId = null) => {
     try {
-      const response = await fetch(`https://localhost:443/employee`, {
+      let url = 'https://localhost/employee';
+      if (deptId) {
+        url = `https://localhost/employee/department/${deptId}`;
+      }
+      const response = await fetch(url, {
         method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        } // 수정점. 04.16
       });
 
       if (response.ok) {
@@ -42,11 +45,16 @@ const List_member = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  });
+  }, []);
 
   useEffect(() => {
     fetchMembers();
-  }, []);
+  }, [fetchMembers]);
+
+  const handleDeptSelect = (deptId) => {
+    setSelectedDeptId(deptId);
+    fetchMembers(deptId);
+  }
 
   const level = {
     "1": "팀원",
@@ -113,7 +121,7 @@ const List_member = () => {
         </div>
       </div>
       <div className={styles.right_panel}>
-          <Organization />
+        <Organization onDeptSelect={handleDeptSelect} />
       </div>
     </div>
   )

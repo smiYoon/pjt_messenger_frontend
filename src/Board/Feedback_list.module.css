@@ -102,7 +102,7 @@
 .search_box { 
     display: flex;
     align-items: center;
-    gap: 1vw;
+    gap: 0.5vw;
 }
 
 .select {
@@ -130,22 +130,19 @@
 .search_box .input {
     width: 15vw;
     height: 4vh;
-    border-radius: 40px;
+    border-radius: 5px;
     border: none;
-    padding: 0 20px;
-    box-sizing: border-box;
     outline: 1px solid #6c47ff;
+    padding: 0 40px;
+    box-sizing: border-box;
     transition: outline 0.5s ease-in-out;
-    
 }
 
 .input_box i {
     position: absolute;
-    right: 0;
-    margin-right: 10px;
+    left: 0;
+    margin-left: 10px;
 }
-
-
 
 .Board_table {
     border-collapse: collapse;

@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import styles from './Notice_detail.module.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useLoadScript } from '../LoadScriptContext';
 
 
 const Notice_detail = () => {
-
+  const { decodedToken } = useLoadScript();
   const navigate = useNavigate();
   const [post, setPost] = useState([]);
   const { id } = useParams();
@@ -40,19 +41,46 @@ const Notice_detail = () => {
     fetchPostData();
   }, []);
 
-  const handleClick = () => {
-    Swal.fire({
-      title: '삭제하시겠습니까?',
-      icon: 'question',
+  const handleCancelClick = () => {
+    navigate(`/board/notice/list`);
+  };
+
+  const handleDeleteClick = async () => {
+    const result = await Swal.fire({
+      icon: 'warning',
+      title: '게시글을 삭제하시겠습니까?',
+      text: '삭제된 게시글은 되돌릴 수 없습니다. 계속 진행하시겠습니까?',
       showCancelButton: true,
       confirmButtonText: '삭제',
-      cancelButtonText: '취소'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate('/board/notice/list');
+      cancelButtonText: '취소',
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const response = await fetch(`https://localhost/board/notice/${id}`, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          await Swal.fire({
+            icon: 'success',
+            title: '게시글이 삭제되었습니다.',
+            confirmButtonText: '확인',
+          });
+
+          if (result.isConfirmed) {
+            navigate('/board/notice/list');
+          }
+        } else {
+          console.error('삭제 실패:', response.statusText);
+          alert('회원 삭제에 실패했습니다.');
+        }
+      } catch (error) {
+        console.error('요청 중 오류 발생:', error);
+        alert('오류가 발생했습니다. 다시 시도해주세요.');
       }
-    })
-  }
+    }
+  };
 
   const handleUpdateClick = () => {
     navigate(`/board/notice/update/${ id }`);
@@ -117,8 +145,13 @@ const Notice_detail = () => {
             {post.detail}
           </div>
           <div className={styles.buttonContainer}>
-            <button onClick={handleUpdateClick} className={styles.edit} >수정</button>
-            <button onClick={handleClick} className={styles.cancel}>삭제</button>
+            <button onClick={handleCancelClick} className={styles.cancel}>뒤로</button>
+            {decodedToken.name === post.author && (
+              <>
+                <button onClick={handleUpdateClick} className={styles.edit} >수정</button>
+                <button onClick={handleDeleteClick} className={styles.cancel}>삭제</button>
+              </>
+            )}
           </div>
         </div>
       </div>
