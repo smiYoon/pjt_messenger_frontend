@@ -72,8 +72,9 @@
 .option_box {
     position: relative;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     width: 100%;
+    height: 4vh;
     margin-bottom: 20px;
 }
 
@@ -102,8 +103,10 @@
 
 .search_box { 
     display: flex;
+    position: absolute;
+    right: 0;
     align-items: center;
-    gap: 1vw;
+    gap: 0.5vw;
 }
 
 .select {
