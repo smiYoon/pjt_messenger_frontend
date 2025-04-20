@@ -1,8 +1,6 @@
 import React, { useEffect} from "react";
 import { useLoadScript } from "../../LoadScriptContext";
-
 import styles from './ChatList.module.css';
-import { useLoadScript } from "../../LoadScriptContext";
 
 const ChatList = ({ onCreateClick,onChatClick, chatrooms, setChatrooms}) => {
 
