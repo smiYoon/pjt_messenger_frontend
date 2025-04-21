@@ -8,10 +8,11 @@ import CreateChat from './createChatPopup/CreateChat';
 import { useLoadScript } from "../LoadScriptContext";
 
 import styles from './Chat_main.module.css';
-import { useLoadScript } from '../LoadScriptContext'; // ✅ 토큰 불러오기
 
 const Chat_main = () => {
-    const { token } = useLoadScript(); // ✅ 토큰 추출
+
+    const { decodedToken, token } = useLoadScript();
+    const empno = decodedToken?.empno;
 
     const [showCreateChat, setShowCreateChat] = useState(false);    // 채팅방 생성 팝업
     const [showOrga, setShowOrga]=useState(false);                  // 조직도 초대 팝업
@@ -42,14 +43,17 @@ const Chat_main = () => {
         }
     };
 
-    const { decodedToken } = useLoadScript();
-    const empno = decodedToken.empno;
-
     // 채팅방 리스트 받아오기 (채팅방이름, 등록한사람 아이콘, 프로젝트 유무)
     // 공통 fetch 로직
     const fetchChatrooms = async () => {
         try {
-            const response = await fetch(`https://localhost:443/chat/list/${empno}`);
+            const response = await fetch(`https://localhost:443/chat/list/${empno}`,{
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`, // ✅ 토큰 추가
+                    'Content-Type': 'application/json',
+                },
+            });
             const data = await response.json();
             setChatrooms(Array.isArray(data) ? data : []);
         } catch (error) {

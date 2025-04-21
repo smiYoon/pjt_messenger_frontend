@@ -5,18 +5,12 @@ import { IoExitOutline } from "react-icons/io5";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useLoadScript } from "../../LoadScriptContext";
-
-const AiSummary = ({ id, setChatrooms, setSelectedChatRoom, selectedChatRoom }) => {
-    const { decodedToken, token } = useLoadScript();
-    const empno = decodedToken?.empno;
 import Swal from "sweetalert2";
 
 
-const AiSummary = ({id, setChatrooms, setSelectedChatRoom , selectedChatRoom,fetchChatrooms, chatrooms,setMessages}) => {
-
-    const { decodedToken } = useLoadScript();
-    const empno = decodedToken.empno;
-
+const AiSummary = ({ id, setChatrooms, setSelectedChatRoom, selectedChatRoom , setMessages, fetchChatrooms}) => {
+    const { decodedToken, token } = useLoadScript();
+    const empno = decodedToken?.empno;
 
     useEffect(() => {
         setSummaryText("");
@@ -41,10 +35,12 @@ const AiSummary = ({id, setChatrooms, setSelectedChatRoom , selectedChatRoom,fet
             try  { 
                 const response = await fetch(`https://localhost/chat/${id}`,{
                     method : 'DELETE',
+                    headers: {
+                        Authorization: `Bearer ${token}` // ✅ 토큰 추가
+                    },
                     body: formData
                 });
                     console.log("퇴장 처리 완료");
-                    alert("퇴장했습니다");
                     const deletedChat = await response.json();
                     setChatrooms((prev) => prev.filter((room) => room.chat.id !== deletedChat.id));
                     // 현재 보고 있던 방이 이 방이라면 초기화
@@ -69,42 +65,8 @@ const AiSummary = ({id, setChatrooms, setSelectedChatRoom , selectedChatRoom,fet
         return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
     };
 
-    const handleExit = async () => {
-        const formData = new FormData();
-        formData.append("empno", empno);
-
-        const result = await Swal.fire({
-            title: '정말로 이 채팅방을 떠나시겠습니까?',
-            text: "이 작업은 되돌릴 수 없습니다.",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: '네',
-            cancelButtonText: '아니요'
-        });
-
-        try {
-            const response = await fetch(`https://localhost:443/chat/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    Authorization: `Bearer ${token}` // ✅ 토큰 추가
-                },
-                body: formData
-            });
-
-            const deletedChat = await response.json();
-            alert("퇴장했습니다");
-            setChatrooms((prev) => prev.filter((room) => room.id !== deletedChat.id));
-
-            if (selectedChatRoom?.id === deletedChat.id) {
-                setSelectedChatRoom(null);
-            }
-        } catch (error) {
-            console.error("퇴장 처리 실패", error);
-        }
-    };
-
     const handleSummary = async () => {
-        const formData = new FormData();
+   
         Swal.fire({
             title: '요약 생성 중...',
             text: '잠시만 기다려주세요.',
@@ -126,34 +88,20 @@ const AiSummary = ({id, setChatrooms, setSelectedChatRoom , selectedChatRoom,fet
                 headers: {
                     Authorization: `Bearer ${token}` // ✅ 토큰 추가
                 },
-        try  {
-            // 1. 퇴장 요청 서버로 보내기
-            const response = await fetch(`https://localhost/message/${id}/summarize`,{
-                method : 'POST',
                 body: formData
             });
-
-            if (!response.ok) throw new Error("서버 응답 오류");
-            const text = await response.text();
-            setSummaryText(text);
-        } catch (error) {
-            console.error("요약 처리 실패", error);
-
             const text = await response.text(); 
             setSummaryText(text); // 상태에 저장
             console.log("요약 처리 완료");
         } catch (error) {
-                console.log("요약 처리 실패",error);
+            console.error("요약 처리 실패", error);
         } finally {
             Swal.close();
         }
     };
 
     const handleTodaySummary = async () => {
-        const now = new Date();
-        const startOfDay = new Date(now.setHours(0, 0, 0, 0));
 
-        const formData = new FormData();
         const formData = new FormData;
         const now = new Date(); // 현재 시간
         const startOfDay = new Date(now);
@@ -168,13 +116,7 @@ const AiSummary = ({id, setChatrooms, setSelectedChatRoom , selectedChatRoom,fet
         formData.append("end", formatDateToYMDHM(new Date()));
 
         try {
-            const response = await fetch(`https://localhost:443/message/${id}/summarize`, {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${token}` // ✅ 토큰 추가
-                },
-        try  {
-             Swal.fire({
+            Swal.fire({
                 title: '요약 생성 중...',
                 text: '잠시만 기다려주세요.',
                 allowOutsideClick: false,
@@ -184,9 +126,11 @@ const AiSummary = ({id, setChatrooms, setSelectedChatRoom , selectedChatRoom,fet
                 }
               });
 
-            // 1. 퇴장 요청 서버로 보내기
-            const response = await fetch(`https://localhost/message/${id}/summarize`,{
-                method : 'POST',
+            const response = await fetch(`https://localhost:443/message/${id}/summarize`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}` // ✅ 토큰 추가
+                },
                 body: formData
             });
 
@@ -195,8 +139,7 @@ const AiSummary = ({id, setChatrooms, setSelectedChatRoom , selectedChatRoom,fet
             setSummaryText(text);
         } catch (error) {
             console.error("요약 처리 실패", error);
-                console.log("요약 처리 실패",error);
-                Swal.fire('요약 실패', '요약 도중 문제가 발생했어요.', 'error');
+            Swal.fire('요약 실패', '요약 도중 문제가 발생했어요.', 'error');
         }finally {
             Swal.close(); // 항상 닫아줘야 함!
         }

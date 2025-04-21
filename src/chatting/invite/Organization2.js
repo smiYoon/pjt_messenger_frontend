@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Tree } from "react-arborist";
 import styles from './Organization2.module.css';
 import Swal from 'sweetalert2';
+import { useLoadScript } from "../../LoadScriptContext";
 
 const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id }) => {
   const { deptNum } = useParams();
@@ -13,6 +14,9 @@ const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id }) => {
   const [inviteList, setInviteList] = useState([]);
 
   const containerRef = useRef(null);
+
+  const { decodedToken, token } = useLoadScript(); // ✅ token 가져옴
+  const empno = decodedToken?.empno;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,14 +41,15 @@ const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id }) => {
     inviteList.forEach(emp => formData.append("empnos", emp.id));
 
     try {
-      const res = await fetch(`https://localhost:443/chat/${id}`, {
+      const response = await fetch(`https://localhost:443/chat/${id}`, {
         method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`, // ✅ 토큰 추가
+          'Content-Type': 'application/json',
+    },
         body: formData
+        
       });
-  
-      if (!response.ok) {
-        throw new Error("서버 응답 실패: " + response.status);
-      }
   
       const result = await response.json();
       console.log("서버 응답:", result);
@@ -120,13 +125,6 @@ const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id }) => {
           </div>
           <button className={styles.inviteBtn} disabled={inviteList.length === 0} onClick={handleAddInvite}>초대하기</button>
         </div>
-        <button
-          className={styles.inviteBtn}
-          disabled={inviteList.length === 0}
-          onClick={handleAddInvite}
-        >
-          초대하기
-        </button>
       </div>
 
   );
