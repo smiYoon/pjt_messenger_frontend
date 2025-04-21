@@ -1,52 +1,43 @@
-import React, { useEffect, useState ,useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Tree } from "react-arborist";
 import styles from './Organization2.module.css';
+import Swal from 'sweetalert2';
 
+const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id }) => {
+  const { deptNum } = useParams();
+  const DepartmentNumber = Number(deptNum) || 1;
 
-const Organization2 = ({onCloseOrgaClick, handleChatRoomClick, id}) => {
-  const { deptNum } = useParams(); // deptNum은 문자열로 들어옴
-  const DepartmentNumber = Number(deptNum) || 1; // 숫자로 변환, 없으면 1
   const [data, setData] = useState([]);
   const [treeData, setTreeData] = useState([]);
-  const [inviteList, setInviteList] = useState([]);               // 초대할 직원 id들 저장
+  const [inviteList, setInviteList] = useState([]);
+
+  const containerRef = useRef(null);
 
   useEffect(() => {
-      console.log("data:", data); // 데이터 확인용
-  }, [data]);
-
-  useEffect(() => {
-      console.log("treeData:", treeData); // 데이터 확인용
-  }, [treeData]);
-
-  // 조직도 데이터
-  useEffect(() =>{
     const fetchData = async () => {
-        try {
-            const response = await fetch(`https://localhost:443/department/${DepartmentNumber}`);
-            if (!response.ok) {
-             throw new Error("Network response was not ok");
-            }
-            const data = await response.json();
-            setData(data); // 원본 데이터 저장
-            const convertedData = convertToSortableTree(data);
-            setTreeData([convertedData].filter(Boolean)); // 배열로 감싸고 null 제거
-        } catch (error) {
-            console.error("Fetch error:", error);
-        }
+      try {
+        const res = await fetch(`https://localhost:443/department/${DepartmentNumber}`);
+        if (!res.ok) throw new Error("네트워크 오류");
+
+        const json = await res.json();
+        setData(json);
+        const converted = convertToSortableTree(json);
+        if (converted) setTreeData([converted]);
+      } catch (err) {
+        console.error("조직도 데이터 fetch 실패:", err);
+      }
     };
     fetchData();
-  },[]);
+  }, [DepartmentNumber]);
 
-
-  // 초대하기
+  // 초대 요청
   const handleAddInvite = async () => {
     const formData = new FormData();
-
-    formData.append("empnos", inviteList.map(emp => emp.id));
+    inviteList.forEach(emp => formData.append("empnos", emp.id));
 
     try {
-      const response = await fetch(`https://localhost:443/chat/${id}`, {
+      const res = await fetch(`https://localhost:443/chat/${id}`, {
         method: "PUT",
         body: formData
       });
@@ -57,60 +48,59 @@ const Organization2 = ({onCloseOrgaClick, handleChatRoomClick, id}) => {
   
       const result = await response.json();
       console.log("서버 응답:", result);
-      alert("초대 성공!");
+
+      await Swal.fire({
+        icon: 'success',
+        title: '초대 성공!',
+        text: '선택한 사원이 채팅방에 초대되었습니다.',
+        confirmButtonText: '확인'
+      });
+
       setInviteList([]);
       onCloseOrgaClick();
-      
-      // 초대 후 채팅방 갱신
-      if (id) {
-        await handleChatRoomClick(id);
-      }
+      handleChatRoomClick?.(id);
     } catch (err) {
       console.error("초대 실패!", err);
-      alert("초대 중 오류 발생!");
+
+      await Swal.fire({
+        icon: 'error',
+        title: '초대 실패!',
+        text: '초대 중 오류가 발생했습니다. 다시 시도해주세요.',
+        confirmButtonText: '확인'
+      });
     }
-  }
+  };
 
-  // 외부 클릭 감지
-  const containerRef = useRef(null); // 외부 클릭 감지용 ref
-
+  // 외부 클릭 → 닫기
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (containerRef.current && !containerRef.current.contains(event.target)) {
-        setInviteList([]);      // 리스트 비우기
-        onCloseOrgaClick();      // 닫기
+    const handleClickOutside = (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setInviteList([]);
+        onCloseOrgaClick();
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // 초대할 직원 설정
+  const handleSelect = (nodes) => {
+    const leafNodes = nodes.filter(n => n.isLeaf);
+    const newInvites = leafNodes.map(n => ({
+      id: n.data.id.replace('emp-', ''),
+      name: n.data.name
+    }));
 
-  // 초대목록 설정
-  const handleSelect = (selectedNodes) => {
-    const leafNodes = selectedNodes.filter(node => node.isLeaf);
-    const ids = leafNodes.map(node => {
-      return {
-        id: node.data.id.replace('emp-', ''),
-        name: node.data.name,
-      };
-    });
-    setInviteList(
-      Array.from(new Map([...inviteList, ...ids].map(item => [item.id, item])).values())
-    );
-    console.log("초대할 직원 ID들:", inviteList);
+    const combined = [...inviteList, ...newInvites];
+    const unique = Array.from(new Map(combined.map(item => [item.id, item])).values());
+    setInviteList(unique);
   };
 
-  const handleRemoveInvite = (idToRemove) => {
-    const updatedList = inviteList.filter(emp => emp.id !== idToRemove);
-    setInviteList(updatedList);
+  const handleRemoveInvite = (id) => {
+    setInviteList(prev => prev.filter(emp => emp.id !== id));
   };
-
-
 
   if (treeData.length === 0) return <div className={styles.loading}>로딩 중...</div>;
-
 
   return (
     <div ref={containerRef} className={styles.container}>
@@ -130,10 +120,18 @@ const Organization2 = ({onCloseOrgaClick, handleChatRoomClick, id}) => {
           </div>
           <button className={styles.inviteBtn} disabled={inviteList.length === 0} onClick={handleAddInvite}>초대하기</button>
         </div>
-    </div>
-  );
+        <button
+          className={styles.inviteBtn}
+          disabled={inviteList.length === 0}
+          onClick={handleAddInvite}
+        >
+          초대하기
+        </button>
+      </div>
 
-}; // Organization
+  );
+};
+
 export default Organization2;
 
 const convertToSortableTree = (node) => {

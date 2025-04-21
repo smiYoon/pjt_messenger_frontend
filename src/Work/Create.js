@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef  } from "react";
 import { useNavigate } from 'react-router-dom';
+import { createPortal } from 'react-dom';
 import Swal from "sweetalert2";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useLoadScript } from '../LoadScriptContext.js';
@@ -15,6 +16,7 @@ registerLocale("ko", ko);
 console.groupCollapsed("src/Work/Create.js");console.groupEnd();
 
 
+
 const Create = () => {
     console.debug("Create() invoked.");
 
@@ -23,7 +25,7 @@ const Create = () => {
     const detailRef = useRef();
     const memoRef = useRef();
 
-    const { decodedToken } = useLoadScript();
+    const { decodedToken, token, role_level } = useLoadScript();
     const [isTokenLoaded, setIsTokenLoaded] = useState(false);
     const [loginEmpData, setLoginEmpData] = useState({
             userId: "",
@@ -68,33 +70,44 @@ const Create = () => {
             if (!loginEmpData.userDeptId) return;
             
             try {
-                const response = await fetch(`https://localhost:443/department/${loginEmpData.userDeptId}`);
+                const response = await fetch(`https://localhost/department/${loginEmpData.userDeptId}`,
+                    {headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json", 
+                        },
+                    }
+                );
                 const data = await response.json();
+
+                let members = [];
                 
-                // List.js와 동일한 로직 적용
                 if (data.children?.length > 0) {
-                    // 각 하위 부서에서 최고 position 사원 1명 추출
                     const topMembers = data.children.map(dept => {
                         if (dept.employees?.length > 0) {
                             const topEmp = dept.employees.reduce((max, emp) => 
-                            emp.position > max.position ? emp : max, 
-                            dept.employees[0]
+                                emp.position > max.position ? emp : max, 
+                                dept.employees[0]
                             );
                             return { empno: topEmp.empno, name: topEmp.name };
                         } else {
-                            return { empno: null, name: null };
+                            return null;
                         } // if-else
-                    }); // if-else
-                    setDepartmentMembers(topMembers.filter(m => m.empno !== null)); // null 제외
+                    }).filter(m => m !== null);
+                    members = topMembers;
                 } else {
-                    // 최고 position 제외 후 필터링
                     const allEmployees = data.employees || [];
                     const maxPosition = Math.max(...allEmployees.map(emp => emp.position));
-                    const filtered = allEmployees
-                    .filter(emp => emp.position !== maxPosition)
-                    .map(emp => ({ empno: emp.empno, name: emp.name }));
-                    setDepartmentMembers(filtered);
+                    members = allEmployees
+                        .filter(emp => emp.position !== maxPosition)
+                        .map(emp => ({ empno: emp.empno, name: emp.name }));
                 } // if-else
+
+                const loggedInUser = { 
+                    empno: loginEmpData.userId, 
+                    name: loginEmpData.userName 
+                };
+                const filtered = members.filter(m => m.empno !== loggedInUser.empno);
+                setDepartmentMembers([loggedInUser, ...filtered]);
             } catch (error) {
                 console.error("부서원 조회 오류:", error);
             } // try-catch
@@ -215,8 +228,12 @@ const Create = () => {
 
                 console.info("params: ", params.toString());
                 
-                const response = await fetch(`https://localhost:443/work?${params.toString()}`, {
-                    method: "POST"
+                const response = await fetch(`https://localhost/work?${params.toString()}`, {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json", 
+                        },
                 });
 
                 if (!response.ok) {
@@ -251,7 +268,8 @@ const Create = () => {
 
     const handleCancel = () => {
         Swal.fire({
-            text: "정말 취소하시겠습니까? 취소하시면 변경사항이 저장되지 않습니다.",
+            title: "정말 취소하시겠습니까?",
+            text: "취소하시면 변경사항이 저장되지 않습니다.",
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "예",
@@ -270,7 +288,8 @@ const Create = () => {
 
     const handleBack = () => {
         Swal.fire({
-            text: "뒤로 이동하시겠습니까? 페이지를 벗어나면 변경사항이 저장되지 않습니다.",
+            title: "뒤로 이동하시겠습니까?",
+            text: "페이지를 벗어나면 변경사항이 저장되지 않습니다.",
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "예",
@@ -337,6 +356,7 @@ const Create = () => {
                                 endDate={endDate}
                                 dateFormat="yyyy-MM-dd"
                                 placeholderText="시작일"
+                                popperContainer={({ children }) => createPortal(children, document.body)}
                             />
                             <span>~</span>
                             <DatePicker
@@ -347,9 +367,10 @@ const Create = () => {
                                 selectsEnd
                                 startDate={startDate}
                                 endDate={endDate}
-                                minDate={startDate} // 종료일은 시작일 이후로만 선택 가능
+                                minDate={startDate}
                                 dateFormat="yyyy-MM-dd"
                                 placeholderText="종료일"
+                                popperContainer={({ children }) => createPortal(children, document.body)}
                             />
                         </span>
                     </div>
@@ -362,22 +383,22 @@ const Create = () => {
                                 className='fas fa-circle-plus'
                                 onClick={() => setIsEmpModalOpen(true)}
                             />
-                            {/* 선택된 담당자 표시 */}
                             <span className={`${styles.selectedEmployeeWrap} ${selectedEmployees.length > 0 ? styles.hasEmployee : ''}`}>
-                                {selectedEmployees.map(emp => (
-                                    <span 
-                                        key={emp.empno} 
-                                        className={styles.selectedEmployee}
-                                        onClick={() => handleEmployeeSelect(emp)} // 클릭 시 제거
-                                    >
-                                        {emp.name}
-                                    </span>
-                                ))}
+                                <div className={styles.selectedEmployeeScroller}>
+                                    {selectedEmployees.map(emp => (
+                                        <span 
+                                            key={emp.empno} 
+                                            className={styles.selectedEmployee}
+                                            onClick={() => handleEmployeeSelect(emp)} // 클릭 시 제거
+                                        >
+                                            {emp.name}
+                                        </span>
+                                    ))}
+                                </div>
                             </span>
                         </span>
                     </div>
                     
-                    {/* 담당자 선택 모달 */}
                     {isEmpModalOpen && (
                     <div className={styles.modalBackdrop}>
                         <div className={styles.empModal}>
@@ -392,6 +413,7 @@ const Create = () => {
                                 onClick={() => handleEmployeeSelect(emp)}
                             >
                                 <input 
+                                className={styles.checkbox}
                                 type="checkbox"
                                 checked={selectedEmployees.some(e => e.empno === emp.empno)}
                                 readOnly
@@ -401,8 +423,8 @@ const Create = () => {
                             ))}
                         </div>
                         <div className={styles.modalActions}>
-                            <button onClick={handleConfirmSelection}>선택 완료</button>
-                            <button onClick={() => setIsEmpModalOpen(false)}>취소</button>
+                            <button className={styles.confirmButton} onClick={handleConfirmSelection}>선택 완료</button>
+                            <button className={styles.modalCancelButton} onClick={() => setIsEmpModalOpen(false)}>취소</button>
                         </div>
                         </div>
                     </div>

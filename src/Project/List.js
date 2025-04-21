@@ -14,7 +14,15 @@ const List = () => {
   // console.group("List() invoked.");  console.groupEnd();
 
 
-    const { decodedToken } = useLoadScript();
+    const { decodedToken, role_level , token } = useLoadScript();
+  console.log('로그인 사용자정보:', decodedToken);
+
+  const userRole = Array.isArray(decodedToken?.roles)
+      ? decodedToken.roles[0]
+      : decodedToken?.roles;
+    const userRoleLevel = role_level[userRole]; // 수정
+
+
 
 
   // upComingList, list
@@ -70,12 +78,17 @@ const List = () => {
   const [isOpen, setIsOpen] = useState(false);
   const openProjectRegister = () => setIsOpen(true);
   const closeProjectRegister = () => setIsOpen(false);
-
+  console.log("▶ 현재 token:", token);
   //project 상단 upComing 리스트 data 가져오기
   const handleGetUpComingList = useCallback(async () => {
     try {
       const response = await fetch(`https://localhost:443/project/upComing`, {
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+
       });
 
       if (response.ok) {
@@ -89,7 +102,7 @@ const List = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }, []);
+  }, [token]); // 수정점.
 
   //project 하단 리스트 data 가져오기
   const handleGetList = useCallback(
@@ -111,6 +124,10 @@ const List = () => {
           `https://localhost:443/project?${params.toString()}`,
           {
             method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
           }
         );
 
@@ -134,13 +151,13 @@ const List = () => {
         console.error("Error fetching data:", error);
       }
     },
-    [searchData, currPage]
+    [ token, searchData, currPage]
   );
 
   // 컴포넌트 마운트 시 첫 데이터 로드
   useEffect(() => {
     console.log("List useEffect() invoked.");
-
+    if (!token) return;
     handleGetUpComingList();
 
     handleSearchData("status", "");
@@ -148,7 +165,7 @@ const List = () => {
     handleSearchData("searchText", "");
 
     handleGetList(1);
-  }, []);
+  }, [token]);
 
   //project data 삭제
   const handleProjectDelete = useCallback(
@@ -157,6 +174,10 @@ const List = () => {
       try {
         const response = await fetch(`https://localhost:443/project/${pjtId}`, {
           method: "DELETE",
+          headers: {
+                 Authorization: `Bearer ${token}`,
+                 "Content-Type": "application/json", 
+               },
         });
 
         if (response.ok) {
@@ -175,7 +196,7 @@ const List = () => {
         infoAlert("error", "오류가 발생했습니다. 다시 시도해주세요.", " ");
       }
     },
-    [searchData, currPage]
+    [token, searchData, currPage]
   );
 
   function infoAlert(icon, title, msg) {
@@ -276,13 +297,10 @@ const List = () => {
               >
                 검색
               </button>
-              {
-                (decodedToken.position === 3 || decodedToken.position === 9) ? (
-                  <button onClick={openProjectRegister}>등록</button>
-                ) : (
-                  <div></div>
-                )
-              }
+              {/* {role_level[decodedToken.roles] === 3 ? ( */}
+              {userRoleLevel === 3 ? ( // 수정점.
+                <button onClick={openProjectRegister}>등록</button>
+              ) : (<div></div>)}
             </div>
           </div>
 

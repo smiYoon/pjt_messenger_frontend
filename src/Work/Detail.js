@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
+import { createPortal } from 'react-dom';
 import Swal from "sweetalert2";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useLoadScript } from '../LoadScriptContext.js';
@@ -19,25 +20,41 @@ const Detail = () => {
     console.debug("Detail() invoked.");
 
     const navigate = useNavigate();
-
     const nameRef = useRef();
     const detailRef = useRef();
     const memoRef = useRef();
     const { workId } = useParams();
+
+    const { decodedToken , token, Role_level } = useLoadScript();
+    const [loginEmpData, setLoginEmpData] = useState({
+        userId: "",
+        userName: "",
+        userPosition: "",
+        userDeptId: "",
+    }); // 로그인한 사람
+
+    useEffect(() => {
+        if (decodedToken) {
+            setLoginEmpData({
+                userId: decodedToken.empno,
+                userName: decodedToken.name,
+                userPosition: decodedToken.position,
+                userDeptId: decodedToken.department,
+            });
+        }
+    }, [decodedToken]);
+
+    // 모달
+    const [departmentMembers, setDepartmentMembers] = useState([]);
+    const [selectedEmployees, setSelectedEmployees] = useState([]);
+    const [isEmpModalOpen, setIsEmpModalOpen] = useState(false);
+    
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+
     const [loading, setLoading] = useState(false);
+
     const [employeeData, setEmployeeData] = useState([]);
-    var userId = "E2405001";
-    var userId = "E2005003";
-    // E2405001
-    // E2406002 , E2005003
-    var userDeptId = "27"; // 8 , 27
-    // var userDeptId = "8"; // 8 , 27
-    // var userDeptId = "1"; // 8 , 27
-    var userName = "홍시리";
-    var userStatus = 1; // 1, 2, 3, 4, 5, 9
-    const [userData, setUserDate] = useState(); // 로그인한 사람의 정보
     const [uploadData, setUploadData] = useState({
             name: "",
             detail: "",
@@ -46,16 +63,84 @@ const Detail = () => {
             type: 1,
             startDate: "",
             endDate: "",
-            employee: userData,
+            employee: "",
     });
     const [empnos, setEmpnos] = useState([]);
 
     const handleRemoveEmpno = (empnoToRemove) => {
         setEmpnos(prevEmpnos => prevEmpnos.filter(empno => empno !== empnoToRemove));
+        setSelectedEmployees(prev => prev.filter(e => e.empno !== empnoToRemove));
         console.log("delete complete : ", empnoToRemove);
     }; // handleRemoveEmpno
-    
 
+
+    // 부서원 목록 가져오기
+    useEffect(() => {
+        const fetchDepartmentMembers = async () => {
+            if (!loginEmpData.userDeptId) return;
+            
+            try {
+                const response = await fetch(`https://localhost/department/${loginEmpData.userDeptId}`,
+                    {headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json", 
+                        },
+                    }
+                );
+                const data = await response.json();
+                
+                let members = [];
+
+                if (data.children?.length > 0) {
+                    const topMembers = data.children.map(dept => {
+                        if (dept.employees?.length > 0) {
+                            const topEmp = dept.employees.reduce((max, emp) => 
+                                emp.position > max.position ? emp : max, 
+                                dept.employees[0]
+                            );
+                            return { empno: topEmp.empno, name: topEmp.name };
+                        } else {
+                            return null;
+                        } // if-else
+                    }).filter(m => m !== null);
+                    members = topMembers;
+                } else {
+                    const allEmployees = data.employees || [];
+                    const maxPosition = Math.max(...allEmployees.map(emp => emp.position));
+                    members = allEmployees
+                        .filter(emp => emp.position !== maxPosition)
+                        .map(emp => ({ empno: emp.empno, name: emp.name }));
+                } // if-else
+
+                const loggedInUser = { 
+                    empno: loginEmpData.userId, 
+                    name: loginEmpData.userName 
+                };
+                const filtered = members.filter(m => m.empno !== loggedInUser.empno);
+                setDepartmentMembers([loggedInUser, ...filtered]);
+            } catch (error) {
+                console.error("부서원 조회 오류:", error);
+            } // try-catch
+        }; // fetchDepartmentMembers
+        fetchDepartmentMembers();
+    }, [loginEmpData.userDeptId]);
+
+    // 담당자 선택/해제
+    const handleEmployeeSelect = (emp) => {
+        setSelectedEmployees(prev => {
+            const exists = prev.some(e => e.empno === emp.empno);
+            return exists 
+                ? prev.filter(e => e.empno !== emp.empno)
+                : [...prev, emp];
+        });
+    };
+
+    // 선택 완료 시
+    const handleConfirmSelection = () => {
+        setEmpnos(selectedEmployees.map(e => e.empno));
+        setIsEmpModalOpen(false);
+    };
+    
 
     useEffect(() => {
         setUploadData(prev => ({
@@ -65,43 +150,59 @@ const Detail = () => {
         }));
     }, [startDate, endDate]);
     
-
     useEffect(() => {
         console.log("employeeData is :", employeeData);
         console.log("uploadData is :", uploadData);
     }, [uploadData]);
 
     useEffect(() => {       
-            const fetchData = async () => {
-                try {
-                    setEmployeeData([]); // 초기화
-                    setLoading(true); // 로딩 시작
-    
-                    const response = await fetch(`https://localhost:443/work/${workId}`);
-                    if (!response.ok) {
-                        throw new Error("Network response was not ok");
-                    } // if
-                    const data = await response.json();
-                    setEmployeeData(data);
-                    setEmpnos(data.workEmployees.map(emp => emp.employee.empno));
-                    setUploadData({
-                        name: data.name,
-                        detail: data.detail,
-                        memo: data.memo,
-                        status: data.status,
-                        type: data.type,
-                        startDate: data.startDate,
-                        endDate: data.endDate,
-                        employee: userId,
-                    });
-                } catch (error) {
-                    console.error("Fetch error:", error);
-                } finally{
-                    setLoading(false); // 로딩 종료
-                }// try-catch-finally
-              };
-              fetchData();
-    }, []);
+        const fetchData = async () => {
+            try {
+                setEmployeeData([]); // 초기화
+                setLoading(true); // 로딩 시작
+
+                const response = await fetch(`https://localhost/work/${workId}`,
+                    {headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json", 
+                        },
+                    }
+                );
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                } // if
+                const data = await response.json();
+                setEmployeeData(data);
+                setEmpnos(data.workEmployees.map(emp => emp.employee.empno));
+                setUploadData({
+                    name: data.name,
+                    detail: data.detail,
+                    memo: data.memo,
+                    status: data.status,
+                    type: data.type,
+                    startDate: data.startDate,
+                    endDate: data.endDate,
+                    employee: loginEmpData.userId,
+                });
+                setStartDate(new Date(data.startDate));
+                setEndDate(new Date(data.endDate));
+                // 담당자 정보도 selectedEmployees로 세팅
+                setSelectedEmployees(
+                    data.workEmployees
+                        .filter(emp => emp.employee && emp.employee.empno)
+                        .map(emp => ({
+                            empno: emp.employee.empno,
+                            name: emp.employee.name
+                        }))
+                );
+            } catch (error) {
+                console.error("Fetch error:", error);
+            } finally{
+                setLoading(false); // 로딩 종료
+            }// try-catch-finally
+        };
+        fetchData();
+    }, [workId]);
 
     const getDiffDays = (startDateStr, endDateStr) => {
         const start = new Date(startDateStr);
@@ -190,8 +291,9 @@ const Detail = () => {
                     name: name,
                     detail: detail,
                     memo: memo,
-                    startDate: formatDate(uploadData.startDate),
-                    endDate: formatDate(uploadData.endDate),
+                    startDate: formatDate(startDate),
+                    endDate: formatDate(endDate),
+                    employee: loginEmpData.userId,
                 };
                 
                 // 서버에 데이터 전송
@@ -206,8 +308,12 @@ const Detail = () => {
 
                 console.info("params: ", params.toString());
                 
-                const response = await fetch(`https://localhost:443/work/${employeeData.id}?${params.toString()}`, {
-                    method: "PUT"
+                const response = await fetch(`https://localhost/work/${employeeData.id}?${params.toString()}`, {
+                    method: "PUT",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json", 
+                    },
                 });
 
                 if (!response.ok) {
@@ -258,12 +364,16 @@ const Detail = () => {
                 // 서버에 데이터 전송
                 const fetchData = async () => {
                     try {
-                        const response = await fetch(`https://localhost:443/work/${employeeData.id}`, {
-                            method: "DELETE"
+                        const response = await fetch(`https://localhost/work/${employeeData.id}`, {
+                            method: "DELETE",
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                                "Content-Type": "application/json", 
+                            },
                         });
                         if (response.ok) {
-                        Swal.fire("삭제 완료", "업무가 삭제되었습니다.", "success");
-                        navigate('/work');
+                            Swal.fire("삭제 완료", "업무가 삭제되었습니다.", "success");
+                            navigate('/work');
                         } // if
                     } catch (error) { 
                         console.error("Fetch error:", error);
@@ -276,7 +386,8 @@ const Detail = () => {
 
     const handleCancel = () => {
         Swal.fire({
-            text: "리스트 화면으로 이동하시겠습니까? 이동하시면 변경사항이 저장되지 않습니다.",
+            title: "리스트 화면으로 이동하시겠습니까?",
+            text: "이동하시면 변경사항이 저장되지 않습니다.",
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "예",
@@ -293,7 +404,7 @@ const Detail = () => {
         }); // Swal.fire
     }; // handleCancel
 
-    // {loading? "로딩중..." : employeeData?.employee?.name || "-"}
+    if(loading) return <div>로딩중</div>
 
     return(
         <div className={styles.container}>
@@ -313,22 +424,22 @@ const Detail = () => {
                         <span className={styles.contentLeft}>상태</span>
                         <span className={styles.contentRight}>
                             <span className={`${styles.status1} ${uploadData.status === 1 ? styles.on : ""}`} onClick={() => {
-                                if(userStatus == 1 && uploadData.status == 4) {
+                                if(loginEmpData.userStatus == 1 && uploadData.status == 4) {
                                     alert("팀원은 완료된 업무를 변경 할 수 없습니다");
                                 } else {handleStatusClick(1)} // if-else
                                 }}>진행예정</span>
                             <span className={`${styles.status2} ${uploadData.status === 2 ? styles.on : ""}`} onClick={() => {
-                                if(userStatus == 1 && uploadData.status == 4) {
+                                if(loginEmpData.userStatus == 1 && uploadData.status == 4) {
                                     alert("팀원은 완료된 업무를 변경 할 수 없습니다");
                                 } else {handleStatusClick(2)} // if-else
                                 }}>진행중</span>
                             <span className={`${styles.status3} ${uploadData.status === 3 ? styles.on : ""}`} onClick={() => {
-                                if(userStatus == 1 && uploadData.status == 4) {
+                                if(loginEmpData.userStatus == 1 && uploadData.status == 4) {
                                     alert("팀원은 완료된 업무를 변경 할 수 없습니다");
                                 } else {handleStatusClick(3)} // if-else
                                 }}>완료 대기</span>
                             <span className={`${styles.status4} ${uploadData.status === 4 ? styles.on : ""}`} onClick={() => {
-                                if(userStatus == 1) {
+                                if(loginEmpData.userStatus == 1) {
                                     alert("팀원은 업무완료를 할 수 없습니다");
                                 } else {handleStatusClick(4)} // if-else
                                 }}>완료</span>
@@ -359,6 +470,7 @@ const Detail = () => {
                                 endDate={uploadData.endDate}
                                 dateFormat="yyyy-MM-dd"
                                 placeholderText="시작일"
+                                popperContainer={({ children }) => createPortal(children, document.body)}
                             />
                             <span>~</span>
                             <DatePicker
@@ -372,6 +484,7 @@ const Detail = () => {
                                 minDate={uploadData.startDate} 
                                 dateFormat="yyyy-MM-dd"
                                 placeholderText="종료일"
+                                popperContainer={({ children }) => createPortal(children, document.body)}
                             />
                         </span>
                     </div>
@@ -379,20 +492,55 @@ const Detail = () => {
                     <div style={{display: "flex"}}>
                         <span className={styles.contentLeft}>담당자 </span>
                         <span className={styles.contentRight}>
-                            {loading
-                                ? "로딩중..."
-                                : (employeeData?.workEmployees?.length > 0
-                                    ? employeeData.workEmployees
-                                    .filter(data => empnos.includes(data.employee.empno))
-                                    .map((data, idx) => (
-                                        <span className={styles.nameCircle} onClick={() => handleRemoveEmpno(data.employee.empno)} key={data.employee?.empno || idx} >
-                                            {data.employee?.name}
-                                            {idx < employeeData.workEmployees.length - 1 ? ", " : ""}
-                                        </span>
-                                    ))
-                                    : "-")
-                            }
-                            {" "}<i style={{cursor: "pointer"}} className='fas fa-circle-plus'/>
+                        <i 
+                            style={{cursor: "pointer"}} 
+                            className='fas fa-circle-plus'
+                            onClick={() => setIsEmpModalOpen(true)}
+                        />
+                        <div className={`${styles.selectedEmployeeWrap} ${selectedEmployees.length > 0 ? styles.hasEmployee : ''}`}>
+                            <div className={styles.selectedEmployeeScroller}>
+                                {selectedEmployees.map(emp => (
+                                    <span 
+                                        key={emp.empno} 
+                                        className={styles.selectedEmployee}
+                                        onClick={() => handleRemoveEmpno(emp.empno)}
+                                    >
+                                        {emp.name}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                        
+                        {isEmpModalOpen && (
+                            <div className={styles.modalBackdrop}>
+                                <div className={styles.empModal}>
+                                    <h3>담당자 선택 ({selectedEmployees.length}명 선택됨)</h3>
+                                    <div className={styles.modalContent}>
+                                        {departmentMembers.map(emp => (
+                                            <div
+                                                key={emp.empno}
+                                                className={`${styles.empItem} ${
+                                                    selectedEmployees.some(e => e.empno === emp.empno) ? styles.selected : ''
+                                                }`}
+                                                onClick={() => handleEmployeeSelect(emp)}
+                                            >
+                                                <input
+                                                    className={styles.checkbox}
+                                                    type="checkbox"
+                                                    checked={selectedEmployees.some(e => e.empno === emp.empno)}
+                                                    readOnly
+                                                />
+                                                {emp.name}
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className={styles.modalActions}>
+                                        <button className={styles.confirmButton} onClick={handleConfirmSelection}>선택 완료</button>
+                                        <button className={styles.modalCancelButton} onClick={() => setIsEmpModalOpen(false)}>취소</button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                         </span>
                     </div>
 
