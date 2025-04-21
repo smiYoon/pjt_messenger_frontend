@@ -197,8 +197,12 @@
 .pageBox .pageNum {
     padding:0 10px;
 }
+.pageBox .pageNum i{
+    font-size: 0.8rem;
+}
 .activePage{
     padding:0 10px;
     color:red;
-    font-size: 1.2rem;
+    font-weight: bold;
+    font-size: 1.3rem;
 }

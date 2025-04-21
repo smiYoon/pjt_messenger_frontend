@@ -36,7 +36,7 @@ const Chat_main = () => {
 
     useEffect(() => {
         if (!selectedChatRoom && chatrooms.length > 0) {
-            handleChatRoomClick(chatrooms[0].id); // 첫 번째 채팅방 자동 선택
+            handleChatRoomClick(chatrooms[0].chat.id); // 첫 번째 채팅방 자동 선택
         }
     }, [chatrooms]);
 

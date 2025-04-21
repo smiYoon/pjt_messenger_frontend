@@ -44,7 +44,7 @@ const ChatList = ({ onCreateClick,onChatClick, chatrooms, setChatrooms}) => {
             <div className={styles.roomboxes}>
 
                 {chatrooms.map((room) => (
-                    <div key={room.id} className={styles.chatroombox} onClick={() => {onChatClick(room.chat.id); console.log("roomid", room.chat.id)}}>
+                    <div key={room.chat.id} className={styles.chatroombox} onClick={() => {onChatClick(room.chat.id); console.log("roomid", room.chat.id)}}>
                         <div className={styles.empicon}></div>
                         <div className={styles.rightbox}>
                             <div className={styles.projecticon}>{room.chat.project?.name}</div>
