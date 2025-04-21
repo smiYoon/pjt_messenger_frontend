@@ -35,7 +35,7 @@ const ChatList = ({ onCreateClick, onChatClick, chatrooms, setChatrooms }) => {
         };
 
         fetchChatrooms();
-    }, [empno, token, setChatrooms]);
+    }, [empno, token]);
 
     return (
         <div className={styles.chatlist}>
@@ -46,11 +46,11 @@ const ChatList = ({ onCreateClick, onChatClick, chatrooms, setChatrooms }) => {
 
             <div className={styles.roomboxes}>
                 {chatrooms.map((room) => (
-                    <div key={room.chat.id} className={styles.chatroombox} onClick={() => {onChatClick(room.chat.id); console.log("roomid", room.chat.id)}}>
+                    <div key={room.chat?.id} className={styles.chatroombox} onClick={() => {onChatClick(room.chat?.id); console.log("roomid", room.chat?.id)}}>
                         <div className={styles.empicon}></div>
                         <div className={styles.rightbox}>
-                            <div className={styles.projecticon}>{room.chat.project?.name}</div>
-                            <div className={styles.chatname}>{room.chat.name}</div>
+                            <div className={styles.projecticon}>{room.chat?.project?.name || ""}</div>
+                            <div className={styles.chatname}>{room?.chat?.name}</div>
                         </div>
                     </div>
                 ))}
