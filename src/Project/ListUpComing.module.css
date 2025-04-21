@@ -20,15 +20,28 @@
     font-size: 1.3rem;
     font-weight: bold;
     
-    /* display: flex;
-    align-items: center; */
-
-    line-height: 7vh;
-
+    display: flex;
+    align-items: center;
     overflow:hidden; 
-    text-overflow:ellipsis;
-    white-space:nowrap;
+
+
+
 }
+.name .nameBox{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;       /* 최대 2줄까지 표시 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    line-height: 1.2em;
+    max-height: calc(1.2em * 2); /* 2줄 높이 제한 */
+}
+
+
+
+
+
 .content {
     width: 55%;
     

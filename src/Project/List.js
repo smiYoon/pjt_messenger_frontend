@@ -6,16 +6,13 @@ import styles from "./List.module.css";
 import { P_ListUpComing, P_ListUnit, P_Create } from "./";
 import { useLoadScript } from '../LoadScriptContext';
 
-console.groupCollapsed("src/Project/List.js");
-console.groupEnd();
+// console.groupCollapsed("src/Project/List.js");console.groupEnd();
 
 const List = () => {
-  console.group("List() invoked.");
-  console.groupEnd();
+  // console.group("List() invoked.");  console.groupEnd();
 
 
-    const { decodedToken, role_level } = useLoadScript();
-  console.log('로그인 사용자정보:', decodedToken);
+    const { decodedToken } = useLoadScript();
 
   // 상태 및 타입 매핑
   const statusMapping = { 1: "진행예정", 2: "진행중", 3: "종료" };
@@ -284,9 +281,13 @@ const List = () => {
               >
                 검색
               </button>
-              {role_level[decodedToken.roles] === 3 ? (
-                <button onClick={openProjectRegister}>등록</button>
-              ) : (<div></div>)}
+              {
+                (decodedToken.position === 3 || decodedToken.position === 9) ? (
+                  <button onClick={openProjectRegister}>등록</button>
+                ) : (
+                  <div></div>
+                )
+              }
             </div>
           </div>
 
@@ -309,13 +310,15 @@ const List = () => {
           {/* currPage: {currPage} / totalPageCnt:{totalPageCnt} / startPage:{startPage} / endPage:{endPage} */}
             
             <div className={styles.pageBox}>
+
+{/*               
               <div
                 className={styles.pageNum}
                 onClick={() => handleGetList(1)}
                 style={{ display: currPage === 1 ? "none" : "" }}
               >
                 처음
-              </div>
+              </div> */}
 
               <div 
                 className={styles.pageNum} 
@@ -361,14 +364,14 @@ const List = () => {
               >
                 <i className="fas fa-angles-right"></i>
               </div>
-
+{/* 
               <div
                 className={styles.pageNum}
                 onClick={() => handleGetList(totalPageCnt)}
                 style={{ display: currPage === totalPageCnt ? "none" : "" }}
               >
                 마지막
-              </div>
+              </div> */}
 
 
             </div>
