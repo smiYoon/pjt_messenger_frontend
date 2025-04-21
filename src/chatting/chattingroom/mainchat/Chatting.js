@@ -3,13 +3,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { BsArrowUpCircleFill } from "react-icons/bs";
 import { useLoadScript } from "../../../LoadScriptContext";
 
-const Chatting = ({ id }) => {
+const Chatting = ({id, messages, setMessages}) => {
 
     const { decodedToken, token } = useLoadScript(); // ✅ token 가져옴
     const empno = decodedToken?.empno;
 
     const [inputValue, setInputValue] = useState("");
-    const [messages, setMessages] = useState([]);
     const socketRef = useRef(null);
     const messagesEndRef = useRef(null);
 
@@ -68,6 +67,7 @@ const Chatting = ({ id }) => {
         if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
             socketRef.current.send(JSON.stringify(messageObj));
         }
+        console.log("보낼 메시지:", JSON.stringify(messageObj))
         setInputValue("");
     };
 
