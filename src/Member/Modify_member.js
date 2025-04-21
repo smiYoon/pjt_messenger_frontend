@@ -50,15 +50,6 @@ const Modify_member = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (!memberForm.loginId || !memberForm.password || !memberForm.name || !memberForm.tel || !memberForm.email) {
-            Swal.fire({
-                icon: 'warning',
-                title: '입력 오류',
-                text: '빈칸을 모두 기입해주세요.',
-            });
-            return;
-        }
-
         try {
             const formData = new FormData();
             formData.append("loginId", memberForm.loginId);
@@ -116,8 +107,10 @@ const Modify_member = () => {
                     setMemberForm({
                         name: data.name,
                         loginId: data.loginId,
+                        password: '',
                         empno: data.empno,
-                        department: data.department.id,
+                        dept_id: data.department.id,
+                        dept_name: data.department.name,
                         position: data.position,
                         tel: data.tel,
                         address: data.address,
@@ -211,51 +204,60 @@ const Modify_member = () => {
                                     name='position'
                                     value={level[memberForm.position]}
                                     onChange={(e) => handleChange(e.target.name, e.target.value)}
-                                />
-                                <div className={styles.position_text}>직급</div> */}
-                                <select
-                                    name='department'
-                                    className={styles.dept}
-                                    value={memberForm.department || ''}
-                                    onChange={(e) => handleChange(e.target.name, e.target.value)}
-                                >
-                                    <option value="">부서를 선택해주세요.</option>
-                                    {deptId.map((dept) => (
-                                        // <span style={{ paddingLeft: `${id.depth} * 50`, boxSizing: "border-box" }}></span>
-                                        <option key={dept.id} value={dept.id}>
-                                            {dept.name}
-                                        </option>
-                                    ))}
-                                </select>
-                                <div className={styles.placeholder_text}>부서</div>
-
+                                    />
+                                    <div className={styles.position_text}>직급</div> */}
                                 {role_level[decodedToken.roles] === 5 ? (
-                                    <select
-                                        name='position'
-                                        className={styles.position}
-                                        value={memberForm.position}
-                                        onChange={(e) => handleChange(e.target.name, e.target.value)}
-                                    >
-                                        <option value="">직급을 선택해주세요.</option>
-                                        <option value="1">팀원</option>
-                                        <option value="2">팀장</option>
-                                        <option value="3">부서장</option>
-                                        <option value="4">CEO</option>
-                                        <option value="5">인사담당자</option>
-                                    </select>
+                                    <>
+                                        <select
+                                            name='department'
+                                            className={styles.dept}
+                                            value={memberForm.department || ''}
+                                            onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                        >
+                                            <option value="">부서를 선택해주세요.</option>
+                                            {deptId.map((dept) => (
+                                                // <span style={{ paddingLeft: `${id.depth} * 50`, boxSizing: "border-box" }}></span>
+                                                <option key={dept.id} value={dept.id}>
+                                                    {dept.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <div className={styles.placeholder_text}>부서</div>
+
+                                        <select
+                                            name='position'
+                                            className={styles.position}
+                                            value={memberForm.position}
+                                            onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                        >
+                                            <option value="">직급을 선택해주세요.</option>
+                                            <option value="1">팀원</option>
+                                            <option value="2">팀장</option>
+                                            <option value="3">부서장</option>
+                                            <option value="4">CEO</option>
+                                            <option value="5">인사담당자</option>
+                                        </select>
+                                    </>
                                 ) : (
-                                    <div className={styles.position}>{level[memberForm.position]}</div>
+                                    <>
+                                        <div className={styles.dept}>{memberForm.dept_name}</div>
+
+                                        <div className={styles.placeholder_text}>부서</div>
+
+                                        <div className={styles.position}>{level[memberForm.position]}</div>
+
+                                        <div className={styles.position_text}>직급</div>
+                                    </>
                                 )}
-                                <div className={styles.position_text}>직급</div>
                             </div>
 
                             <div className={styles.single}>
                                 <input
                                     type='password'
                                     className={styles.single}
-                                    placeholder='기존 비밀번호 혹은 새로운 비밀번호를 입력해주세요.'
+                                    placeholder='비밀번호를 변경하시려면 입력해주세요.'
                                     name='password'
-                                    // value={memberForm.password}
+                                    value={memberForm.password}
                                     onChange={(e) => handleChange(e.target.name, e.target.value)}
                                 />
                                 <div className={styles.placeholder_text}>비밀번호</div>

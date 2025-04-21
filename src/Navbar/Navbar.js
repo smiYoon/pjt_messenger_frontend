@@ -4,12 +4,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { useLoadScript } from '../LoadScriptContext';
+import Swal from 'sweetalert2';
 
 const Navbar = () => {
   const { role_level, decodedToken } = useLoadScript();
 
-  // decodedToken이 로딩되기 전에는 아무것도 렌더링하지 않도록 처리
-  if (!decodedToken) return null;
+  console.group('Navbar() invoked.'); console.groupEnd();
+
+  const handleLinkClick = (e) => {
+    e.preventDefault();
+    Swal.fire({
+      icon: 'warning',
+      title: '접근 권한 없음',
+      text: '해당 페이지에 접근할 수 없습니다.',
+      confirmButtonText: '확인',
+    });
+  };
 
   const handleLogout = async () => {
     try {
@@ -31,23 +41,43 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.buttons}>
-        {role_level[decodedToken.roles] === 5 && (
-          <Link to={`/member/list`} className={styles.flip}>
-            <i className={`${styles.icon} fas fa-user`} />
-            <div className={styles.text}>회원관리</div>
-          </Link>
-        )}
-
-        <Link to={`/chat`} className={styles.flip}>
-          <i className={`${styles.icon} fas fa-comment-dots`} />
-          <div className={styles.text}>채팅</div>
+        <Link to={`/member/list`} className={styles.flip}>
+          <i className={`${styles.icon} fas fa-user`} />
+          <div className={styles.text}>회원관리</div>
         </Link>
 
-        {role_level[decodedToken.roles] !== 4 && (
+        {decodedToken.position != 5 ? (
+          <Link to={`/chat`} className={styles.flip}>
+            <i className={`${styles.icon} fas fa-comment-dots`} />
+            <div className={styles.text}>채팅</div>
+          </Link>
+        ) : (
+          <a
+            href="#"
+            className={styles.flip}
+            onClick={handleLinkClick}
+            style={{ cursor: 'pointer' }}
+          >
+            <i className={`${styles.icon} fas fa-comment-dots`} />
+            <div className={styles.text}>채팅</div>
+          </a>
+        )}
+
+        {decodedToken.position != '4' ? (
           <Link to={`/work`} className={styles.flip}>
             <i className={`${styles.icon} fas fa-file-pen`} />
             <div className={styles.text}>업무</div>
           </Link>
+        ) : (
+          <a
+            href="#"
+            className={styles.flip}
+            onClick={handleLinkClick}
+            style={{ cursor: 'pointer' }}
+          >
+            <i className={`${styles.icon} fas fa-file-pen`} />
+            <div className={styles.text}>업무</div>
+          </a>
         )}
 
         <Link to={`/board/notice/list`} className={styles.flip}>
@@ -55,11 +85,21 @@ const Navbar = () => {
           <div className={styles.text}>게시판</div>
         </Link>
 
-        {role_level[decodedToken.roles] !== 1 && (
+        {decodedToken.position != 1 ? (
           <Link to={`/project/list`} className={styles.flip}>
             <i className={`${styles.icon} fa-solid fa-list-check`} />
             <div className={styles.text}>프로젝트</div>
           </Link>
+        ) : (
+          <a
+            href="#"
+            className={styles.flip}
+            onClick={handleLinkClick}
+            style={{ cursor: 'pointer' }}
+          >
+            <i className={`${styles.icon} fa-solid fa-list-check`} />
+            <div className={styles.text}>프로젝트</div>
+          </a>
         )}
       </div>
 

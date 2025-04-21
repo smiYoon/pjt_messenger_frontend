@@ -38,7 +38,7 @@ const Login = () => {
             formData.append("loginId", loginData.loginId);
             formData.append("password", loginData.password);
 
-            const response = await fetch('https://localhost:443/auth/login', {
+            const response = await fetch('https://localhost/auth/login', {
                 method: 'POST',
                 body: formData,
 

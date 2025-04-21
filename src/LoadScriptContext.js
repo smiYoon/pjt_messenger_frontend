@@ -38,6 +38,35 @@ export const LoadScriptProvider = ({ children }) => {
         setDecodedToken(jwtDecode(newToken));
     };
 
+    const deptName = {
+        2: "CEO",
+        3: "개발본부",
+        4: "개발1팀",
+        5: "개발2팀",
+        6: "개발3팀",
+        7: "개발4팀",
+        8: "인사본부",
+        9: "인사1팀",
+        10: "인사2팀",
+        11: "인사3팀",
+        12: "인사4팀",
+        13: "운영본부",
+        14: "운영1팀",
+        15: "운영2팀",
+        16: "운영3팀",
+        17: "운영4팀",
+        18: "마케팅본부",
+        19: "마케팅1팀",
+        20: "마케팅2팀",
+        21: "마케팅3팀",
+        22: "마케팅4팀",
+        23: "회계본부",
+        24: "회계1팀",
+        25: "회계2팀",
+        26: "회계3팀",
+        27: "회계4팀"
+    };
+
     const role_level = {
         // "ROLE_Employee": 1,
         // "ROLE_TeamLeader": 2,
@@ -53,9 +82,17 @@ export const LoadScriptProvider = ({ children }) => {
         "SystemManager": 9,
     };
 
+    const level = {
+        "1": "팀원",
+        "2": "팀장",
+        "3": "부서장",
+        "4": "CEO",
+        "5": "인사담당자",
+        "9": "시스템관리자",
+      };
 
     return (
-        <LoadScriptContext.Provider value={{ token, decodedToken, updateToken, role_level }}>
+        <LoadScriptContext.Provider value={{ token, decodedToken, updateToken, role_level, deptName, level }}>
             {children}
         </LoadScriptContext.Provider>
     );

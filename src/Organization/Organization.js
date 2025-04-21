@@ -12,7 +12,7 @@ const Organization = ({ onDeptSelect }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://localhost/department/1`);
+        const response = await fetch(`https://localhost/department/2`);
         if (!response.ok) throw new Error("Network response was not ok");
         const data = await response.json();
         const convertedData = convertToSortableTree(data);
