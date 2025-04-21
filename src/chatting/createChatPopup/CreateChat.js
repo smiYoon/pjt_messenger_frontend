@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import styles from './CreateChat.module.css';
 import {useLoadScript} from "../../LoadScriptContext";
 
-const CreateChat = ({ onCloseClick, setChatrooms }) => {
+import Swal from 'sweetalert2';
+
+
+const CreateChat = ({ onCloseClick, setChatrooms , chatrooms , fetchChatrooms}) => {
   const [roomName, setRoomName] = useState(""); //채팅방이름
   const [selectPj, setSelectPj] = useState(""); //프로젝트 
   const [selectPjs, setSelectPjs] = useState([]);
@@ -43,15 +46,29 @@ const CreateChat = ({ onCloseClick, setChatrooms }) => {
       if (!response.ok) {
         throw new Error("서버 응답 실패: " + response.status);
       }
+
+      
   
       const result = await response.json();
       console.log("서버 응답:", result);
-      alert("채팅방 생성 성공!");
+      await Swal.fire({
+        icon: 'success',
+        title: '채팅방 생성 성공!',
+        text: '새 채팅방이 성공적으로 생성되었습니다.',
+        confirmButtonText: '확인'
+      });
+      console.log("chatrooms:", chatrooms);
       setChatrooms((prev) => [...prev, result]);
       onCloseClick?.();
+      fetchChatrooms();
     } catch (err) {
       console.error("채팅방 생성 실패!", err);
-      alert("채팅방 생성 중 오류 발생!");
+      await Swal.fire({
+        icon: 'error',
+        title: '채팅방 생성 실패!',
+        text: '채팅방을 생성하는 동안 오류가 발생했습니다. 다시 시도해주세요.',
+        confirmButtonText: '확인'
+      });
     }
   };
 

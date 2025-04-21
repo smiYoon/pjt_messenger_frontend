@@ -2,6 +2,7 @@ import React, { useEffect, useState ,useRef} from "react";
 import { useParams } from "react-router-dom";
 import { Tree } from "react-arborist";
 import styles from './Organization2.module.css';
+import Swal from 'sweetalert2';
 
 
 const Organization2 = ({onCloseOrgaClick, handleChatRoomClick, id}) => {
@@ -57,7 +58,14 @@ const Organization2 = ({onCloseOrgaClick, handleChatRoomClick, id}) => {
   
       const result = await response.json();
       console.log("서버 응답:", result);
-      alert("초대 성공!");
+
+      await Swal.fire({
+        icon: 'success',
+        title: '초대 성공!',
+        text: '선택한 사원이 채팅방에 초대되었습니다.',
+        confirmButtonText: '확인'
+      });
+
       setInviteList([]);
       onCloseOrgaClick();
       
@@ -67,7 +75,13 @@ const Organization2 = ({onCloseOrgaClick, handleChatRoomClick, id}) => {
       }
     } catch (err) {
       console.error("초대 실패!", err);
-      alert("초대 중 오류 발생!");
+
+      await Swal.fire({
+        icon: 'error',
+        title: '초대 실패!',
+        text: '초대 중 오류가 발생했습니다. 다시 시도해주세요.',
+        confirmButtonText: '확인'
+      });
     }
   }
 
