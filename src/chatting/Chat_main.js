@@ -27,7 +27,6 @@ const Chat_main = () => {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`, // ✅ 토큰 추가
-                    'Content-Type': 'application/json',
                 },
             });
 
@@ -50,8 +49,7 @@ const Chat_main = () => {
             const response = await fetch(`https://localhost:443/chat/list/${empno}`,{
                 method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${token}`, // ✅ 토큰 추가
-                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
                 },
             });
             const data = await response.json();

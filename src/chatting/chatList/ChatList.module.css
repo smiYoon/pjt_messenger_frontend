@@ -1,7 +1,7 @@
 .chatlist {
     position: relative;
     width: 87%;
-    height: 79%;
+    height: 77%;
     background-color: #E5E1F5;
 
     border-radius: 20px;
@@ -89,6 +89,7 @@
 
 /* 오른쪽 정보 */
 .rightbox {
+    width: 80%;
     margin-left: 1rem;
     display: flex;
     flex-direction: column;
@@ -98,10 +99,18 @@
 .projecticon {
     font-size: 14px;
     color: #999;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .chatname {
     font-size: 18px;
     font-weight: 600;
     color: #333;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

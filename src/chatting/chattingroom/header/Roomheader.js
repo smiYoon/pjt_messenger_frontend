@@ -6,6 +6,7 @@ const Roomheader = ({ selectedChatRoom }) => {
     const empListRef = useRef(null);
     const toggleBtnRef = useRef(null); // 토글 버튼용 ref
 
+    const [showTooltip, setShowTooltip] = useState(false);
     // 채팅방 인원 리스트
     const [showEmpList, setShowEmpList] = useState(null);
 
@@ -52,7 +53,21 @@ const Roomheader = ({ selectedChatRoom }) => {
                         </div>
                     </div>
 
-                        <div className={styles.projecticon}>{selectedChatRoom?.project?.name || ""}</div>
+                    {selectedChatRoom?.project?.name && (
+                        <div className={styles.projectBadgeWrapper}>
+                            <div
+                            className={styles.colorDot}
+                            onMouseEnter={() => setShowTooltip(true)}
+                            onMouseLeave={() => setShowTooltip(false)}
+                            />
+
+                            {showTooltip && (
+                            <div className={styles.tooltip}>
+                                {selectedChatRoom.project.name}
+                            </div>
+                            )}
+                        </div>
+                    )}
                 </div>
 
                 {showEmpList && (

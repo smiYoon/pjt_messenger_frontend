@@ -21,7 +21,12 @@ const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`https://localhost:443/department/${DepartmentNumber}`);
+        const res = await fetch(`https://localhost:443/department/${DepartmentNumber}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+        });
         if (!res.ok) throw new Error("네트워크 오류");
 
         const json = await res.json();
@@ -45,8 +50,7 @@ const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id }) => {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`, // ✅ 토큰 추가
-          'Content-Type': 'application/json',
-    },
+        },
         body: formData
         
       });

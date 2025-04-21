@@ -16,7 +16,7 @@
   position: relative;
 
   width: 30%;
-  height: 58%;
+  height: 40%;
   left: 1.5vw;
   background: #e6ddf6;
   border-radius: 12px;
@@ -48,7 +48,7 @@
 }
 
 .field {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   width: 70%;
   height: 13%;
 }
@@ -67,52 +67,6 @@
   border: 1px solid #ccc;
   font-size: 14px;
   box-sizing: border-box;
-}
-
-.inviteRow {
-  display: flex;
-}
-
-.inviteRow input {
-  flex: 1;
-}
-
-.inviteRow button {
-  margin-left: 3%;
-  padding: 3px 12px;
-  background-color: #6C47FF;
-  color: white;
-  font-size: 33px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.inviteRow button:hover{
-  background-color: #4A1DFF;
-}
-
-.avatarRow {
-  display: flex;
-  gap: 8px;
-  margin: 16px 0;
-
-}
-
-.avatarBox{
-  display: flex;
-  gap: 8px;
-}
-.avatar {
-  width: 40px;
-  height: 40px;
-  background: #ccc;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 14px;
 }
 
 .mkBtn {

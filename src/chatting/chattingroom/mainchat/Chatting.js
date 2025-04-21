@@ -94,14 +94,15 @@ const Chatting = ({id, messages, setMessages}) => {
                         const isMine = parsedMsg?.employee?.empno === empno;
 
                         return (
-                            <div
-                                key={idx}
-                                className={`${styles.messageBubble} ${isMine ? styles.myMessage : styles.otherMessage}`}
-                            >
+                            <div key={idx} className={`${styles.messageItem} ${isMine ? styles.myItem : styles.otherItem}`}>
                                 {!isMine && (
                                     <div className={styles.senderName}>{parsedMsg.employee?.name || '알 수 없음'}</div>
                                 )}
-                                <div className={styles.messageText}>{parsedMsg.detail}</div>
+                                <div
+                                    className={`${styles.messageBubble} ${isMine ? styles.myMessage : styles.otherMessage}`}
+                                >
+                                    <div className={styles.messageText}>{parsedMsg.detail}</div>
+                                </div>
                             </div>
                         );
                     })}

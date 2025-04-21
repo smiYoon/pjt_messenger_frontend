@@ -1,145 +1,100 @@
-.mainchat{
-    position: relative;
-    width: 100%;
-    height: 80%;
-    background-color: #E5E1F5;
-    border-radius: 20px;
-
-    /* 가로 중앙 정렬 */
-    justify-items: center;
-
-    box-shadow: 4px 4px 10px rgba(0, 0,0,.25);
+.mainchat {
+  position: relative;
+  width: 100%;
+  height: 80%;
+  background-color: #E5E1F5;
+  border-radius: 20px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, .25);
 }
 
-.SearchBar {
-    position: relative;
-    
-    top: 3%;
-
-    width: 60%;
-    height: 5%;
-    
-    background-color: white;
-
-    border-radius: 20px;
-
-    /* display: flex; */
-    /* justify-content: center; */
-}
-
-.searchInput {
-    position: relative;
-
-    width: 80%;
-
-    border: none;
-    outline: none;
-}
-
-.searchInput::placeholder {
-    font-size: 15px;
-}
-
-.IoSearch {
-    position: relative;
-
-    margin-top: 5px;
-    left: 20px;
-
-    font-size: 25px;
-}
-
-/* //////////////////////////////////////////////////////////// */
-
-.messagebox{
+.messagebox {
   position: relative;
   top: 5%;
-
   width: 80%;
   height: 85%;
-
   overflow-y: auto;
   scrollbar-width: none;
+  margin: 0 auto;
 }
 
 .chatMessages {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-  }
-  
-  .messageBubble {
-    max-width: 60%;
-    border-radius: 16px;
-    padding: 10px 15px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    word-wrap: break-word;
-  }
-  
-  .myMessage {
-    align-self: flex-end;
-    background-color: #d0f0ff; 
-    border-bottom-right-radius: 0;
-  }
-  
-  .otherMessage {
-    align-self: flex-start;
-    background-color: #f0f0f0;
-    border-bottom-left-radius: 0;
-  }
-  
-  .senderName {
-    font-size: 0.8rem;
-    font-weight: bold;
-    margin-bottom: 4px;
-    color: #555;
-  }
-  
-  .messageText {
-    font-size: 1rem;
-    color: #222;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
 
-  /* //////////////////////////////////////////////////////////// */
+.messageItem {
+  display: flex;
+  flex-direction: column;
+  max-width: 60%;
+}
+
+.myItem {
+  align-self: flex-end;
+  text-align: right;
+}
+
+.otherItem {
+  align-self: flex-start;
+  text-align: left;
+}
+
+.senderName {
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: #555;
+  padding-left: 5px;
+}
+
+.messageBubble {
+  border-radius: 16px;
+  padding: 10px 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  word-wrap: break-word;
+}
+
+.myMessage {
+  background-color: #d0f0ff;
+  border-bottom-right-radius: 0;
+}
+
+.otherMessage {
+  background-color: #f0f0f0;
+  border-bottom-left-radius: 0;
+}
+
+.messageText {
+  font-size: 1rem;
+  color: #222;
+}
 
 .MessageInputBox {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    left: 50%;
-    bottom: 3%;
-
-    transform: translateX(-50%);
-
-    width: 80%;
-    height: 6%;
-
-    border-radius: 10px;
-    background-color: white;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 50%;
+  bottom: 3%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 6%;
+  border-radius: 10px;
+  background-color: white;
 }
 
 .messageInput {
-    position: relative;
-    
-    width: 90%;
-    height: 60%;
-
-    resize: none;
-
-    border: none;
-    outline: none;
-
-    font-size: 20px;
+  width: 90%;
+  height: 60%;
+  font-size: 20px;
+  border: none;
+  outline: none;
+  resize: none;
 }
 
 .sendMessagIcon {
-    position: relative;
-
-    left: 1%;
-    font-size: 30px;
-
-    cursor: pointer;
+  font-size: 30px;
+  cursor: pointer;
+  margin-left: 5px;
 }

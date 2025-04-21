@@ -13,45 +13,88 @@
     box-shadow: 4px 4px 10px rgba(0, 0,0,.25);
 }
 
-.chatname{
-    font-size: 24px;
-    font-weight: 700;
-}
+.chatname {
+    width: 30%;
+
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px; /* 너비 조절 가능 */
+
+    font-size: 25px;
+    font-weight: bold;
+  }
 
 /* ////////////////////////////////// */
 
 .iconbox{
+    width: 40%;
     display: flex;
-
+    justify-content: center;
+    gap: 8px;
 }
 
-.empicon{
-    width: 50px;
-    height: 50px;
-
-    margin-right: 20px;
-
-    border-radius: 50%;
-
+.empicon {
+    width: 40px;
+    height: 40px;
     background-color: #6C47FF;
-}
-
-.list{
-    width: 50px;
-    height: 50px;
-
-    margin-right: 20px;
-
-    text-align: center;
-    line-height: 50px;
-    /* border-radius: 50%; */
-
-    background-color: #7b66cf;
-}
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  }
+  
+  .list {
+    background-color: #ebe9f9;
+    color: #4e3fb3;
+    padding: 4px 10px;
+    border-radius: 30px;
+    font-size: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .list:hover {
+    background-color: #d9d4f1;
+  }
 
 /* ////////////////////////////////// */
 
-.projecticon{
-    font-size: 24px;
-    font-weight: 700;
+.projectBadgeWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.colorDot {
+    width: 30px;
+    height: 30px;
+    background-color: red; /* 원하는 프로젝트 컬러 */
+    border-radius: 50%;
+    cursor: default;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 125%; /* 아이콘 위에 배치 */
+    left: 50%;
+    transform: translateX(-50%);
+
+    background-color: #333;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    font-size: 14px;
+    z-index: 10;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+
+    opacity: 0;
+    animation: fadeIn 0.2s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
 }

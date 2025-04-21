@@ -16,7 +16,6 @@ const ChatList = ({ onCreateClick, onChatClick, chatrooms, setChatrooms }) => {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
                     },
                 });
 
