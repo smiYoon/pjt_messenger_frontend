@@ -6,12 +6,10 @@ import styles from "./Create.module.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-console.groupCollapsed("src/Project/Modify.js");
-console.groupEnd();
+// console.groupCollapsed("src/Project/Modify.js");console.groupEnd();
 
 const Modify = ({ closeModal, statusMapping, infoAlert, project, handleGetUpComingList, handleGetList }) => {
-  console.group("Modify(", project, ") invoked.");
-  console.groupEnd();
+  // console.group("Modify(", project, ") invoked.");  console.groupEnd();
 
   const onClose = () => {
     closeModal();
@@ -69,6 +67,7 @@ const Modify = ({ closeModal, statusMapping, infoAlert, project, handleGetUpComi
         !postData.startDate ||
         !postData.endDate ||
         !postData.managerEmpno ||
+        !postData.creatorEmpno ||
         !postData.status
       ) {
         infoAlert("warning", "", "프로젝트명, 진행기간, 담당자, 진행상태를 입력하세요");
@@ -182,7 +181,7 @@ const Modify = ({ closeModal, statusMapping, infoAlert, project, handleGetUpComi
               >
                 <option value="">== 총괄 담당자를 선택하세요. ==</option>
                 {selectList.map((emp) => (
-                  <option value={emp.empno} selected={emp.empno === postData.managerEmpno}>{emp.department.name} {emp.position} {emp.name}</option>
+                  <option value={emp.empno} selected={emp.empno === postData.managerEmpno}>{emp.department} {emp.position} {emp.name}</option>
                 ))}
               </select>
             </div>

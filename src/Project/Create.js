@@ -5,17 +5,18 @@ import styles from "./Create.module.css";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useLoadScript } from '../LoadScriptContext';
 
-console.groupCollapsed("src/Project/Create.js");
-console.groupEnd();
+// console.groupCollapsed("src/Project/Create.js");console.groupEnd();
 
 const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, handleGetList }) => {
-  console.group("Create() invoked.");
-  console.groupEnd();
+  // console.group("Create() invoked.");  console.groupEnd();
 
   const onClose = () => {
     closeModal();
   };
+
+  const { decodedToken, role_level } = useLoadScript();
 
   const [selectList, setSelectList] = useState([]);
 
@@ -27,7 +28,8 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
     endDate: "",
     status: "",
     detail: "",
-    managerEmpno: "",
+    managerEmpno: decodedToken.empno,
+    creatorEmpno: decodedToken.empno,
   });
 
   const handleChange = (e) => {
@@ -60,17 +62,14 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
     try {
       postData.startDate = startDate;
       postData.endDate = endDate;
-
-      postData.managerEmpno = "E2110002";
-
       console.log("postData: ", postData);
-
 
       if (
         !postData.name ||
         !postData.startDate ||
         !postData.endDate ||
         !postData.managerEmpno ||
+        !postData.creatorEmpno ||
         !postData.status
       ) {
         infoAlert("warning", "", "프로젝트명, 진행기간, 담당자, 진행상태를 입력하세요");
@@ -84,6 +83,7 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
       formData.append("managerEmpno", postData.managerEmpno);
       formData.append("status", postData.status);
       formData.append("detail", postData.detail);
+      formData.append("creatorEmpno", postData.creatorEmpno);
 
       const response = await fetch(
         `https://localhost:443/project`,
@@ -121,13 +121,14 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
       draggable: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        postData({
+        setPostData({
           name: "",
           startDate: "",
           endDate: "",
           status: "",
           detail: "",
-          managerEmpno: "",
+          managerEmpno: decodedToken.empno,
+          creatorEmpno: decodedToken.empno,
         });
         onClose();
       }
@@ -188,7 +189,7 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
               >
                 <option value="">== 총괄 담당자를 선택하세요. ==</option>
                 {selectList.map((emp) => (
-                  <option value={emp.empno}>{emp.department.name} {emp.position} {emp.name}</option>
+                  <option value={emp.empno} selected={emp.empno === postData.creatorEmpno}>{emp.department} {emp.position} {emp.name}</option>
                 ))}
               </select>
             </div>

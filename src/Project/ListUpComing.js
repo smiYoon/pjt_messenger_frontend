@@ -6,14 +6,12 @@ import styles from "./ListUpComing.module.css";
 import { RxLapTimer } from "react-icons/rx";
 import { useLoadScript } from '../LoadScriptContext';
 
-console.groupCollapsed("src/Project/ListUpComing.js");
-console.groupEnd();
+// console.groupCollapsed("src/Project/ListUpComing.js");console.groupEnd();
 
 const ListUpComing = ({ project, statusMapping, onDelete, infoAlert, handleGetUpComingList, handleGetList }) => {
   // console.group("ListUpcommig(", project, statusMapping, ") invoked."); console.groupEnd();
 
-  const { decodedToken, role_level } = useLoadScript();
-  console.log('로그인 사용자정보:', decodedToken);
+  const { decodedToken } = useLoadScript();
 
   // 모달 상태
   const [isOpen, setIsOpen] = useState(false);
@@ -78,7 +76,11 @@ const ListUpComing = ({ project, statusMapping, onDelete, infoAlert, handleGetUp
         />
       )}
 
-      <div className={styles.name}>{project.name}</div>
+      <div className={styles.name}>
+        <div className={styles.nameBox}>
+          {project.name}
+        </div>
+      </div>
 
       <div className={styles.content}>
         <div className={styles.manager}>
@@ -124,7 +126,7 @@ const ListUpComing = ({ project, statusMapping, onDelete, infoAlert, handleGetUp
 
         {showEditMenu === project.id  
           && (
-              decodedToken.empnp === project.pjtCreator.empno || decodedToken.empnp === project.pjtManager.empno ? (
+            (decodedToken.empno === project.pjtCreator.empno || decodedToken.empno === project.pjtManager.empno || decodedToken.position === 9) ? (
                   <div ref={editMenuRef} className={styles.editMenu}>
                     <div className={styles.dotBtnEdit} onClick={openProjectModify}>
                       수정
