@@ -12,29 +12,15 @@ const WorkBox = (props) => {
     
     const navigate = useNavigate();
 
-    const {data} = props;
-    // console.log("data is :", data);
+    const {data, loginEmpData } = props;
     const [loading, setLoading] = useState(false);
     const [employeeData, setEmployeeData] = useState([]);
-    // var userId = "E2405001";
-    var userId = "E2005003";
-    // E2405001
-    // E2406002 , E2005003
-    // var userDeptId = "27"; // 8 , 27
-    // var userDeptId = "8"; // 8 , 27
-    var userDeptId = "14"; // 8 , 27
-    var userName = "홍시리";
-    var userStatus = 2; // 1, 2, 3, 4, 5, 9
-    const [userData, setUserDate] = useState({ 
-        userId : "E2005003",
-        userDeptId : "14",
-        userName : "홍시리",
-        userStatus : 2,
-    }); // 로그인한 사람의 정보
+    const userData = {
+        userId: loginEmpData.userId,
+        userDeptId: loginEmpData.userDeptId,
+        userName: loginEmpData.userName,
+    };
 
-    useEffect(() => { 
-        // console.log("employeeData is :", employeeData);
-    }, [employeeData]); // 로그인한 사람의 정보
 
     useEffect(() => {       
                 const fetchData = async () => {
@@ -68,7 +54,16 @@ const WorkBox = (props) => {
             default: return "기타";
         } // switch
     } // switchType
-    
+
+    if(loading !== false) {
+        return (
+            <div className={styles.workBox}>
+                <div className={styles.workBoxTop}>
+                    <span className={styles.type}>로딩중...</span>
+                </div>
+            </div>
+        );
+    } // if
 
     return(
         <div className={styles.workBox}>
@@ -79,15 +74,14 @@ const WorkBox = (props) => {
                 </span>
             </div>
 
-            <div>{data.name}</div>
+            <div>업무명: {data.name}</div>
 
             <div>
-                <i className='fas fa-calendar-days'/>{" "}
-                {data.startDate.substring(0, 10)} ~ {data.endDate.substring(0, 10)} 
+                기간: {data.startDate.substring(0, 10)} ~ {data.endDate.substring(0, 10)} 
             </div>
 
             <div>
-                <div>요청자 
+                <div>요청자: 
                     ({
                         loading 
                         ? null 
@@ -114,7 +108,7 @@ const WorkBox = (props) => {
                           )
                     })
                 </div> 
-                <div>담당자 ({userData.userName})</div>
+                <div>담당자: ({userData.userName})</div>
             </div>
         </div>
     );

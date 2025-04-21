@@ -9,7 +9,7 @@
     flex-direction: column;
     gap: 1vh;
 
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 
 .workBoxTop{
@@ -19,7 +19,7 @@
 }
 
 .type{
-    height: 5vh;
+    height: 3vh;
     padding: 0 1vw;
     display: flex;
     align-items: center;

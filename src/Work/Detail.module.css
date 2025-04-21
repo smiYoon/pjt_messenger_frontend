@@ -1,28 +1,29 @@
 .container{
-    margin: 3vh auto;
-    width: 85%;
-    height: 80%;
-    padding: 0;
+    margin: 10vh auto;
+    align-items: center;
+    width: 70%;
+    height: 70%;
     text-align: left;
     display: flex;
 
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
 
     overflow: hidden;
     box-sizing: border-box;
-    padding: 3vh 3vw 3vh calc(3vw + 150px);
+
+    padding: 2vh 2vw 2vh calc(2vw + 150px);
     overflow-x: hidden;
 }
 
 .leftBox{
-    width: 70%;
+    width: 60%;
     height: 100%;
-    padding: 3vh 2vw;
+    padding: 2vh 1vw;
     display: flex;
     flex-direction: column;
-    gap: 2vh;
-    margin-right: 2vh;
+    gap: 1.5vh;
+    margin-right: 1vh;
 
     background-color: #E5E1F5;
     border-radius: 5px;
@@ -32,7 +33,7 @@
 .pageDetail{
     position: absolute;
     right: 0;
-    padding-right: 3.8vh;
+    padding-right: 2vh;
 }
 
 .leftContent{
@@ -41,7 +42,7 @@
     padding: 1vh 2vw;
     display: flex;
     flex-direction: column;
-    gap: 2vh;
+    gap: 1.5vh;
 
     box-sizing: border-box;
 }
@@ -63,115 +64,52 @@
     font-size: 1.5rem;
 }
 
-.nameCircle{
-    border: solid 2px #6C47FF;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
 .nameInputBox{
     width: 30%;
-    height: 5vh;
+    height: 4vh;
     padding: 1% 2%;
     border: solid 1px #6C47FF;
     border-radius: 5px;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 
     box-sizing: border-box;
     vertical-align: top;
 }
 
-.status1{
-    width: 25%;
-    height: 100%;
-    padding: 0 1vw;
+.status1, .status2, .status3, .status4{
+    width: 20%;
+    height: 80%;
+    padding: 0 0.5vw;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    border-radius: 20px 20px;
-    background-color: rgb(245, 198, 87);
+    border-radius: 20px;
+    font-size: 1rem;
     color: white;
 }
 
-.status1.on{
+.status1 { background-color: rgb(245, 198, 87);}
+.status2 { background-color: #fd6435;}
+.status3 { background-color: #12ab8c;}
+.status4 { background-color: #00464d;}
+
+.status1.on, .status2.on, .status3.on, .status4.on {
     border: solid 5px #4A1DFF;
 }
 
-.status1:hover{
-    background-color: rgb(178, 150, 27);
-}
-
-.status2{
-    width: 25%;
-    height: 100%;
-    padding: 0 1vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    border-radius: 20px 20px;
-    background-color: #fd6435;
-    color: white;
-}
-
-.status2.on{
-    border: solid 5px #4A1DFF;
-}
-
-.status2:hover{
-    background-color: #b94927;
-}
-
-.status3{
-    width: 25%;
-    height: 100%;
-    padding: 0 1vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    border-radius: 20px 20px;
-    background-color: #12ab8c;
-    color: white;
-}
-
-.status3.on{
-    border: solid 5px #4A1DFF;
-}
-
-.status3:hover{
-    background-color: #096452;
-}
-
-.status4{
-    width: 25%;
-    height: 100%;
-    padding: 0 1vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    border-radius: 20px 20px;
-    background-color: #00464d;
-    color: white;
-}
-
-.status4.on{
-    border: solid 5px #4A1DFF;
-}
-
-.status4:hover{
-    background-color: #001b1e;
-}
+.status1:hover { background-color: rgb(178, 150, 27); }
+.status2:hover { background-color: #b94927; }
+.status3:hover { background-color: #096452; }
+.status4:hover { background-color: #001b1e; }
 
 .type{
     width: 20%;
-    height: 100%;
-    border-radius: 5px;
+    height: 80%;
+    border-radius: 8px;
     background-color: #6C47FF;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
     display: flex;
@@ -188,6 +126,7 @@
 }
 
 .reactDatepicker{
+    width: 100%;
     height: 3vh;
     padding-left: 0.5vw;
     background-color: white;
@@ -203,6 +142,9 @@
     padding: 1% 2%;
     border: solid 1px #6C47FF;
     border-radius: 5px;
+    font-size: 1.3rem;
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
 
     box-sizing: border-box;
     vertical-align: top;
@@ -222,7 +164,7 @@
 
 .dateBox{
     width: auto;
-    height: 10vh;
+    height: 8vh;
     padding: 1vw;
     display: flex;
     flex-direction: column;
@@ -235,12 +177,13 @@
 
 .memoBox{
     width: auto;
-    height: auto;
+    height: 48vh;
     padding: 1.5vh 1vw;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 2vh;
+    
     
     background-color: #E5E1F5;
     border-radius: 5px;
@@ -253,6 +196,9 @@
     padding: 1% 2%;
     border: solid 1px #6C47FF;
     border-radius: 5px;
+    font-size: 1.3rem;
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
 
     box-sizing: border-box;
     vertical-align: top;
@@ -261,10 +207,12 @@
 
 .buttonBox{
     width: 100%;
-    height: 10vh;
+    height: 8vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .buttonBoxLeft{
@@ -274,8 +222,6 @@
     border: none;
     background-color: #6C47FF;
     color: white;
-    font-size: 2rem;
-    font-weight: bold;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -296,8 +242,6 @@
     border: none;
     background-color: #E5E1F5;
     color: #616264;
-    font-size: 2rem;
-    font-weight: bold;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -311,7 +255,6 @@
 }
 
 
-
 .updateCancelButton {
     color: black;
 }
@@ -322,4 +265,139 @@
 
 .cancelButton {
     color: black;
+}
+
+
+.selectedEmployeeWrap {
+    border-radius: 8px;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 100%;
+    max-height: 60px;
+}
+
+.selectedEmployeeWrap.hasEmployee {
+    border: solid 1px #6C47FF;
+}
+
+.selectedEmployeeScroller{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2%;
+    overflow-y: auto;
+    max-height: 60px;
+    padding: 1%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.selectedEmployee {
+    display: inline-block;
+    margin: 1%;
+    padding: 1% 2%;
+    background: #f0f0f0;
+    border-radius: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.empModal {
+    background: white;
+    padding: 1.5%;
+    width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 8px;
+    font-size: 1.5rem;
+}
+
+.modalContent{
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.confirmButton{
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #6C47FF;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.confirmButton:hover{
+    background-color: #4A1DFF;
+}
+
+.modalCancelButton{
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #E5E1F5;
+    color: #616264;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.modalCancelButton:hover{
+    background-color: #D1CFE2;
+}
+
+.empItem {
+    padding: 1%;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1%;
+}
+
+.empItem:hover {
+    background: #f8f8f8;   
+}
+
+.empItem input {
+    margin-right: 2%;
+}
+
+.selected {
+    background-color: #e6f3ff;
+}
+
+.modalActions {
+    margin-top: 2vh;
+    height: 5vh;
+    display: flex;
+    gap: 2%;
+    justify-content: flex-end;
+    align-items: end;
+}
+
+.checkbox{
+    accent-color: #6C47FF;
 }

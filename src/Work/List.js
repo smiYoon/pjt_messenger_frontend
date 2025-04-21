@@ -44,7 +44,6 @@ const List = () => {
     
     
     const [loading, setLoading] = useState(false);
-    const [userData, setUserDate] = useState({ children: [] }); // 검증용 사용자 정보
     const [pickedEmployee, setPickedEmployee] = useState({
         empno: "",
         name: "",
@@ -55,10 +54,7 @@ const List = () => {
         employee: "",
     }); // 업로드할 데이터
     const [departmentMembers, setDepartmentMembers] = useState([]); // 부서원들
-
-    useEffect(() => {
-        // console.log("userData is :", userData);
-    }, [userData]); // useEffect
+    const [isEmpModalOpen, setIsEmpModalOpen] = useState(false)
 
     useEffect(() => {
         // console.log("work is :", work);
@@ -79,16 +75,16 @@ const List = () => {
     }; // handleToggle
 
     const handleChangePickedEmployee = (empno, name) => {
-        console.log("Clicked work ID:", empno);
+        setPickedEmployee({ empno, name });
+
         const fetchData = async () => {
             try {
                 console.log("handleChangePickedEmployee() invoked.");
                 setLoading(true); // 로딩 시작
                 setEmployeeData([]); // 초기화
-                setPickedEmployee({empno:empno, name:name}); // 현재 선택된 사원
                 const params = new URLSearchParams({
                     work: work,
-                    employee: loginEmpData.userId,
+                    employee: empno,
                 });
 
                 // 서버에 데이터 전송
@@ -121,7 +117,6 @@ const List = () => {
                     throw new Error("Network response was not ok");
                 }
                 const data = await response.json();
-                setUserDate(data);
 
                 // 부서원 정보 추출 (empno, name만)
                 if (data.children.length > 0) {
@@ -224,23 +219,59 @@ const List = () => {
 
             <div className={styles.pageMiddle}>
                 <span className={styles.middleLeft}>
-                    <span onClick={() => handleChangePickedEmployee(loginEmpData.userId, loginEmpData.userName)} className={styles.nameCircle}>({loginEmpData.userName})</span>
+                    <span onClick={() => handleChangePickedEmployee(loginEmpData.userId, loginEmpData.userName)} className={`${styles.nameCircle} ${pickedEmployee.empno === loginEmpData.userId ? styles.selected : ''}`}>({loginEmpData.userName})</span>
                     {loading ? null : (
                         <>
                             {/* 최대 4개만 출력 */}
                             {departmentMembers.slice(0, 4).map((child, idx) => (
-                                <span onClick={() => handleChangePickedEmployee(child.empno, child.name)} className={styles.nameCircle} key={child.id || idx}>{child.name}</span>
+                                <span onClick={() => handleChangePickedEmployee(child.empno, child.name)} className={`${styles.nameCircle} ${pickedEmployee.empno === child.empno ? styles.selected : ''}`} key={child.id || idx}>{child.name}</span>
                             ))}
                             
                             {/* 5개 이상일 때 추가 버튼 */}
                             {departmentMembers.length > 4 && (
                                 <button style={{ cursor: "pointer" }}
                                     className={styles.empPlusButton}
-                                    onClick={() => {/* 사원 리스트 화면으로 이동하는 로직 */}}
+                                    onClick={() => setIsEmpModalOpen(true)}
                                 >
                                     <i className='fas fa-plus'/>
                                     {departmentMembers.length - 4}
                                 </button>
+                            )}
+
+                            {isEmpModalOpen && (
+                                <div className={styles.modalBackdrop}>
+                                    <div className={styles.empModal}>
+                                        <div className={styles.modalActions}>
+                                            <h3>사원 리스트</h3>
+                                            <button className={styles.cancelButton} onClick={() => setIsEmpModalOpen(false)}>닫기</button>
+                                        </div>
+                                        <div className={styles.modalContent}>
+                                            <div
+                                                className={`${styles.empItem} ${pickedEmployee.empno === loginEmpData.userId ? styles.selected : ''}`}
+                                                onClick={() => {
+                                                    handleChangePickedEmployee(loginEmpData.userId, loginEmpData.userName);
+                                                    setIsEmpModalOpen(false);
+                                                }}
+                                            >
+                                                {loginEmpData.userName}
+                                            </div>
+                                            {departmentMembers
+                                                .filter(emp => emp.empno !== loginEmpData.userId && emp.empno) // 본인 중복 제거, null 제외
+                                                .map((emp, idx) => (
+                                                    <div
+                                                        key={emp.empno || idx}
+                                                        className={`${styles.empItem} ${pickedEmployee.empno === emp.empno ? styles.selected : ''}`}
+                                                        onClick={() => {
+                                                            handleChangePickedEmployee(emp.empno, emp.name);
+                                                            setIsEmpModalOpen(false);
+                                                        }}
+                                                    >
+                                                        {emp.name}
+                                                    </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
                             )}
                         </>
                     )}
@@ -279,7 +310,7 @@ const List = () => {
                             <div className={styles.emptyText}>업무가 없습니다.</div>
                         ) : (
                             status1List.map(item => (
-                                <WorkBox key={item.id} data={item} className={styles.WorkBox}/>
+                                <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} className={styles.WorkBox}/>
                             ))
                         )}
                     </div>
@@ -295,7 +326,7 @@ const List = () => {
                                 <div className={styles.emptyText}>업무가 없습니다.</div>
                             ) : (
                                 status2List.map(item => (
-                                    <WorkBox key={item.id} data={item} className={styles.WorkBox}/>
+                                    <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} className={styles.WorkBox}/>
                                 ))
                             )}
                     </div>
@@ -311,7 +342,7 @@ const List = () => {
                                 <div className={styles.emptyText}>업무가 없습니다.</div>
                             ) : (
                                 status3List.map(item => (
-                                    <WorkBox key={item.id} data={item} className={styles.WorkBox}/>
+                                    <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} className={styles.WorkBox}/>
                                 ))
                             )}
                     </div>
@@ -327,7 +358,7 @@ const List = () => {
                                 <div className={styles.emptyText}>업무가 없습니다.</div>
                             ) : (
                                 status4List.map(item => (
-                                    <WorkBox key={item.id} data={item} className={styles.WorkBox}/>
+                                    <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} className={styles.WorkBox}/>
                                 ))
                             )}
                     </div>
