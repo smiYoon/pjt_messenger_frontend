@@ -6,10 +6,11 @@ import styles from "./Create.module.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useLoadScript } from '../LoadScriptContext';
+import { pjtStatusMapping } from '../CodeContext';
 
 // console.groupCollapsed("src/Project/Create.js");console.groupEnd();
 
-const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, handleGetList }) => {
+const Create = ({ closeModal, infoAlert, handleGetUpComingList, handleGetList }) => {
   // console.group("Create() invoked.");  console.groupEnd();
 
   const onClose = () => {
@@ -202,7 +203,7 @@ const Create = ({ closeModal, statusMapping, infoAlert, handleGetUpComingList, h
                 onChange={handleChange}
               >
                 <option value="" key={""}>== 진행상태를 선택하세요. ==</option>
-                {Object.entries(statusMapping).map(([sKey, sValue]) => (
+                {Object.entries(pjtStatusMapping).map(([sKey, sValue]) => (
                   <option value={sKey} key={sKey}>{sValue}</option>
                 ))}
               </select>

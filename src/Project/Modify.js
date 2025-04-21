@@ -6,9 +6,11 @@ import styles from "./Create.module.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { pjtStatusMapping } from '../CodeContext';
+
 // console.groupCollapsed("src/Project/Modify.js");console.groupEnd();
 
-const Modify = ({ closeModal, statusMapping, infoAlert, project, handleGetUpComingList, handleGetList }) => {
+const Modify = ({ closeModal, infoAlert, project, handleGetUpComingList, handleGetList }) => {
   // console.group("Modify(", project, ") invoked.");  console.groupEnd();
 
   const onClose = () => {
@@ -67,7 +69,6 @@ const Modify = ({ closeModal, statusMapping, infoAlert, project, handleGetUpComi
         !postData.startDate ||
         !postData.endDate ||
         !postData.managerEmpno ||
-        !postData.creatorEmpno ||
         !postData.status
       ) {
         infoAlert("warning", "", "프로젝트명, 진행기간, 담당자, 진행상태를 입력하세요");
@@ -192,7 +193,7 @@ const Modify = ({ closeModal, statusMapping, infoAlert, project, handleGetUpComi
                 onChange={handleChange}
               >
                 <option value="">== 진행상태를 선택하세요. ==</option>
-                {Object.entries(statusMapping).map(([sKey, sValue]) => (
+                {Object.entries(pjtStatusMapping).map(([sKey, sValue]) => (
                   <option value={sKey} selected={sKey == postData.status}>{sValue}</option>
                 ))}
               </select>

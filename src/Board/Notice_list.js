@@ -1,88 +1,168 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import styles from './Notice_list.module.css';
-import { Link } from 'react-router-dom';
-import { useLoadScript } from '../LoadScriptContext';
+import React, { useCallback, useEffect, useState } from "react";
+import styles from "./Notice_list.module.css";
+import pagingStyles from "../Project/PagingStyle.module.css";
+import { Link } from "react-router-dom";
+import { useLoadScript } from "../LoadScriptContext";
+import { empPositionMapping } from "../CodeContext";
 
 const Notice_list = () => {
-    const [inputValue, setInputValue] = useState();
-    const [posts, setPosts] = useState([]);
     const { decodedToken, role_level } = useLoadScript();
-    const handleChange = (e) => setInputValue(e.target.value);
+    // console.log('사용자정보(공지사항):', decodedToken);
 
-    console.log('사용자정보(공지사항):', decodedToken);
-    const fetchPosts = useCallback(async () => {
-        try {
-            const response = await fetch(`https://localhost/board/notice`, {
-                method: 'GET',
-            });
+    const [list, setList] = useState([]);
 
-            if (response.ok) {
-                const data = await response.json();
-                console.log("data:", data);
-                const formattedData = data.content.map(post => ({
-                    id: post.id,
-                    title: post.title,
-                    author: post.employee.name,
-                    count: post.count,
-                    crtDate: post.crtDate,
-                }));
+    // list paging 정보
+    const [currPage, setCurrPage] = useState(1);
+    const [pageSize] = useState(10);
+    const [blockSize] = useState(10);
+    const [totalPageCnt, setTotalPageCnt] = useState(0);
+    const [currBlock, setCurrBlock] = useState(
+        Math.floor((currPage - 1) / blockSize)
+    );
+    const [startPage, setStartPage] = useState(currBlock * blockSize);
+    const [endPage, setEndPage] = useState(
+        Math.min(startPage + blockSize, totalPageCnt)
+    );
+    useEffect(() => {
+        setCurrBlock(Math.floor((currPage - 1) / blockSize));
+        setStartPage(currBlock * blockSize);
+        setEndPage(Math.min(startPage + blockSize, totalPageCnt));
+    }, [currPage, totalPageCnt, currBlock, startPage, endPage]);
 
-                // 기본적으로 id 기준 내림차순으로 정렬
-                const sortedData = formattedData.sort((a, b) => b.id - a.id);
-                setPosts(sortedData);
-
-            } else {
-                console.error('불러오기 실패', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
+    // 검색어 및 상태 관리
+    const [searchData, setSearchData] = useState({
+        type: 1, //공지사항
+        searchWord: "",
+        searchText: "",
     });
 
     useEffect(() => {
-        fetchPosts(); // 활성화된 탭에 따라 데이터 가져오기
+        console.log("searchData:", searchData);
+    }, [searchData]);
+
+    // list 검색 함수
+    const handleSearchData = (field, value) => {
+        setSearchData((prevData) => ({
+            ...prevData,
+            [field]: value,
+        }));
+    };
+
+    // list 검색 엔터키 이벤트
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            handleGetList(1);
+        }
+    };
+
+    //리스트 data 가져오기
+    const handleGetList = useCallback(
+        async (page = 1, type = searchData.type) => {
+            setCurrPage(page);
+            handleSearchData("type", type);
+
+            const params = new URLSearchParams({
+                currPage: page,
+                pageSize: pageSize,
+                type: type,
+                searchWord: searchData.searchWord,
+                searchText: searchData.searchText,
+            });
+            console.log("params:", params.toString());
+
+            try {
+                const response = await fetch(
+                    `https://localhost/board/notice?${params.toString()}`,
+                    {
+                        method: "GET",
+                    }
+                );
+
+                if (!response.ok)
+                    throw new Error("서버 응답 오류", response.statusText);
+
+                const listJson = await response.json();
+                const listData = listJson.content.map((data) => ({
+                    ...data,
+                }));
+
+                setCurrBlock(Math.floor((currPage - 1) / blockSize));
+                setStartPage(currBlock * blockSize);
+                setEndPage(Math.min(startPage + blockSize, totalPageCnt));
+
+                console.log("listData:", listData);
+
+                setList(listData);
+
+                setTotalPageCnt(listJson.totalPages);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        },
+        [searchData, currPage]
+    );
+
+    // 컴포넌트 마운트 시 첫 데이터 로드
+    useEffect(() => {
+        console.log("List useEffect() invoked.");
+
+        handleSearchData("type", 1);
+        handleSearchData("searchWord", "");
+        handleSearchData("searchText", "");
+
+        handleGetList(1);
     }, []);
 
     return (
         <div className={styles.container}>
             <div className={styles.side_bar}>
                 <div className={styles.menu}>
-                    <div
-                        className={styles.notice}
-                    >
-                        공지사항 게시판
-                    </div>
-                    <Link
-                        className={styles.feedback}
-                        to={`/board/feedback/list`}
-                    >
+                    <div className={styles.notice}>공지사항 게시판</div>
+                    <Link className={styles.feedback} to={`/board/feedback/list`}>
                         건의 게시판
                     </Link>
                 </div>
             </div>
             <div className={styles.list_Page}>
                 <div className={styles.list_container}>
-                    <div className={styles.header}>
-                        Notification
-                    </div>
+                    <div className={styles.header}>Notification</div>
                     <div className={styles.option_box}>
                         {role_level[decodedToken.roles] != 1 && (
-                            <Link to={`/board/notice/create`} className={styles.button}>등록</Link>
+                            <Link to={`/board/notice/create`} className={styles.button}>
+                                등록
+                            </Link>
                         )}
                         <div className={styles.search_box}>
                             <select
-                                name='searchWord'
+                                name="searchWord"
                                 className={styles.select}
-                                onChange={handleChange}
+                                value={searchData.searchWord}
+                                onChange={(e) => handleSearchData("searchWord", e.target.value)}
                             >
                                 <option value="">검색조건</option>
                                 <option value="title">제목</option>
                                 <option value="author">작성자</option>
                             </select>
                             <div className={styles.input_box}>
-                                <input name='searchText' type='text' className={styles.input} placeholder='검색'></input>
+                                <input
+                                    name="searchText"
+                                    type="text"
+                                    className={styles.input}
+                                    placeholder="검색어를 입력하세요."
+                                    onChange={(e) =>
+                                        handleSearchData("searchText", e.target.vale)
+                                    }
+                                    onKeyUp={handleKeyPress}
+                                ></input>
                                 <i className="fa-solid fa-magnifying-glass" />
                             </div>
+                            
+                            <button
+                                className={`${styles.button} ${styles.btnStyle_yg}`}
+                                onClick={() => handleGetList(1)}
+                            >
+                                검색
+                            </button>
                         </div>
                     </div>
                     <div className={styles.Board_NameContainer}>
@@ -93,14 +173,21 @@ const Notice_list = () => {
                             <div className={styles.writeTime}>작성 날짜</div>
                             <div className={styles.views}>조회수</div>
                         </div>
-                        {posts.map((post) => (
-                            <Link key={post.id} to={`/board/notice/detail/${post.id}`} className={styles.tr}>
+                        {list.map((post) => (
+                            <Link
+                                key={post.id}
+                                to={`/board/notice/detail/${post.id}`}
+                                className={styles.tr}
+                            >
                                 <table className={styles.Board_table}>
                                     <tbody>
                                         <tr>
                                             <td className={styles.number}>{post.id}</td>
-                                            <td className={styles.postTitle}>{post.title}</td>
-                                            <td className={styles.writer}>{post.author}</td>
+                                            <td className={`${styles.postTitle} ${styles.alignLeft}`}>{post.title}</td>
+                                            <td className={styles.writer}>
+                                                {post.employee.name}{" "}
+                                                {empPositionMapping[post.employee.position]}
+                                            </td>
                                             <td className={styles.writeTime}>{post.crtDate}</td>
                                             <td className={styles.views}>{post.count}</td>
                                         </tr>
@@ -109,7 +196,61 @@ const Notice_list = () => {
                             </Link>
                         ))}
                     </div>
-                    <div className={styles.Board_paging}>페이징 1, 2, 3</div>
+
+                    <div className={pagingStyles.pageBar}>
+                        {/* currPage: {currPage} / totalPageCnt:{totalPageCnt} / startPage:{startPage} / endPage:{endPage} */}
+
+                        <div className={pagingStyles.pageBox}>
+                            <div
+                                className={pagingStyles.pageNum}
+                                onClick={() => handleGetList(startPage - blockSize + 1)}
+                                style={{ display: currPage <= 10 ? "none" : "" }}
+                            >
+                                <i className="fas fa-angles-left"></i>
+                            </div>
+
+                            <div
+                                className={pagingStyles.pageNum}
+                                onClick={() => handleGetList(currPage - 1)}
+                                style={{ display: currPage === 1 ? "none" : "" }}
+                            >
+                                <i className="fas fa-angle-left"></i>
+                            </div>
+
+                            {Array.from(
+                                { length: endPage - startPage },
+                                (_, i) => startPage + i + 1
+                            ).map((pageNum) => (
+                                <div
+                                    key={pageNum}
+                                    className={
+                                        currPage === pageNum
+                                            ? pagingStyles.activePage
+                                            : pagingStyles.pageNum
+                                    }
+                                    onClick={() => handleGetList(pageNum)} // ← 이 부분에서 currPage 변경됨
+                                >
+                                    {pageNum}
+                                </div>
+                            ))}
+
+                            <div
+                                className={pagingStyles.pageNum}
+                                onClick={() => handleGetList(currPage + 1)}
+                                style={{ display: currPage === totalPageCnt ? "none" : "" }}
+                            >
+                                <i className="fas fa-angle-right"></i>
+                            </div>
+
+                            <div
+                                className={pagingStyles.pageNum}
+                                onClick={() => handleGetList(endPage + 1)}
+                                style={{ display: endPage + 1 > totalPageCnt ? "none" : "" }}
+                            >
+                                <i className="fas fa-angles-right"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

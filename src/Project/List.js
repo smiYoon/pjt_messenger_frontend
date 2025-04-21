@@ -2,9 +2,11 @@ import { useCallback, useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
 import styles from "./List.module.css";
+import pagingStyles from "./PagingStyle.module.css"
 
 import { P_ListUpComing, P_ListUnit, P_Create } from "./";
 import { useLoadScript } from '../LoadScriptContext';
+import { pjtStatusMapping } from '../CodeContext';
 
 // console.groupCollapsed("src/Project/List.js");console.groupEnd();
 
@@ -14,8 +16,6 @@ const List = () => {
 
     const { decodedToken } = useLoadScript();
 
-  // 상태 및 타입 매핑
-  const statusMapping = { 1: "진행예정", 2: "진행중", 3: "종료" };
 
   // upComingList, list
   const [upComingList, setUpComingList] = useState([]);
@@ -39,11 +39,7 @@ const List = () => {
     setEndPage(Math.min(startPage + blockSize, totalPageCnt));
   }, [currPage, totalPageCnt, currBlock, startPage, endPage]);
 
-  // list 검색 상태
-  const pageNumbers = [];
-  for (let i = 1; i <= totalPageCnt; i++) {
-    pageNumbers.push(i);
-  }
+  // 검색어 및 상태 관리
   const [searchData, setSearchData] = useState({
     status: "",
     searchWord: "",
@@ -65,6 +61,7 @@ const List = () => {
   // list 검색 엔터키 이벤트
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
+      console.log("Enter:");
       handleGetList(1);
     }
   };
@@ -205,7 +202,6 @@ const List = () => {
               <P_ListUpComing
                 key={project.id}
                 project={project}
-                statusMapping={statusMapping}
                 onDelete={handleProjectDelete}
                 infoAlert={infoAlert}
                 handleGetList={handleGetList}
@@ -218,7 +214,6 @@ const List = () => {
         {isOpen && (
           <P_Create
             closeModal={closeProjectRegister}
-            statusMapping={statusMapping}
             infoAlert={infoAlert}
             handleGetList={handleGetList}
             handleGetUpComingList={handleGetUpComingList}
@@ -237,7 +232,7 @@ const List = () => {
                 >
                   ALL
                 </div>
-                {Object.entries(statusMapping).map(([sKey, sValue]) => (
+                {Object.entries(pjtStatusMapping).map(([sKey, sValue]) => (
                   <div
                     key={sKey}
                     onClick={() => handleGetList(1, sKey)}
@@ -296,7 +291,6 @@ const List = () => {
               <P_ListUnit
                 key={project.id}
                 project={project}
-                statusMapping={statusMapping}
                 onDelete={handleProjectDelete}
                 infoAlert={infoAlert}
                 handleGetList={handleGetList}
@@ -305,15 +299,15 @@ const List = () => {
             ))}
           </div>
 
-          <div className={styles.pageBar}>
+          <div className={pagingStyles.pageBar}>
 
           {/* currPage: {currPage} / totalPageCnt:{totalPageCnt} / startPage:{startPage} / endPage:{endPage} */}
             
-            <div className={styles.pageBox}>
+            <div className={pagingStyles.pageBox}>
 
 {/*               
               <div
-                className={styles.pageNum}
+                className={pagingStyles.pageNum}
                 onClick={() => handleGetList(1)}
                 style={{ display: currPage === 1 ? "none" : "" }}
               >
@@ -321,7 +315,7 @@ const List = () => {
               </div> */}
 
               <div 
-                className={styles.pageNum} 
+                className={pagingStyles.pageNum} 
                 onClick={() => handleGetList(startPage-blockSize+1)} 
                 style={{ display: currPage <= 10 ? "none" : "" }}
               >
@@ -329,7 +323,7 @@ const List = () => {
               </div>
 
               <div
-                className={styles.pageNum}
+                className={pagingStyles.pageNum}
                 onClick={() => handleGetList(currPage - 1)}
                 style={{ display: currPage === 1 ? "none" : "" }}
               >
@@ -342,7 +336,7 @@ const List = () => {
               ).map((pageNum) => (
                 <div
                   key={pageNum}
-                  className={currPage === pageNum ? styles.activePage : styles.pageNum}
+                  className={currPage === pageNum ? pagingStyles.activePage : pagingStyles.pageNum}
                   onClick={() => handleGetList(pageNum)} // ← 이 부분에서 currPage 변경됨
                 >
                   {pageNum}
@@ -350,7 +344,7 @@ const List = () => {
               ))}
 
               <div
-                className={styles.pageNum}
+                className={pagingStyles.pageNum}
                 onClick={() => handleGetList(currPage + 1)}
                 style={{ display: currPage === totalPageCnt ? "none" : "" }}
               >
@@ -358,7 +352,7 @@ const List = () => {
               </div>
 
               <div 
-                className={styles.pageNum} 
+                className={pagingStyles.pageNum} 
                 onClick={() => handleGetList(endPage+1)} 
                 style={{ display: (endPage+1) > totalPageCnt ? "none" : "" }}
               >
@@ -366,7 +360,7 @@ const List = () => {
               </div>
 {/* 
               <div
-                className={styles.pageNum}
+                className={pagingStyles.pageNum}
                 onClick={() => handleGetList(totalPageCnt)}
                 style={{ display: currPage === totalPageCnt ? "none" : "" }}
               >

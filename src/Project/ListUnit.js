@@ -6,10 +6,11 @@ import styles from "./ListUnit.module.css";
 
 import { RxLapTimer } from "react-icons/rx";
 import { useLoadScript } from '../LoadScriptContext';
+import { pjtStatusMapping, empPositionMapping } from '../CodeContext';
 
 // console.groupCollapsed("src/Project/ListUnit.js");console.groupEnd();
 
-const ListUnit = ({ project, statusMapping, onDelete, infoAlert, handleGetUpComingList, handleGetList }) => {
+const ListUnit = ({ project, onDelete, infoAlert, handleGetUpComingList, handleGetList }) => {
   // console.group('ListUnit(', project, statusMapping, ') invoked.'); console.groupEnd();
 
   const { decodedToken } = useLoadScript();
@@ -82,7 +83,6 @@ const ListUnit = ({ project, statusMapping, onDelete, infoAlert, handleGetUpComi
       {isOpen && (
         <P_Modify
           closeModal={closeProjectModify}
-          statusMapping={statusMapping}
           project={project}
           infoAlert={infoAlert}
           handleGetList={handleGetList}
@@ -98,7 +98,7 @@ const ListUnit = ({ project, statusMapping, onDelete, infoAlert, handleGetUpComi
                 className={`${styles.status}`}
                 style={statusColor(project.status)}
               >
-                {statusMapping[project.status]}
+                {pjtStatusMapping[project.status]}
               </div>
             </div>
 
@@ -143,11 +143,11 @@ const ListUnit = ({ project, statusMapping, onDelete, infoAlert, handleGetUpComi
 
           <div className={styles.manager}>
             <label>담당자</label>
-            {project.pjtManager.name} {project.pjtManager.position}
+            {empPositionMapping[project.pjtManager.position]} {project.pjtManager.name}
           </div>
 
           <div className={styles.timeline}>
-            <label>기간</label> {project.startDate} ~ {project.endDate}
+            <label>진행기간</label> {project.startDate} ~ {project.endDate}
           </div>
 
           <hr />

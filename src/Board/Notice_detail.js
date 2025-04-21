@@ -146,7 +146,8 @@ const Notice_detail = () => {
           </div>
           <div className={styles.buttonContainer}>
             <button onClick={handleCancelClick} className={styles.cancel}>뒤로</button>
-            {decodedToken.name === post.author && (
+            {
+              (decodedToken.name === post.author || decodedToken.position === 9) && (
               <>
                 <button onClick={handleUpdateClick} className={styles.edit} >수정</button>
                 <button onClick={handleDeleteClick} className={styles.cancel}>삭제</button>

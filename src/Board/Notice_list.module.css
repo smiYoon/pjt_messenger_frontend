@@ -79,12 +79,12 @@
 }
 
 .button {
-    padding: 10px 40px;
+    padding: 7.5px 25px;
     display: flex;
     align-items: center;
     display: flex;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 1.0rem;
     font-weight: bold;
     text-decoration: none;
     border-radius: 7px;
@@ -98,6 +98,15 @@
     background-color: #4a1dff;
     color: white;
     transition: all 0.1s ease-in;
+}
+
+
+.search_box .btnStyle_yg {
+    border: #4FC765;
+    background-color: #4FC765;
+}
+.search_box .btnStyle_yg:hover {
+    background-color: #39b851;    
 }
 
 
@@ -184,6 +193,10 @@
 .writer {width: 20%;}
 .writeTime {width: 15%;}
 .views {width: 10%;}
+
+.alignLeft {
+    text-align: left !important;
+}
 
 .Board_paging {
     /* border: 1px solid #6c47ff; */

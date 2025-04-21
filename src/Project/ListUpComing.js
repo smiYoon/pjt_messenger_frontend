@@ -5,10 +5,11 @@ import { P_Modify } from ".";
 import styles from "./ListUpComing.module.css";
 import { RxLapTimer } from "react-icons/rx";
 import { useLoadScript } from '../LoadScriptContext';
+import { pjtStatusMapping, empPositionMapping } from '../CodeContext';
 
 // console.groupCollapsed("src/Project/ListUpComing.js");console.groupEnd();
 
-const ListUpComing = ({ project, statusMapping, onDelete, infoAlert, handleGetUpComingList, handleGetList }) => {
+const ListUpComing = ({ project, onDelete, infoAlert, handleGetUpComingList, handleGetList }) => {
   // console.group("ListUpcommig(", project, statusMapping, ") invoked."); console.groupEnd();
 
   const { decodedToken } = useLoadScript();
@@ -68,7 +69,6 @@ const ListUpComing = ({ project, statusMapping, onDelete, infoAlert, handleGetUp
       {isOpen && (
         <P_Modify
           closeModal={closeProjectModify}
-          statusMapping={statusMapping}
           project={project}
           infoAlert={infoAlert}
           handleGetList={handleGetList}
@@ -85,7 +85,7 @@ const ListUpComing = ({ project, statusMapping, onDelete, infoAlert, handleGetUp
       <div className={styles.content}>
         <div className={styles.manager}>
           <label>담당자</label>
-          {project.pjtManager.name} {project.pjtManager.position}
+          {empPositionMapping[project.pjtManager.position]} {project.pjtManager.name}
         </div>
 
         <div className={styles.detail}>
@@ -95,7 +95,7 @@ const ListUpComing = ({ project, statusMapping, onDelete, infoAlert, handleGetUp
       </div>
 
       <div className={styles.timeline}>
-        <div className={styles.status}>{statusMapping[project.status]}</div>
+        <div className={styles.status}>{pjtStatusMapping[project.status]}</div>
 
         {project.endDday === 0 ? (
           <div className={styles.deadline} style={{ color: "#ee311d" }}>
