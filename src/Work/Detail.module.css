@@ -86,13 +86,13 @@
     cursor: pointer;
     border-radius: 20px;
     font-size: 1rem;
-    color: white;
+    color: black;
 }
 
-.status1 { background-color: rgb(245, 198, 87);}
-.status2 { background-color: #fd6435;}
-.status3 { background-color: #12ab8c;}
-.status4 { background-color: #00464d;}
+.status1 { background-color: #AADCFF;}
+.status2 { background-color: #FFF5AA;}
+.status3 { background-color: #a9f85f;}
+.status4 { background-color: #4FC765;}
 
 .status1.on, .status2.on, .status3.on, .status4.on {
     border: solid 5px #4A1DFF;

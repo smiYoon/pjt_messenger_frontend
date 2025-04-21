@@ -86,22 +86,36 @@
     cursor: pointer;
     border-radius: 20px;
     font-size: 1rem;
-    color: white;
+    color: black;
 }
 
+/*
 .status1 { background-color: rgb(245, 198, 87);}
 .status2 { background-color: #fd6435;}
 .status3 { background-color: #12ab8c;}
 .status4 { background-color: #00464d;}
+*/
+
+.status1 { background-color: #AADCFF;}
+.status2 { background-color: #FFF5AA;}
+.status3 { background-color: #a9f85f;}
+.status4 { background-color: #4FC765;}
 
 .status1.on, .status2.on, .status3.on, .status4.on {
     border: solid 5px #4A1DFF;
 }
 
-.status1:hover { background-color: rgb(178, 150, 27); }
-.status2:hover { background-color: #b94927; }
-.status3:hover { background-color: #096452; }
-.status4:hover { background-color: #001b1e; }
+/*
+.status1 { background-color: rgb(245, 198, 87);}
+.status2 { background-color: #fd6435;}
+.status3 { background-color: #12ab8c;}
+.status4 { background-color: #00464d;}
+*/
+
+.status1:hover { background-color: rgb(245, 198, 87);}
+.status2:hover { background-color: #fd6435;}
+.status3:hover { background-color: #12ab8c;}
+.status4:hover { background-color: #00464d;}
 
 .type{
     width: 20%;

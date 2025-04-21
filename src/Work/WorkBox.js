@@ -61,6 +61,18 @@ const WorkBox = (props) => {
         } // switch
     } // switchType
 
+    const [isDragging, setIsDragging] = useState(false);
+
+    const handleDragStart = (e) => {
+        setIsDragging(true);
+        e.dataTransfer.setData("text/plain", props.data.id);
+        props.onDragStart?.(e, props.data);
+    } // handleDragStart;
+
+    const handleDragEnd = () => {
+        setIsDragging(false);
+    }; // handleDragEnd;
+
     if(loading !== false) {
         return (
             <div className={styles.workBox}>
@@ -72,7 +84,12 @@ const WorkBox = (props) => {
     } // if
 
     return(
-        <div className={styles.workBox}>
+        <div
+            className={`${styles.workBox} ${isDragging ? styles.dragging : ''}`}
+            draggable={props.draggable}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+        >
             <div className={styles.workBoxTop}>
                 <span className={styles.type}>{switchType(data.type)}</span>
                 <span className={styles.arrow}>
@@ -88,7 +105,7 @@ const WorkBox = (props) => {
 
             <div>
                 <div>요청자: 
-                    ({
+                    {
                         loading 
                         ? null 
                         : (
@@ -112,9 +129,9 @@ const WorkBox = (props) => {
                                 })()
                               : null
                           )
-                    })
+                    }
                 </div> 
-                <div>담당자: ({userData.userName})</div>
+                <div>담당자: {userData.userName}</div>
             </div>
         </div>
     );

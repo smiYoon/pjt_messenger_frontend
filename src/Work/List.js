@@ -214,6 +214,112 @@ const List = () => {
     }, [work, pickedEmployee]); // useEffect
 
 
+    const [draggedWork, setDraggedWork] = useState(null);
+
+    const handleDragStart = (e, item) => {
+        if (item.status === 4) {
+            alert("완료된 업무는 상세 화면에서 수정해주십시오.");
+            e.preventDefault();
+            return;
+        } // if
+        setDraggedWork(item);
+    }; // handleDragStart
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        e.currentTarget.classList.add(styles.dragover);
+        e.dataTransfer.dropEffect = "move";
+    }; // handleDragOver
+
+    const handleDragLeave = (e) => {
+        e.currentTarget.classList.remove(styles.dragover);
+    }; // handleDragLeave
+    
+    const handleDrop = (newStatus) => async (e) => {
+        e.preventDefault();
+        e.currentTarget.classList.remove(styles.dragover);
+        
+        if (!draggedWork) return;
+
+        // 완료로 드롭하는데, 팀원(position=1)인 경우
+        if (newStatus === 4 && loginEmpData.position === 1) {
+            alert("팀원은 업무완료를 할 수 없습니다");
+            setDraggedWork(null);
+            return;
+        } // if
+      
+        // 임시 데이터 저장 (롤백용)
+        const originalData = employeeData;
+        
+        try {
+            // 1. 기존 데이터 조회
+            const currentDataResponse = await fetch(`https://localhost/work/${draggedWork.id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            if (!currentDataResponse.ok) throw new Error("데이터 조회 실패");
+            const currentData = await currentDataResponse.json();
+
+            // 2. status만 변경된 새 데이터 생성
+            const updatedData = { 
+                ...currentData,
+                status: newStatus 
+            };
+
+            const params = new URLSearchParams();
+            // 원시값 필드
+            params.append("id", updatedData.id);
+            params.append("name", updatedData.name);
+            params.append("detail", updatedData.detail);
+            params.append("memo", updatedData.memo);
+            params.append("status", updatedData.status);
+            params.append("type", updatedData.type);
+            params.append("startDate", updatedData.startDate);
+            params.append("endDate", updatedData.endDate);
+            params.append("enabled", updatedData.enabled);
+
+            // employee: empno만 전송
+            if (updatedData.employee && updatedData.employee.empno) {
+                params.append("employee", updatedData.employee.empno);
+            }
+
+            // workEmployees: empno만 여러 번 append
+            if (Array.isArray(updatedData.workEmployees)) {
+                updatedData.workEmployees.forEach(empObj => {
+                    if (empObj.employee && empObj.employee.empno) {
+                        params.append("empnos", empObj.employee.empno);
+                    } else if (empObj.empno) {
+                        params.append("empnos", empObj.empno);
+                    }
+                });
+            }
+
+            console.log("params is :", params.toString());
+            
+            // 서버 동기화
+            const response = await fetch(`https://localhost/work/${draggedWork.id}?${params.toString()}`, {
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            }); // response
+            if (!response.ok) throw new Error("서버 업데이트 실패");
+
+            // 성공 시 상태 업데이트
+            setEmployeeData(prev =>
+                prev.map(work =>
+                work.id === draggedWork.id ? { ...work, status: newStatus } : work
+                )
+            ); // setEmployeeData
+
+        } catch (error) {
+            console.error("업데이트 실패:", error);
+            setEmployeeData(originalData); // 롤백
+            alert("상태 변경에 실패했습니다.");
+        } // try-catch
+        setDraggedWork(null);
+    }; // handleDrop
+
     const status1List = employeeData.filter(item => item.status === 1);
     const status2List = employeeData.filter(item => item.status === 2);
     const status3List = employeeData.filter(item => item.status === 3);
@@ -228,7 +334,7 @@ const List = () => {
 
             <div className={styles.pageMiddle}>
                 <span className={styles.middleLeft}>
-                    <span onClick={() => handleChangePickedEmployee(loginEmpData.userId, loginEmpData.userName)} className={`${styles.nameCircle} ${pickedEmployee.empno === loginEmpData.userId ? styles.selected : ''}`}>({loginEmpData.userName})</span>
+                    <span onClick={() => handleChangePickedEmployee(loginEmpData.userId, loginEmpData.userName)} className={`${styles.nameCircle} ${pickedEmployee.empno === loginEmpData.userId ? styles.selected : ''}`}>{loginEmpData.userName}</span>
                     {loading ? null : (
                         <>
                             {/* 최대 4개만 출력 */}
@@ -312,14 +418,21 @@ const List = () => {
                 <span className={styles.pageBottom_Box}>
                     <div>진행 예정 <span className={styles.bottomNumber}>{status1List.length}</span><hr className={styles.hr}/></div>
 
-                    <div className={styles.bottom_background}>
+                    <div 
+                        className={styles.bottom_background}
+                        onDragOver={handleDragOver}
+                        onDragLeave={handleDragLeave}
+                        onDrop={handleDrop(1)}
+                        >
                         {loading ? (
                             <div className={styles.loadingText}>로딩중...</div>
-                        ) : status1List.length === 0 ? (
-                            <div className={styles.emptyText}>업무가 없습니다.</div>
-                        ) : (
-                            status1List.map(item => (
-                                <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} token={token} className={styles.WorkBox}/>
+                            ) : status1List.length === 0 ? (
+                                <div className={styles.emptyText}>업무가 없습니다.</div>
+                            ) : (
+                                status1List.map(item => (
+                                    <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} token={token} className={styles.WorkBox}
+                                    draggable onDragStart={e => handleDragStart(e, item)}
+                                    />
                             ))
                         )}
                     </div>
@@ -328,14 +441,21 @@ const List = () => {
                 <span className={styles.pageBottom_Box}>
                     <div>진행중 <span className={styles.bottomNumber}>{status2List.length}</span><hr className={styles.hr}/></div>
 
-                    <div className={styles.bottom_background}>
+                    <div 
+                        className={styles.bottom_background}
+                        onDragOver={handleDragOver}
+                        onDragLeave={handleDragLeave}
+                        onDrop={handleDrop(2)}
+                    >
                         {loading ? (
                                 <div className={styles.loadingText}>로딩중...</div>
                             ) : status2List.length === 0 ? (
                                 <div className={styles.emptyText}>업무가 없습니다.</div>
                             ) : (
                                 status2List.map(item => (
-                                    <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} token={token} className={styles.WorkBox}/>
+                                    <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} token={token} className={styles.WorkBox}
+                                    draggable onDragStart={e => handleDragStart(e, item)}
+                                    />
                                 ))
                             )}
                     </div>
@@ -344,14 +464,21 @@ const List = () => {
                 <span className={styles.pageBottom_Box}>
                     <div>완료 대기 <span className={styles.bottomNumber}>{status3List.length}</span><hr className={styles.hr}/></div>
 
-                    <div className={styles.bottom_background}>
+                    <div 
+                        className={styles.bottom_background}
+                        onDragOver={handleDragOver}
+                        onDragLeave={handleDragLeave}
+                        onDrop={handleDrop(3)}
+                    >
                         {loading ? (
                                 <div className={styles.loadingText}>로딩중...</div>
                             ) : status3List.length === 0 ? (
                                 <div className={styles.emptyText}>업무가 없습니다.</div>
                             ) : (
                                 status3List.map(item => (
-                                    <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} token={token} className={styles.WorkBox}/>
+                                    <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} token={token} className={styles.WorkBox}
+                                    draggable onDragStart={e => handleDragStart(e, item)}
+                                    />
                                 ))
                             )}
                     </div>
@@ -360,14 +487,21 @@ const List = () => {
                 <span className={styles.pageBottom_Box}>
                     <div>완료 <span className={styles.bottomNumber}>{status4List.length}</span><hr className={styles.hr}/></div>
                     
-                    <div className={styles.bottom_background}>
+                    <div 
+                        className={styles.bottom_background}
+                        onDragOver={handleDragOver}
+                        onDragLeave={handleDragLeave}
+                        onDrop={handleDrop(4)}
+                    >
                         {loading ? (
                                 <div className={styles.loadingText}>로딩중...</div>
                             ) : status4List.length === 0 ? (
                                 <div className={styles.emptyText}>업무가 없습니다.</div>
                             ) : (
                                 status4List.map(item => (
-                                    <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} token={token} className={styles.WorkBox}/>
+                                    <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} token={token} className={styles.WorkBox}
+                                    draggable={item.status < 4} onDragStart={e => handleDragStart(e, item)}
+                                    />
                                 ))
                             )}
                     </div>

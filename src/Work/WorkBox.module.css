@@ -35,4 +35,19 @@
     margin-left: auto;
 }
 
+.workBox {
+    transition: transform 0.2s, opacity 0.2s;
+}
+  
+.workBox.dragging {
+    opacity: 0.5;
+    transform: scale(0.95);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.workBox[draggable="false"] {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+  
 
