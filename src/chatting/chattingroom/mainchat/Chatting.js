@@ -33,7 +33,7 @@ const Chatting = ({id}) => {
     useEffect(() => {
         if (!id) return; // chatId가 undefined면 연결하지 않음
 
-        const socket = new WebSocket(`wss://localhost:443/chatroom?chatId=${id}`);
+        const socket = new WebSocket(`wss://192.168.0.83/chatroom?chatId=${id}`);
         socketRef.current = socket;
 
         socket.onmessage = (event) => {
@@ -44,8 +44,8 @@ const Chatting = ({id}) => {
             console.log("WebSocket 연결됨");
         };
 
-        socket.onclose = () => {
-            console.log("WebSocket 연결 종료");
+        socket.onclose = (event) => {
+            console.log("WebSocket 연결 종료", event.code, event.reason);
         };
 
         socket.onerror = (error) => {

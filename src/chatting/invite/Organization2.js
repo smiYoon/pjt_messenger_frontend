@@ -115,8 +115,8 @@ const Organization2 = ({onCloseOrgaClick, handleChatRoomClick, id}) => {
   return (
     <div ref={containerRef} className={styles.container}>
         <div className={styles.Xbutton} onClick={() => {onCloseOrgaClick(); setInviteList([]); }}>X</div>
-        <Tree data={treeData} className={styles.tree} width={400} height={500}  onSelect={handleSelect}>
-        </Tree>
+        <Tree data={treeData} className={styles.tree} width={400} height={500}  onSelect={handleSelect} openByDefault={false} />  
+
         <div className={styles.inviteBox}>
           <div className={styles.inviteList}>
             <h3>초대할 직원 ID들:</h3>
@@ -135,7 +135,6 @@ const Organization2 = ({onCloseOrgaClick, handleChatRoomClick, id}) => {
 
 }; // Organization
 export default Organization2;
-
 
 const convertToSortableTree = (node) => {
   if (!node) return null; // 안전장치
@@ -168,13 +167,12 @@ const convertToSortableTree = (node) => {
   // 기본적으로 id 기준 내림차순으로 정렬
   const sortedData = empChildren.sort((a, b) => b.position - a.position);
 
-
   return {
     id: `dept-${node.id}`,    // 부서 고유 ID
     name: node.name,
     isDepartment: true,
     depth: node.depth,
-    children: [...sortedData, ...sortedDept]
+    children: [...sortedData, ...sortedDept],
   };
 } // ConvertToSortableTree
 
