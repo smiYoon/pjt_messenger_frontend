@@ -8,10 +8,10 @@ import { useLoadScript } from '../LoadScriptContext';
 const Navbar = () => {
   const { role_level, decodedToken } = useLoadScript();
 
-  console.group('Navbar() invoked.'); console.groupEnd();
+  // decodedToken이 로딩되기 전에는 아무것도 렌더링하지 않도록 처리
+  if (!decodedToken) return null;
 
   const handleLogout = async () => {
-
     try {
       const response = await fetch('https://localhost/logout', {
         method: 'POST'
@@ -19,17 +19,14 @@ const Navbar = () => {
 
       if (response.ok) {
         console.log('logout Successful');
-        window.location.href = '/'; // 로그아웃 성공 시 리다이렉트( 프론트 주소 입력해야 함.)
+        window.location.href = '/';
       } else {
         console.error('로그아웃 실패! ', response.status);
       }
-
     } catch (error) {
       console.error('Error during logout:', error);
-    } // try
-
-  } // handlelogout
-
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -41,14 +38,12 @@ const Navbar = () => {
           </Link>
         )}
 
-        {/* {role_level[decodedToken.roles] != 5 && ( */}
         <Link to={`/chat`} className={styles.flip}>
           <i className={`${styles.icon} fas fa-comment-dots`} />
           <div className={styles.text}>채팅</div>
         </Link>
-        {/* )} */}
 
-        {role_level[decodedToken.roles] != 4 && (
+        {role_level[decodedToken.roles] !== 4 && (
           <Link to={`/work`} className={styles.flip}>
             <i className={`${styles.icon} fas fa-file-pen`} />
             <div className={styles.text}>업무</div>
@@ -60,7 +55,7 @@ const Navbar = () => {
           <div className={styles.text}>게시판</div>
         </Link>
 
-        {role_level[decodedToken.roles] != 1 && (
+        {role_level[decodedToken.roles] !== 1 && (
           <Link to={`/project/list`} className={styles.flip}>
             <i className={`${styles.icon} fa-solid fa-list-check`} />
             <div className={styles.text}>프로젝트</div>
@@ -78,6 +73,6 @@ const Navbar = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Navbar;

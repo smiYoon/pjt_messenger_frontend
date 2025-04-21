@@ -16,6 +16,7 @@ registerLocale("ko", ko);
 console.groupCollapsed("src/Work/Create.js");console.groupEnd();
 
 
+
 const Create = () => {
     console.debug("Create() invoked.");
 
@@ -24,7 +25,7 @@ const Create = () => {
     const detailRef = useRef();
     const memoRef = useRef();
 
-    const { decodedToken } = useLoadScript();
+    const { decodedToken, token, role_level } = useLoadScript();
     const [isTokenLoaded, setIsTokenLoaded] = useState(false);
     const [loginEmpData, setLoginEmpData] = useState({
             userId: "",
@@ -69,7 +70,13 @@ const Create = () => {
             if (!loginEmpData.userDeptId) return;
             
             try {
-                const response = await fetch(`https://localhost:443/department/${loginEmpData.userDeptId}`);
+                const response = await fetch(`https://localhost/department/${loginEmpData.userDeptId}`,
+                    {headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json", 
+                        },
+                    }
+                );
                 const data = await response.json();
 
                 let members = [];
@@ -221,8 +228,12 @@ const Create = () => {
 
                 console.info("params: ", params.toString());
                 
-                const response = await fetch(`https://localhost:443/work?${params.toString()}`, {
-                    method: "POST"
+                const response = await fetch(`https://localhost/work?${params.toString()}`, {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json", 
+                        },
                 });
 
                 if (!response.ok) {

@@ -25,7 +25,7 @@ const Detail = () => {
     const memoRef = useRef();
     const { workId } = useParams();
 
-    const { decodedToken } = useLoadScript();
+    const { decodedToken , token, Role_level } = useLoadScript();
     const [loginEmpData, setLoginEmpData] = useState({
         userId: "",
         userName: "",
@@ -80,7 +80,13 @@ const Detail = () => {
             if (!loginEmpData.userDeptId) return;
             
             try {
-                const response = await fetch(`https://localhost:443/department/${loginEmpData.userDeptId}`);
+                const response = await fetch(`https://localhost/department/${loginEmpData.userDeptId}`,
+                    {headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json", 
+                        },
+                    }
+                );
                 const data = await response.json();
                 
                 let members = [];
@@ -155,7 +161,13 @@ const Detail = () => {
                 setEmployeeData([]); // 초기화
                 setLoading(true); // 로딩 시작
 
-                const response = await fetch(`https://localhost:443/work/${workId}`);
+                const response = await fetch(`https://localhost/work/${workId}`,
+                    {headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json", 
+                        },
+                    }
+                );
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 } // if
@@ -296,8 +308,12 @@ const Detail = () => {
 
                 console.info("params: ", params.toString());
                 
-                const response = await fetch(`https://localhost:443/work/${employeeData.id}?${params.toString()}`, {
-                    method: "PUT"
+                const response = await fetch(`https://localhost/work/${employeeData.id}?${params.toString()}`, {
+                    method: "PUT",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json", 
+                    },
                 });
 
                 if (!response.ok) {
@@ -348,8 +364,12 @@ const Detail = () => {
                 // 서버에 데이터 전송
                 const fetchData = async () => {
                     try {
-                        const response = await fetch(`https://localhost:443/work/${employeeData.id}`, {
-                            method: "DELETE"
+                        const response = await fetch(`https://localhost/work/${employeeData.id}`, {
+                            method: "DELETE",
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                                "Content-Type": "application/json", 
+                            },
                         });
                         if (response.ok) {
                             Swal.fire("삭제 완료", "업무가 삭제되었습니다.", "success");

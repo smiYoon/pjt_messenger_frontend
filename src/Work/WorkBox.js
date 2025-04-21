@@ -12,7 +12,7 @@ const WorkBox = (props) => {
     
     const navigate = useNavigate();
 
-    const {data, loginEmpData } = props;
+    const {data, loginEmpData, token } = props;
     const [loading, setLoading] = useState(false);
     const [employeeData, setEmployeeData] = useState([]);
     const userData = {
@@ -26,7 +26,13 @@ const WorkBox = (props) => {
                 const fetchData = async () => {
                     try {
                         setLoading(true); // 로딩 시작
-                        const response = await fetch(`https://localhost:443/work/${data.id}`);
+                        const response = await fetch(`https://localhost/work/${data.id}`,
+                            {headers: {
+                                Authorization: `Bearer ${token}`,
+                                "Content-Type": "application/json", 
+                                },
+                            }
+                        );
                         if (!response.ok) {
                             throw new Error("Network response was not ok");
                         } // if

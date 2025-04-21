@@ -13,7 +13,7 @@ const List = () => {
     console.debug("List() invoked.");
 
     const navigate = useNavigate();
-    const { decodedToken } = useLoadScript();
+    const { decodedToken, token, Role_level } = useLoadScript();
     const [work, setWork] = useState("managed"); // 담당업무 = managed, 요청업무 = requested
     const [loginEmpData, setLoginEmpData] = useState({
         userId: "",
@@ -56,16 +56,6 @@ const List = () => {
     const [departmentMembers, setDepartmentMembers] = useState([]); // 부서원들
     const [isEmpModalOpen, setIsEmpModalOpen] = useState(false)
 
-    useEffect(() => {
-        // console.log("work is :", work);
-        // console.log("employeeData is :", employeeData);
-        // console.log("decodedToken is :",decodedToken);
-        // console.log("loginEmpData is :",loginEmpData);
-        // console.log("uploadData is :", uploadData);
-        // console.log("departmentMembers is :", departmentMembers);
-    }, [work, employeeData, uploadData, departmentMembers, loginEmpData]); // useEffect
-    
-
     const handleToggle = () => {
         setWork(work === "managed" ? "requested" : "managed");
         setUploadData({
@@ -88,7 +78,13 @@ const List = () => {
                 });
 
                 // 서버에 데이터 전송
-                const response = await fetch(`https://localhost:443/work?${params}`);
+                const response = await fetch(`https://localhost/work?${params}`,
+                    {headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json", 
+                        },
+                    }
+                );
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 } // if
@@ -112,7 +108,14 @@ const List = () => {
                     empno:loginEmpData.userId,
                     name:loginEmpData.userName
                 }); // 현재 선택된 사원
-                const response = await fetch(`https://localhost:443/department/${loginEmpData.userDeptId}`, { method: "GET"});
+                const response = await fetch(`https://localhost/department/${loginEmpData.userDeptId}`,
+                    {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "application/json", 
+                        }
+                    });
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
@@ -188,7 +191,13 @@ const List = () => {
                     employee: pickedEmployee.empno // 항상 최신 pickedEmployee 사용
                 });
 
-                const response = await fetch(`https://localhost:443/work?${params}`);
+                const response = await fetch(`https://localhost/work?${params}`,
+                    {headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json", 
+                        },
+                    }
+                );
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 } // if
@@ -310,7 +319,7 @@ const List = () => {
                             <div className={styles.emptyText}>업무가 없습니다.</div>
                         ) : (
                             status1List.map(item => (
-                                <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} className={styles.WorkBox}/>
+                                <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} token={token} className={styles.WorkBox}/>
                             ))
                         )}
                     </div>
@@ -326,7 +335,7 @@ const List = () => {
                                 <div className={styles.emptyText}>업무가 없습니다.</div>
                             ) : (
                                 status2List.map(item => (
-                                    <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} className={styles.WorkBox}/>
+                                    <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} token={token} className={styles.WorkBox}/>
                                 ))
                             )}
                     </div>
@@ -342,7 +351,7 @@ const List = () => {
                                 <div className={styles.emptyText}>업무가 없습니다.</div>
                             ) : (
                                 status3List.map(item => (
-                                    <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} className={styles.WorkBox}/>
+                                    <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} token={token} className={styles.WorkBox}/>
                                 ))
                             )}
                     </div>
@@ -358,7 +367,7 @@ const List = () => {
                                 <div className={styles.emptyText}>업무가 없습니다.</div>
                             ) : (
                                 status4List.map(item => (
-                                    <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} className={styles.WorkBox}/>
+                                    <WorkBox key={item.id} data={item} loginEmpData={loginEmpData} token={token} className={styles.WorkBox}/>
                                 ))
                             )}
                     </div>
