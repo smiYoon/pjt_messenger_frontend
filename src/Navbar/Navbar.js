@@ -42,10 +42,22 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.buttons}>
+        {decodedToken.position == 5 ? (
         <Link to={`/member/list`} className={styles.flip}>
           <i className={`${styles.icon} fas fa-user`} />
           <div className={styles.text}>회원관리</div>
         </Link>
+        ) : (
+          <a
+          href="#"
+          className={styles.flip}
+          onClick={handleLinkClick}
+          style={{ cursor: 'pointer' }}
+        >
+          <i className={`${styles.icon} fas fa-user`} />
+          <div className={styles.text}>원관리</div>
+        </a>
+        )}
 
         {decodedToken.position != 5 ? (
           <Link to={`/chat`} className={styles.flip}>
@@ -64,7 +76,7 @@ const Navbar = () => {
           </a>
         )}
 
-        {decodedToken.position != '4' ? (
+        {decodedToken.position != 4 && decodedToken.position != 5 ? (
           <Link to={`/work`} className={styles.flip}>
             <i className={`${styles.icon} fas fa-file-pen`} />
             <div className={styles.text}>업무</div>
@@ -77,7 +89,7 @@ const Navbar = () => {
             style={{ cursor: 'pointer' }}
           >
             <i className={`${styles.icon} fas fa-file-pen`} />
-            <div className={styles.text}>업무</div>
+            <div className={styles.text}>무업</div>
           </a>
         )}
 
@@ -86,7 +98,7 @@ const Navbar = () => {
           <div className={styles.text}>게시판</div>
         </Link>
 
-        {decodedToken.position != 1 ? (
+        {decodedToken.position != 1 && decodedToken.position != 5 ? (
           <Link to={`/project/list`} className={styles.flip}>
             <i className={`${styles.icon} fa-solid fa-list-check`} />
             <div className={styles.text}>프로젝트</div>
