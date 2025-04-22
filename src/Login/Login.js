@@ -42,7 +42,6 @@ const Login = () => {
             const response = await fetch('https://localhost/auth/login', {
                 method: 'POST',
                 body: formData,
-
             });
 
             const result = await response.json(); // json 파싱

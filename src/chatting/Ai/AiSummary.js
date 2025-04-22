@@ -86,7 +86,7 @@ const AiSummary = ({ id, setChatrooms, setSelectedChatRoom, selectedChatRoom , s
             const response = await fetch(`https://localhost:443/message/${id}/summarize`, {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer ${token}` // ✅ 토큰 추가
+                    Authorization: `Bearer ${token}` 
                 },
                 body: formData
             });
