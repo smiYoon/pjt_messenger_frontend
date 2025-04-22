@@ -31,15 +31,6 @@ const Chat_main = () => {
         const newSocket = new WebSocket(`wss://192.168.0.83/chatroom?chatId=${selectedChatRoom?.id}&empno=${empno}`);
         setSocket(newSocket);
 
-        newSocket.onmessage = (event) => {
-            const message = JSON.parse(event.data);
-            console.log("받은 메시지:", message);
-            if (message.type === 'invite' && message.type === 'leave') {
-                fetchChatrooms();
-            }
-            setMessages((prev) => [...prev, { ...message, isSystemMessage: message.type !== 'message' }]);
-        };
-
         newSocket.onopen = () => {
             console.log("WebSocket 연결됨");
         };
@@ -128,7 +119,7 @@ const Chat_main = () => {
 
             <div className={styles.centerbox}>
                 <Roomheader selectedChatRoom={selectedChatRoom} />
-                <Chatting selectedChatRoom={selectedChatRoom} id={selectedChatRoom?.id} messages={messages} setMessages={setMessages} socket={socket}/>
+                <Chatting selectedChatRoom={selectedChatRoom} id={selectedChatRoom?.id} messages={messages} setMessages={setMessages} socket={socket} fetchChatrooms={fetchChatrooms}/>
             </div>
 
             <div className={styles.rightbox}>
