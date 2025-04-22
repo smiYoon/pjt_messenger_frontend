@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { pjtStatusMapping } from '../CodeContext';
+import { useLoadScript } from "../LoadScriptContext";
 
 // console.groupCollapsed("src/Project/Modify.js");console.groupEnd();
 
@@ -16,7 +17,7 @@ const Modify = ({ closeModal, infoAlert, project, handleGetUpComingList, handleG
   const onClose = () => {
     closeModal();
   };
-
+  const {token, decodedToken} = useLoadScript;
   const [selectList, setSelectList] = useState([]);
 
   const [startDate, setStartDate] = useState(project.startDate);
@@ -41,7 +42,12 @@ const Modify = ({ closeModal, infoAlert, project, handleGetUpComingList, handleG
       try {
         const response = await fetch(
           "https://localhost:443/employee/selectlist",
-          { method: "GET" }
+          { method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json", 
+            },
+           }
         );
         if (response.ok) {
           const data = await response.json();

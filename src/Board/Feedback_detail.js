@@ -7,7 +7,7 @@ import { useLoadScript } from '../LoadScriptContext';
 
 const Feedback_detail = () => {
 
-  const { decodedToken, role_level } = useLoadScript();
+  const { decodedToken, role_level, token } = useLoadScript();
   const navigate = useNavigate();
   const [post, setPost] = useState([]);
   const { id } = useParams();
@@ -18,6 +18,10 @@ const Feedback_detail = () => {
       try {
         const response = await fetch(`https://localhost:443/board/feedback/${id}`, {
           method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
         });
 
         if (response.ok) {
@@ -60,6 +64,10 @@ const Feedback_detail = () => {
       try {
         const response = await fetch(`https://localhost/board/feedback/${id}`, {
           method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
         });
 
         if (response.ok) {

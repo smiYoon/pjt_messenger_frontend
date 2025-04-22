@@ -9,6 +9,8 @@ export const LoadScriptProvider = ({ children }) => {
     const [decodedToken, setDecodedToken] = useState(null); // [] -> null 로 변경.
     const [token, setToken] = useState(localStorage.getItem('jwt') || null); // 수정점.
 
+
+   
     useEffect(() => {
         const loadToken = () => {
             try {
@@ -64,12 +66,6 @@ export const LoadScriptProvider = ({ children }) => {
     };
 
     const role_level = {
-        // "ROLE_Employee": 1,
-        // "ROLE_TeamLeader": 2,
-        // "ROLE_DepartmentLeader": 3,
-        // "ROLE_CEO": 4,
-        // "ROLE_HireManager": 5,
-        // "ROLE_SystemManager": 9,
         "Employee": 1,
         "TeamLeader": 2,
         "DepartmentLeader": 3,
@@ -89,8 +85,16 @@ export const LoadScriptProvider = ({ children }) => {
 
     const pjtStatusMapping = { 1: "진행예정", 2: "진행중", 3: "종료" };
 
+    const userRole = Array.isArray(decodedToken?.roles)
+    ? decodedToken.roles[0]
+    : decodedToken?.roles;
+    const isTopLevel = role_level?.[userRole] === 9; // 수정점 04.22
+
+
+
+
     return (
-        <LoadScriptContext.Provider value={{ token, decodedToken, updateToken, role_level, deptName, empPositionMapping, pjtStatusMapping }}>
+        <LoadScriptContext.Provider value={{ token, decodedToken, updateToken, role_level, deptName, empPositionMapping, pjtStatusMapping, isTopLevel }}>
             {children}
         </LoadScriptContext.Provider>
     );
