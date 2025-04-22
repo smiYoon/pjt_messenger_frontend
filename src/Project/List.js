@@ -24,6 +24,11 @@ const List = () => {
 
 
 
+  // 상태 및 타입 매핑
+  const statusMapping = { 1: "진행예정", 2: "진행중", 3: "종료" };
+
+
+
 
   // upComingList, list
   const [upComingList, setUpComingList] = useState([]);

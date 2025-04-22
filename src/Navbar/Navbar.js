@@ -9,7 +9,8 @@ import Swal from 'sweetalert2';
 const Navbar = () => {
   const { role_level, decodedToken } = useLoadScript();
 
-  console.group('Navbar() invoked.'); console.groupEnd();
+  // decodedToken이 로딩되기 전에는 아무것도 렌더링하지 않도록 처리
+  if (!decodedToken) return null;
 
   const handleLinkClick = (e) => {
     e.preventDefault();

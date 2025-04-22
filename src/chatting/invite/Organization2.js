@@ -46,7 +46,7 @@ const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id }) => {
     inviteList.forEach(emp => formData.append("empnos", emp.id));
 
     try {
-      const response = await fetch(`https://localhost:443/chat/${id}`, {
+      const res = await fetch(`https://localhost:443/chat/${id}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`, // ✅ 토큰 추가
@@ -55,7 +55,7 @@ const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id }) => {
         
       });
   
-      const result = await response.json();
+      const result = await res.json();
       console.log("서버 응답:", result);
 
       await Swal.fire({
