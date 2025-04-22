@@ -6,7 +6,6 @@ import styles from "./Create.module.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useLoadScript } from '../LoadScriptContext';
-import { pjtStatusMapping } from '../CodeContext';
 
 // console.groupCollapsed("src/Project/Create.js");console.groupEnd();
 
@@ -17,7 +16,7 @@ const Create = ({ closeModal, infoAlert, handleGetUpComingList, handleGetList })
     closeModal();
   };
 
-  const { decodedToken, token } = useLoadScript();
+  const { decodedToken, token, pjtStatusMapping } = useLoadScript();
 
   const [selectList, setSelectList] = useState([]);
 

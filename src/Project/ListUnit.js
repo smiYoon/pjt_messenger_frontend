@@ -12,7 +12,7 @@ import { useLoadScript } from '../LoadScriptContext';
 const ListUnit = ({ project, onDelete, infoAlert, handleGetUpComingList, handleGetList }) => {
   // console.group('ListUnit(', project, statusMapping, ') invoked.'); console.groupEnd();
 
-  const { decodedToken, token, isTopLevel } = useLoadScript();
+  const { decodedToken, isTopLevel, pjtStatusMapping, empPositionMapping } = useLoadScript();
   
   const statusColor = (status) => {
     switch (status) {
@@ -110,7 +110,7 @@ const ListUnit = ({ project, onDelete, infoAlert, handleGetUpComingList, handleG
               </div>
               {showEditMenu === project.id 
                 && (
-                  (decodedToken.empno === project.pjtCreator.empno || decodedToken.empno === project.pjtManager.empno || decodedToken.position === 9 || isTopLevel)  ? (
+                  (decodedToken.empno === project.pjtCreator.empno || decodedToken.empno === project.pjtManager.empno || isTopLevel)  ? (
                       <div ref={editMenuRef} className={styles.editMenu}>
                         <div
                           className={styles.dotBtnEdit}

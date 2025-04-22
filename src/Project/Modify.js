@@ -7,15 +7,13 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { useLoadScript } from '../LoadScriptContext';
-import { pjtStatusMapping } from '../CodeContext';
-import { useLoadScript } from "../LoadScriptContext";
 
 // console.groupCollapsed("src/Project/Modify.js");console.groupEnd();
 
 const Modify = ({ closeModal, infoAlert, project, handleGetUpComingList, handleGetList }) => {
   // console.group("Modify(", project, ") invoked.");  console.groupEnd();
 
-  const { token } = useLoadScript();
+  const { pjtStatusMapping, token } = useLoadScript();
 
   const onClose = () => {
     closeModal();

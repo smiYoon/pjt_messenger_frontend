@@ -13,13 +13,13 @@ const List = () => {
   // console.group("List() invoked.");  console.groupEnd();
 
 
-    const { decodedToken, role_level , token, pjtStatusMapping } = useLoadScript();
+  const { decodedToken, role_level, token, pjtStatusMapping } = useLoadScript();
   console.log('로그인 사용자정보:', decodedToken);
 
   const userRole = Array.isArray(decodedToken?.roles)
-      ? decodedToken.roles[0]
-      : decodedToken?.roles;
-    const userRoleLevel = role_level[userRole]; // 수정
+    ? decodedToken.roles[0]
+    : decodedToken?.roles;
+  const userRoleLevel = role_level[userRole]; // 수정
 
 
   // upComingList, list
@@ -31,7 +31,7 @@ const List = () => {
   const [pageSize] = useState(4);
   const [blockSize] = useState(10);
   const [totalPageCnt, setTotalPageCnt] = useState(0);
-  const [currBlock, setCurrBlock] = useState(Math.floor((currPage-1) / blockSize));
+  const [currBlock, setCurrBlock] = useState(Math.floor((currPage - 1) / blockSize));
 
   const [startPage, setStartPage] = useState(currBlock * blockSize);
   const [endPage, setEndPage] = useState(
@@ -39,7 +39,7 @@ const List = () => {
   );
 
   useEffect(() => {
-    setCurrBlock(Math.floor((currPage-1) / blockSize));
+    setCurrBlock(Math.floor((currPage - 1) / blockSize));
     setStartPage(currBlock * blockSize);
     setEndPage(Math.min(startPage + blockSize, totalPageCnt));
   }, [currPage, totalPageCnt, currBlock, startPage, endPage]);
@@ -135,7 +135,7 @@ const List = () => {
           ...data,
         }));
 
-        setCurrBlock(Math.floor((currPage-1) / blockSize));
+        setCurrBlock(Math.floor((currPage - 1) / blockSize));
         setStartPage(currBlock * blockSize);
         setEndPage(Math.min(startPage + blockSize, totalPageCnt));
 
@@ -148,7 +148,7 @@ const List = () => {
         console.error("Error fetching data:", error);
       }
     },
-    [ token, searchData, currPage]
+    [token, searchData, currPage]
   );
 
   // 컴포넌트 마운트 시 첫 데이터 로드
@@ -172,9 +172,9 @@ const List = () => {
         const response = await fetch(`https://localhost:443/project/${pjtId}`, {
           method: "DELETE",
           headers: {
-                 Authorization: `Bearer ${token}`,
-                 "Content-Type": "application/json", 
-               },
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         });
 
         if (response.ok) {
@@ -296,7 +296,7 @@ const List = () => {
               </button>
               {userRoleLevel === 3 || userRoleLevel === 9 ? ( // 수정점.
                 <button onClick={openProjectRegister}>등록</button>
-                ) : (<div></div>)
+              ) : (<div></div>)
               }
             </div>
           </div>
@@ -316,11 +316,11 @@ const List = () => {
 
           <div className={pagingStyles.pageBar}>
 
-          {/* currPage: {currPage} / totalPageCnt:{totalPageCnt} / startPage:{startPage} / endPage:{endPage} */}
-            
+            {/* currPage: {currPage} / totalPageCnt:{totalPageCnt} / startPage:{startPage} / endPage:{endPage} */}
+
             <div className={pagingStyles.pageBox}>
 
-{/*               
+              {/*               
               <div
                 className={pagingStyles.pageNum}
                 onClick={() => handleGetList(1)}
@@ -329,9 +329,9 @@ const List = () => {
                 처음
               </div> */}
 
-              <div 
-                className={pagingStyles.pageNum} 
-                onClick={() => handleGetList(startPage-blockSize+1)} 
+              <div
+                className={pagingStyles.pageNum}
+                onClick={() => handleGetList(startPage - blockSize + 1)}
                 style={{ display: currPage <= 10 ? "none" : "" }}
               >
                 <i className="fas fa-angles-left"></i>
@@ -366,14 +366,14 @@ const List = () => {
                 <i className="fas fa-angle-right"></i>
               </div>
 
-              <div 
-                className={pagingStyles.pageNum} 
-                onClick={() => handleGetList(endPage+1)} 
-                style={{ display: (endPage+1) > totalPageCnt ? "none" : "" }}
+              <div
+                className={pagingStyles.pageNum}
+                onClick={() => handleGetList(endPage + 1)}
+                style={{ display: (endPage + 1) > totalPageCnt ? "none" : "" }}
               >
                 <i className="fas fa-angles-right"></i>
               </div>
-{/* 
+              {/* 
               <div
                 className={pagingStyles.pageNum}
                 onClick={() => handleGetList(totalPageCnt)}
