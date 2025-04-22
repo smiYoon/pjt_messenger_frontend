@@ -7,7 +7,7 @@ import { useLoadScript } from '../LoadScriptContext';
 import Swal from 'sweetalert2';
 
 const List_member = () => {
-  const { deptName, level } = useLoadScript();
+  const { deptName, empPositionMapping } = useLoadScript();
   const [searchWord, setSearchWord] = useState("");
   const [searchText, setSearchText] = useState("");
   const [appliedSearchText, setAppliedSearchText] = useState("");
@@ -157,7 +157,7 @@ const List_member = () => {
               <div key={member.empno} className={styles.card}>
                 <img src={profile} alt='' />
                 <div className={styles.name}>
-                  {level[member.position]}
+                  {empPositionMapping[member.position]}
                 </div>
                 <div className={styles.name}>
                   {member.name}

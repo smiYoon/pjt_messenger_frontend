@@ -8,16 +8,12 @@ export const LoadScriptProvider = ({ children }) => {
 
     const [decodedToken, setDecodedToken] = useState(null); // [] -> null 로 변경.
     const [token, setToken] = useState(localStorage.getItem('jwt') || null); // 수정점.
-    
+
     useEffect(() => {
         const loadToken = () => {
             try {
-                // const token = localStorage.getItem('jwt');
                 const stored = localStorage.getItem('jwt');
-                // if (!token) return;
                 if (!stored) return; // 수정점.
-                // const decoded = jwtDecode(token);
-                // setDecodedToken(decoded);
                 setToken(stored); // 수정점.
                 const decoded = jwtDecode(stored);
                 setDecodedToken(decoded);
@@ -82,17 +78,19 @@ export const LoadScriptProvider = ({ children }) => {
         "SystemManager": 9,
     };
 
-    const level = {
-        "1": "팀원",
-        "2": "팀장",
-        "3": "부서장",
-        "4": "CEO",
-        "5": "인사담당자",
-        "9": "시스템관리자",
-      };
+    const empPositionMapping = {
+        1: "팀원",
+        2: "팀장",
+        3: "부서장",
+        4: "CEO",
+        5: "인사담당자",
+        9: "시스템관리자"
+    };
+
+    const pjtStatusMapping = { 1: "진행예정", 2: "진행중", 3: "종료" };
 
     return (
-        <LoadScriptContext.Provider value={{ token, decodedToken, updateToken, role_level, deptName, level }}>
+        <LoadScriptContext.Provider value={{ token, decodedToken, updateToken, role_level, deptName, empPositionMapping, pjtStatusMapping }}>
             {children}
         </LoadScriptContext.Provider>
     );
