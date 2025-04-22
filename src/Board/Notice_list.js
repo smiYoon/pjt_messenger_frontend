@@ -3,10 +3,9 @@ import styles from "./Notice_list.module.css";
 import pagingStyles from "../Project/PagingStyle.module.css";
 import { Link } from "react-router-dom";
 import { useLoadScript } from "../LoadScriptContext";
-import { empPositionMapping } from "../CodeContext";
 
 const Notice_list = () => {
-    const { decodedToken, role_level, token } = useLoadScript();
+    const { decodedToken, role_level, token, empPositionMapping } = useLoadScript();
     // console.log('사용자정보(공지사항):', decodedToken);
 
     
@@ -181,7 +180,7 @@ const Notice_list = () => {
                                 ></input>
                                 <i className="fa-solid fa-magnifying-glass" />
                             </div>
-                            
+
                             <button
                                 className={`${styles.button} ${styles.btnStyle_yg}`}
                                 onClick={() => handleGetList(1)}

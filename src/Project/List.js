@@ -6,7 +6,6 @@ import pagingStyles from "./PagingStyle.module.css"
 
 import { P_ListUpComing, P_ListUnit, P_Create } from "./";
 import { useLoadScript } from '../LoadScriptContext';
-import { pjtStatusMapping } from '../CodeContext';
 
 // console.groupCollapsed("src/Project/List.js");console.groupEnd();
 
@@ -14,20 +13,13 @@ const List = () => {
   // console.group("List() invoked.");  console.groupEnd();
 
 
-    const { decodedToken, role_level , token } = useLoadScript();
+    const { decodedToken, role_level , token, pjtStatusMapping } = useLoadScript();
   console.log('로그인 사용자정보:', decodedToken);
 
   const userRole = Array.isArray(decodedToken?.roles)
       ? decodedToken.roles[0]
       : decodedToken?.roles;
     const userRoleLevel = role_level[userRole]; // 수정
-
-
-
-  // 상태 및 타입 매핑
-  const statusMapping = { 1: "진행예정", 2: "진행중", 3: "종료" };
-
-
 
 
   // upComingList, list
@@ -302,10 +294,10 @@ const List = () => {
               >
                 검색
               </button>
-              {/* {role_level[decodedToken.roles] === 3 ? ( */}
               {userRoleLevel === 3 || userRoleLevel === 9 ? ( // 수정점.
                 <button onClick={openProjectRegister}>등록</button>
-              ) : (<div></div>)}
+                ) : (<div></div>)
+              }
             </div>
           </div>
 

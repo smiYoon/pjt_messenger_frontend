@@ -6,7 +6,6 @@ import styles from "./ListUnit.module.css";
 
 import { RxLapTimer } from "react-icons/rx";
 import { useLoadScript } from '../LoadScriptContext';
-import { pjtStatusMapping, empPositionMapping } from '../CodeContext';
 
 // console.groupCollapsed("src/Project/ListUnit.js");console.groupEnd();
 

@@ -6,6 +6,7 @@ import styles from "./Create.module.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { useLoadScript } from '../LoadScriptContext';
 import { pjtStatusMapping } from '../CodeContext';
 import { useLoadScript } from "../LoadScriptContext";
 
@@ -14,10 +15,11 @@ import { useLoadScript } from "../LoadScriptContext";
 const Modify = ({ closeModal, infoAlert, project, handleGetUpComingList, handleGetList }) => {
   // console.group("Modify(", project, ") invoked.");  console.groupEnd();
 
+  const { token } = useLoadScript();
+
   const onClose = () => {
     closeModal();
   };
-  const {token, decodedToken} = useLoadScript;
   const [selectList, setSelectList] = useState([]);
 
   const [startDate, setStartDate] = useState(project.startDate);
@@ -42,12 +44,12 @@ const Modify = ({ closeModal, infoAlert, project, handleGetUpComingList, handleG
       try {
         const response = await fetch(
           "https://localhost:443/employee/selectlist",
-          { method: "GET",
+          {
+            method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json", 
             },
-           }
+          }
         );
         if (response.ok) {
           const data = await response.json();
@@ -94,6 +96,9 @@ const Modify = ({ closeModal, infoAlert, project, handleGetUpComingList, handleG
         {
           method: "PUT",
           body: formData,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
 
       if (response.ok) {
@@ -143,86 +148,86 @@ const Modify = ({ closeModal, infoAlert, project, handleGetUpComingList, handleG
 
         {/* <form> */}
 
-          <div className={styles.container}>
-            <div className={styles.pageTitle}>Project Modify</div>
+        <div className={styles.container}>
+          <div className={styles.pageTitle}>Project Modify</div>
 
-            <div className={styles.contentItem}>
-              <label>프로젝트명</label>
-              <input
-                type="text"
-                name="name"
-                className={styles.input}
-                placeholder="프로젝트명을 입력하세요."
-                value={postData.name}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className={styles.contentItem}>
-              <label>기간</label>
-              <DatePicker
-                selected={startDate}
-                onChange={(date) =>
-                  setStartDate(date ? date.toISOString().slice(0, 10) : "")
-                }
-                dateFormat="yyyy-MM-dd"
-                className={styles.inputDate}
-                placeholder="시작일자을 입력하세요."
-              />
-              <span className={styles.tilde}>~</span>
-              <DatePicker
-                selected={endDate}
-                onChange={(date) =>
-                  setEndDate(date ? date.toISOString().slice(0, 10) : "")
-                }
-                dateFormat="yyyy-MM-dd"
-                className={styles.inputDate}
-                placeholder="종료일자을 입력하세요."
-              />
-            </div>
-
-            <div className={styles.contentItem}>
-              <label>종괄 담당자</label>
-              <select name="managerEmpno" className={styles.select}
-                onChange={handleChange}
-              >
-                <option value="">== 총괄 담당자를 선택하세요. ==</option>
-                {selectList.map((emp) => (
-                  <option value={emp.empno} selected={emp.empno === postData.managerEmpno}>{emp.department} {emp.position} {emp.name}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className={styles.contentItem}>
-              <label>진행상태</label>
-              <select name="status" className={styles.select}
-                onChange={handleChange}
-              >
-                <option value="">== 진행상태를 선택하세요. ==</option>
-                {Object.entries(pjtStatusMapping).map(([sKey, sValue]) => (
-                  <option value={sKey} selected={sKey == postData.status}>{sValue}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className={styles.contentItem}>
-              <label>내용</label>
-              <textarea
-                name="detail"
-                className={styles.textarea}
-                placeholder="내용을 입력하세요."
-                value={postData.detail}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className={styles.buttonBox}>
-              <button onClick={handleModifyClick}>저장</button>
-              <button onClick={onClose} className={styles.btnStyle_gray}>
-                취소
-              </button>
-            </div>
+          <div className={styles.contentItem}>
+            <label>프로젝트명</label>
+            <input
+              type="text"
+              name="name"
+              className={styles.input}
+              placeholder="프로젝트명을 입력하세요."
+              value={postData.name}
+              onChange={handleChange}
+            />
           </div>
+
+          <div className={styles.contentItem}>
+            <label>기간</label>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) =>
+                setStartDate(date ? date.toISOString().slice(0, 10) : "")
+              }
+              dateFormat="yyyy-MM-dd"
+              className={styles.inputDate}
+              placeholder="시작일자을 입력하세요."
+            />
+            <span className={styles.tilde}>~</span>
+            <DatePicker
+              selected={endDate}
+              onChange={(date) =>
+                setEndDate(date ? date.toISOString().slice(0, 10) : "")
+              }
+              dateFormat="yyyy-MM-dd"
+              className={styles.inputDate}
+              placeholder="종료일자을 입력하세요."
+            />
+          </div>
+
+          <div className={styles.contentItem}>
+            <label>종괄 담당자</label>
+            <select name="managerEmpno" className={styles.select}
+              onChange={handleChange}
+            >
+              <option value="">== 총괄 담당자를 선택하세요. ==</option>
+              {selectList.map((emp) => (
+                <option value={emp.empno} selected={emp.empno === postData.managerEmpno}>{emp.department} {emp.position} {emp.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className={styles.contentItem}>
+            <label>진행상태</label>
+            <select name="status" className={styles.select}
+              onChange={handleChange}
+            >
+              <option value="">== 진행상태를 선택하세요. ==</option>
+              {Object.entries(pjtStatusMapping).map(([sKey, sValue]) => (
+                <option value={sKey} selected={sKey == postData.status}>{sValue}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className={styles.contentItem}>
+            <label>내용</label>
+            <textarea
+              name="detail"
+              className={styles.textarea}
+              placeholder="내용을 입력하세요."
+              value={postData.detail}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className={styles.buttonBox}>
+            <button onClick={handleModifyClick}>저장</button>
+            <button onClick={onClose} className={styles.btnStyle_gray}>
+              취소
+            </button>
+          </div>
+        </div>
 
         {/* </form> */}
 

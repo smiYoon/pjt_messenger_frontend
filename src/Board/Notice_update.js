@@ -5,9 +5,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useLoadScript } from '../LoadScriptContext';
 
 const Notice_update = () => {
+  const {token} = useLoadScript;
 
-
-  const {token, decodedToken} = useLoadScript;
   const navigate = useNavigate();
   const [post, setPost] = useState({
     title: "",

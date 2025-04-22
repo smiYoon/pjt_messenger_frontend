@@ -17,7 +17,7 @@ const Create = ({ closeModal, infoAlert, handleGetUpComingList, handleGetList })
     closeModal();
   };
 
-  const { decodedToken, role_level } = useLoadScript();
+  const { decodedToken, token } = useLoadScript();
 
   const [selectList, setSelectList] = useState([]);
 
@@ -42,7 +42,12 @@ const Create = ({ closeModal, infoAlert, handleGetUpComingList, handleGetList })
       try {
         const response = await fetch(
           "https://localhost:443/employee/selectlist",
-          { method: "GET" }
+          { 
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (response.ok) {
           const data = await response.json();
@@ -91,6 +96,9 @@ const Create = ({ closeModal, infoAlert, handleGetUpComingList, handleGetList })
         {
           method: "POST",
           body: formData,
+          headers: {
+              Authorization: `Bearer ${token}`,
+          },
         });
 
       if (response.ok) {

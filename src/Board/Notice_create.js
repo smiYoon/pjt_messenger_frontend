@@ -32,6 +32,7 @@ const Notice_create = () => {
   };
 
   const [registerForm, setRegisterForm] = useState({
+    type: 1, //공지사항
     title: '',
     detail: '',
   });
@@ -72,6 +73,10 @@ const Notice_create = () => {
           'Content-Type': 'application/json',
       },
         body: formData,
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
       });
 
       if (response.ok) {
