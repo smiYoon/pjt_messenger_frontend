@@ -6,7 +6,7 @@ import { useLoadScript } from '../LoadScriptContext';
 
 
 const Notice_detail = () => {
-  const { decodedToken } = useLoadScript();
+  const { decodedToken, token } = useLoadScript();
   const navigate = useNavigate();
   const [post, setPost] = useState([]);
   const { id } = useParams();
@@ -17,6 +17,10 @@ const Notice_detail = () => {
       try {
         const response = await fetch(`https://localhost:443/board/notice/${id}`, {
           method: 'GET',
+          headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+          },
         });
 
         if (response.ok) {

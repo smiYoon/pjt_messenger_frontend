@@ -6,14 +6,13 @@ import styles from "./ListUnit.module.css";
 
 import { RxLapTimer } from "react-icons/rx";
 import { useLoadScript } from '../LoadScriptContext';
-import { pjtStatusMapping, empPositionMapping } from '../CodeContext';
 
 // console.groupCollapsed("src/Project/ListUnit.js");console.groupEnd();
 
 const ListUnit = ({ project, onDelete, infoAlert, handleGetUpComingList, handleGetList }) => {
   // console.group('ListUnit(', project, statusMapping, ') invoked.'); console.groupEnd();
 
-  const { decodedToken } = useLoadScript();
+  const { decodedToken, pjtStatusMapping, empPositionMapping } = useLoadScript();
 
   const statusColor = (status) => {
     switch (status) {

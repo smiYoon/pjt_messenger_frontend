@@ -6,12 +6,15 @@ import styles from "./Create.module.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { useLoadScript } from '../LoadScriptContext';
 import { pjtStatusMapping } from '../CodeContext';
 
 // console.groupCollapsed("src/Project/Modify.js");console.groupEnd();
 
 const Modify = ({ closeModal, infoAlert, project, handleGetUpComingList, handleGetList }) => {
   // console.group("Modify(", project, ") invoked.");  console.groupEnd();
+
+  const { token } = useLoadScript();
 
   const onClose = () => {
     closeModal();
@@ -41,7 +44,12 @@ const Modify = ({ closeModal, infoAlert, project, handleGetUpComingList, handleG
       try {
         const response = await fetch(
           "https://localhost:443/employee/selectlist",
-          { method: "GET" }
+          { 
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (response.ok) {
           const data = await response.json();
@@ -88,6 +96,9 @@ const Modify = ({ closeModal, infoAlert, project, handleGetUpComingList, handleG
         {
           method: "PUT",
           body: formData,
+          headers: {
+              Authorization: `Bearer ${token}`,
+          },
         });
 
       if (response.ok) {

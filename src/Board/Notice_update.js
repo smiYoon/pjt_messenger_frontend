@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react'
 import Swal from 'sweetalert2';
 import styles from './Notice_update.module.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useLoadScript } from '../LoadScriptContext';
 
 const Notice_update = () => {
+  const { token } = useLoadScript();
 
   const navigate = useNavigate();
   const [post, setPost] = useState({
@@ -47,6 +49,10 @@ const Notice_update = () => {
       try {
         const response = await fetch(`https://localhost:443/board/notice/${id}`, {
           method: 'GET',
+          headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+          },
         });
 
         if (response.ok) {
@@ -82,6 +88,10 @@ const Notice_update = () => {
       const response = await fetch(`https://localhost:443/board/notice/${id}`, {
         method: 'PUT', // 수정 요청은 PUT 메서드 사용
         body: formData,
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
       });
 
       if (response.ok) {

@@ -3,10 +3,9 @@ import styles from "./Notice_list.module.css";
 import pagingStyles from "../Project/PagingStyle.module.css";
 import { Link } from "react-router-dom";
 import { useLoadScript } from "../LoadScriptContext";
-import { empPositionMapping } from "../CodeContext";
 
 const Notice_list = () => {
-    const { decodedToken, role_level } = useLoadScript();
+    const { decodedToken, role_level, token, empPositionMapping } = useLoadScript();
     // console.log('사용자정보(공지사항):', decodedToken);
 
     const [list, setList] = useState([]);
@@ -75,6 +74,10 @@ const Notice_list = () => {
                     `https://localhost/board/notice?${params.toString()}`,
                     {
                         method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "application/json",
+                        },
                     }
                 );
 
@@ -127,7 +130,7 @@ const Notice_list = () => {
                 <div className={styles.list_container}>
                     <div className={styles.header}>Notification</div>
                     <div className={styles.option_box}>
-                        {role_level[decodedToken.roles] != 1 && (
+                        {role_level[decodedToken.position] > 1 && (
                             <Link to={`/board/notice/create`} className={styles.button}>
                                 등록
                             </Link>
@@ -150,13 +153,13 @@ const Notice_list = () => {
                                     className={styles.input}
                                     placeholder="검색어를 입력하세요."
                                     onChange={(e) =>
-                                        handleSearchData("searchText", e.target.vale)
+                                        handleSearchData("searchText", e.target.value)
                                     }
                                     onKeyUp={handleKeyPress}
                                 ></input>
                                 <i className="fa-solid fa-magnifying-glass" />
                             </div>
-                            
+
                             <button
                                 className={`${styles.button} ${styles.btnStyle_yg}`}
                                 onClick={() => handleGetList(1)}
