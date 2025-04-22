@@ -254,7 +254,10 @@ const List = () => {
         try {
             // 1. 기존 데이터 조회
             const currentDataResponse = await fetch(`https://localhost/work/${draggedWork.id}`, {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: { 
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                }
             });
             if (!currentDataResponse.ok) throw new Error("데이터 조회 실패");
             const currentData = await currentDataResponse.json();
