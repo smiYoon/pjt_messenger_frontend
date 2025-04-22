@@ -56,13 +56,11 @@ const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id , socket}) =>
 
       if (socket?.readyState === WebSocket.OPEN) {
         const inviteMessage = {
-          type: "invite",
+          type: "INVITE",
           chatId: id,
-          employee: {
-            empno: decodedToken.empno,
-            name: decodedToken.name,
-          },
+          empno: decodedToken.empno,
           invitedEmpnos: inviteList.map(emp => emp.id),
+          detail: `${inviteList.length}명 초대함`
         };
       
         socket.send(JSON.stringify(inviteMessage));
