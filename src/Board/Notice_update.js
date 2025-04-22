@@ -9,6 +9,7 @@ const Notice_update = () => {
 
   const navigate = useNavigate();
   const [post, setPost] = useState({
+    type: 2,
     title: "",
     detail: "",
   });
@@ -51,7 +52,6 @@ const Notice_update = () => {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
         },
         });
 
@@ -90,7 +90,6 @@ const Notice_update = () => {
         body: formData,
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
       },
       });
 

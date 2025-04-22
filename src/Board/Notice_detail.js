@@ -65,7 +65,6 @@ const Notice_detail = () => {
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
         },
         });
 

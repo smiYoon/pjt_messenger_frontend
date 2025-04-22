@@ -11,6 +11,7 @@ const Feedback_update = () => {
 
     const navigate = useNavigate();
     const [post, setPost] = useState({
+      type: 2,
       title: "",
       detail: "",
     });
@@ -53,7 +54,6 @@ const Feedback_update = () => {
             method: 'GET',
             headers: {
               Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
           },
           });
   
@@ -92,7 +92,6 @@ const Feedback_update = () => {
           body: formData,
           headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
         },
         });
   

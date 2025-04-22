@@ -31,6 +31,7 @@ const Feedback_create = () => {
   };
 
   const [registerForm, setRegisterForm] = useState({
+    type: 2, //건의사항
     title: '',
     detail: '',
   });
@@ -56,10 +57,11 @@ const Feedback_create = () => {
 
     try {
       const formData = new FormData();
+      formData.append("type", registerForm.type);
       formData.append("title", registerForm.title);
       formData.append("detail", registerForm.detail);
       formData.append("authorEmpno", decodedToken.empno);
-      formData.append("position", role_level[decodedToken.roles]);
+      formData.append("position", decodedToken.position);
 
 
       console.log("registerForm:", registerForm);
@@ -68,7 +70,6 @@ const Feedback_create = () => {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
       },
         body: formData,
       });
