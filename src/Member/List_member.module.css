@@ -190,7 +190,7 @@
     width: 100%;
     align-items: center;
     position: absolute;
-    top: 100px;
+    bottom: 200px;
 }
 
 .deptContainer .deptButton {
