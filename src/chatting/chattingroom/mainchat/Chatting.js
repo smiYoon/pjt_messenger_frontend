@@ -3,13 +3,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { BsArrowUpCircleFill } from "react-icons/bs";
 import { useLoadScript } from "../../../LoadScriptContext";
 
-const Chatting = ({id, messages, setMessages}) => {
+const Chatting = ({id, messages, setMessages, socket, fetchChatrooms}) => {
 
     const { decodedToken, token } = useLoadScript(); // ✅ token 가져옴
     const empno = decodedToken?.empno;
 
     const [inputValue, setInputValue] = useState("");
-    const socketRef = useRef(null);
     const messagesEndRef = useRef(null);
 
     useEffect(() => {
@@ -21,6 +20,7 @@ const Chatting = ({id, messages, setMessages}) => {
                     },
                 });
                 const data = await response.json();
+                console.log("초기 메시지:", data);
                 setMessages(data);
             } catch (error) {
                 console.error('초기 메시지 불러오기 실패:', error);
@@ -28,46 +28,65 @@ const Chatting = ({id, messages, setMessages}) => {
         };
 
         if (id) fetchMessages();
-    }, [id, token]); // ✅ token 의존성 추가
-
-    useEffect(() => {
-        if (!id) return;
-
-        const socket = new WebSocket(`wss://192.168.0.83/chatroom?chatId=${id}`);
-        socketRef.current = socket;
-
-        socket.onmessage = (event) => {
-            setMessages((prev) => [...prev, event.data]);
-        };
-
-        socket.onopen = () => console.log("WebSocket 연결됨");
-        socket.onclose = () => console.log("WebSocket 연결 종료");
-        socket.onerror = (error) => console.error("WebSocket 에러 발생:", error);
-
-        socket.onclose = (event) => {
-            console.log("WebSocket 연결 종료", event.code, event.reason);
-        };
-
-        socket.onerror = (error) => {
-            console.error("WebSocket 에러 발생:", error);
-        };
-
-        return () => {
-            socket.close();
-        };
     }, [id]);
 
+    useEffect(() => {
+        if (!socket) return;
+    
+       
+        socket.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            console.log("[수신 메시지 RAW 데이터]", event.data); 
+            console.log("[파싱된 메시지]", message); 
+            
+    
+            switch(message.type) {
+                case 'INVITE':
+                    fetchChatrooms();
+                    setMessages(prev => [...prev, {
+                        empno: empno,
+                        detail: message.detail,
+                        isSystemMessage: true,
+                        employee: message.employee
+                    }]);
+                    break;
+                    
+                case 'SYSTEM':
+                    setMessages(prev => [...prev, {
+                        empno: empno,
+                        detail: message.detail,
+                        isSystemMessage: true,
+                        employee: message.employee
+                    }]);
+                    break;
+                    
+                default:
+                    setMessages(prev => [...prev, {
+                        empno: empno,
+                        detail: message.detail,
+                        isSystemMessage: false,
+                        employee: message.employee
+                    }]);
+            }
+        };
+    
+        return () => {
+            socket.onmessage = null;
+        };
+    }, [socket]);
+    
     const sendMessage = (msg) => {
         const messageObj = {
             detail: msg,
             chatId: id,
             empno: empno,
+            type: "MESSAGE"
         };
 
-        if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-            socketRef.current.send(JSON.stringify(messageObj));
+        if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify(messageObj));
         }
-        console.log("보낼 메시지:", JSON.stringify(messageObj))
+
         setInputValue("");
     };
 
@@ -92,7 +111,31 @@ const Chatting = ({id, messages, setMessages}) => {
                         }
 
                         const isMine = parsedMsg?.employee?.empno === empno;
+                        const isSystemMessage = parsedMsg?.isSystemMessage;
 
+                        if (isSystemMessage) {
+                            let systemText = "";
+                            switch (parsedMsg.type) {
+                                case "INVITE":
+                                    systemText = `${parsedMsg.employee?.name}님이 초대하셨습니다.`;
+                                    break;
+                                case "join":
+                                    systemText = `${parsedMsg.employee?.name}님이 입장하셨습니다.`;
+                                    break;
+                                case "leave":
+                                    systemText = `${parsedMsg.employee?.name}님이 퇴장하셨습니다.`;
+                                    break;
+                                default:
+                                    systemText = parsedMsg.detail;
+                            }
+                    
+                            return (
+                                <div key={idx} className={styles.centerSystemMessage}>
+                                    {systemText}
+                                </div>
+                            );
+                        }
+                    
                         return (
                             <div key={idx} className={`${styles.messageItem} ${isMine ? styles.myItem : styles.otherItem}`}>
                                 {!isMine && (

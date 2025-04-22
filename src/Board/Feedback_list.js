@@ -92,8 +92,19 @@ const Feedback_list = () => {
                             <div className={styles.writeTime}>작성 날짜</div>
                             <div className={styles.views}>조회수</div>
                         </div>
+
                         {decodedToken && posts
-                            .filter(post => post.empno === decodedToken.empno)
+                        .filter(post => {
+                            const roles = decodedToken.roles || [];
+                            // CEO 또는 SystemManager는 전체 보기
+                            if (roles.includes("CEO") || roles.includes("SystemManager")) {
+                                return true;
+                            }
+                            // 일반 직원은 자기 글만 보기
+                            return post.empno === decodedToken.empno;
+                        }) // 수정됨 04.22
+                        /* {decodedToken && posts
+                            .filter(post => post.empno === decodedToken.empno) */
                             .map((post) => (
                                 <Link key={post.id} to={`/board/feedback/detail/${post.id}`} className={styles.tr}>
                                     <table className={styles.Board_table}>

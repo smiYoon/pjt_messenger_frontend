@@ -6,7 +6,7 @@ import { useLoadScript } from '../LoadScriptContext';
 
 const Notice_create = () => {
 
-  const { decodedToken, role_level } = useLoadScript();
+  const { decodedToken, role_level, token } = useLoadScript();
   const navigate = useNavigate();
 
   const handleCancelClick = () => {
@@ -67,6 +67,10 @@ const Notice_create = () => {
 
       const response = await fetch('https://localhost/board/notice/create', {
         method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+      },
         body: formData,
       });
 

@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { useLoadScript } from '../LoadScriptContext';
 
 const Feedback_create = () => {
-  const { decodedToken, role_level } = useLoadScript();
+  const { decodedToken, role_level, token } = useLoadScript();
   const navigate = useNavigate();
 
   const handleCancelClick = () => {
@@ -66,6 +66,10 @@ const Feedback_create = () => {
 
       const response = await fetch('https://localhost/board/feedback/create', {
         method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+      },
         body: formData,
       });
 

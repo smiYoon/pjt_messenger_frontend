@@ -23,6 +23,35 @@ const Chat_main = () => {
     const [selectedChatRoom, setSelectedChatRoom] = useState(null);  // 선택된 채팅방
     const [messages, setMessages] = useState([]); // 메시지 리스트
 
+    const [socket, setSocket] = useState(null);
+
+    useEffect(() => {
+        if (!selectedChatRoom?.id) return;
+
+        const newSocket = new WebSocket(`wss://192.168.0.83/chatroom?chatId=${selectedChatRoom?.id}&empno=${empno}`);
+        setSocket(newSocket);
+
+        newSocket.onopen = () => {
+            console.log("WebSocket 연결됨");
+        };
+
+        newSocket.onclose = (event) => {
+            console.log("WebSocket 연결 종료", event.code, event.reason);
+        };
+
+        newSocket.onerror = (error) => {
+            console.error("WebSocket 에러 발생:", error);
+        };
+
+        setSocket(newSocket);
+
+        return () => {
+            console.log("🧹 기존 소켓 연결 해제");
+            newSocket.close();
+        };
+    }, [selectedChatRoom?.id]);
+
+
     const handleChatRoomClick = async (chatId) => {
         try {
             const response = await fetch(`https://localhost:443/chat/${chatId}`, {
@@ -90,7 +119,7 @@ const Chat_main = () => {
 
             <div className={styles.centerbox}>
                 <Roomheader selectedChatRoom={selectedChatRoom} />
-                <Chatting selectedChatRoom={selectedChatRoom} id={selectedChatRoom?.id} messages={messages} setMessages={setMessages}/>
+                <Chatting selectedChatRoom={selectedChatRoom} id={selectedChatRoom?.id} messages={messages} setMessages={setMessages} socket={socket} fetchChatrooms={fetchChatrooms}/>
             </div>
 
             <div className={styles.rightbox}>
@@ -98,7 +127,7 @@ const Chat_main = () => {
                         setSelectedChatRoom={setSelectedChatRoom} fetchChatrooms={fetchChatrooms} chatrooms={chatrooms} setMessages={setMessages}/>
             </div>
 
-            {showOrga && <Organization2 onCloseOrgaClick={()=> {setShowOrga(false)}} id={selectedChatRoom?.id} handleChatRoomClick={handleChatRoomClick}/>}
+            {showOrga && <Organization2 onCloseOrgaClick={()=> {setShowOrga(false)}} id={selectedChatRoom?.id} handleChatRoomClick={handleChatRoomClick} socket={socket}/>}
             {showCreateChat && <CreateChat onCloseClick={() => setShowCreateChat(false)} setChatrooms={setChatrooms} fetchChatrooms={fetchChatrooms}/>}
             
         </div>

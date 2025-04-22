@@ -7,10 +7,11 @@ import { useLoadScript } from '../LoadScriptContext';
 import Swal from 'sweetalert2';
 
 const Navbar = () => {
-  const { role_level, decodedToken } = useLoadScript();
+  const { role_level, decodedToken, updateToken } = useLoadScript();
 
   // decodedToken이 로딩되기 전에는 아무것도 렌더링하지 않도록 처리
   if (!decodedToken) return null;
+  console.log('decodedToken: ', decodedToken);
 
   const handleLinkClick = (e) => {
     e.preventDefault();
@@ -31,6 +32,7 @@ const Navbar = () => {
       if (response.ok) {
         console.log('logout Successful');
         window.location.href = '/';
+        updateToken('');
       } else {
         console.error('로그아웃 실패! ', response.status);
       }
@@ -42,7 +44,7 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.buttons}>
-        {decodedToken.position == 5 ? (
+        {decodedToken.position == 5 || decodedToken.position == 9 ? (
         <Link to={`/member/list`} className={styles.flip}>
           <i className={`${styles.icon} fas fa-user`} />
           <div className={styles.text}>회원관리</div>

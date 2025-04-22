@@ -7,7 +7,7 @@ import { useLoadScript } from '../LoadScriptContext';
 import Swal from 'sweetalert2';
 
 const List_member = () => {
-  const { deptName, empPositionMapping } = useLoadScript();
+  const { deptName, empPositionMapping, token } = useLoadScript();
   const [searchWord, setSearchWord] = useState("");
   const [searchText, setSearchText] = useState("");
   const [appliedSearchText, setAppliedSearchText] = useState("");
@@ -43,7 +43,12 @@ const List_member = () => {
         url.searchParams.append('searchText', appliedSearchText);
       }
 
-      const response = await fetch(url, { method: 'GET' });
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}` // ✅ 토큰 추가
+      },
+      });
       if (response.ok) {
         const data = await response.json();
         const isPaginated = !!data.content;

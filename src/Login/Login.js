@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 
 import styles from './Login.module.css';
 import { useLoadScript } from '../LoadScriptContext';
+import { jwtDecode } from 'jwt-decode';
 
 const Login = () => {
     console.log("Login() invoked.");
+    const { decodedToken } = useLoadScript();
 
     const navigate = useNavigate();
     const [message, setMessage] = useState();
@@ -41,7 +43,6 @@ const Login = () => {
             const response = await fetch('https://localhost/auth/login', {
                 method: 'POST',
                 body: formData,
-
             });
 
             const result = await response.json(); // json 파싱
@@ -56,11 +57,19 @@ const Login = () => {
             if (response.ok) {
                 // 로그인 성공 시 처리
                 const token = result.token; // 진짜 토큰만 꺼냄.
-                // console.log("로그인 성공");
-                // setMessage(token);
+                const decoded = jwtDecode(token); // ✅ 추가된 부분
                 updateToken(token);
                 console.log("서버 응답:", token);
-                navigate("/member/list");   
+                console.log('decoded(로그인):', decoded);
+                if(decoded.position == 1 || decoded.position == 2) {
+                navigate("/chat");   
+                } else if (decoded.position == 3 || decoded.position == 4) {
+                    navigate('/work');
+                } else if (decoded.position == 5) {
+                    navigate('/member/list');
+                } else {
+                    navigate('/chat');
+                }
             } else {
                 // 로그인 실패 시 처리
                 setMessage( result.error );

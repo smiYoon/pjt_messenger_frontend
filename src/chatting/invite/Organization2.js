@@ -5,7 +5,7 @@ import styles from './Organization2.module.css';
 import Swal from 'sweetalert2';
 import { useLoadScript } from "../../LoadScriptContext";
 
-const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id }) => {
+const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id , socket}) => {
   const { deptNum } = useParams();
   const DepartmentNumber = Number(deptNum) || 1;
 
@@ -15,8 +15,7 @@ const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id }) => {
 
   const containerRef = useRef(null);
 
-  const { decodedToken, token } = useLoadScript(); // ✅ token 가져옴
-  const empno = decodedToken?.empno;
+  const { decodedToken, token } = useLoadScript(); //  token 가져옴
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,8 +26,6 @@ const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id }) => {
             Authorization: `Bearer ${token}`, 
           },
         });
-        if (!res.ok) throw new Error("네트워크 오류");
-
         const json = await res.json();
         setData(json);
         const converted = convertToSortableTree(json);
@@ -54,9 +51,20 @@ const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id }) => {
         body: formData
         
       });
-  
       const result = await res.json();
       console.log("서버 응답:", result);
+
+      if (socket?.readyState === WebSocket.OPEN) {
+        const inviteMessage = {
+          type: "INVITE",
+          chatId: id,
+          empno: decodedToken.empno,
+          invitedEmpnos: inviteList.map(emp => emp.id),
+          detail: `${inviteList.length}명 초대함`
+        };
+      
+        socket.send(JSON.stringify(inviteMessage));
+      }
 
       await Swal.fire({
         icon: 'success',

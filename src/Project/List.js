@@ -303,7 +303,7 @@ const List = () => {
                 검색
               </button>
               {/* {role_level[decodedToken.roles] === 3 ? ( */}
-              {userRoleLevel === 3 ? ( // 수정점.
+              {userRoleLevel === 3 || userRoleLevel === 9 ? ( // 수정점.
                 <button onClick={openProjectRegister}>등록</button>
               ) : (<div></div>)}
             </div>

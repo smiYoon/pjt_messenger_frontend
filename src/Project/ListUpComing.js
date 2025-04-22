@@ -12,7 +12,7 @@ import { pjtStatusMapping, empPositionMapping } from '../CodeContext';
 const ListUpComing = ({ project, onDelete, infoAlert, handleGetUpComingList, handleGetList }) => {
   // console.group("ListUpcommig(", project, statusMapping, ") invoked."); console.groupEnd();
 
-  const { decodedToken } = useLoadScript();
+  const { decodedToken, isTopLevel } = useLoadScript();
 
   // 모달 상태
   const [isOpen, setIsOpen] = useState(false);
@@ -126,7 +126,7 @@ const ListUpComing = ({ project, onDelete, infoAlert, handleGetUpComingList, han
 
         {showEditMenu === project.id  
           && (
-            (decodedToken.empno === project.pjtCreator.empno || decodedToken.empno === project.pjtManager.empno || decodedToken.position === 9) ? (
+            (decodedToken.empno === project.pjtCreator.empno || decodedToken.empno === project.pjtManager.empno || decodedToken.position === 9 || isTopLevel) ? (
                   <div ref={editMenuRef} className={styles.editMenu}>
                     <div className={styles.dotBtnEdit} onClick={openProjectModify}>
                       수정

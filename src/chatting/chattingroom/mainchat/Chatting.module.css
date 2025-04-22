@@ -48,6 +48,13 @@
   padding-left: 5px;
 }
 
+.centerSystemMessage {
+  text-align: center;
+  color: gray;
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
 .messageBubble {
   border-radius: 16px;
   padding: 10px 15px;
