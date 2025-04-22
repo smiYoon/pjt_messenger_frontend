@@ -3,7 +3,7 @@
     border: solid 1px #6C47FF;
     border-radius: 10px;
     background-color: white;
-    color: #616264;
+    color: #222;
 
     display: flex;
     flex-direction: column;
@@ -47,7 +47,7 @@
 
 .workBox[draggable="false"] {
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: 1;
 }
   
 

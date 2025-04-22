@@ -80,7 +80,8 @@ const Detail = () => {
             if (!loginEmpData.userDeptId) return;
             
             try {
-                const response = await fetch(`https://localhost/department/${loginEmpData.userDeptId}`,
+                setLoading(true); // 로딩 시작
+                const response = await fetch(`https://localhost/department/${(loginEmpData.userPosition === 9) ? 1 : loginEmpData.userDeptId}`,
                     {headers: {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json", 
@@ -88,10 +89,42 @@ const Detail = () => {
                     }
                 );
                 const data = await response.json();
+
+                console.log("API 응답 데이터 (Detail):", data);
                 
                 let members = [];
 
-                if (data.children?.length > 0) {
+                // 부서원 정보 추출 (empno, name만)
+                if(loginEmpData.userPosition === 9){
+                    // 모든 부서의 사원 수집
+                    const allEmployees = [];
+                    const collectEmployees = (departments) => {
+                        departments.forEach(dept => {
+                            if (dept.employees?.length > 0) {
+                                allEmployees.push(...dept.employees);
+                            } // if
+                            if (dept.children?.length > 0) {
+                                collectEmployees(dept.children);
+                            } // if
+                        }); // forEach
+                    }; // collectEmployees
+                    collectEmployees(data.children || []);
+
+                    // 중복 제거 및 포맷팅
+                    const uniqueEmployees = Array.from(
+                        new Map(allEmployees.filter(emp => emp.empno != null).map(emp => [emp.empno, emp])).values()
+                    ); // uniqueEmployees
+
+                    console.log("uniqueEmployees: ", uniqueEmployees);
+
+                    setDepartmentMembers(
+                        uniqueEmployees.map(emp => ({
+                            empno: emp.empno,
+                            name: emp.name,
+                        })) // map
+                    ); // setDepartmentMembers
+                    return;
+                } else if (data.children?.length > 0) {
                     const topMembers = data.children.map(dept => {
                         if (dept.employees?.length > 0) {
                             const topEmp = dept.employees.reduce((max, emp) => 
@@ -120,7 +153,9 @@ const Detail = () => {
                 setDepartmentMembers([loggedInUser, ...filtered]);
             } catch (error) {
                 console.error("부서원 조회 오류:", error);
-            } // try-catch
+            } finally {
+                setLoading(false); // 로딩 종료
+            } // try-catch-finally
         }; // fetchDepartmentMembers
         fetchDepartmentMembers();
     }, [loginEmpData.userDeptId]);
@@ -149,11 +184,6 @@ const Detail = () => {
             endDate: endDate,
         }));
     }, [startDate, endDate]);
-    
-    useEffect(() => {
-        console.log("employeeData is :", employeeData);
-        console.log("uploadData is :", uploadData);
-    }, [uploadData]);
 
     useEffect(() => {       
         const fetchData = async () => {
@@ -408,176 +438,178 @@ const Detail = () => {
 
     return(
         <div className={styles.container}>
-            <span className={styles.leftBox}>
-                <div style={{display: "flex", position: "relative"}}>
-                    <i style={{cursor: "pointer"}} className='fas fa-arrow-left' onClick={handleCancel}/>
-                    <span className={styles.pageDetail}>업무 상세/수정</span>
-                </div>
-
-                <div className={styles.leftContent}>
-                    <div>
-                        <input ref={nameRef} className={styles.nameInputBox} type="text" placeholder="업무명을 입력하세요." defaultValue={uploadData.name}/>
-                    </div>
-                    <div/>
-
-                    <div style={{display: "flex"}}>
-                        <span className={styles.contentLeft}>상태</span>
-                        <span className={styles.contentRight}>
-                            <span className={`${styles.status1} ${uploadData.status === 1 ? styles.on : ""}`} onClick={() => {
-                                if(loginEmpData.userStatus == 1 && uploadData.status == 4) {
-                                    alert("팀원은 완료된 업무를 변경 할 수 없습니다");
-                                } else {handleStatusClick(1)} // if-else
-                                }}>진행예정</span>
-                            <span className={`${styles.status2} ${uploadData.status === 2 ? styles.on : ""}`} onClick={() => {
-                                if(loginEmpData.userStatus == 1 && uploadData.status == 4) {
-                                    alert("팀원은 완료된 업무를 변경 할 수 없습니다");
-                                } else {handleStatusClick(2)} // if-else
-                                }}>진행중</span>
-                            <span className={`${styles.status3} ${uploadData.status === 3 ? styles.on : ""}`} onClick={() => {
-                                if(loginEmpData.userStatus == 1 && uploadData.status == 4) {
-                                    alert("팀원은 완료된 업무를 변경 할 수 없습니다");
-                                } else {handleStatusClick(3)} // if-else
-                                }}>완료 대기</span>
-                            <span className={`${styles.status4} ${uploadData.status === 4 ? styles.on : ""}`} onClick={() => {
-                                if(loginEmpData.userStatus == 1) {
-                                    alert("팀원은 업무완료를 할 수 없습니다");
-                                } else {handleStatusClick(4)} // if-else
-                                }}>완료</span>
-                        </span>
+            <div className={styles.innerContainer}>
+                <div className={styles.leftBox}>
+                    <div style={{display: "flex", position: "relative"}}>
+                        <i style={{cursor: "pointer"}} className='fas fa-arrow-left' onClick={handleCancel}/>
+                        <span className={styles.pageDetail}>업무 상세/수정</span>
                     </div>
 
-                    <div style={{display: "flex"}}>
-                        <span className={styles.contentLeft}>분류</span>
-                        <span className={styles.contentRight}>
-                            <span className={`${styles.type} ${uploadData.type === 1 ? styles.on : ""}`} onClick={() => handleTypeClick(1)}>개발</span>
-                            <span className={`${styles.type} ${uploadData.type === 2 ? styles.on : ""}`} onClick={() => handleTypeClick(2)}>운영</span>
-                            <span className={`${styles.type} ${uploadData.type === 3 ? styles.on : ""}`} onClick={() => handleTypeClick(3)}>인사</span>
-                            <span className={`${styles.type} ${uploadData.type === 4 ? styles.on : ""}`} onClick={() => handleTypeClick(4)}>회계</span>
-                            <span className={`${styles.type} ${uploadData.type === 5 ? styles.on : ""}`} onClick={() => handleTypeClick(5)}>마케팅</span>
-                        </span>
-                    </div>
-
-                    <div style={{display: "flex"}}>
-                        <span className={styles.contentLeft}>진행 기간</span>
-                        <span className={styles.contentRight}>
-                            <DatePicker
-                                className={styles.reactDatepicker}
-                                filterDate={(date) => date >= new Date()}
-                                selected={uploadData.startDate}
-                                onChange={(date) => setStartDate(date)}
-                                selectsStart
-                                startDate={uploadData.startDate}
-                                endDate={uploadData.endDate}
-                                dateFormat="yyyy-MM-dd"
-                                placeholderText="시작일"
-                                popperContainer={({ children }) => createPortal(children, document.body)}
-                            />
-                            <span>~</span>
-                            <DatePicker
-                                className={styles.reactDatepicker}
-                                filterDate={(date) => date >= new Date()}
-                                selected={uploadData.endDate}
-                                onChange={(date) => setEndDate(date)}
-                                selectsEnd
-                                startDate={uploadData.startDate}
-                                endDate={uploadData.endDate}
-                                minDate={uploadData.startDate} 
-                                dateFormat="yyyy-MM-dd"
-                                placeholderText="종료일"
-                                popperContainer={({ children }) => createPortal(children, document.body)}
-                            />
-                        </span>
-                    </div>
-
-                    <div style={{display: "flex"}}>
-                        <span className={styles.contentLeft}>담당자 </span>
-                        <span className={styles.contentRight}>
-                        <i 
-                            style={{cursor: "pointer"}} 
-                            className='fas fa-circle-plus'
-                            onClick={() => setIsEmpModalOpen(true)}
-                        />
-                        <div className={`${styles.selectedEmployeeWrap} ${selectedEmployees.length > 0 ? styles.hasEmployee : ''}`}>
-                            <div className={styles.selectedEmployeeScroller}>
-                                {selectedEmployees.map(emp => (
-                                    <span 
-                                        key={emp.empno} 
-                                        className={styles.selectedEmployee}
-                                        onClick={() => handleRemoveEmpno(emp.empno)}
-                                    >
-                                        {emp.name}
-                                    </span>
-                                ))}
-                            </div>
+                    <div className={styles.leftContent}>
+                        <div>
+                            <input ref={nameRef} className={styles.nameInputBox} type="text" placeholder="업무명을 입력하세요." defaultValue={uploadData.name}/>
                         </div>
-                        
-                        {isEmpModalOpen && (
-                            <div className={styles.modalBackdrop}>
-                                <div className={styles.empModal}>
-                                    <h3>담당자 선택 ({selectedEmployees.length}명 선택됨)</h3>
-                                    <div className={styles.modalContent}>
-                                        {departmentMembers.map(emp => (
-                                            <div
-                                                key={emp.empno}
-                                                className={`${styles.empItem} ${
-                                                    selectedEmployees.some(e => e.empno === emp.empno) ? styles.selected : ''
-                                                }`}
-                                                onClick={() => handleEmployeeSelect(emp)}
-                                            >
-                                                <input
-                                                    className={styles.checkbox}
-                                                    type="checkbox"
-                                                    checked={selectedEmployees.some(e => e.empno === emp.empno)}
-                                                    readOnly
-                                                />
-                                                {emp.name}
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <div className={styles.modalActions}>
-                                        <button className={styles.confirmButton} onClick={handleConfirmSelection}>선택 완료</button>
-                                        <button className={styles.modalCancelButton} onClick={() => setIsEmpModalOpen(false)}>취소</button>
-                                    </div>
+                        <div/>
+
+                        <div style={{display: "flex"}}>
+                            <span className={styles.contentLeft}>상태</span>
+                            <span className={styles.contentRight}>
+                                <span className={`${styles.status1} ${uploadData.status === 1 ? styles.on : ""}`} onClick={() => {
+                                    if(loginEmpData.userStatus == 1 && uploadData.status == 4) {
+                                        alert("팀원은 완료된 업무를 변경 할 수 없습니다");
+                                    } else {handleStatusClick(1)} // if-else
+                                    }}>진행예정</span>
+                                <span className={`${styles.status2} ${uploadData.status === 2 ? styles.on : ""}`} onClick={() => {
+                                    if(loginEmpData.userStatus == 1 && uploadData.status == 4) {
+                                        alert("팀원은 완료된 업무를 변경 할 수 없습니다");
+                                    } else {handleStatusClick(2)} // if-else
+                                    }}>진행중</span>
+                                <span className={`${styles.status3} ${uploadData.status === 3 ? styles.on : ""}`} onClick={() => {
+                                    if(loginEmpData.userStatus == 1 && uploadData.status == 4) {
+                                        alert("팀원은 완료된 업무를 변경 할 수 없습니다");
+                                    } else {handleStatusClick(3)} // if-else
+                                    }}>완료 대기</span>
+                                <span className={`${styles.status4} ${uploadData.status === 4 ? styles.on : ""}`} onClick={() => {
+                                    if(loginEmpData.userStatus == 1) {
+                                        alert("팀원은 업무완료를 할 수 없습니다");
+                                    } else {handleStatusClick(4)} // if-else
+                                    }}>완료</span>
+                            </span>
+                        </div>
+
+                        <div style={{display: "flex"}}>
+                            <span className={styles.contentLeft}>분류</span>
+                            <span className={styles.contentRight}>
+                                <span className={`${styles.type} ${uploadData.type === 1 ? styles.on : ""}`} onClick={() => handleTypeClick(1)}>개발</span>
+                                <span className={`${styles.type} ${uploadData.type === 2 ? styles.on : ""}`} onClick={() => handleTypeClick(2)}>운영</span>
+                                <span className={`${styles.type} ${uploadData.type === 3 ? styles.on : ""}`} onClick={() => handleTypeClick(3)}>인사</span>
+                                <span className={`${styles.type} ${uploadData.type === 4 ? styles.on : ""}`} onClick={() => handleTypeClick(4)}>회계</span>
+                                <span className={`${styles.type} ${uploadData.type === 5 ? styles.on : ""}`} onClick={() => handleTypeClick(5)}>마케팅</span>
+                            </span>
+                        </div>
+
+                        <div style={{display: "flex"}}>
+                            <span className={styles.contentLeft}>진행 기간</span>
+                            <span className={styles.contentRight}>
+                                <DatePicker
+                                    className={styles.reactDatepicker}
+                                    filterDate={(date) => date >= new Date()}
+                                    selected={uploadData.startDate}
+                                    onChange={(date) => setStartDate(date)}
+                                    selectsStart
+                                    startDate={uploadData.startDate}
+                                    endDate={uploadData.endDate}
+                                    dateFormat="yyyy-MM-dd"
+                                    placeholderText="시작일"
+                                    popperContainer={({ children }) => createPortal(children, document.body)}
+                                />
+                                <span>~</span>
+                                <DatePicker
+                                    className={styles.reactDatepicker}
+                                    filterDate={(date) => date >= new Date()}
+                                    selected={uploadData.endDate}
+                                    onChange={(date) => setEndDate(date)}
+                                    selectsEnd
+                                    startDate={uploadData.startDate}
+                                    endDate={uploadData.endDate}
+                                    minDate={uploadData.startDate} 
+                                    dateFormat="yyyy-MM-dd"
+                                    placeholderText="종료일"
+                                    popperContainer={({ children }) => createPortal(children, document.body)}
+                                />
+                            </span>
+                        </div>
+
+                        <div style={{display: "flex"}}>
+                            <span className={styles.contentLeft}>담당자 </span>
+                            <span className={styles.contentRight}>
+                            <i 
+                                style={{cursor: "pointer"}} 
+                                className='fas fa-circle-plus'
+                                onClick={() => setIsEmpModalOpen(true)}
+                            />
+                            <div className={`${styles.selectedEmployeeWrap} ${selectedEmployees.length > 0 ? styles.hasEmployee : ''}`}>
+                                <div className={styles.selectedEmployeeScroller}>
+                                    {selectedEmployees.map(emp => (
+                                        <span 
+                                            key={emp.empno} 
+                                            className={styles.selectedEmployee}
+                                            onClick={() => handleRemoveEmpno(emp.empno)}
+                                        >
+                                            {emp.name}
+                                        </span>
+                                    ))}
                                 </div>
                             </div>
-                        )}
-                        </span>
+                            
+                            {isEmpModalOpen && (
+                                <div className={styles.modalBackdrop}>
+                                    <div className={styles.empModal}>
+                                        <h3>담당자 선택 ({selectedEmployees.length}명 선택됨)</h3>
+                                        <div className={styles.modalContent}>
+                                            {departmentMembers.sort((a, b) => a.name.localeCompare(b.name)).map(emp => (
+                                                <div
+                                                    key={emp.empno}
+                                                    className={`${styles.empItem} ${
+                                                        selectedEmployees.some(e => e.empno === emp.empno) ? styles.selected : ''
+                                                    }`}
+                                                    onClick={() => handleEmployeeSelect(emp)}
+                                                >
+                                                    <input
+                                                        className={styles.checkbox}
+                                                        type="checkbox"
+                                                        checked={selectedEmployees.some(e => e.empno === emp.empno)}
+                                                        readOnly
+                                                    />
+                                                    {emp.name}
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className={styles.modalActions}>
+                                            <button className={styles.confirmButton} onClick={handleConfirmSelection}>선택 완료</button>
+                                            <button className={styles.modalCancelButton} onClick={() => setIsEmpModalOpen(false)}>취소</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                            </span>
+                        </div>
+
+                        <div style={{display: "flex"}}>
+                            <span className={styles.contentLeft}>요청자</span>
+                            <span className={styles.contentRight}>{loading? "로딩중..." : employeeData?.employee?.name || "-"}</span>
+                        </div>
+
+                        <div className={styles.contentLeft}>상세정보</div>
+                        <div>
+                            <textarea ref={detailRef} className={styles.detailInputBox} type="text" placeholder="상세정보를 입력하세요." defaultValue={uploadData.detail}/>
+                        </div>
+                    </div>
+                </div>
+
+                <div className={styles.rightBox}>
+                    <div className={styles.dateBox}>
+                        <div>업무 종료일까지</div>
+                        <div style={{textAlign: "right"}}>
+                            {loading? "로딩중..." : (`D-${getDiffDays(employeeData.startDate, employeeData.endDate)}`) || "-"}
+                        </div>    
                     </div>
 
-                    <div style={{display: "flex"}}>
-                        <span className={styles.contentLeft}>요청자</span>
-                        <span className={styles.contentRight}>{loading? "로딩중..." : employeeData?.employee?.name || "-"}</span>
+                    <div className={styles.memoBox}>
+                        메모
+                        <textarea ref={memoRef} className={styles.memoInputBox} type="text" placeholder="메모를 입력하세요." defaultValue={uploadData.memo}/>
                     </div>
 
-                    <div className={styles.contentLeft}>상세정보</div>
-                    <div>
-                        <textarea ref={detailRef} className={styles.detailInputBox} type="text" placeholder="상세정보를 입력하세요." defaultValue={uploadData.detail}/>
+                    <div className={styles.buttonBox}>
+                        <span className={styles.buttonBoxLeft} onClick={() => {
+                            if(uploadData.status == 4) {
+                                alert("완료된 업무는 수정할 수 없습니다.");
+                            } else {handleUpdate()} // if-else
+                            }}>수정</span>
+                        <span className={styles.buttonBoxRight} onClick={handleDelete}>삭제</span>
                     </div>
                 </div>
-            </span>
-
-            <span className={styles.rightBox}>
-                <div className={styles.dateBox}>
-                    <div>업무 종료일까지</div>
-                    <div style={{textAlign: "right"}}>
-                        {loading? "로딩중..." : (`D-${getDiffDays(employeeData.startDate, employeeData.endDate)}`) || "-"}
-                    </div>    
-                </div>
-
-                <div className={styles.memoBox}>
-                    메모
-                    <textarea ref={memoRef} className={styles.memoInputBox} type="text" placeholder="메모를 입력하세요." defaultValue={uploadData.memo}/>
-                </div>
-
-                <div className={styles.buttonBox}>
-                    <span className={styles.buttonBoxLeft} onClick={() => {
-                        if(uploadData.status == 4) {
-                            alert("완료된 업무는 수정할 수 없습니다.");
-                        } else {handleUpdate()} // if-else
-                        }}>수정</span>
-                    <span className={styles.buttonBoxRight} onClick={handleDelete}>삭제</span>
-                </div>
-            </span>
+            </div>
         </div>
     );
 

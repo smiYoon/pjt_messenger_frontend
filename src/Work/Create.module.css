@@ -1,8 +1,8 @@
 .container{
     margin: 10vh auto;
-    align-items: center;
+    align-items: flex-start;
     width: 70%;
-    height: 70%;
+    height: 80vh;
     text-align: left;
     display: flex;
 
@@ -14,6 +14,18 @@
 
     padding: 2vh 2vw 2vh calc(2vw + 150px);
     overflow-x: hidden;
+    color: #222;
+}
+
+.innerContainer{
+    width: 100%;
+    height: 100%;
+    min-height: 65vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1vh;
+    box-sizing: border-box;
 }
 
 .leftBox{
@@ -23,7 +35,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.5vh;
-    margin-right: 1vh;
+    box-sizing: border-box;
 
     background-color: #E5E1F5;
     border-radius: 5px;
@@ -86,36 +98,22 @@
     cursor: pointer;
     border-radius: 20px;
     font-size: 1rem;
-    color: black;
+    color: beige;
 }
 
-/*
-.status1 { background-color: rgb(245, 198, 87);}
-.status2 { background-color: #fd6435;}
-.status3 { background-color: #12ab8c;}
-.status4 { background-color: #00464d;}
-*/
-
-.status1 { background-color: #AADCFF;}
-.status2 { background-color: #FFF5AA;}
-.status3 { background-color: #a9f85f;}
-.status4 { background-color: #4FC765;}
+.status1 { background-color: #5bc0de;}
+.status2 { background-color: #337ab7;}
+.status3 { background-color: #f0ad4e;}
+.status4 { background-color: #5cb85c;}
 
 .status1.on, .status2.on, .status3.on, .status4.on {
     border: solid 5px #4A1DFF;
 }
 
-/*
-.status1 { background-color: rgb(245, 198, 87);}
-.status2 { background-color: #fd6435;}
-.status3 { background-color: #12ab8c;}
-.status4 { background-color: #00464d;}
-*/
-
-.status1:hover { background-color: rgb(245, 198, 87);}
-.status2:hover { background-color: #fd6435;}
-.status3:hover { background-color: #12ab8c;}
-.status4:hover { background-color: #00464d;}
+.status1:hover { background-color: #31a6c0; color: #222;}
+.status2:hover { background-color: #286090; color: #222;}
+.status3:hover { background-color: #ec971f; color: #222;}
+.status4:hover { background-color: #449d44; color: #222;}
 
 .type{
     width: 20%;
@@ -140,7 +138,7 @@
 }
 
 .reactDatepicker{
-    width: 100%;
+    width: 90%;
     height: 3vh;
     padding-left: 0.5vw;
     background-color: white;
@@ -152,7 +150,7 @@
 
 .detailInputBox{
     width: 100%;
-    height: 20vh;
+    height: 18vh;
     padding: 1% 2%;
     border: solid 1px #6C47FF;
     border-radius: 5px;
@@ -169,20 +167,22 @@
 
 .rightBox{
     width: 30%;
-    height: 80%;
+    height: 100%;
+    box-sizing: border-box;
     padding: 0 1vw;
     display: flex;
     flex-direction: column;
     gap: 2vh;
 }
 
+
 .dateBox{
-    width: auto;
-    height: 8vh;
+    width: 100%;
     padding: 1vw;
     display: flex;
     flex-direction: column;
     gap: 2vh;
+    box-sizing: border-box;
 
     background-color: #E5E1F5;
     border-radius: 5px;
@@ -190,13 +190,15 @@
 }
 
 .memoBox{
-    width: auto;
-    height: 48vh;
-    padding: 1.5vh 1vw;
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 1vw;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 2vh;
+    box-sizing: border-box;
     
     background-color: #E5E1F5;
     border-radius: 5px;
@@ -205,8 +207,9 @@
 
 .memoInputBox{
     width: 100%;
-    height: 50vh;
     padding: 1% 2%;
+    flex: 1 1 auto;
+    min-height: 0;
     border: solid 1px #6C47FF;
     border-radius: 5px;
     font-size: 1.3rem;
@@ -220,17 +223,21 @@
 
 .buttonBox{
     width: 100%;
-    height: 8vh;
+    height: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 1.5rem;
     font-weight: bold;
+    padding: 0;
+    margin: 0;
+    gap: 2vh;
 }
 
 .buttonBoxLeft{
     width: 47%;
     height: 60%;
+    padding: 0.5vw;
     border-radius: 5px;
     border: none;
     background-color: #6C47FF;
@@ -250,10 +257,11 @@
 .buttonBoxRight{
     width: 47%;
     height: 60%;
+    padding: 0.5vw;
     border-radius: 5px;
-    border: none;
-    background-color: #E5E1F5;
-    color: #616264;
+    border: 1px solid #6C47FF;
+    background-color: white;
+    color: #222;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -362,7 +370,7 @@
     border-radius: 5px;
     border: none;
     background-color: #E5E1F5;
-    color: #616264;
+    color: #222;
     cursor: pointer;
     display: flex;
     justify-content: center;

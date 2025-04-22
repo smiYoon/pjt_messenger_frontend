@@ -13,8 +13,8 @@ const List = () => {
     console.debug("List() invoked.");
 
     const navigate = useNavigate();
-    const { decodedToken, token, Role_level } = useLoadScript();
-    const [work, setWork] = useState("managed"); // 담당업무 = managed, 요청업무 = requested
+    const { decodedToken, token } = useLoadScript();
+    const [work, setWork] = useState("requested"); // 담당업무 = managed, 요청업무 = requested
     const [loginEmpData, setLoginEmpData] = useState({
         userId: "",
         userName: "",
@@ -49,19 +49,11 @@ const List = () => {
         name: "",
     }); // 현재 선택된 사원
     const [employeeData, setEmployeeData] = useState([]); 
-    const [uploadData, setUploadData] = useState({
-        work: work,
-        employee: "",
-    }); // 업로드할 데이터
     const [departmentMembers, setDepartmentMembers] = useState([]); // 부서원들
     const [isEmpModalOpen, setIsEmpModalOpen] = useState(false)
 
     const handleToggle = () => {
         setWork(work === "managed" ? "requested" : "managed");
-        setUploadData({
-            work: work === "managed" ? "requested" : "managed",
-            employee: pickedEmployee.empno,
-        });
     }; // handleToggle
 
     const handleChangePickedEmployee = (empno, name) => {
@@ -108,7 +100,8 @@ const List = () => {
                     empno:loginEmpData.userId,
                     name:loginEmpData.userName
                 }); // 현재 선택된 사원
-                const response = await fetch(`https://localhost/department/${loginEmpData.userDeptId}`,
+
+                const response = await fetch(`https://localhost/department/${(loginEmpData.userPosition === 9) ? 1 : loginEmpData.userDeptId}`,
                     {
                         method: "GET",
                         headers: {
@@ -118,19 +111,46 @@ const List = () => {
                     });
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
-                }
+                } // if
                 const data = await response.json();
 
+                console.log("data is:", data);
+
                 // 부서원 정보 추출 (empno, name만)
-                if (data.children.length > 0) {
+                if(loginEmpData.userPosition === 9){
+                    // 모든 부서의 사원 수집
+                    const allEmployees = [];
+                    const collectEmployees = (departments) => {
+                        departments.forEach(dept => {
+                            if (dept.employees?.length > 0) {
+                                allEmployees.push(...dept.employees);
+                            } // if
+                            if (dept.children?.length > 0) {
+                                collectEmployees(dept.children);
+                            } // if
+                        }); // forEach
+                    }; // collectEmployees
+                    collectEmployees(data.children || []);
+
+                    // 중복 제거 및 포맷팅
+                    const uniqueEmployees = Array.from(
+                        new Map(allEmployees.map(emp => [emp.empno, emp])).values()
+                    ); // uniqueEmployees
+
+                    setDepartmentMembers(
+                        uniqueEmployees.map(emp => ({
+                            empno: emp.empno,
+                            name: emp.name,
+                        })) // map
+                    ); // setDepartmentMembers
+                } else if (data.children?.length > 0) {
                     const topMembers = data.children.map(dept => {
                         if (Array.isArray(dept.employees) && dept.employees.length > 0) {
                             const topEmp = dept.employees.reduce((max, emp) => 
-                            emp.position > max.position ? emp : max
-                            , dept.employees[0]);
+                                emp.position > max.position ? emp : max , dept.employees[0]);
                             return {
-                            empno: topEmp.empno,
-                            name: topEmp.name
+                                empno: topEmp.empno,
+                                name: topEmp.name
                             };
                         } else {
                             return {
@@ -173,13 +193,6 @@ const List = () => {
 
 
     useEffect(() => {    
-        if (pickedEmployee.empno) {
-            setUploadData({
-                work: work,
-                employee: pickedEmployee.empno,
-            });
-        } // if
-        
         const fetchData = async () => {
             try {
                 console.log("fetchData() invoked.");
@@ -242,7 +255,7 @@ const List = () => {
         if (!draggedWork) return;
 
         // 완료로 드롭하는데, 팀원(position=1)인 경우
-        if (newStatus === 4 && loginEmpData.position === 1) {
+        if (newStatus === 4 && loginEmpData.userPosition === 1) {
             alert("팀원은 업무완료를 할 수 없습니다");
             setDraggedWork(null);
             return;
@@ -373,7 +386,7 @@ const List = () => {
                                             >
                                                 {loginEmpData.userName}
                                             </div>
-                                            {departmentMembers
+                                            {departmentMembers.sort((a, b) => a.name.localeCompare(b.name)) // 이름 기준 정렬
                                                 .filter(emp => emp.empno !== loginEmpData.userId && emp.empno) // 본인 중복 제거, null 제외
                                                 .map((emp, idx) => (
                                                     <div
