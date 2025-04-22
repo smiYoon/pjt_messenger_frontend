@@ -3,13 +3,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { BsArrowUpCircleFill } from "react-icons/bs";
 import { useLoadScript } from "../../../LoadScriptContext";
 
-const Chatting = ({id, messages, setMessages}) => {
+const Chatting = ({id, messages, setMessages, socket}) => {
 
     const { decodedToken, token } = useLoadScript(); // ✅ token 가져옴
     const empno = decodedToken?.empno;
 
     const [inputValue, setInputValue] = useState("");
-    const socketRef = useRef(null);
     const messagesEndRef = useRef(null);
 
     useEffect(() => {
@@ -21,6 +20,7 @@ const Chatting = ({id, messages, setMessages}) => {
                     },
                 });
                 const data = await response.json();
+                console.log("초기 메시지:", data);
                 setMessages(data);
             } catch (error) {
                 console.error('초기 메시지 불러오기 실패:', error);
@@ -28,48 +28,35 @@ const Chatting = ({id, messages, setMessages}) => {
         };
 
         if (id) fetchMessages();
-    }, [id, token]); // ✅ token 의존성 추가
-
-    useEffect(() => {
-        if (!id) return;
-
-        const socket = new WebSocket(`wss://192.168.0.83/chatroom?chatId=${id}`);
-        socketRef.current = socket;
-
-        socket.onmessage = (event) => {
-            setMessages((prev) => [...prev, event.data]);
-        };
-
-        socket.onopen = () => console.log("WebSocket 연결됨");
-        socket.onclose = () => console.log("WebSocket 연결 종료");
-        socket.onerror = (error) => console.error("WebSocket 에러 발생:", error);
-
-        socket.onclose = (event) => {
-            console.log("WebSocket 연결 종료", event.code, event.reason);
-        };
-
-        socket.onerror = (error) => {
-            console.error("WebSocket 에러 발생:", error);
-        };
-
-        return () => {
-            socket.close();
-        };
     }, [id]);
 
-    const sendMessage = (msg) => {
-        const messageObj = {
-            detail: msg,
-            chatId: id,
-            empno: empno,
+    useEffect(() => {
+        if (!socket) return;
+    
+        socket.onmessage = (event) => {
+          const message = JSON.parse(event.data);
+          setMessages((prev) => [...prev, { ...message, isSystemMessage: message.type !== 'message' }]);
         };
-
-        if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-            socketRef.current.send(JSON.stringify(messageObj));
+    
+        return () => {
+          socket.onmessage = null;
+        };
+      }, [socket]);
+    
+      const sendMessage = (msg) => {
+        const messageObj = {
+          detail: msg,
+          chatId: id,
+          empno: empno,
+          type: "message"
+        };
+    
+        if (socket && socket.readyState === WebSocket.OPEN) {
+          socket.send(JSON.stringify(messageObj));
         }
-        console.log("보낼 메시지:", JSON.stringify(messageObj))
+    
         setInputValue("");
-    };
+      };
 
     useEffect(() => {
         if (messagesEndRef.current) {
@@ -92,16 +79,25 @@ const Chatting = ({id, messages, setMessages}) => {
                         }
 
                         const isMine = parsedMsg?.employee?.empno === empno;
+                        const isSystemMessage = parsedMsg?.isSystemMessage;
 
                         return (
                             <div key={idx} className={`${styles.messageItem} ${isMine ? styles.myItem : styles.otherItem}`}>
-                                {!isMine && (
+                                {!isMine && !isSystemMessage && (
                                     <div className={styles.senderName}>{parsedMsg.employee?.name || '알 수 없음'}</div>
                                 )}
                                 <div
                                     className={`${styles.messageBubble} ${isMine ? styles.myMessage : styles.otherMessage}`}
                                 >
-                                    <div className={styles.messageText}>{parsedMsg.detail}</div>
+                                    {isSystemMessage ? (
+                                        <div className={styles.systemMessage}>
+                                            {parsedMsg.type === "invite" && `${parsedMsg.employee?.name}님이 초대하셨습니다.`}
+                                            {parsedMsg.type === "join" && `${parsedMsg.employee?.name}님이 입장하셨습니다.`}
+                                            {parsedMsg.type === "leave" && `${parsedMsg.employee?.name}님이 퇴장하셨습니다.`}
+                                        </div>
+                                    ) : (
+                                        <div className={styles.messageText}>{parsedMsg.detail}</div>
+                                    )}
                                 </div>
                             </div>
                         );
