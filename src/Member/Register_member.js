@@ -3,11 +3,12 @@ import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Register_member.module.css';
 import Register from './img/Register.png';
+import { useLoadScript } from '../LoadScriptContext';
 
 const Register_member = () => {
 
     const navigate = useNavigate();
-
+    const { token } = useLoadScript();
 
     const handleCancelClick = () => {
         Swal.fire({
@@ -55,7 +56,10 @@ const Register_member = () => {
         const fetchDeptId = async () => {
             try {
                 const response = await fetch('https://localhost/department/filter', {
-                    method: 'GET'
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}` // ✅ 토큰 추가
+                    },
                 });
 
                 if (response.ok) {
@@ -136,9 +140,11 @@ const Register_member = () => {
 
         try {
             const response = await fetch(`https://localhost/employee/checkId?loginId=${registerForm.loginId}`, {
-                method: 'GET'
-            }
-            )
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}` // ✅ 토큰 추가
+                },
+            })
 
 
             if (response.ok) {
@@ -275,7 +281,16 @@ const Register_member = () => {
                             />
                             <div className={styles.placeholder_email}>이메일</div>
                         </div>
-
+                        <div className={styles.pic_container}>
+                            <input 
+                                type='file' 
+                                id='profileUpload' 
+                                accept='image/*' 
+                                className={styles.profile_pic}
+                                placeholder='이미지를 선택해주세요.'
+                            />
+                            <div className={styles.placeholder_pic}>사진</div>
+                        </div>
                         <div className={styles.role_box}>
                             <select
                                 name='department'

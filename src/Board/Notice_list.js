@@ -6,7 +6,7 @@ import { useLoadScript } from "../LoadScriptContext";
 import { empPositionMapping } from "../CodeContext";
 
 const Notice_list = () => {
-    const { decodedToken, role_level } = useLoadScript();
+    const { decodedToken, role_level, token } = useLoadScript();
     // console.log('사용자정보(공지사항):', decodedToken);
 
     const [list, setList] = useState([]);
@@ -75,6 +75,10 @@ const Notice_list = () => {
                     `https://localhost/board/notice?${params.toString()}`,
                     {
                         method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        },
                     }
                 );
 

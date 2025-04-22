@@ -7,7 +7,7 @@ import { useLoadScript } from '../LoadScriptContext';
 
 const Modify_member = () => {
 
-    const { decodedToken, role_level } = useLoadScript();
+    const { decodedToken, role_level, token } = useLoadScript();
     const navigate = useNavigate();
     const handleCancelClick = () => {
         Swal.fire({
@@ -69,6 +69,9 @@ const Modify_member = () => {
             console.log("memberForm:", memberForm);
             const response = await fetch(`https://localhost/employee/${empno}`, {
                 method: 'PUT', // 수정 요청은 PUT 메서드 사용
+                headers: {
+                    Authorization: `Bearer ${token}` // ✅ 토큰 추가
+                },
                 body: formData,
             });
 
@@ -96,6 +99,9 @@ const Modify_member = () => {
             try {
                 const response = await fetch(`https://localhost:443/employee/${empno}`, {
                     method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}` // ✅ 토큰 추가
+                    },
                 });
 
                 if (response.ok) {
@@ -128,7 +134,10 @@ const Modify_member = () => {
         const fetchDeptId = async () => {
             try {
                 const response = await fetch('https://localhost:443/department', {
-                    method: 'GET'
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}` // ✅ 토큰 추가
+                    },
                 });
 
                 if (response.ok) {

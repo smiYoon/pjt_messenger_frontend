@@ -6,6 +6,7 @@ import { useLoadScript } from '../LoadScriptContext';
 
 const Login = () => {
     console.log("Login() invoked.");
+    const { decodedToken } = useLoadScript();
 
     const navigate = useNavigate();
     const [message, setMessage] = useState();
@@ -60,7 +61,15 @@ const Login = () => {
                 // setMessage(token);
                 updateToken(token);
                 console.log("서버 응답:", token);
-                navigate("/member/list");   
+                if(decodedToken.position == 1 || decodedToken.position == 2) {
+                navigate("/chat");   
+                } else if (decodedToken.position == 3 || decodedToken.position == 4) {
+                    navigate('/work');
+                } else if (decodedToken.position == 5) {
+                    navigate('/employee/list');
+                } else {
+                    navigate('/chat');
+                }
             } else {
                 // 로그인 실패 시 처리
                 setMessage( result.error );
