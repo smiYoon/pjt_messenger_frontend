@@ -44,22 +44,28 @@ const Chatting = ({id, messages, setMessages, socket, fetchChatrooms}) => {
                 case 'INVITE':
                     fetchChatrooms();
                     setMessages(prev => [...prev, {
+                        empno: empno,
                         detail: message.detail,
-                        isSystemMessage: true
+                        isSystemMessage: true,
+                        employee: message.employee
                     }]);
                     break;
                     
                 case 'SYSTEM':
                     setMessages(prev => [...prev, {
+                        empno: empno,
                         detail: message.detail,
-                        isSystemMessage: true
+                        isSystemMessage: true,
+                        employee: message.employee
                     }]);
                     break;
                     
                 default:
                     setMessages(prev => [...prev, {
+                        empno: empno,
                         detail: message.detail,
-                        isSystemMessage: false
+                        isSystemMessage: false,
+                        employee: message.employee
                     }]);
             }
         };
