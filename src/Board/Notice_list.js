@@ -8,35 +8,34 @@ const Notice_list = () => {
     const { decodedToken, role_level, token, empPositionMapping } = useLoadScript();
     // console.log('사용자정보(공지사항):', decodedToken);
 
-    
+
 
     const [list, setList] = useState([]);
 
     // list paging 정보
     const [currPage, setCurrPage] = useState(1);
-    const [pageSize] = useState(10);
+    const [pageSize] = useState(5);
     const [blockSize] = useState(10);
     const [totalPageCnt, setTotalPageCnt] = useState(0);
-    const [currBlock, setCurrBlock] = useState(
-        Math.floor((currPage - 1) / blockSize)
-    );
+    const [currBlock, setCurrBlock] = useState(Math.floor((currPage - 1) / blockSize));
+
     const [startPage, setStartPage] = useState(currBlock * blockSize);
     const [endPage, setEndPage] = useState(
         Math.min(startPage + blockSize, totalPageCnt)
     );
-    // useEffect(() => {
-    //     if(!decodedToken) return; // 수정점. 04.22
-    //     setCurrBlock(Math.floor((currPage - 1) / blockSize));
-    //     setStartPage(currBlock * blockSize);
-    //     setEndPage(Math.min(startPage + blockSize, totalPageCnt));
-    // }, [currPage, totalPageCnt, currBlock, startPage, endPage]);
 
-     useEffect(() => {
-           const block = Math.floor((currPage - 1) / blockSize);
-           setCurrBlock(block);
-           setStartPage(block * blockSize);
-           setEndPage(Math.min(block * blockSize + blockSize, totalPageCnt));
-         }, [currPage, totalPageCnt, blockSize]); 
+    useEffect(() => {
+        setCurrBlock(Math.floor((currPage - 1) / blockSize));
+        setStartPage(currBlock * blockSize);
+        setEndPage(Math.min(startPage + blockSize, totalPageCnt));
+    }, [currPage, totalPageCnt, currBlock, startPage, endPage]);
+
+    // useEffect(() => {
+    //     const block = Math.floor((currPage - 1) / blockSize);
+    //     setCurrBlock(block);
+    //     setStartPage(block * blockSize);
+    //     setEndPage(Math.min(block * blockSize + blockSize, totalPageCnt));
+    // }, [currPage, totalPageCnt, blockSize]);
     // // 위와같이 의존성에 넣고 setState을 할 경우 무한 루프가 발생할 수 있음. 
     // [] 안에 있는 계산에 필요한 값을 제외하고 나머지는 계산된 값이므로 의존성에서 제외한 변경 코드 ( 참고용)
 
@@ -44,7 +43,7 @@ const Notice_list = () => {
 
     // 검색어 및 상태 관리
     const [searchData, setSearchData] = useState({
-        
+
         type: 1, //공지사항
         searchWord: "",
         searchText: "",
@@ -71,9 +70,9 @@ const Notice_list = () => {
 
     //리스트 data 가져오기
     const handleGetList = useCallback(
-        
+
         async (page = 1, type = searchData.type) => {
-            if(!decodedToken) return; // 수정점. 04.22
+            if (!decodedToken) return; // 수정점. 04.22
             setCurrPage(page);
             handleSearchData("type", type);
 
@@ -124,7 +123,7 @@ const Notice_list = () => {
 
     // 컴포넌트 마운트 시 첫 데이터 로드
     useEffect(() => {
-        if(!decodedToken) return; // 수정점. 04.22
+        if (!decodedToken) return; // 수정점. 04.22
         console.log("List useEffect() invoked.");
 
         handleSearchData("type", 1);
@@ -134,7 +133,7 @@ const Notice_list = () => {
         handleGetList(1);
     }, [decodedToken]); // 수정점. [] -> [decodedToken] 04.22 (토큰이 준비될 때 리스트 가져오기.)
 
-    if(!decodedToken) return; // 수정점. 04.22
+    if (!decodedToken) return; // 수정점. 04.22
 
     return (
         <div className={styles.container}>
