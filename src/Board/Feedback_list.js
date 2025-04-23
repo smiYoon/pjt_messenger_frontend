@@ -1,60 +1,135 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import styles from './Feedback_list.module.css';
+import styles from './Notice_list.module.css';
+import pagingStyles from "../Project/PagingStyle.module.css";
 import { Link } from 'react-router-dom';
 import { useLoadScript } from '../LoadScriptContext';
 
 const Feedback_list = () => {
-    const { decodedToken, token } = useLoadScript();
-    const [inputValue, setInputValue] = useState();
-    const [posts, setPosts] = useState([]);
+    const { decodedToken, role_level, token, empPositionMapping } = useLoadScript();
 
-    const handleChange = (e) => setInputValue(e.target.value);
+    const [list, setList] = useState([]);
 
-    const fetchPosts = useCallback(async () => {
-        try {
-            const response = await fetch(`https://localhost/board/feedback`, {
-                method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+    // list paging 정보
+    const [currPage, setCurrPage] = useState(1);
+    const [pageSize] = useState(5);
+    const [blockSize] = useState(10);
+    const [totalPageCnt, setTotalPageCnt] = useState(0);
+    const [currBlock, setCurrBlock] = useState(Math.floor((currPage - 1) / blockSize));
 
-            if (response.ok) {
-                const data = await response.json();
-                console.log("data:", data);
-                const formattedData = data.content.map(post => ({
-                    id: post.id,
-                    title: post.title,
-                    author: post.employee.name,
-                    empno: post.employee.empno,
-                    count: post.count,
-                    crtDate: post.crtDate,
-                }));
-
-                const sortedData = formattedData.sort((a, b) => b.id - a.id);
-                setPosts(sortedData);
-            } else {
-                console.error('불러오기 실패', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    }, [token]);
+    const [startPage, setStartPage] = useState(currBlock * blockSize);
+    const [endPage, setEndPage] = useState(
+        Math.min(startPage + blockSize, totalPageCnt)
+    );
 
     useEffect(() => {
-        if (token) {
-            fetchPosts();
+        setCurrBlock(Math.floor((currPage - 1) / blockSize));
+        setStartPage(currBlock * blockSize);
+        setEndPage(Math.min(startPage + blockSize, totalPageCnt));
+    }, [currPage, totalPageCnt, currBlock, startPage, endPage]);
+
+    // 검색어 및 상태 관리
+    const [searchData, setSearchData] = useState({
+
+        type: 2, //건의사항
+        searchWord: "",
+        searchText: "",
+    });
+
+    useEffect(() => {
+        console.log("searchData:", searchData);
+    }, [searchData]);
+
+    // list 검색 함수
+    const handleSearchData = (field, value) => {
+        setSearchData((prevData) => ({
+            ...prevData,
+            [field]: value,
+        }));
+    };
+
+    // list 검색 엔터키 이벤트
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            handleGetList(1);
         }
-    }, [fetchPosts, token]);
+    };
+
+    //리스트 data 가져오기
+    const handleGetList = useCallback(
+
+        async (page = 1, type = searchData.type) => {
+            if (!decodedToken) return; // 수정점. 04.22
+            setCurrPage(page);
+            handleSearchData("type", type);
+
+            const params = new URLSearchParams({
+                currPage: page,
+                pageSize: pageSize,
+                type: type,
+                searchWord: searchData.searchWord,
+                searchText: searchData.searchText,
+            });
+            console.log("params:", params.toString());
+
+            try {
+                const response = await fetch(
+                    `https://localhost/board/feedback?${params.toString()}`,
+                    {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                if (!response.ok)
+                    throw new Error("서버 응답 오류", response.statusText);
+
+                const listJson = await response.json();
+                const listData = listJson.content.map((data) => ({
+                    ...data,
+                }));
+
+                setCurrBlock(Math.floor((currPage - 1) / blockSize));
+                setStartPage(currBlock * blockSize);
+                setEndPage(Math.min(startPage + blockSize, totalPageCnt));
+
+                console.log("listData:", listData);
+
+                setList(listData);
+
+                setTotalPageCnt(listJson.totalPages);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        },
+        [searchData, currPage, decodedToken] // 수정점. 04.22
+    );
+
+    // 컴포넌트 마운트 시 첫 데이터 로드
+    useEffect(() => {
+        if (!decodedToken) return; // 수정점. 04.22
+        console.log("List useEffect() invoked.");
+
+        handleSearchData("type", 2);
+        handleSearchData("searchWord", "");
+        handleSearchData("searchText", "");
+
+        handleGetList(1);
+    }, [decodedToken]); // 수정점. [] -> [decodedToken] 04.22 (토큰이 준비될 때 리스트 가져오기.)
+
+    if (!decodedToken) return; // 수정점. 04.22
 
     return (
         <div className={styles.container}>
             <div className={styles.side_bar}>
                 <div className={styles.menu}>
-                    <Link to={`/board/notice/list`} className={styles.notice}>
-                        공지사항 게시판
+                    <Link to={`/board/notice/list`} className={`${styles.link}`}>
+                        공지사항
                     </Link>
-                    <div className={styles.feedback}>건의 게시판</div>
+                    <Link to={`/board/feedback/list`} className={`${styles.link} ${styles.active}`}>
+                        건의사항
+                    </Link>
                 </div>
             </div>
             <div className={styles.list_Page}>
@@ -66,7 +141,7 @@ const Feedback_list = () => {
                             <select
                                 name='searchWord'
                                 className={styles.select}
-                                onChange={handleChange}
+                                onChange={(e) => handleSearchData("searchWord", e.target.value)}
                             >
                                 <option value="">검색조건</option>
                                 <option value="title">제목</option>
@@ -77,10 +152,21 @@ const Feedback_list = () => {
                                     name='searchText'
                                     type='text'
                                     className={styles.input}
-                                    placeholder='검색'
+                                    placeholder="검색어를 입력하세요."
+                                    onChange={(e) =>
+                                        handleSearchData("searchText", e.target.value)
+                                    }
+                                    onKeyUp={handleKeyPress}
                                 />
                                 <i className="fa-solid fa-magnifying-glass" />
                             </div>
+
+                            <button
+                                className={`${styles.button} ${styles.btnStyle_yg}`}
+                                onClick={() => handleGetList(1)}
+                            >
+                                검색
+                            </button>
                         </div>
                     </div>
                     <div className={styles.Board_NameContainer}>
@@ -91,36 +177,84 @@ const Feedback_list = () => {
                             <div className={styles.writeTime}>작성 날짜</div>
                             <div className={styles.views}>조회수</div>
                         </div>
-
-                        {decodedToken && posts
-                        .filter(post => {
-                            const roles = decodedToken.roles || [];
-                            // CEO 또는 SystemManager는 전체 보기
-                            if (roles.includes("CEO") || roles.includes("SystemManager")) {
-                                return true;
-                            }
-                            // 일반 직원은 자기 글만 보기
-                            return post.empno === decodedToken.empno;
-                        }) // 수정됨 04.22
-                        /* {decodedToken && posts
-                            .filter(post => post.empno === decodedToken.empno) */
-                            .map((post) => (
-                                <Link key={post.id} to={`/board/feedback/detail/${post.id}`} className={styles.tr}>
-                                    <table className={styles.Board_table}>
-                                        <tbody>
-                                            <tr>
-                                                <td className={styles.number}>{post.id}</td>
-                                                <td className={styles.postTitle}>{post.title}</td>
-                                                <td className={styles.writer}>{post.author}</td>
-                                                <td className={styles.writeTime}>{post.crtDate}</td>
-                                                <td className={styles.views}>{post.count}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </Link>
-                            ))}
+                        {list.map((post) => (
+                            <Link
+                                key={post.id}
+                                to={`/board/feedback/detail/${post.id}`}
+                                className={styles.tr}
+                            >
+                                <table className={styles.Board_table}>
+                                    <tbody>
+                                        <tr>
+                                            <td className={styles.number}>{post.id}</td>
+                                            <td className={`${styles.postTitle} ${styles.alignLeft}`}>{post.title}</td>
+                                            <td className={styles.writer}>
+                                                {post.employee.name}{" "}
+                                                {empPositionMapping[post.employee.position]}
+                                            </td>
+                                            <td className={styles.writeTime}>{post.crtDate}</td>
+                                            <td className={styles.views}>{post.count}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </Link>
+                        ))}
                     </div>
-                    <div className={styles.Board_paging}>페이징 1, 2, 3</div>
+                    
+                    <div className={pagingStyles.pageBar}>
+                        {/* currPage: {currPage} / totalPageCnt:{totalPageCnt} / startPage:{startPage} / endPage:{endPage} */}
+
+                        <div className={pagingStyles.pageBox}>
+                            <div
+                                className={pagingStyles.pageNum}
+                                onClick={() => handleGetList(startPage - blockSize + 1)}
+                                style={{ display: currPage <= 10 ? "none" : "" }}
+                            >
+                                <i className="fas fa-angles-left"></i>
+                            </div>
+
+                            <div
+                                className={pagingStyles.pageNum}
+                                onClick={() => handleGetList(currPage - 1)}
+                                style={{ display: currPage === 1 ? "none" : "" }}
+                            >
+                                <i className="fas fa-angle-left"></i>
+                            </div>
+
+                            {Array.from(
+                                { length: endPage - startPage },
+                                (_, i) => startPage + i + 1
+                            ).map((pageNum) => (
+                                <div
+                                    key={pageNum}
+                                    className={
+                                        currPage === pageNum
+                                            ? pagingStyles.activePage
+                                            : pagingStyles.pageNum
+                                    }
+                                    onClick={() => handleGetList(pageNum)} // ← 이 부분에서 currPage 변경됨
+                                >
+                                    {pageNum}
+                                </div>
+                            ))}
+
+                            <div
+                                className={pagingStyles.pageNum}
+                                onClick={() => handleGetList(currPage + 1)}
+                                style={{ display: currPage === totalPageCnt || totalPageCnt === 0 ? "none" : "" }}
+                            >
+                                <i className="fas fa-angle-right"></i>
+                            </div>
+
+                            <div
+                                className={pagingStyles.pageNum}
+                                onClick={() => handleGetList(endPage + 1)}
+                                style={{ display: endPage + 1 > totalPageCnt ? "none" : "" }}
+                            >
+                                <i className="fas fa-angles-right"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

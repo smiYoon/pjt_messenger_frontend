@@ -1,35 +1,49 @@
+.body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;  
+    color: #222;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .main{
     width: calc(96vw - 150px);
-    margin-left: 9vw;
-    height: 100vh;
+    margin-left: 8vw;
+    height: 94vh;
 
     display: flex;
+    justify-content: space-between;
 }
 /* //////////////////////////////////////////// */
 .leftbox{
-    width: 25vw;
-    height: 100vh;
+    width: 22vw;
+    /* height: 100vh; */
 
-    align-content: center;
-    justify-items: center;
+    /* align-content: center;
+    justify-items: center; */
 }
 
 /* //////////////////////////////////////////// */
 
 .centerbox{
-    width: 45vw;
-    height: 100vh;
+    width: 41vw;
+    /* height: 100vh; */
 
-    align-content: center;
-    justify-items: center;
+    /* align-content: center;
+    justify-items: center; */
 }
 
 /* //////////////////////////////////////////// */
 
 .rightbox{
-    width: 25vw;
-    height: 100vh;
+    width: 22vw;
+    /* height: 100vh; */
 
-    align-content: center;
-    justify-items: center;
+    /* align-content: center;
+    justify-items: center; */
 }

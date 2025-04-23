@@ -45,20 +45,20 @@ const Navbar = () => {
     <div className={styles.container}>
       <div className={styles.buttons}>
         {decodedToken.position == 5 || decodedToken.position == 9 ? (
-        <Link to={`/member/list`} className={styles.flip}>
-          <i className={`${styles.icon} fas fa-user`} />
-          <div className={styles.text}>회원관리</div>
-        </Link>
+          <Link to={`/member/list`} className={styles.flip}>
+            <i className={`${styles.icon} fas fa-user`} />
+            <div className={styles.text}>회원관리</div>
+          </Link>
         ) : (
           <a
-          href="#"
-          className={styles.flip}
-          onClick={handleLinkClick}
-          style={{ cursor: 'pointer' }}
-        >
-          <i className={`${styles.icon} fas fa-user`} />
-          <div className={styles.text}>원관리</div>
-        </a>
+            href="#"
+            className={styles.flip}
+            onClick={handleLinkClick}
+            style={{ cursor: 'pointer' }}
+          >
+            <i className={`${styles.icon} fas fa-user`} />
+            <div className={styles.text}>안돼</div>
+          </a>
         )}
 
         {decodedToken.position != 5 ? (
@@ -74,7 +74,7 @@ const Navbar = () => {
             style={{ cursor: 'pointer' }}
           >
             <i className={`${styles.icon} fas fa-comment-dots`} />
-            <div className={styles.text}>채팅</div>
+            <div className={styles.text}>안돼</div>
           </a>
         )}
 
@@ -91,14 +91,25 @@ const Navbar = () => {
             style={{ cursor: 'pointer' }}
           >
             <i className={`${styles.icon} fas fa-file-pen`} />
-            <div className={styles.text}>무업</div>
+            <div className={styles.text}>안돼</div>
           </a>
         )}
-
-        <Link to={`/board/notice/list`} className={styles.flip}>
-          <i className={`${styles.icon} fas fa-chalkboard`} />
-          <div className={styles.text}>게시판</div>
-        </Link>
+        {decodedToken.position != 5 ? (
+          <Link to={`/board/notice/list`} className={styles.flip}>
+            <i className={`${styles.icon} fas fa-chalkboard`} />
+            <div className={styles.text}>게시판</div>
+          </Link>
+        ) : (
+          <a
+            href="#"
+            className={styles.flip}
+            onClick={handleLinkClick}
+            style={{ cursor: 'pointer' }}
+          >
+            <i className={`${styles.icon} fas fa-chalkboard`} />
+            <div className={styles.text}>안돼</div>
+          </a>
+        )}
 
         {decodedToken.position != 1 && decodedToken.position != 5 ? (
           <Link to={`/project/list`} className={styles.flip}>
@@ -113,7 +124,7 @@ const Navbar = () => {
             style={{ cursor: 'pointer' }}
           >
             <i className={`${styles.icon} fa-solid fa-list-check`} />
-            <div className={styles.text}>프로젝트</div>
+            <div className={styles.text}>안돼</div>
           </a>
         )}
       </div>

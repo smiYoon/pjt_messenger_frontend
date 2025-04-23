@@ -15,7 +15,10 @@ const ListUpComing = ({ project, onDelete, infoAlert, handleGetUpComingList, han
 
   // 모달 상태
   const [isOpen, setIsOpen] = useState(false);
-  const openProjectModify = () => setIsOpen(true);
+  const openProjectModify = () => {
+    setIsOpen(true);
+    setShowEditMenu(null);
+  }
   const closeProjectModify = () => setIsOpen(false);
 
   // 수정/삭제 메뉴 관리

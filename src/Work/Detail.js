@@ -25,7 +25,7 @@ const Detail = () => {
     const memoRef = useRef();
     const { workId } = useParams();
 
-    const { decodedToken , token, Role_level } = useLoadScript();
+    const { decodedToken , token } = useLoadScript();
     const [loginEmpData, setLoginEmpData] = useState({
         userId: "",
         userName: "",
@@ -455,22 +455,22 @@ const Detail = () => {
                             <span className={styles.contentLeft}>상태</span>
                             <span className={styles.contentRight}>
                                 <span className={`${styles.status1} ${uploadData.status === 1 ? styles.on : ""}`} onClick={() => {
-                                    if(loginEmpData.userStatus == 1 && uploadData.status == 4) {
+                                    if(loginEmpData.userStatus === 1 && uploadData.status === 4) {
                                         alert("팀원은 완료된 업무를 변경 할 수 없습니다");
                                     } else {handleStatusClick(1)} // if-else
                                     }}>진행예정</span>
                                 <span className={`${styles.status2} ${uploadData.status === 2 ? styles.on : ""}`} onClick={() => {
-                                    if(loginEmpData.userStatus == 1 && uploadData.status == 4) {
+                                    if(loginEmpData.userStatus === 1 && uploadData.status === 4) {
                                         alert("팀원은 완료된 업무를 변경 할 수 없습니다");
                                     } else {handleStatusClick(2)} // if-else
                                     }}>진행중</span>
                                 <span className={`${styles.status3} ${uploadData.status === 3 ? styles.on : ""}`} onClick={() => {
-                                    if(loginEmpData.userStatus == 1 && uploadData.status == 4) {
+                                    if(loginEmpData.userStatus === 1 && uploadData.status === 4) {
                                         alert("팀원은 완료된 업무를 변경 할 수 없습니다");
                                     } else {handleStatusClick(3)} // if-else
                                     }}>완료 대기</span>
                                 <span className={`${styles.status4} ${uploadData.status === 4 ? styles.on : ""}`} onClick={() => {
-                                    if(loginEmpData.userStatus == 1) {
+                                    if(loginEmpData.userStatus === 1) {
                                         alert("팀원은 업무완료를 할 수 없습니다");
                                     } else {handleStatusClick(4)} // if-else
                                     }}>완료</span>
@@ -602,7 +602,7 @@ const Detail = () => {
 
                     <div className={styles.buttonBox}>
                         <span className={styles.buttonBoxLeft} onClick={() => {
-                            if(uploadData.status == 4) {
+                            if(uploadData.status === 4) {
                                 alert("완료된 업무는 수정할 수 없습니다.");
                             } else {handleUpdate()} // if-else
                             }}>수정</span>

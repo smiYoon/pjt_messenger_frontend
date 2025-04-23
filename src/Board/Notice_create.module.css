@@ -23,13 +23,13 @@
     right: 0;
 }
 
-.menu .notice,
-.menu .feedback {
+
+.menu .link {
     font-size: 1.3rem;
     text-decoration: none;
     text-align: right;
     color: #222;
-    padding: 20px 1vw;
+    padding: 20px 2vw;
     margin: 10px 0;
     background-color: transparent;
     font-weight: normal;
@@ -38,7 +38,7 @@
     transition: background-color 0.3s ease, font-weight 0.3s ease;
 }
 
-.menu .notice {
+.menu .active {
     background-color: white;
     font-weight: bold;
     pointer-events: none;
@@ -175,5 +175,10 @@
 .buttons .cancel {
     background-color: white;
     color: #222;
-    border: 1px solid #4a1dff;
+    border: 1px solid #a0a0a0;
+}
+
+.buttons .cancel:hover {
+    background-color: #d5d5d5;
+    transition: background-color 0.2s ease;
 }

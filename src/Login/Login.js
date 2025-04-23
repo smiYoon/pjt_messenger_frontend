@@ -64,8 +64,8 @@ const Login = () => {
                 if(decoded.position == 1 || decoded.position == 2) {
                 navigate("/chat");   
                 } else if (decoded.position == 3 || decoded.position == 4) {
-                    navigate('/work');
-                } else if (decoded.position == 5) {
+                    navigate('/project/list');
+                } else if (decoded.position == 5 || decoded.position == 9) {
                     navigate('/member/list');
                 } else {
                     navigate('/chat');

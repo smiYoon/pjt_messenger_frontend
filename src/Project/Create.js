@@ -32,6 +32,17 @@ const Create = ({ closeModal, infoAlert, handleGetUpComingList, handleGetList })
     creatorEmpno: decodedToken.empno,
   });
 
+  useEffect(() => { 
+    if(startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      if (start > end) {
+        infoAlert("warning", "", "시작일자는 종료일자보다 이전이어야 합니다.");
+        setEndDate("");
+      }
+    } 
+  }, [startDate, endDate]);
+
   const handleChange = (e) => {
     setPostData({ ...postData, [e.target.name]: e.target.value });
   };

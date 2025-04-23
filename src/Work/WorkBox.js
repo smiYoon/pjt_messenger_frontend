@@ -38,6 +38,7 @@ const WorkBox = (props) => {
                         } // if
                         const data1 = await response.json();
                         setEmployeeData(data1);
+                        console.log("employeeData", data1);
                     } catch (error) {
                         console.error("Fetch error:", error);
                     } finally{
@@ -73,7 +74,7 @@ const WorkBox = (props) => {
         setIsDragging(false);
     }; // handleDragEnd;
 
-    if(loading !== false) {
+    if(loading !== false || employeeData.length === 0) {
         return (
             <div className={styles.workBox}>
                 <div className={styles.workBoxTop}>
@@ -131,7 +132,7 @@ const WorkBox = (props) => {
                           )
                     }
                 </div> 
-                <div>담당자: {userData.userName}</div>
+                <div>담당자:{employeeData.employee.name}</div>
             </div>
         </div>
     );

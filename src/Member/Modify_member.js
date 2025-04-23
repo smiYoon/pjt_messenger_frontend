@@ -53,13 +53,15 @@ const Modify_member = () => {
         try {
             const formData = new FormData();
             formData.append("loginId", memberForm.loginId);
-            formData.append("password", memberForm.password);
+            if (memberForm.password) {
+                formData.append("password", memberForm.password);
+            }
             formData.append("name", memberForm.name);
             formData.append("tel", memberForm.tel);
             formData.append("address", memberForm.address);
             formData.append("zipCode", memberForm.zipCode);
             formData.append("email", memberForm.email);
-            formData.append("deptId", memberForm.department);
+            formData.append("deptId", memberForm.dept_id);
             formData.append("position", memberForm.position);
 
             if (memberForm.upfiles) {
@@ -215,12 +217,12 @@ const Modify_member = () => {
                                     onChange={(e) => handleChange(e.target.name, e.target.value)}
                                     />
                                     <div className={styles.position_text}>직급</div> */}
-                                {role_level[decodedToken.roles] === 5 ? (
+                                {decodedToken.position === 5 ? (
                                     <>
                                         <select
-                                            name='department'
+                                            name='dept_id'
                                             className={styles.dept}
-                                            value={memberForm.department || ''}
+                                            value={memberForm.dept_id}
                                             onChange={(e) => handleChange(e.target.name, e.target.value)}
                                         >
                                             <option value="">부서를 선택해주세요.</option>
