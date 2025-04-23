@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { BsArrowUpCircleFill } from "react-icons/bs";
 import { useLoadScript } from "../../../LoadScriptContext";
 
-const Chatting = ({id, messages, setMessages, socket, fetchChatrooms}) => {
+const Chatting = ({id, messages, setMessages, socket, socketError}) => {
 
     const [isComposing, setIsComposing] = useState(false);
     const { decodedToken, token } = useLoadScript(); // ✅ token 가져옴
@@ -103,6 +103,11 @@ const Chatting = ({id, messages, setMessages, socket, fetchChatrooms}) => {
                             </div>
                         );
                     })}
+                    {socketError && (
+                        <div className={styles.socketError}>
+                            {socketError}
+                        </div>
+                    )}
                 </div>
             </div>
 

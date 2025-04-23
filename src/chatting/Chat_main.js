@@ -24,6 +24,7 @@ const Chat_main = () => {
     const [messages, setMessages] = useState([]); // 메시지 리스트
 
     const [socket, setSocket] = useState(null);
+    const [socketError, setSocketError] = useState(null); // 에러 메시지 상태
 
     useEffect(() => {
         if (!selectedChatRoom?.id) return;
@@ -37,10 +38,14 @@ const Chat_main = () => {
 
         newSocket.onclose = (event) => {
             console.log("WebSocket 연결 종료", event.code, event.reason);
+            if (event.code !== 1000) {
+                setSocketError("채팅 서버와의 연결이 끊겼습니다.");
+            }
         };
 
         newSocket.onerror = (error) => {
             console.error("WebSocket 에러 발생:", error);
+            setSocketError("채팅 서버와 연결에 실패했습니다. 다시 시도해 주세요.");
         };
 
 
@@ -144,7 +149,8 @@ const Chat_main = () => {
 
                 <div className={styles.centerbox}>
                     <Roomheader selectedChatRoom={selectedChatRoom} />
-                    <Chatting selectedChatRoom={selectedChatRoom} id={selectedChatRoom?.id} messages={messages} setMessages={setMessages} socket={socket} fetchChatrooms={fetchChatrooms} />
+                    <Chatting selectedChatRoom={selectedChatRoom} id={selectedChatRoom?.id} messages={messages} 
+                    setMessages={setMessages} socket={socket} fetchChatrooms={fetchChatrooms} socketError={socketError}/>
                 </div>
 
                 <div className={styles.rightbox}>
