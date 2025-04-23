@@ -79,11 +79,10 @@ const List = () => {
   //project 상단 upComing 리스트 data 가져오기
   const handleGetUpComingList = useCallback(async () => {
     try {
-      const response = await fetch(`https://localhost:443/project/upComing`, {
+      const response = await fetch(`https://localhost/project/upComing`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
         },
 
       });
@@ -169,7 +168,7 @@ const List = () => {
     async (pjtId) => {
       console.log("handleProjectDelete(", pjtId, ") invoked ");
       try {
-        const response = await fetch(`https://localhost:443/project/${pjtId}`, {
+        const response = await fetch(`https://localhost/project/${pjtId}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,

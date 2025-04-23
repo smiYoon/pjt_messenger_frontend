@@ -72,7 +72,9 @@ const CreateChat = ({ onCloseClick, setChatrooms , chatrooms , fetchChatrooms}) 
   return (
     <div className={styles.overlay}>
       <div className={styles.popup}>
-        <button className={styles.clsX} onClick={onCloseClick}>X</button>
+        <button className={styles.clsX} onClick={onCloseClick}>
+          <i className='fas fa-xmark' style={{color: '#222'}}/>
+        </button>
         <h2 className={styles.title}>채팅방 만들기</h2>
 
         <div className={styles.field}>
@@ -81,12 +83,12 @@ const CreateChat = ({ onCloseClick, setChatrooms , chatrooms , fetchChatrooms}) 
             type="text"
             value={roomName}
             onChange={(e) => setRoomName(e.target.value)}
-            placeholder="채팅방 이름을 적으세요"
+            placeholder="채팅방 이름을 적어주세요."
           />
         </div>
 
         <div className={styles.field}>
-          <label>연관프로젝트</label>
+          <label>관련된 프로젝트 선택</label>
           <select
             value={selectPj}
             onChange={(e) => setSelectPj(e.target.value)}

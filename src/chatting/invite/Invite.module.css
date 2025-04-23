@@ -11,11 +11,6 @@
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
 }
 
-.disabled {
-    opacity: 0.5;
-    pointer-events: none;
-}
-  
 /* 조직도 보기 버튼 */
 .opOrga {
     height: 5vh;
@@ -24,17 +19,29 @@
     width: 100%;
     margin: 0 auto;
     text-align: center;
-
+    
     background-color: #6C47FF;
     color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-
+    
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .opOrga:hover {
     background-color: #4A1DFF;
     transform: translateY(-1px);
+}
+
+.opOrga.disabled {
+    cursor: not-allowed;
+    background-color: #cccccc;
+    color: #666;
+}
+
+.opOrga.disabled:hover {
+    background-color: #ccc;
+    color: #666;
+    transform: translateY(0px);
 }

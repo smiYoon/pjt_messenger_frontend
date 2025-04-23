@@ -461,14 +461,14 @@ const List = () => {
 
                     <span className={styles.middleRight}>
                         <div className={styles.toggleWrapper}>
-                            <span>담당업무 </span>
+                            <span style={{fontSize: '1.2rem'}}>담당업무 </span>
                             <span className={styles.toggle_container} onClick={handleToggle}>
                                 <span
                                     className={`${styles.toggle_button} ${work === "managed" ? styles.managed : styles.requested
                                         }`}
                                 />
                             </span>
-                            <span>요청업무 </span>
+                            <span style={{fontSize: '1.2rem'}} >요청업무 </span>
                         </div>
 
                         <span>

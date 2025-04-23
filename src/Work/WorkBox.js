@@ -87,15 +87,14 @@ const WorkBox = (props) => {
     return(
         <div
             className={`${styles.workBox} ${isDragging ? styles.dragging : ''}`}
+            style={{cursor: "pointer"}}
             draggable={props.draggable}
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
+            onClick={() => navigate(`/work/detail/${data.id}`)}
         >
             <div className={styles.workBoxTop}>
                 <span className={styles.type}>{switchType(data.type)}</span>
-                <span className={styles.arrow}>
-                    <i style={{cursor: "pointer"}} className='fas fa-arrow-right' onClick={() => navigate(`/work/detail/${data.id}`)}/>
-                </span>
             </div>
 
             <div>업무명: {data.name}</div>
@@ -104,8 +103,8 @@ const WorkBox = (props) => {
                 기간: {data.startDate.substring(0, 10)} ~ {data.endDate.substring(0, 10)} 
             </div>
 
-            <div>
-                <div>요청자: 
+            <div className={styles.manager}>
+                <div>요청자:  
                     {
                         loading 
                         ? null 
@@ -132,7 +131,7 @@ const WorkBox = (props) => {
                           )
                     }
                 </div> 
-                <div>담당자:{employeeData.employee.name}</div>
+                <div>담당자: {employeeData.employee.name}</div>
             </div>
         </div>
     );

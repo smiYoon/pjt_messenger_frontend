@@ -55,9 +55,10 @@
 
 .nameCircle{
     border: solid 1px #6C47FF;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
-    padding: 0.5vh;
+    font-size: 1.2rem;
+    padding: 0.5vh 1vh;
 }
 
 .empPlusButton{
@@ -127,16 +128,19 @@
 }
 
 .addButton{
+    cursor: pointer;
     border-radius: 20px;
     padding: 0.5vw 1vw;
     background-color: #6C47FF;
     color: white;
     border: 0;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease-in-out;
 }
 
 .addButton:hover{
     background-color: #4A1DFF;
+    transition: background-color 0.3s ease-in-out;
 }
 
 
@@ -157,7 +161,7 @@
 
 .hr{
     background-color: #616264;
-    height: 3px;
+    height: 2px;
     transition: all 0.3s ease;
 }
 
@@ -191,7 +195,7 @@
     overflow-y: auto;
     border-radius: 10px;
     height: 55vh;
-    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
     padding: 2vh;
     gap: 1vh;
 }

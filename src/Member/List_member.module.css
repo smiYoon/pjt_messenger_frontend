@@ -132,6 +132,20 @@
     padding: 10px;
 }
 
+.profile_container {
+    width: 3vw;
+    height: 3vw;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile_container img {
+    width: 3vw;
+}
+
 .list .card {
     width: 14vw;
     height: 35vh;
@@ -143,11 +157,6 @@
     justify-content: space-evenly;
     box-sizing: border-box;
     padding: 10px;
-
-    img {
-        margin-top: 20px;
-        width: 60px;
-    }
     
     .name {
         font-size: 1.2rem;
@@ -210,4 +219,24 @@
     border-radius: 5px;
     color: white;
     margin-left: 10px;
+}
+
+.paging button {
+    border: none;
+    background-color: transparent;
+    padding:0 5px;
+    margin:0 5px;
+
+}
+
+.btn i {
+    font-size: 0.8rem;
+}
+
+.activePage {
+    padding:0 5px;
+    margin:0 5px;
+    color:red;
+    font-weight: bold;
+    font-size: 1.3rem;
 }

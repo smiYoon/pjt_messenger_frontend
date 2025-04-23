@@ -423,13 +423,8 @@ const Detail = () => {
             text: "이동하시면 변경사항이 저장되지 않습니다.",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonText: "예",
+            confirmButtonText: "확인",
             cancelButtonText: "아니오",
-            confirmButtonColor: "#6C47FF",
-            cancelButtonColor: "#FFFFFF",
-            customClass: {
-                cancelButton: styles.cancelButton,
-            },
         }).then((result) => {
             if (result.isConfirmed) {
             navigate('/work');
@@ -549,6 +544,7 @@ const Detail = () => {
                                 <div className={styles.modalBackdrop}>
                                     <div className={styles.empModal}>
                                         <h3>담당자 선택 ({selectedEmployees.length}명 선택됨)</h3>
+                                        <div className={styles.cancelButton}><i className='fas fa-xmark' onClick={() => setIsEmpModalOpen(false)}/></div>
                                         <div className={styles.modalContent}>
                                             {departmentMembers.sort((a, b) => a.name.localeCompare(b.name)).map(emp => (
                                                 <div
@@ -585,7 +581,7 @@ const Detail = () => {
 
                         <div className={styles.contentLeft}>상세정보</div>
                         <div>
-                            <textarea ref={detailRef} className={styles.detailInputBox} type="text" placeholder="상세정보를 입력하세요." defaultValue={uploadData.detail}/>
+                            <textarea ref={detailRef} className={styles.detailInputBox} type="text" placeholder="상세정보를 입력해주세요." defaultValue={uploadData.detail}/>
                         </div>
                     </div>
                 </div>
@@ -602,7 +598,7 @@ const Detail = () => {
 
                     <div className={styles.memoBox}>
                         메모
-                        <textarea ref={memoRef} className={styles.memoInputBox} type="text" placeholder="메모를 입력하세요." defaultValue={uploadData.memo}/>
+                        <textarea ref={memoRef} className={styles.memoInputBox} type="text" placeholder="메모를 입력해주세요." defaultValue={uploadData.memo}/>
                     </div>
 
                     <div className={styles.buttonBox}>
