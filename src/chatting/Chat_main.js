@@ -43,7 +43,6 @@ const Chat_main = () => {
             console.error("WebSocket 에러 발생:", error);
         };
 
-        setSocket(newSocket);
 
         return () => {
             console.log("🧹 기존 소켓 연결 해제");
