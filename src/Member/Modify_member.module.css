@@ -54,14 +54,12 @@
     
     img {
         width: 200px;
-        box-sizing: border-box;
-        background-color: skyblue;
     }
-
+    
     input[type='file'] {
         display: none;
     }
-
+    
     .camera {
         color: #444;
         font-size: 2rem;
@@ -77,10 +75,11 @@
     height: 200px;
     overflow: hidden;
     border-radius: 50%;
-    border: 1px solid #6c47ff;
+    border: 3px solid #6c47ff;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: skyblue;
 }
 
 .name {
