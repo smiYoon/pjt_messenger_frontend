@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 const AiSummary = ({ id, setChatrooms, setSelectedChatRoom, selectedChatRoom , setMessages, fetchChatrooms}) => {
     const { decodedToken, token } = useLoadScript();
     const empno = decodedToken?.empno;
+    const isDisabled = !selectedChatRoom;
 
     useEffect(() => {
         setSummaryText("");
@@ -36,7 +37,7 @@ const AiSummary = ({ id, setChatrooms, setSelectedChatRoom, selectedChatRoom , s
                 const response = await fetch(`https://localhost/chat/${id}`,{
                     method : 'DELETE',
                     headers: {
-                        Authorization: `Bearer ${token}` // ✅ 토큰 추가
+                        Authorization: `Bearer ${token}` // 토큰 추가
                     },
                     body: formData
                 });
@@ -129,7 +130,7 @@ const AiSummary = ({ id, setChatrooms, setSelectedChatRoom, selectedChatRoom , s
             const response = await fetch(`https://localhost:443/message/${id}/summarize`, {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer ${token}` // ✅ 토큰 추가
+                    Authorization: `Bearer ${token}` //  토큰 추가
                 },
                 body: formData
             });
@@ -146,62 +147,79 @@ const AiSummary = ({ id, setChatrooms, setSelectedChatRoom, selectedChatRoom , s
     };
 
     return (
-        <div className={styles.aibox}>
-            <div className={styles.todaySummary} onClick={handleTodaySummary}>
-                <BsMagic className={styles.magicWand} />
-                <span className={styles.todaySummaryTxt}>오늘 하루 요약</span>
+        <div
+          className={`${styles.aibox} ${isDisabled ? styles.disabled : ''}`}
+        >
+          <div
+            className={styles.todaySummary}
+            onClick={isDisabled ? null : handleTodaySummary}
+          >
+            <BsMagic className={styles.magicWand} />
+            <span className={styles.todaySummaryTxt}>오늘 하루 요약</span>
+          </div>
+    
+          <div className={styles.dateSetManually}>
+            <span className={styles.dateSetManuallyTxt}>요약할 날짜 선택</span>
+          </div>
+    
+          <div className={styles.startDateBox}>
+            <div className={styles.startDate}>
+              <span className={styles.startDateTxt}>시작일</span>
             </div>
-
-            <div className={styles.dateSetManually}>
-                <span className={styles.dateSetManuallyTxt}>요약할 날짜 선택</span>
+            <div className={styles.startDatePickerBox}>
+              <DatePicker
+                className={styles.startDatePicker}
+                selected={startDate}
+                onChange={(date) => {
+                  if (isDisabled) return;
+                  setStartDate(date);
+                  if (endDate && date > endDate) {
+                    setEndDate(null);
+                  }
+                }}
+                selectsStart
+                startDate={startDate}
+                endDate={endDate}
+                showTimeSelect
+                dateFormat="yyyy-MM-dd HH:mm"
+                disabled={isDisabled}
+              />
             </div>
-
-            <div className={styles.startDateBox}>
-                <div className={styles.startDate}>
-                    <span className={styles.startDateTxt}>시작일</span>
-                </div>
-                <div className={styles.startDatePickerBox}>
-                    <DatePicker
-                        className={styles.startDatePicker}
-                        selected={startDate}
-                        onChange={(date) => {
-                            setStartDate(date);
-                            if (endDate && date > endDate) {
-                                setEndDate(null);
-                            }
-                        }}
-                        selectsStart
-                        startDate={startDate}
-                        endDate={endDate}
-                        showTimeSelect
-                        dateFormat="yyyy-MM-dd HH:mm"
-                    />
-                </div>
+          </div>
+    
+          <div className={styles.startDateBox}>
+            <div className={styles.startDate}>
+              <span className={styles.startDateTxt}>종료일</span>
             </div>
-
-            <div className={styles.startDateBox}>
-                <div className={styles.startDate}>
-                    <span className={styles.startDateTxt}>종료일</span>
-                </div>
-                <div className={styles.startDatePickerBox}>
-                    <DatePicker
-                        className={styles.startDatePicker}
-                        selected={endDate}
-                        onChange={(date) => setEndDate(date)}
-                        startDate={startDate}
-                        endDate={endDate}
-                        minDate={startDate}
-                        showTimeSelect
-                        dateFormat="yyyy-MM-dd HH:mm"
-                    />
-                </div>
+            <div className={styles.startDatePickerBox}>
+              <DatePicker
+                className={styles.startDatePicker}
+                selected={endDate}
+                onChange={(date) => !isDisabled && setEndDate(date)}
+                startDate={startDate}
+                endDate={endDate}
+                minDate={startDate}
+                showTimeSelect
+                dateFormat="yyyy-MM-dd HH:mm"
+                disabled={isDisabled}
+              />
             </div>
-
-            <div className={styles.summaryInfo}>{summaryText}</div>
-            <div className={styles.summaryButton} onClick={handleSummary}>요약하기</div>
-            <IoExitOutline className={styles.exitButton} onClick={handleExit} />
+          </div>
+    
+          <div className={styles.summaryInfo}>{summaryText}</div>
+          <div
+            className={styles.summaryButton}
+            onClick={isDisabled ? null : handleSummary}
+          >
+            요약하기
+          </div>
+    
+          <IoExitOutline
+            className={styles.exitButton}
+            onClick={isDisabled ? null : handleExit}
+          />
         </div>
-    );
+      );
 };
 
 export default AiSummary;

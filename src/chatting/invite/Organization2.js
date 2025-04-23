@@ -46,7 +46,7 @@ const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id , socket}) =>
       const res = await fetch(`https://localhost:443/chat/${id}`, {
         method: "PUT",
         headers: {
-          Authorization: `Bearer ${token}`, // ✅ 토큰 추가
+          Authorization: `Bearer ${token}`, //  토큰 추가
         },
         body: formData
         

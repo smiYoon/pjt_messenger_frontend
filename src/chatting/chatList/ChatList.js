@@ -3,12 +3,12 @@ import { useLoadScript } from "../../LoadScriptContext";
 import styles from './ChatList.module.css';
 
 const ChatList = ({ onCreateClick, onChatClick, chatrooms, setChatrooms }) => {
-    const { decodedToken, token } = useLoadScript(); // ✅ token 추가
+    const { decodedToken, token } = useLoadScript(); // token 추가
     const empno = decodedToken?.empno;
 
     // 채팅방 리스트 받아오기
     useEffect(() => {
-        if (!empno || !token) return; // ✅ null-safe
+        if (!empno || !token) return; // null-safe
 
         const fetchChatrooms = async () => {
             try {

@@ -14,6 +14,11 @@
     flex-direction: column;
     gap: 1rem;
 }
+
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
   
 /* 조직도 보기 버튼 */
 .opOrga {
