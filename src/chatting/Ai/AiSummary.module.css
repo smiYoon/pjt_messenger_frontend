@@ -1,15 +1,16 @@
 .aibox {
     position: relative;
-    /* width: 80%; */
-    height: 86%;
-    background-color: #e5e1f5;
-    border-radius: 20px;
+    width: 100%;
+    height: 90vh;
+    background-color: #E5E1F5;
+    border-radius: 10px;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
     padding: 2rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .todaySummary {
@@ -27,7 +28,7 @@
     color: white;
     background-color: #6C47FF;
 
-    border-radius: 12px;
+    border-radius: 7px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -61,11 +62,11 @@
     align-items: center;
     justify-content: center;
 
-    width: 92%;
+    width: 100%;
     height: 40px;
 
     background-color: white;
-    border-radius: 10px;
+    border-radius: 7px;
 
     font-weight: bold;
     color: #6C47FF;
@@ -75,15 +76,15 @@
 .startDateBox {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 5%;
     width: 100%;
 }
 
 .startDate {
-    width: 30%;
+    width: 41%;
     height: 100%;
     background-color: white;
-    border-radius: 15px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -93,15 +94,15 @@
 }
 
 .startDatePickerBox {
-    flex-grow: 1;
+    /* flex-grow: 1; */
+    width: 75%;
 }
 
 .startDatePicker {
     width: 100%;
-    height: 40px;
-    padding: 0.5rem;
+    padding: 20px 20px;
     background-color: white;
-    border-radius: 15px;
+    border-radius: 8px;
     font-size: 14px;
     text-align: center;
 
@@ -119,7 +120,7 @@
     color: #333;
     border-radius: 10px;
 
-    height: 40%;
+    height: 43%;
     padding: 1rem;
     overflow-y: auto;
     white-space: pre-wrap;
@@ -147,8 +148,8 @@
 .exitButton {
     font-size: 36px;
     position: absolute;
-    bottom: 20px;
-    right: 20px;
+    bottom: 2rem;
+    right: 2rem;
     color: #6C47FF;
     cursor: pointer;
     transition: transform 0.2s;

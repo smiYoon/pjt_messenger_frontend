@@ -8,20 +8,26 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 1vw;
 }
 
 
 .main{
-    width: calc(96vw - 150px);
+    width: calc(92vw - 150px);
     margin-left: 8vw;
-    height: 94vh;
+    height: 90vh;
 
     display: flex;
     justify-content: space-between;
 }
 /* //////////////////////////////////////////// */
 .leftbox{
-    width: 22vw;
+    width: 20vw;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
     /* height: 100vh; */
 
     /* align-content: center;
@@ -31,7 +37,12 @@
 /* //////////////////////////////////////////// */
 
 .centerbox{
-    width: 41vw;
+    width: 35.5vw;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
     /* height: 100vh; */
 
     /* align-content: center;
@@ -41,7 +52,7 @@
 /* //////////////////////////////////////////// */
 
 .rightbox{
-    width: 22vw;
+    width: 25vw;
     /* height: 100vh; */
 
     /* align-content: center;

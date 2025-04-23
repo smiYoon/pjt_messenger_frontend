@@ -162,6 +162,7 @@ const AiSummary = ({ id, setChatrooms, setSelectedChatRoom, selectedChatRoom , s
             <span className={styles.dateSetManuallyTxt}>요약할 날짜 선택</span>
           </div>
     
+          
           <div className={styles.startDateBox}>
             <div className={styles.startDate}>
               <span className={styles.startDateTxt}>시작일</span>

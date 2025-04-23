@@ -1,15 +1,16 @@
 .chatlist {
-    position: relative;
-    /* width: 87%; */
-    height: 77%;
+    padding: 1rem;
+    width: 100%;
+    height:78.5vh;
+    box-sizing: border-box;
+
     background-color: #E5E1F5;
 
-    border-radius: 20px;
-    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
 
     display: flex;
     flex-direction: column;
-    padding: 1rem;
     overflow: hidden;
 }
 
@@ -62,8 +63,8 @@
     align-items: center;
     background-color: #fff;
 
-    border-radius: 15px;
-    padding: 1rem;
+    border-radius: 10px;
+    padding: 14px;
     margin-bottom: 1rem;
 
     cursor: pointer;
@@ -73,14 +74,14 @@
 }
 
 .chatroombox:hover {
-    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
     transform: translateY(-2px);
 }
 
 /* 아이콘 */
 .empicon {
-    width: 50px;
-    height: 50px;
+    width: 47px;
+    height: 47px;
     background-color: #6C47FF;
     border-radius: 50%;
 
