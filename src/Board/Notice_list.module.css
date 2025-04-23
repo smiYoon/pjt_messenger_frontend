@@ -24,13 +24,12 @@
 }
 
 
-.menu .notice,
-.menu .feedback {
+.menu .link {
     font-size: 1.3rem;
     text-decoration: none;
     text-align: right;
     color: #222;
-    padding: 20px 1vw;
+    padding: 20px 2vw;
     margin: 10px 0;
     background-color: transparent;
     font-weight: normal;
@@ -39,7 +38,7 @@
     transition: background-color 0.3s ease, font-weight 0.3s ease;
 }
 
-.menu .notice {
+.menu .active {
     background-color: white;
     font-weight: bold;
     pointer-events: none;

@@ -20,7 +20,7 @@ const Notice_detail = () => {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-        },
+          },
         });
 
         if (response.ok) {
@@ -65,7 +65,7 @@ const Notice_detail = () => {
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${token}`,
-        },
+          },
         });
 
         if (response.ok) {
@@ -90,24 +90,18 @@ const Notice_detail = () => {
   };
 
   const handleUpdateClick = () => {
-    navigate(`/board/notice/update/${ id }`);
+    navigate(`/board/notice/update/${id}`);
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.side_bar}>
         <div className={styles.menu}>
-          <Link
-            className={styles.notice}
-            to={`/board/notice/list`}
-          >
-            공지사항 게시판
+          <Link to={`/board/notice/list`} className={`${styles.link} ${styles.active}`}>
+            공지사항
           </Link>
-          <Link
-            className={styles.feedback}
-            to={`/board/feedback/list`}
-          >
-            건의 게시판
+          <Link to={`/board/feedback/list`} className={`${styles.link}`}>
+            건의사항
           </Link>
         </div>
       </div>
@@ -155,11 +149,11 @@ const Notice_detail = () => {
             <button onClick={handleCancelClick} className={styles.cancel}>뒤로</button>
             {
               (decodedToken.name === post.author || decodedToken.position === 9) && (
-              <>
-                <button onClick={handleUpdateClick} className={styles.edit} >수정</button>
-                <button onClick={handleDeleteClick} className={styles.cancel}>삭제</button>
-              </>
-            )}
+                <>
+                  <button onClick={handleUpdateClick} className={styles.edit} >수정</button>
+                  <button onClick={handleDeleteClick} className={styles.cancel}>삭제</button>
+                </>
+              )}
           </div>
         </div>
       </div>
