@@ -1,13 +1,28 @@
 
 .body {
-    margin: 4vh auto;
+    /* margin: 4vh auto;
     width: 70%;
     height: 80%;
     padding: 0;
     text-align: left;
     padding: 3vh 3vw 3vh calc(3vw + 150px);
     overflow-x: hidden;
+    color: #222; */
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;  
     color: #222;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: calc(90vw - 150px);
+    height: 92vh;
+    margin-left: 8vw;
 }
 
 
@@ -75,7 +90,7 @@
 
 
 .toggle_container{
-    width: 3vw; 
+    width: 2vw; 
     height: 2vh; 
     background-color: #E5E1F5;
     border-radius: 20px;
@@ -112,9 +127,8 @@
 }
 
 .addButton{
-    height: 5vh;
-    padding: 0 1vw;
-    border-radius: 20px 20px;
+    border-radius: 20px;
+    padding: 0.5vw 1vw;
     background-color: #6C47FF;
     color: white;
     border: 0;
@@ -137,7 +151,7 @@
 }
 
 .pageBottom_Box{
-    width: 18vw;
+    width: 21vw;
     transition: all 0.3s ease;
 }
 

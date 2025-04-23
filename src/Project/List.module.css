@@ -97,7 +97,7 @@
     background-color: #4FC765;
     position:relative;
     top: 50%;
-    bottom: -5vh;
+    bottom: -5.3vh;
 }
 
 .searchBar .dropdown {
@@ -147,23 +147,23 @@
     font-weight: bold;
     text-decoration: none;
     border-radius: 7px;
-    border: #6c47ff;
-    background-color: #6c47ff;
+    border: #337ab7  ;
+    background-color: #337ab7 ;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease-in;
 }
 .listBar button:hover {
-    background-color: #4a1dff;
+    background-color: #286090 ;
     transition: background-color 0.3s ease-in;
 }
 
 .listBar .btnStyle_yg {
-    border: #4FC765;
-    background-color: #4FC765;
+    border: #6c47ff;
+    background-color: #6c47ff;
 }
 .listBar .btnStyle_yg:hover {
-    background-color: #39b851;    
+    background-color: #4a1dff;    
 }
 
 
