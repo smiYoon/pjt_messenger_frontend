@@ -53,28 +53,29 @@ const Roomheader = ({ selectedChatRoom }) => {
                         </div>
                     </div>
 
-                    {selectedChatRoom?.project?.name && (
-                        <div className={styles.projectBadgeWrapper}>
-                            <div
+            
+                    <div  className={`${styles.projectBadgeWrapper} ${selectedChatRoom?.project?.name ? '' :  styles.disabled}`}>
+                        <div
                             className={styles.colorDot}
                             onMouseEnter={() => setShowTooltip(true)}
                             onMouseLeave={() => setShowTooltip(false)}
-                            />
+                        />
 
-                            {showTooltip && (
-                            <div className={styles.tooltip}>
-                                {selectedChatRoom.project.name}
-                            </div>
-                            )}
+                        {showTooltip && (
+                        <div className={styles.tooltip}>
+                            {selectedChatRoom.project.name}
                         </div>
-                    )}
-                </div>
+                        )}
+                    
+                    </div>
 
+                </div>
                 {showEmpList && (
                     <div ref={empListRef} className={styles.empListBox}>
                         <ChatEmpList employees={Array.isArray(selectedChatRoom?.chatEmployees) ? employees : []} />
                     </div>
                 )}
+                
             </>
     )
 }
