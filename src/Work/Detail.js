@@ -234,10 +234,13 @@ const Detail = () => {
         fetchData();
     }, [workId]);
 
-    const getDiffDays = (startDateStr, endDateStr) => {
-        const start = new Date(startDateStr);
-        const end = new Date(endDateStr);
-        const diffMillis = end.getTime() - start.getTime();
+    const getDiffDays = (now, endDateStr) => {
+        const nowDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const end = new Date(endDateStr); 
+        const endDate = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+          
+        const diffMillis = endDate.getTime() - nowDate.getTime(); // 밀리초 차이
+        if (diffMillis <= 0) return "DAY"; // 종료일이 시작일 이전인 경우
         return diffMillis / (1000 * 60 * 60 * 24);
     } // getDiffDays
 
@@ -591,7 +594,9 @@ const Detail = () => {
                     <div className={styles.dateBox}>
                         <div>업무 종료일까지</div>
                         <div style={{textAlign: "right"}}>
-                            {loading? "로딩중..." : (`D-${getDiffDays(employeeData.startDate, employeeData.endDate)}`) || "-"}
+                            {loading? 
+                                "로딩중..." : 
+                                (`D-${getDiffDays(new Date(), employeeData.endDate)}`) || "-"}
                         </div>    
                     </div>
 

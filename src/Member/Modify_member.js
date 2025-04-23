@@ -172,8 +172,11 @@ const Modify_member = () => {
             <div className={styles.container}>
                 <div className={styles.left_panel}>
                     <div className={styles.pic}>
-                        <img src={profile} alt='' />
-                        {/* <img src={memberForm.profile} alt='' /> */}
+                        <img 
+                            src={"https://localhost/"+empno+".png"} 
+                            alt='' 
+                            onError={e => { e.target.onerror = null; e.target.src = profile;}}
+                        />
                         <label htmlFor='profileUpload'>
                             <i className={`fas fa-camera ${styles.camera}`} />
                         </label>
@@ -188,7 +191,7 @@ const Modify_member = () => {
                                   }));
                                 }
                             }} 
-                            />
+                        />
                     </div>
                     <div className={styles.name}>
                         {memberForm.name}
