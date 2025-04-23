@@ -10,7 +10,7 @@ const CreateChat = ({ onCloseClick, setChatrooms , chatrooms , fetchChatrooms}) 
   const [selectPj, setSelectPj] = useState(""); //프로젝트 
   const [selectPjs, setSelectPjs] = useState([]);
 
-  const { decodedToken, token } = useLoadScript(); // ✅ token 추가
+  const { decodedToken, token } = useLoadScript(); //  token 추가
   const empno = decodedToken.empno;
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const CreateChat = ({ onCloseClick, setChatrooms , chatrooms , fetchChatrooms}) 
       const response = await fetch("https://localhost:443/chat", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}` // ✅ 헤더 추가
+          Authorization: `Bearer ${token}` // 헤더 추가
         },
         body: formData
       });

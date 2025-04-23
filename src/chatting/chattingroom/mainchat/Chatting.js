@@ -16,7 +16,7 @@ const Chatting = ({id, messages, setMessages, socket, fetchChatrooms}) => {
             try {
                 const response = await fetch(`https://localhost:443/message?chatId=${id}`, {
                     headers: {
-                        Authorization: `Bearer ${token}`, // ✅ 토큰 추가
+                        Authorization: `Bearer ${token}`, // 토큰 추가
                     },
                 });
                 const data = await response.json();

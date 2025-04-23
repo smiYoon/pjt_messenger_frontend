@@ -8,9 +8,7 @@ export const LoadScriptProvider = ({ children }) => {
 
     const [decodedToken, setDecodedToken] = useState(null); // [] -> null 로 변경.
     const [token, setToken] = useState(localStorage.getItem('jwt') || null); // 수정점.
-
-
-   
+ 
     useEffect(() => {
         const loadToken = () => {
             try {
