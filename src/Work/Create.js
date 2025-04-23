@@ -25,7 +25,7 @@ const Create = () => {
     const detailRef = useRef();
     const memoRef = useRef();
 
-    const { decodedToken, token, role_level } = useLoadScript();
+    const { decodedToken, token } = useLoadScript();
     const [isTokenLoaded, setIsTokenLoaded] = useState(false);
     const [loginEmpData, setLoginEmpData] = useState({
             userId: "",
