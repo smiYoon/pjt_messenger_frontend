@@ -116,6 +116,7 @@ const Chatting = ({id, messages, setMessages, socket, socketError}) => {
                     className={styles.messageInput}
                     type="text"
                     value={inputValue}
+                    
                     onChange={(e) => setInputValue(e.target.value)}
                     onCompositionStart={() => setIsComposing(true)}
                     onCompositionEnd={() => setIsComposing(false)}

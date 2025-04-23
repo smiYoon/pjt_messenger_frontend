@@ -147,11 +147,9 @@ const AiSummary = ({ id, setChatrooms, setSelectedChatRoom, selectedChatRoom , s
     };
 
     return (
-        <div
-          className={`${styles.aibox} ${isDisabled ? styles.disabled : ''}`}
-        >
+        <div className={styles.aibox}>
           <div
-            className={styles.todaySummary}
+            className={`${styles.todaySummary} ${isDisabled ? styles.disabled : ''} `}
             onClick={isDisabled ? null : handleTodaySummary}
           >
             <BsMagic className={styles.magicWand} />
@@ -169,7 +167,7 @@ const AiSummary = ({ id, setChatrooms, setSelectedChatRoom, selectedChatRoom , s
             </div>
             <div className={styles.startDatePickerBox}>
               <DatePicker
-                className={styles.startDatePicker}
+                className={`${styles.startDatePicker} ${isDisabled ? styles.disabled : ''}`}
                 selected={startDate}
                 onChange={(date) => {
                   if (isDisabled) return;
@@ -194,7 +192,7 @@ const AiSummary = ({ id, setChatrooms, setSelectedChatRoom, selectedChatRoom , s
             </div>
             <div className={styles.startDatePickerBox}>
               <DatePicker
-                className={styles.startDatePicker}
+                className={`${styles.startDatePicker} ${isDisabled ? styles.disabled : ''} `}
                 selected={endDate}
                 onChange={(date) => !isDisabled && setEndDate(date)}
                 startDate={startDate}
@@ -209,14 +207,14 @@ const AiSummary = ({ id, setChatrooms, setSelectedChatRoom, selectedChatRoom , s
     
           <div className={styles.summaryInfo}>{summaryText}</div>
           <div
-            className={styles.summaryButton}
+            className={`${styles.summaryButton} ${isDisabled ? styles.disabled : ''} `}
             onClick={isDisabled ? null : handleSummary}
           >
             요약하기
           </div>
     
           <IoExitOutline
-            className={styles.exitButton}
+            className={`${styles.exitButton} ${isDisabled ? styles.disabled2 : ''} `}
             onClick={isDisabled ? null : handleExit}
           />
         </div>

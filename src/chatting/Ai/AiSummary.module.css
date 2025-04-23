@@ -94,7 +94,6 @@
 }
 
 .startDatePickerBox {
-    /* flex-grow: 1; */
     width: 75%;
 }
 
@@ -161,6 +160,12 @@
 
 .disabled {
     pointer-events: none;
-    opacity: 0.5;
-    filter: grayscale(0.4);
-  }
+    background-color: #999;
+    color: #111;
+}
+
+.disabled2{
+    pointer-events: none;
+    /* background-color: #666; */
+    color: #111;
+}

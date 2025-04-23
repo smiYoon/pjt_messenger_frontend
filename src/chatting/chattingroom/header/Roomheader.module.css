@@ -1,39 +1,38 @@
 .header{
-  padding: 1rem;
+  padding: 30px;
   width: 100%;
   height: 8vh;
   box-sizing: border-box;
   
-    background-color: #E5E1F5;
+  background-color: #E5E1F5;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-    border-radius: 10px;
+  border-radius: 10px;
 
-    box-shadow: 4px 4px 10px rgba(0, 0,0,.25);
+  box-shadow: 4px 4px 10px rgba(0, 0,0,.25);
 }
 
 .chatname {
     width: 30%;
 
-    text-align: center;
+    text-align: left;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 200px; /* 너비 조절 가능 */
+    max-width: 200px;
 
     font-size: 25px;
     font-weight: bold;
-  }
+}
 
 /* ////////////////////////////////// */
 
 .iconbox{
-    width: 40%;
+    width: 35%;
     display: flex;
-    justify-content: center;
     gap: 8px;
 }
 
@@ -42,7 +41,6 @@
     height: 40px;
     background-color: #6C47FF;
     border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
   }
   
   .list {
@@ -57,7 +55,6 @@
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
   
   .list:hover {
@@ -68,15 +65,20 @@
 
 .projectBadgeWrapper {
     position: relative;
-    display: inline-block;
+}
+
+.disabled{
+    opacity: 0;
+    pointer-events: none;
 }
 
 .colorDot {
+    position: relative;
+    
     width: 30px;
     height: 30px;
-    background-color: red; /* 원하는 프로젝트 컬러 */
+    background-color: red;
     border-radius: 50%;
-    cursor: default;
 }
 
 .tooltip {

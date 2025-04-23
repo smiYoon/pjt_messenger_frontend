@@ -1,6 +1,6 @@
 .mainchat {
   position: relative;
-  padding: 1rem;
+  padding: 30px;
   width: 100%;
   height:78.5vh;
   box-sizing: border-box;
@@ -12,9 +12,8 @@
 
 .messagebox {
   position: relative;
-  top: 5%;
-  width: 80%;
-  height: 85%;
+  width: 100%;
+  height: 90%;
   overflow-y: auto;
   scrollbar-width: none;
   margin: 0 auto;
@@ -24,7 +23,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 10px;
 }
 
 .messageItem {
@@ -88,14 +86,19 @@
   left: 50%;
   bottom: 3%;
   transform: translateX(-50%);
-  width: 80%;
+  width: calc(100% - 60px);
   height: 6%;
   border-radius: 10px;
   background-color: white;
 }
 
+.MessageInputBox:focus-within {
+  border: 2px solid #4a1dff;
+}
+
+
 .messageInput {
-  width: 90%;
+  width: 88%;
   height: 60%;
   font-size: 20px;
   border: none;
