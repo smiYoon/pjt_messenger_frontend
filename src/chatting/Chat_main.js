@@ -57,7 +57,7 @@ const Chat_main = () => {
             const response = await fetch(`https://localhost:443/chat/${chatId}`, {
                 method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${token}`, // ✅ 토큰 추가
+                    Authorization: `Bearer ${token}`, // 토큰 추가
                 },
             });
 
@@ -73,6 +73,24 @@ const Chat_main = () => {
         }
     };
 
+    useEffect(() => { // 참여자들 정보도 갱신
+        if (!selectedChatRoom?.id) return;
+    
+        const fetchChatRoomDetail = async () => {
+            const res = await fetch(`https://localhost:443/chat/${selectedChatRoom.id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const data = await res.json();
+            console.log("채팅방 상세정보:", data);
+            setSelectedChatRoom(data);
+        };
+    
+        const intervalId = setInterval(fetchChatRoomDetail, 10000); // 10초마다 갱신
+    
+        return () => clearInterval(intervalId);
+    }, [selectedChatRoom?.id]);
+
+
     // 채팅방 리스트 받아오기 (채팅방이름, 등록한사람 아이콘, 프로젝트 유무)
     // 공통 fetch 로직
     const fetchChatrooms = async () => {
@@ -85,6 +103,7 @@ const Chat_main = () => {
             });
             const data = await response.json();
             setChatrooms(Array.isArray(data) ? data : []);
+            console.log("채팅방 리스트:", data);
         } catch (error) {
             console.error("채팅방 목록 불러오기 실패:", error);
             setChatrooms([]);
@@ -93,9 +112,15 @@ const Chat_main = () => {
 
     // 처음 한 번 불러오기
     useEffect(() => {
-        if (empno) {
-            fetchChatrooms();
-        }
+        if (!empno) return;
+    
+        fetchChatrooms(); // 처음 한 번 호출
+    
+        const intervalId = setInterval(() => {
+            fetchChatrooms(); 
+        }, 10000); // 5000ms = 5초
+    
+        return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 clear
     }, [empno]);
 
 
@@ -108,7 +133,7 @@ const Chat_main = () => {
     return (
         <div className={styles.main}>
             <div className={styles.leftbox}>
-                <Invite onOrgaClick={() => { setShowOrga(true) }} />
+                <Invite onOrgaClick={() => { setShowOrga(true) }} selectedChatRoom={selectedChatRoom} />
                 <ChatList
                     chatrooms={chatrooms}
                     setChatrooms={setChatrooms}
