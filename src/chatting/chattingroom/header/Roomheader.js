@@ -32,7 +32,7 @@ const Roomheader = ({ selectedChatRoom }) => {
     }, []);
 
     const MAX_ICONS = 3; // 표시할 인원 수 제한 (리스트 아이콘 전까지)
-    const employees = selectedChatRoom?.chatEmployees || [];
+    const employees = (selectedChatRoom?.chatEmployees || []).filter(emp => emp.enabled);
     // 아이콘으로 표시할 사람들 (항상 MAX_ICONS 명만 보여줌)
     const displayEmps = employees.slice(0, MAX_ICONS);
     // 나머지 인원 수 (아이콘으로 표시되지 않은 사람 수)
@@ -72,7 +72,7 @@ const Roomheader = ({ selectedChatRoom }) => {
 
                 {showEmpList && (
                     <div ref={empListRef} className={styles.empListBox}>
-                        <ChatEmpList employees={Array.isArray(selectedChatRoom?.chatEmployees) ? selectedChatRoom.chatEmployees : []} />
+                        <ChatEmpList employees={Array.isArray(selectedChatRoom?.chatEmployees) ? employees : []} />
                     </div>
                 )}
             </>

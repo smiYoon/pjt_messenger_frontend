@@ -4,6 +4,7 @@ import styles from './Login_new.module.css'
 import { jwtDecode } from 'jwt-decode';
 import { useLoadScript } from '../LoadScriptContext';
 import back from './img/back.png';
+import logo from './img/logo.png';
 
 const Login_new = () => {
     console.log("Login() invoked.");
@@ -93,29 +94,32 @@ const Login_new = () => {
                 <img src={back} alt='' />
                 <div className={styles.left}>
                     <div className={styles.loginData}>
-                        <div className={styles.title}>로그인</div>
-                        <div className={styles.id_container}>
-                            <input
-                                className={styles.id}
-                                placeholder="loginId"
-                                name="loginId"                           // 서버로 전송되는 이름
-                                value={loginData.loginId}
-                                onChange={handleInputChange}
-                                onKeyUp={handleKeyPress}
-                            />
-                            <i className={`fas fa-user ${styles.user_icon}`} />
-                        </div>
-                        <div className={styles.pw_container}>
-                            <input
-                                className={styles.pw}
-                                placeholder="password"
-                                name="password"                     // 서버로 전송되는 이름
-                                type="password"
-                                value={loginData.password}
-                                onChange={handleInputChange}
-                                onKeyUp={handleKeyPress}
-                            ></input>
-                            <i className={`fas fa-lock ${styles.pass_icon}`} />
+                        <img src={logo} alt='' />
+                        <div className={styles.title}>Welcome!</div>
+                        <div className={styles.input_container}>
+                            <div className={styles.id_container}>
+                                <input
+                                    className={styles.id}
+                                    placeholder="아이디를 입력해주세요."
+                                    name="loginId"                           // 서버로 전송되는 이름
+                                    value={loginData.loginId}
+                                    onChange={handleInputChange}
+                                    onKeyUp={handleKeyPress}
+                                />
+                                <div className={styles.placeholder}>아이디</div>
+                            </div>
+                            <div className={styles.pw_container}>
+                                <input
+                                    className={styles.pw}
+                                    placeholder="비밀번호를 입력해주세요."
+                                    name="password"                     // 서버로 전송되는 이름
+                                    type="password"
+                                    value={loginData.password}
+                                    onChange={handleInputChange}
+                                    onKeyUp={handleKeyPress}
+                                />
+                                <div className={styles.placeholder}>비밀번호</div>
+                            </div>
                         </div>
 
                         {message && (
@@ -125,7 +129,7 @@ const Login_new = () => {
                         )}
                         <div className={styles.button}>
                             <button className={styles.loginButton} onClick={handleLogin}>
-                                로그인
+                                Login
                             </button>
                         </div>
                     </div>
@@ -134,7 +138,7 @@ const Login_new = () => {
                     <div className={styles.text}>
                         Creativity is intelligence having fun
                         <div className={styles.sub_text}>
-                        — Albert Einstein
+                            — Albert Einstein
                         </div>
                     </div>
                 </div>
