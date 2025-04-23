@@ -11,7 +11,7 @@ const Feedback_list = () => {
 
     // list paging 정보
     const [currPage, setCurrPage] = useState(1);
-    const [pageSize] = useState(5);
+    const [pageSize] = useState(10);
     const [blockSize] = useState(10);
     const [totalPageCnt, setTotalPageCnt] = useState(0);
     const [currBlock, setCurrBlock] = useState(Math.floor((currPage - 1) / blockSize));
