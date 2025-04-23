@@ -40,36 +40,13 @@ const Chatting = ({id, messages, setMessages, socket, fetchChatrooms}) => {
             console.log("[수신 메시지 RAW 데이터]", event.data); 
             console.log("[파싱된 메시지]", message); 
             
-    
-            switch(message.type) {
-                case 'INVITE':
-                    fetchChatrooms();
-                    setMessages(prev => [...prev, {
-                        empno: empno,
-                        detail: message.detail,
-                        isSystemMessage: true,
-                        employee: message.employee
-                    }]);
-                    break;
-                    
-                case 'SYSTEM':
-                    setMessages(prev => [...prev, {
-                        empno: empno,
-                        detail: message.detail,
-                        isSystemMessage: true,
-                        employee: message.employee
-                    }]);
-                    break;
-                    
-                default:
-                    setMessages(prev => [...prev, {
-                        empno: empno,
-                        detail: message.detail,
-                        isSystemMessage: false,
-                        employee: message.employee
-                    }]);
-            }
-        };
+            setMessages(prev => [...prev, {
+                empno: empno,
+                detail: message.detail,
+                employee: message.employee
+            }]);
+        }
+
     
         return () => {
             socket.onmessage = null;
@@ -112,30 +89,6 @@ const Chatting = ({id, messages, setMessages, socket, fetchChatrooms}) => {
                         }
 
                         const isMine = parsedMsg?.employee?.empno === empno;
-                        const isSystemMessage = parsedMsg?.isSystemMessage;
-
-                        if (isSystemMessage) {
-                            let systemText = "";
-                            switch (parsedMsg.type) {
-                                case "INVITE":
-                                    systemText = `${parsedMsg.employee?.name}님이 초대하셨습니다.`;
-                                    break;
-                                case "join":
-                                    systemText = `${parsedMsg.employee?.name}님이 입장하셨습니다.`;
-                                    break;
-                                case "leave":
-                                    systemText = `${parsedMsg.employee?.name}님이 퇴장하셨습니다.`;
-                                    break;
-                                default:
-                                    systemText = parsedMsg.detail;
-                            }
-                    
-                            return (
-                                <div key={idx} className={styles.centerSystemMessage}>
-                                    {systemText}
-                                </div>
-                            );
-                        }
                     
                         return (
                             <div key={idx} className={`${styles.messageItem} ${isMine ? styles.myItem : styles.otherItem}`}>

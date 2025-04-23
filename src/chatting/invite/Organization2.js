@@ -54,18 +54,6 @@ const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id , socket}) =>
       const result = await res.json();
       console.log("서버 응답:", result);
 
-      if (socket?.readyState === WebSocket.OPEN) {
-        const inviteMessage = {
-          type: "INVITE",
-          chatId: id,
-          empno: decodedToken.empno,
-          invitedEmpnos: inviteList.map(emp => emp.id),
-          detail: `${inviteList.length}명 초대함`
-        };
-      
-        socket.send(JSON.stringify(inviteMessage));
-      }
-
       await Swal.fire({
         icon: 'success',
         title: '초대 성공!',
