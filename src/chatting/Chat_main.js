@@ -1,4 +1,4 @@
-import React, { useState ,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { AiSummary } from './Ai';
 import { Chatting, Roomheader } from './chattingroom';
@@ -11,13 +11,13 @@ import styles from './Chat_main.module.css';
 
 
 const Chat_main = () => {
-    
+
 
     const { decodedToken, token } = useLoadScript();
     const empno = decodedToken?.empno;
 
     const [showCreateChat, setShowCreateChat] = useState(false);    // 채팅방 생성 팝업
-    const [showOrga, setShowOrga]=useState(false);                  // 조직도 초대 팝업
+    const [showOrga, setShowOrga] = useState(false);                  // 조직도 초대 팝업
     const [chatrooms, setChatrooms] = useState([]);                 // 채팅방 리스트
     ////////////////////////////////////////////////////////////////////
     const [selectedChatRoom, setSelectedChatRoom] = useState(null);  // 선택된 채팅방
@@ -74,7 +74,7 @@ const Chat_main = () => {
 
     useEffect(() => { // 참여자들 정보도 갱신
         if (!selectedChatRoom?.id) return;
-    
+
         const fetchChatRoomDetail = async () => {
             const res = await fetch(`https://localhost:443/chat/${selectedChatRoom.id}`, {
                 headers: { Authorization: `Bearer ${token}` }
@@ -83,9 +83,9 @@ const Chat_main = () => {
             console.log("채팅방 상세정보:", data);
             setSelectedChatRoom(data);
         };
-    
+
         const intervalId = setInterval(fetchChatRoomDetail, 10000); // 10초마다 갱신
-    
+
         return () => clearInterval(intervalId);
     }, [selectedChatRoom?.id]);
 
@@ -94,7 +94,7 @@ const Chat_main = () => {
     // 공통 fetch 로직
     const fetchChatrooms = async () => {
         try {
-            const response = await fetch(`https://localhost:443/chat/list/${empno}`,{
+            const response = await fetch(`https://localhost:443/chat/list/${empno}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -112,13 +112,13 @@ const Chat_main = () => {
     // 처음 한 번 불러오기
     useEffect(() => {
         if (!empno) return;
-    
+
         fetchChatrooms(); // 처음 한 번 호출
-    
+
         const intervalId = setInterval(() => {
-            fetchChatrooms(); 
+            fetchChatrooms();
         }, 10000); // 5000ms = 5초
-    
+
         return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 clear
     }, [empno]);
 
@@ -130,30 +130,32 @@ const Chat_main = () => {
     }, [chatrooms]);
 
     return (
-        <div className={styles.main}>
-            <div className={styles.leftbox}>
-                <Invite onOrgaClick={() => { setShowOrga(true) }} selectedChatRoom={selectedChatRoom} />
-                <ChatList
-                    chatrooms={chatrooms}
-                    setChatrooms={setChatrooms}
-                    onCreateClick={() => setShowCreateChat(true)}
-                    onChatClick={(chatId) => handleChatRoomClick(chatId)}
-                />
-            </div>
+        <div className={styles.body}>
+            <div className={styles.main}>
+                <div className={styles.leftbox}>
+                    <Invite onOrgaClick={() => { setShowOrga(true) }} selectedChatRoom={selectedChatRoom} />
+                    <ChatList
+                        chatrooms={chatrooms}
+                        setChatrooms={setChatrooms}
+                        onCreateClick={() => setShowCreateChat(true)}
+                        onChatClick={(chatId) => handleChatRoomClick(chatId)}
+                    />
+                </div>
 
-            <div className={styles.centerbox}>
-                <Roomheader selectedChatRoom={selectedChatRoom} />
-                <Chatting selectedChatRoom={selectedChatRoom} id={selectedChatRoom?.id} messages={messages} setMessages={setMessages} socket={socket} fetchChatrooms={fetchChatrooms}/>
-            </div>
+                <div className={styles.centerbox}>
+                    <Roomheader selectedChatRoom={selectedChatRoom} />
+                    <Chatting selectedChatRoom={selectedChatRoom} id={selectedChatRoom?.id} messages={messages} setMessages={setMessages} socket={socket} fetchChatrooms={fetchChatrooms} />
+                </div>
 
-            <div className={styles.rightbox}>
-               <AiSummary id={selectedChatRoom?.id} setChatrooms={setChatrooms} selectedChatRoom={selectedChatRoom} 
-                        setSelectedChatRoom={setSelectedChatRoom} fetchChatrooms={fetchChatrooms} chatrooms={chatrooms} setMessages={setMessages}/>
-            </div>
+                <div className={styles.rightbox}>
+                    <AiSummary id={selectedChatRoom?.id} setChatrooms={setChatrooms} selectedChatRoom={selectedChatRoom}
+                        setSelectedChatRoom={setSelectedChatRoom} fetchChatrooms={fetchChatrooms} chatrooms={chatrooms} setMessages={setMessages} />
+                </div>
 
-            {showOrga && <Organization2 onCloseOrgaClick={()=> {setShowOrga(false)}} id={selectedChatRoom?.id} handleChatRoomClick={handleChatRoomClick} socket={socket}/>}
-            {showCreateChat && <CreateChat onCloseClick={() => setShowCreateChat(false)} setChatrooms={setChatrooms} fetchChatrooms={fetchChatrooms}/>}
-            
+                {showOrga && <Organization2 onCloseOrgaClick={() => { setShowOrga(false) }} id={selectedChatRoom?.id} handleChatRoomClick={handleChatRoomClick} socket={socket} />}
+                {showCreateChat && <CreateChat onCloseClick={() => setShowCreateChat(false)} setChatrooms={setChatrooms} fetchChatrooms={fetchChatrooms} />}
+
+            </div>
         </div>
     );
 };
