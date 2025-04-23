@@ -5,6 +5,7 @@ import { useLoadScript } from "../../../LoadScriptContext";
 
 const Chatting = ({id, messages, setMessages, socket, fetchChatrooms}) => {
 
+    const [isComposing, setIsComposing] = useState(false);
     const { decodedToken, token } = useLoadScript(); // ✅ token 가져옴
     const empno = decodedToken?.empno;
 
@@ -158,9 +159,13 @@ const Chatting = ({id, messages, setMessages, socket, fetchChatrooms}) => {
                     type="text"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
+                    onCompositionStart={() => setIsComposing(true)}
+                    onCompositionEnd={() => setIsComposing(false)}
                     onKeyDown={(e) => {
-                        if (e.key === "Enter") sendMessage(inputValue);
-                    }}
+                        if (!isComposing && (e.key === 'Enter' || e.key === 'NumpadEnter')) {
+                          sendMessage(inputValue);
+                        }
+                      }}
                 />
                 <BsArrowUpCircleFill
                     className={styles.sendMessagIcon}
