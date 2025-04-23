@@ -59,6 +59,12 @@
     /* background-color: darkcyan; */
 }
 
+.left .loginData img {
+    width: 7vw;
+    height: auto;
+    top: 5%;
+}
+
 .loginData .title {
     font-size: 3rem;
     font-family: 'italiana';
@@ -155,6 +161,7 @@
 
     border-radius: 7px;
 
+    font-family: 'italiana';
     font-size: 1.3rem;
     font-weight: bold;
 }
@@ -181,7 +188,7 @@
     right: 20px;
     color: white;
     font-size: 4rem;
-    font-family: 'italiana';
+    /* font-weight: bold; */
     text-align: right;
     /* background-color: cornflowerblue; */
 }

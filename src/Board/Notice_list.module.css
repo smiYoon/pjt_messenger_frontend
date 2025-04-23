@@ -10,7 +10,7 @@
 .side_bar {
     width: 20%;
     height: 100%;
-    background-color: burlywood;
+    background-color: #e9eaf5;
     position: relative;
 }
 
@@ -87,25 +87,25 @@
     font-weight: bold;
     text-decoration: none;
     border-radius: 7px;
-    background-color: #6c47ff;
+    background-color: #337ab7;
     color: white;
     cursor: pointer;
     transition: background-color 0.1s ease-in;
 }
 
 .button:hover {
-    background-color: #4a1dff;
+    background-color: #286090;
     color: white;
     transition: all 0.1s ease-in;
 }
 
 
 .search_box .btnStyle_yg {
-    border: #4FC765;
-    background-color: #4FC765;
+    border: #6c47ff;
+    background-color: #6c47ff;
 }
 .search_box .btnStyle_yg:hover {
-    background-color: #39b851;    
+    background-color: #4a1dff;    
 }
 
 
