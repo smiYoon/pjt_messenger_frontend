@@ -172,25 +172,27 @@ const Modify_member = () => {
             <div className={styles.container}>
                 <div className={styles.left_panel}>
                     <div className={styles.pic}>
-                        <img 
-                            src={"https://localhost/"+empno+".png"} 
-                            alt='' 
-                            onError={e => { e.target.onerror = null; e.target.src = profile;}}
-                        />
+                        <div className={styles.pic_container}>
+                            <img
+                                src={`https://localhost/${memberForm.empno}.png`}
+                                alt=''
+                                onError={e => { e.target.onerror = null; e.target.src = profile; }}
+                            />
+                        </div>
                         <label htmlFor='profileUpload'>
                             <i className={`fas fa-camera ${styles.camera}`} />
                         </label>
-                        <input type='file' 
-                            id='profileUpload' 
+                        <input type='file'
+                            id='profileUpload'
                             accept='image/*'
                             onChange={e => {
                                 if (e.target.files && e.target.files[0]) {
-                                  setMemberForm(prev => ({
-                                    ...prev,
-                                    file: e.target.files[0]
-                                  }));
+                                    setMemberForm(prev => ({
+                                        ...prev,
+                                        file: e.target.files[0]
+                                    }));
                                 }
-                            }} 
+                            }}
                         />
                     </div>
                     <div className={styles.name}>

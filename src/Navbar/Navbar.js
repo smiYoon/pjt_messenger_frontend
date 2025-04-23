@@ -57,7 +57,7 @@ const Navbar = () => {
             style={{ cursor: 'pointer' }}
           >
             <i className={`${styles.icon} fas fa-user`} />
-            <div className={styles.text}>안돼</div>
+            <div className={styles.text}>회원관리</div>
           </a>
         )}
 
@@ -74,7 +74,7 @@ const Navbar = () => {
             style={{ cursor: 'pointer' }}
           >
             <i className={`${styles.icon} fas fa-comment-dots`} />
-            <div className={styles.text}>안돼</div>
+            <div className={styles.text}>채팅</div>
           </a>
         )}
 
@@ -91,7 +91,7 @@ const Navbar = () => {
             style={{ cursor: 'pointer' }}
           >
             <i className={`${styles.icon} fas fa-file-pen`} />
-            <div className={styles.text}>안돼</div>
+            <div className={styles.text}>업무</div>
           </a>
         )}
         {decodedToken.position != 5 ? (
@@ -107,7 +107,7 @@ const Navbar = () => {
             style={{ cursor: 'pointer' }}
           >
             <i className={`${styles.icon} fas fa-chalkboard`} />
-            <div className={styles.text}>안돼</div>
+            <div className={styles.text}>게시판</div>
           </a>
         )}
 
@@ -124,14 +124,16 @@ const Navbar = () => {
             style={{ cursor: 'pointer' }}
           >
             <i className={`${styles.icon} fa-solid fa-list-check`} />
-            <div className={styles.text}>안돼</div>
+            <div className={styles.text}>프로젝트</div>
           </a>
         )}
       </div>
 
       <div className={styles.profile}>
         <Link to={`/member/edit/${decodedToken.empno}`} className={styles.profile_link}>
-          <img src={profile} alt='' className={styles.profileImg} />
+          <div className={styles.profile_img}>
+            <img src={`https://localhost/${decodedToken.empno}.png`} alt='' className={styles.profileImg} />
+          </div>
         </Link>
         <div className={styles.logout}>
           <FontAwesomeIcon icon={faArrowRightFromBracket} onClick={handleLogout} />

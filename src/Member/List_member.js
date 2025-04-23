@@ -165,7 +165,7 @@ const List_member = () => {
             members.map((member) => (
               <div key={member.empno} className={styles.card}>
                 <div className={styles.profile_container}>
-                  <img src={`https://localhost/${member.empno}.jpg`} className={styles.profileImg} alt='' />
+                  <img src={`https://localhost/${member.empno}.png`} className={styles.profileImg} alt='' />
                 </div>
                 <div className={styles.name}>
                   {empPositionMapping[member.position]}
