@@ -17,11 +17,11 @@ const ListUnit = ({ project, onDelete, infoAlert, handleGetUpComingList, handleG
   const statusColor = (status) => {
     switch (status) {
       case 1:
-        return { backgroundColor: "#AADCFF" };
+        return { backgroundColor: "#5bc0de", color: "#fff" };
       case 2:
-        return { backgroundColor: "#FFF5AA" };
+        return { backgroundColor: "#337ab7", color: "#fff" };
       case 3:
-        return { backgroundColor: "#4FC765" };
+        return { backgroundColor: "#5cb85c", color: "#fff" };
       default:
         return { backgroundColor: "#6c47ff" };
     }
