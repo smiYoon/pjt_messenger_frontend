@@ -39,7 +39,7 @@
 }
 
 .nameCircle{
-    border: solid 2px #6C47FF;
+    border: solid 1px #6C47FF;
     border-radius: 8px;
     cursor: pointer;
     padding: 0.5vh;
