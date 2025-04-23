@@ -63,10 +63,11 @@ const Modify_member = () => {
             formData.append("email", memberForm.email);
             formData.append("deptId", memberForm.dept_id);
             formData.append("position", memberForm.position);
+            formData.append("empno", empno); // 사원번호 추가
 
-            if (memberForm.upfiles) {
-                formData.append('upfiles', memberForm.upfiles); // 새 파일 추가
-            }
+            if (memberForm.file) {
+                formData.append('file', memberForm.file); // 새 파일 추가
+            } // if
 
             console.log("memberForm:", memberForm);
             const response = await fetch(`https://localhost/employee/${empno}`, {
@@ -176,7 +177,18 @@ const Modify_member = () => {
                         <label htmlFor='profileUpload'>
                             <i className={`fas fa-camera ${styles.camera}`} />
                         </label>
-                        <input type='file' id='profileUpload' accept='image/*' />
+                        <input type='file' 
+                            id='profileUpload' 
+                            accept='image/*'
+                            onChange={e => {
+                                if (e.target.files && e.target.files[0]) {
+                                  setMemberForm(prev => ({
+                                    ...prev,
+                                    file: e.target.files[0]
+                                  }));
+                                }
+                            }} 
+                            />
                     </div>
                     <div className={styles.name}>
                         {memberForm.name}

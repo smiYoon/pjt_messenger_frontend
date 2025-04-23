@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Swal from 'sweetalert2';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './Register_member.module.css';
 import Register from './img/Register.png';
 import { useLoadScript } from '../LoadScriptContext';
@@ -9,8 +9,15 @@ const Register_member = () => {
 
     const navigate = useNavigate();
     const { token } = useLoadScript();
-    const [profileImage, setProfileImage] = useState(null); /// 
-    const [uploadedFileInfo, setUploadedFileInfo ] = useState(null); ///
+    const [uploadedFile, setUploadedFile] = useState(null);
+    const [fileName, setFileName] = useState('');
+
+    const handleFileChange = (e) => {
+        if (e.target.files && e.target.files[0]) {
+            setUploadedFile(e.target.files[0]);
+            setFileName(e.target.files[0].name);
+        } // if
+    }; // handleFileChange
 
     const handleCancelClick = () => {
         Swal.fire({
@@ -24,15 +31,13 @@ const Register_member = () => {
         }).then(result => {
             if (result.isConfirmed) {
                 navigate(-1);
-            } else if (result.isDismissed) {
-
             } // 이전 페이지로 이동
-        });
-    };
+        }); // Swal.fire
+    }; // handleCancelClick
 
     const handleRegisterClick = () => {
         navigate(`/member/list`);
-    };
+    }; // handleRegisterClick
 
     const [deptId, setDeptId] = useState([]);
     const [registerForm, setRegisterForm] = useState({
@@ -45,14 +50,14 @@ const Register_member = () => {
         email: "",
         department: "",
         position: "",
-    });
+    }); // registerForm
 
     const handleChange = (field, value) => {
         setRegisterForm((prevData) => ({
             ...prevData,
             [field]: value,
         }));
-    };
+    }; // handleChange
 
     useEffect(() => {
         const fetchDeptId = async () => {
@@ -62,7 +67,7 @@ const Register_member = () => {
                     headers: {
                         Authorization: `Bearer ${token}` // ✅ 토큰 추가
                     },
-                });
+                }); // response
 
                 if (response.ok) {
                     const data = await response.json();
@@ -71,13 +76,13 @@ const Register_member = () => {
                     setDeptId(sortedData);
                 } else {
                     console.log('부서 정보를 불러오는데 실패했습니다.');
-                }
+                } // if-else
             } catch (error) {
                 console.error('오류발생:', error);
-            }
-        };
+            } // try-catch
+        }; // fetchDeptId
         fetchDeptId();
-    }, []);
+    }, []); // useEffect
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -89,8 +94,8 @@ const Register_member = () => {
                 text: '빈칸을 모두 기입해주세요.',
             });
             return;
-        }
-
+        } // if
+        
         try {
             const formData = new FormData();
             formData.append("loginId", registerForm.loginId);
@@ -105,9 +110,9 @@ const Register_member = () => {
 
             console.log("registerForm:", registerForm);
 
-            if (uploadedFileInfo) {
-                formData.append("fileId", uploadedFileInfo.id); // 또는 file DTO 전체 보내는 구조도 가능
-              }
+            if (uploadedFile) {
+                formData.append("file", uploadedFile);
+            } // if
 
             const response = await fetch('https://localhost/employee/register', {
                 method: 'POST',
@@ -137,49 +142,17 @@ const Register_member = () => {
             alert('오류가 발생했습니다. 다시 시도해주세요.');
             console.error(error);
         }
-    }
-
-    const handleImageChange = async (e) => {
-        const file = e.target.files[0];
-        setProfileImage(file);
-      
-        // 서버에 파일 업로드
-        const formData = new FormData();
-        formData.append("file", file);
-      
-        try {
-          const res = await fetch("https://localhost/file/upload", {
-            method: "POST",
-            body: formData 
-            
-            });
-      
-          if (res.ok) {
-            const json = await res.json(); // 백엔드에서 받은 FileDTO
-            console.log("파일ID" , json.id)
-            setUploadedFileInfo(json);
-          } else {
-            alert("업로드 실패");
-          }
-        } catch (err) {
-          console.error("업로드 에러", err);
-        }
-      };
-
-
+    } // handleSubmit
 
     const handleCheckId = async () => {
-
         console.log("중복확인 요청 ID:", registerForm.loginId);
-
         try {
             const response = await fetch(`https://localhost/employee/checkId?loginId=${registerForm.loginId}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}` // ✅ 토큰 추가
                 },
-            })
-
+            }) // fetch
 
             if (response.ok) {
                 const text = await response.text();
@@ -193,7 +166,6 @@ const Register_member = () => {
                 const isDuplicate = text == 'true';
                 console.log("받은 데이터: ", isDuplicate);
 
-
                 if (isDuplicate) {
                     Swal.fire({
                         icon: 'error',
@@ -206,14 +178,13 @@ const Register_member = () => {
                         title: '사용 가능한 아이디 입니다.',
                         confirmButtonText: '확인',
                     });
-                }
+                } // if-else
 
-
-            }
+            } // if
         } catch (err) {
             console.log('중복확인 오류', err);
-        }
-    }
+        } // try-catch
+    } // handleCheckId
 
     return (
         <div className={styles.container}>
@@ -322,7 +293,7 @@ const Register_member = () => {
                                 accept='image/*' 
                                 className={styles.profile_pic}
                                 placeholder='이미지를 선택해주세요.'
-                                onChange={handleImageChange}
+                                onChange={handleFileChange}
                             />
                             <div className={styles.placeholder_pic}>사진</div>
                         </div>
@@ -361,7 +332,6 @@ const Register_member = () => {
                             <div>
                                 <button
                                     type='submit'
-                                    // onClick={handleRegisterClick} // 지우기!
                                     className={styles.register}>
                                     등록
                                 </button>
