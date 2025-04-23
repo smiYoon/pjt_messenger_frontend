@@ -6,9 +6,6 @@ import { useLoadScript } from "../LoadScriptContext";
 
 const Notice_list = () => {
     const { decodedToken, role_level, token, empPositionMapping } = useLoadScript();
-    // console.log('사용자정보(공지사항):', decodedToken);
-
-
 
     const [list, setList] = useState([]);
 
@@ -29,17 +26,6 @@ const Notice_list = () => {
         setStartPage(currBlock * blockSize);
         setEndPage(Math.min(startPage + blockSize, totalPageCnt));
     }, [currPage, totalPageCnt, currBlock, startPage, endPage]);
-
-    // useEffect(() => {
-    //     const block = Math.floor((currPage - 1) / blockSize);
-    //     setCurrBlock(block);
-    //     setStartPage(block * blockSize);
-    //     setEndPage(Math.min(block * blockSize + blockSize, totalPageCnt));
-    // }, [currPage, totalPageCnt, blockSize]);
-    // // 위와같이 의존성에 넣고 setState을 할 경우 무한 루프가 발생할 수 있음. 
-    // [] 안에 있는 계산에 필요한 값을 제외하고 나머지는 계산된 값이므로 의존성에서 제외한 변경 코드 ( 참고용)
-
-
 
     // 검색어 및 상태 관리
     const [searchData, setSearchData] = useState({
@@ -138,9 +124,11 @@ const Notice_list = () => {
         <div className={styles.container}>
             <div className={styles.side_bar}>
                 <div className={styles.menu}>
-                    <div className={styles.notice}>공지사항 게시판</div>
-                    <Link className={styles.feedback} to={`/board/feedback/list`}>
-                        건의 게시판
+                    <Link to={`/board/notice/list`} className={`${styles.link} ${styles.active}`}>
+                        공지사항
+                    </Link>
+                    <Link to={`/board/feedback/list`} className={`${styles.link}`}>
+                        건의사항
                     </Link>
                 </div>
             </div>
@@ -148,8 +136,7 @@ const Notice_list = () => {
                 <div className={styles.list_container}>
                     <div className={styles.header}>Notification</div>
                     <div className={styles.option_box}>
-                        {/* {role_level[decodedToken.roles] != 1 && ( */}
-                        {decodedToken?.roles && role_level[decodedToken.roles] != 1 && (
+                        {decodedToken?.roles && role_level[decodedToken.roles] > 1 && (
                             <Link to={`/board/notice/create`} className={styles.button}>
                                 등록
                             </Link>
@@ -259,7 +246,7 @@ const Notice_list = () => {
                             <div
                                 className={pagingStyles.pageNum}
                                 onClick={() => handleGetList(currPage + 1)}
-                                style={{ display: currPage === totalPageCnt ? "none" : "" }}
+                                style={{ display: currPage === totalPageCnt || totalPageCnt === 0 ? "none" : "" }}
                             >
                                 <i className="fas fa-angle-right"></i>
                             </div>
@@ -267,7 +254,7 @@ const Notice_list = () => {
                             <div
                                 className={pagingStyles.pageNum}
                                 onClick={() => handleGetList(endPage + 1)}
-                                style={{ display: endPage + 1 > totalPageCnt ? "none" : "" }}
+                                style={{ display: endPage + 1 > totalPageCnt || totalPageCnt === 0 ? "none" : "" }}
                             >
                                 <i className="fas fa-angles-right"></i>
                             </div>

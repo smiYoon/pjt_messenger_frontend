@@ -360,7 +360,7 @@ const List = () => {
               <div
                 className={pagingStyles.pageNum}
                 onClick={() => handleGetList(currPage + 1)}
-                style={{ display: currPage === totalPageCnt ? "none" : "" }}
+                style={{ display: currPage === totalPageCnt || totalPageCnt === 0 ? "none" : "" }}
               >
                 <i className="fas fa-angle-right"></i>
               </div>
@@ -368,7 +368,7 @@ const List = () => {
               <div
                 className={pagingStyles.pageNum}
                 onClick={() => handleGetList(endPage + 1)}
-                style={{ display: (endPage + 1) > totalPageCnt ? "none" : "" }}
+                style={{ display: (endPage + 1) > totalPageCnt || totalPageCnt === 0 ? "none" : "" }}
               >
                 <i className="fas fa-angles-right"></i>
               </div>

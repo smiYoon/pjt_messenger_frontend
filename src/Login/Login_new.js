@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import styles from './Login.module.css';
-import { useLoadScript } from '../LoadScriptContext';
+import styles from './Login_new.module.css'
 import { jwtDecode } from 'jwt-decode';
+import { useLoadScript } from '../LoadScriptContext';
+import back from './img/back.png';
 
-const Login = () => {
+const Login_new = () => {
     console.log("Login() invoked.");
     const { decodedToken } = useLoadScript();
 
@@ -53,7 +53,7 @@ const Login = () => {
             // 세션 스토리지에 저장: 탭 닫으면 토큰 사라짐
             // sessionStorage.setItem("jwt", token);
 
-            
+
             if (response.ok) {
                 // 로그인 성공 시 처리
                 const token = result.token; // 진짜 토큰만 꺼냄.
@@ -61,8 +61,8 @@ const Login = () => {
                 updateToken(token);
                 console.log("서버 응답:", token);
                 console.log('decoded(로그인):', decoded);
-                if(decoded.position == 1 || decoded.position == 2) {
-                navigate("/chat");   
+                if (decoded.position == 1 || decoded.position == 2) {
+                    navigate("/chat");
                 } else if (decoded.position == 3 || decoded.position == 4) {
                     navigate('/project/list');
                 } else if (decoded.position == 5 || decoded.position == 9) {
@@ -72,8 +72,8 @@ const Login = () => {
                 }
             } else {
                 // 로그인 실패 시 처리
-                setMessage( result.error );
-                console.log("로그인 실패", result);               
+                setMessage(result.error);
+                console.log("로그인 실패", result);
             }
         } catch (error) {
             console.error("로그인 오류:", error);
@@ -88,46 +88,59 @@ const Login = () => {
     };
 
     return (
-        <div className={styles.login}>
+        <div className={styles.container}>
             <div className={styles.main}>
-                <div className={styles.logo}></div>
-                <div className={styles.id_container}>
-                    <input
-                        className={styles.id}
-                        placeholder="loginId"
-                        name="loginId"                           // 서버로 전송되는 이름
-                        value={loginData.loginId}
-                        onChange={handleInputChange}
-                        onKeyUp={handleKeyPress}
-                    />
-                    <i className={`fas fa-user ${styles.user_icon}`} />
-                </div>
-                <div className={styles.pw_container}>
-                    <input
-                        className={styles.pw}
-                        placeholder="password"
-                        name="password"                     // 서버로 전송되는 이름
-                        type="password"
-                        value={loginData.password}
-                        onChange={handleInputChange}
-                        onKeyUp={handleKeyPress}
-                    ></input>
-                    <i className={`fas fa-lock ${styles.pass_icon}`} />
-                </div>
+                <img src={back} alt='' />
+                <div className={styles.left}>
+                    <div className={styles.loginData}>
+                        <div className={styles.title}>로그인</div>
+                        <div className={styles.id_container}>
+                            <input
+                                className={styles.id}
+                                placeholder="loginId"
+                                name="loginId"                           // 서버로 전송되는 이름
+                                value={loginData.loginId}
+                                onChange={handleInputChange}
+                                onKeyUp={handleKeyPress}
+                            />
+                            <i className={`fas fa-user ${styles.user_icon}`} />
+                        </div>
+                        <div className={styles.pw_container}>
+                            <input
+                                className={styles.pw}
+                                placeholder="password"
+                                name="password"                     // 서버로 전송되는 이름
+                                type="password"
+                                value={loginData.password}
+                                onChange={handleInputChange}
+                                onKeyUp={handleKeyPress}
+                            ></input>
+                            <i className={`fas fa-lock ${styles.pass_icon}`} />
+                        </div>
 
-                {message && (
-                    <div className={styles.message}>
-                        {message}
+                        {message && (
+                            <div className={styles.message}>
+                                {message}
+                            </div>
+                        )}
+                        <div className={styles.button}>
+                            <button className={styles.loginButton} onClick={handleLogin}>
+                                로그인
+                            </button>
+                        </div>
                     </div>
-                )}
-                <div className={styles.button}>
-                    <button className={styles.loginbutton} onClick={handleLogin}>
-                        로그인
-                    </button>
+                </div>
+                <div className={`${styles.right} italiana-regular`}>
+                    <div className={styles.text}>
+                        Creativity is intelligence having fun
+                        <div className={styles.sub_text}>
+                        — Albert Einstein
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
 
-export default Login;
+export default Login_new;

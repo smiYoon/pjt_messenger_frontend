@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styles from './Feedback_create.module.css';
+import styles from './Notice_create.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useLoadScript } from '../LoadScriptContext';
@@ -99,18 +99,12 @@ const Feedback_create = () => {
     <div className={styles.container}>
       <div className={styles.side_bar}>
         <div className={styles.menu}>
-          <Link
-            className={styles.notice}
-            to={`/board/notice/list`}
-          >
-            공지사항 게시판
-          </Link>
-          <Link
-            className={styles.feedback}
-            to={`/board/feedback/list`}
-          >
-            건의 게시판
-          </Link>
+                    <Link to={`/board/notice/list`} className={`${styles.link}`}>
+                        공지사항
+                    </Link>
+                    <Link to={`/board/feedback/list`} className={`${styles.link} ${styles.active}`}>
+                        건의사항
+                    </Link>
         </div>
       </div>
       <div className={styles.main}>

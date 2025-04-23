@@ -48,10 +48,10 @@
 
 .status {
     width: 100px;
-    padding: 5px 20px;
+    padding: 7px 20px;
 
     border-radius: 50px;
-    border: 1px solid #6c47ff;
+    /* border: 1px solid #6c47ff; */
 
     text-align: center;
     box-sizing: border-box;

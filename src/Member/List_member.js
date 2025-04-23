@@ -105,7 +105,7 @@ const List_member = () => {
         <button
           key={pageNum}
           onClick={() => handlePageChange(pageNum)}
-          className={pageNum === currPage ? styles.activePage : ''}
+          className={`${styles.btn} ${pageNum === currPage ? styles.activePage : ''}`}
         >
           {pageNum + 1}
         </button>
@@ -183,13 +183,13 @@ const List_member = () => {
         </div>
         <div className={styles.paging}>
           {currPage > 0 && (
-            <button onClick={() => handlePageChange(currPage - 1)}>
+            <button className={styles.btn} onClick={() => handlePageChange(currPage - 1)}>
               이전
             </button>
           )}
           {renderPagination()}
           {currPage < totalPages - 1 && (
-            <button onClick={() => handlePageChange(currPage + 1)}>
+            <button className={styles.btn} onClick={() => handlePageChange(currPage + 1)}>
               다음
             </button>
           )}
