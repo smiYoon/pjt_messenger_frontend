@@ -9,6 +9,8 @@ const Register_member = () => {
 
     const navigate = useNavigate();
     const { token } = useLoadScript();
+    const [profileImage, setProfileImage] = useState(null); /// 
+    const [uploadedFileInfo, setUploadedFileInfo ] = useState(null); ///
 
     const handleCancelClick = () => {
         Swal.fire({
@@ -103,6 +105,10 @@ const Register_member = () => {
 
             console.log("registerForm:", registerForm);
 
+            if (uploadedFileInfo) {
+                formData.append("fileId", uploadedFileInfo.id); // 또는 file DTO 전체 보내는 구조도 가능
+              }
+
             const response = await fetch('https://localhost/employee/register', {
                 method: 'POST',
                 body: formData,
@@ -132,6 +138,34 @@ const Register_member = () => {
             console.error(error);
         }
     }
+
+    const handleImageChange = async (e) => {
+        const file = e.target.files[0];
+        setProfileImage(file);
+      
+        // 서버에 파일 업로드
+        const formData = new FormData();
+        formData.append("file", file);
+      
+        try {
+          const res = await fetch("https://localhost/file/upload", {
+            method: "POST",
+            body: formData 
+            
+            });
+      
+          if (res.ok) {
+            const json = await res.json(); // 백엔드에서 받은 FileDTO
+            console.log("파일ID" , json.id)
+            setUploadedFileInfo(json);
+          } else {
+            alert("업로드 실패");
+          }
+        } catch (err) {
+          console.error("업로드 에러", err);
+        }
+      };
+
 
 
     const handleCheckId = async () => {
@@ -288,6 +322,7 @@ const Register_member = () => {
                                 accept='image/*' 
                                 className={styles.profile_pic}
                                 placeholder='이미지를 선택해주세요.'
+                                onChange={handleImageChange}
                             />
                             <div className={styles.placeholder_pic}>사진</div>
                         </div>
