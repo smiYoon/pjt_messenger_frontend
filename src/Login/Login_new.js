@@ -4,6 +4,7 @@ import styles from './Login_new.module.css'
 import { jwtDecode } from 'jwt-decode';
 import { useLoadScript } from '../LoadScriptContext';
 import back from './img/back.png';
+import logo from './img/logo.png';
 
 const Login_new = () => {
     console.log("Login() invoked.");
@@ -93,6 +94,7 @@ const Login_new = () => {
                 <img src={back} alt='' />
                 <div className={styles.left}>
                     <div className={styles.loginData}>
+                        <img src={logo} alt='' />
                         <div className={styles.title}>Welcome!</div>
                         <div className={styles.input_container}>
                             <div className={styles.id_container}>
