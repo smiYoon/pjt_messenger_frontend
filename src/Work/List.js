@@ -354,7 +354,7 @@ const List = () => {
                     {loading ? null : (
                         <>
                             {/* 최대 4개만 출력 */}
-                            {departmentMembers.slice(0, 4).map((child, idx) => (
+                            {departmentMembers.sort((a, b) => a.name.localeCompare(b.name)).slice(0, 4).map((child, idx) => (
                                 <span onClick={() => handleChangePickedEmployee(child.empno, child.name)} className={`${styles.nameCircle} ${pickedEmployee.empno === child.empno ? styles.selected : ''}`} key={child.id || idx}>{child.name}</span>
                             ))}
                             

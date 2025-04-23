@@ -190,9 +190,9 @@
 
 .selected {
     border: 2px solid #6C47FF;
-    color: #6C47FF;
+    color: white;
     border-radius: 8px;
-    background-color: #E5E1F5;
+    background-color: #6C47FF;
 }
 
 .modalBackdrop {
