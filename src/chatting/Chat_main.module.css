@@ -13,16 +13,16 @@
 
 
 .main{
-    width: calc(92vw - 150px);
+    width: calc(88vw - 150px);
     margin-left: 8vw;
-    height: 90vh;
+    height: 85vh;
 
     display: flex;
     justify-content: space-between;
 }
 /* //////////////////////////////////////////// */
 .leftbox{
-    width: 20vw;
+    width: 18vw;
     
     display: flex;
     flex-direction: column;
@@ -37,7 +37,7 @@
 /* //////////////////////////////////////////// */
 
 .centerbox{
-    width: 35.5vw;
+    width: 35vw;
     
     display: flex;
     flex-direction: column;
@@ -52,7 +52,7 @@
 /* //////////////////////////////////////////// */
 
 .rightbox{
-    width: 25vw;
+    width: 24vw;
     /* height: 100vh; */
 
     /* align-content: center;

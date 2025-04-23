@@ -2,7 +2,7 @@
   position: relative;
   padding: 30px;
   width: 100%;
-  height:78.5vh;
+  height: 74vh;
   box-sizing: border-box;
 
   background-color: #E5E1F5;
@@ -76,6 +76,13 @@
 .messageText {
   font-size: 1rem;
   color: #222;
+}
+
+.messageTime {
+  font-size: 0.75rem;
+  color: #999;
+  margin-top: 2px;
+  padding: 0 6px;
 }
 
 .MessageInputBox {

@@ -109,9 +109,9 @@ const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id , socket}) =>
 
   return (
     <div ref={containerRef} className={styles.container}>
-        <div className={styles.Xbutton} onClick={() => {onCloseOrgaClick(); setInviteList([]); }}>X</div>
-        <Tree data={treeData} className={styles.tree} width={400} height={500}  onSelect={handleSelect} openByDefault={false} />  
-
+        <div className={styles.Xbutton} onClick={() => {onCloseOrgaClick(); setInviteList([]); }}><i className='fas fa-xmark' style={{color: '#222'}}/></div>
+        <Tree data={treeData} className={styles.tree} width={400} height={500} onSelect={handleSelect} />  
+    
         <div className={styles.inviteBox}>
           <div className={styles.inviteList}>
             <h3>초대할 직원 ID들:</h3>

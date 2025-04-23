@@ -43,7 +43,8 @@ const Chatting = ({id, messages, setMessages, socket, socketError}) => {
             setMessages(prev => [...prev, {
                 empno: empno,
                 detail: message.detail,
-                employee: message.employee
+                employee: message.employee,
+                crtDate: new Date().toISOString(),
             }]);
         }
 
@@ -58,7 +59,7 @@ const Chatting = ({id, messages, setMessages, socket, socketError}) => {
             detail: msg,
             chatId: id,
             empno: empno,
-            type: "MESSAGE"
+            type: "MESSAGE",
         };
 
         if (socket && socket.readyState === WebSocket.OPEN) {
@@ -73,6 +74,12 @@ const Chatting = ({id, messages, setMessages, socket, socketError}) => {
             messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
         }
     }, [messages]);
+
+    const formatTime = (isoString) => {
+        if (!isoString) return '';
+        const date = new Date(isoString);
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // 예: 03:30 PM
+    };
 
     return (
         <div className={styles.mainchat}>
@@ -95,10 +102,12 @@ const Chatting = ({id, messages, setMessages, socket, socketError}) => {
                                 {!isMine && (
                                     <div className={styles.senderName}>{parsedMsg.employee?.name || '알 수 없음'}</div>
                                 )}
-                                <div
-                                    className={`${styles.messageBubble} ${isMine ? styles.myMessage : styles.otherMessage}`}
-                                >
-                                    <div className={styles.messageText}>{parsedMsg.detail}</div>
+
+                                <div >
+                                    <div className={`${styles.messageBubble} ${isMine ? styles.myMessage : styles.otherMessage}`}>
+                                        <div className={styles.messageText}>{parsedMsg.detail}</div>
+                                    </div>
+                                    <div className={styles.messageTime}>{formatTime(parsedMsg.crtDate)}</div>
                                 </div>
                             </div>
                         );
