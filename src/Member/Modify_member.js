@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import styles from './Modify_member.module.css';
-import profile from '../Navbar/img/profile.png';
+import profile from './img/Default.png';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useLoadScript } from '../LoadScriptContext';
 
@@ -86,7 +86,7 @@ const Modify_member = () => {
                     title: '사원 정보가 성공적으로 수정되었습니다.',
                     confirmButtonText: '확인',
                 }).then(() => {
-                    navigate('/member/list');
+                    navigate(`/member/list?page=${page}`);
                 });
             } else {
                 console.error('수정 실패:', response.statusText);
