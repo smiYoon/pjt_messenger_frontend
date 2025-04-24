@@ -29,7 +29,7 @@ const Chat_main = () => {
     useEffect(() => {
         if (!selectedChatRoom?.id) return;
 
-        const newSocket = new WebSocket(`wss://localhost/chatroom?chatId=${selectedChatRoom?.id}&empno=${empno}`);
+        const newSocket = new WebSocket(`wss://192.168.0.83/chatroom?chatId=${selectedChatRoom?.id}&empno=${empno}`);
         setSocket(newSocket);
 
         newSocket.onopen = () => {

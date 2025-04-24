@@ -1,7 +1,7 @@
 import { useState,useRef, useEffect } from 'react';
 import styles from './Roomheader.module.css';
 import ChatEmpList from '../ChatEmpList';
-import profile from '../../../Navbar/img/profile.png';
+import profile from '../../../Member/img/Default.png';
 
 const Roomheader = ({ selectedChatRoom }) => {
     const empListRef = useRef(null);

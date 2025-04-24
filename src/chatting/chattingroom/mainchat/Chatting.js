@@ -15,7 +15,7 @@ const Chatting = ({id, messages, setMessages, socket, socketError}) => {
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const response = await fetch(`https://localhost:443/message?chatId=${id}`, {
+                const response = await fetch(`https://localhost/message?chatId=${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`, // 토큰 추가
                     },
