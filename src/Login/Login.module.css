@@ -141,12 +141,12 @@
 }
 
 .message {
-    min-height: 24px;
+    position: absolute;
+    bottom: 27%;
+    min-height: 20px;
     text-align: center;
     font-size: 1.2rem;
     color: red;
-
-    margin: 5px 0 15px;
 }
 
 .loginButton {

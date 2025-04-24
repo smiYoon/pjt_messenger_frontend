@@ -122,9 +122,12 @@ const Login = () => {
                             </div>
                         </div>
 
-                        {message && (
+                        {message ? (
                             <div className={styles.message}>
                                 {message}
+                            </div>
+                        ) : (
+                            <div className={styles.message}>
                             </div>
                         )}
                         <div className={styles.button}>

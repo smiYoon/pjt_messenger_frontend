@@ -22,7 +22,7 @@ const Modify_member = () => {
             cancelButtonText: '취소',
         }).then(result => {
             if (result.isConfirmed) {
-                navigate(`/member/list?page=${page}`);
+                navigate(-1);
             } else if (result.isDismissed) {
 
             } // 이전 페이지로 이동
