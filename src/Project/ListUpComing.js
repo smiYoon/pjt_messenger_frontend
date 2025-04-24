@@ -100,19 +100,19 @@ const ListUpComing = ({ project, onDelete, infoAlert, handleGetUpComingList, han
         <div className={styles.status}>{pjtStatusMapping[project.status]}</div>
 
         {project.endDday === 0 ? (
-          <div className={styles.deadline} style={{ color: "#ee311d" }}>
+          <div className={styles.deadline} style={{ color: "#f54336" }}>
             <RxLapTimer className={styles.icon} /> D-day
           </div>
-        ) : project.endDday >= -3 && project.endDday < 0 ? (
-          <div className={styles.deadline} style={{ color: "#ee311d" }}>
+        ) : project.endDday >= -5 && project.endDday < 0 ? (
+          <div className={styles.deadline} style={{ color: "#f54336" }}>
             <RxLapTimer className={styles.icon} /> D{project.endDday}
           </div>
-        ) : project.endDday < -3 ? (
-          <div className={styles.deadline} style={{ color: "#053869" }}>
+        ) : project.endDday < -5 ? (
+          <div className={styles.deadline} style={{ color: "#2b7eb6" }}>
             <RxLapTimer className={styles.icon} /> D{project.endDday}
           </div>
         ) : project.endDday > 0 ? (
-          <div className={styles.deadline} style={{ color: "#053869" }}>
+          <div className={styles.deadline} style={{ color: "#2b7eb6" }}>
             <RxLapTimer className={styles.icon} /> D+{project.endDday}
           </div>
         ) : null}

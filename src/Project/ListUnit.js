@@ -9,7 +9,7 @@ import { useLoadScript } from '../LoadScriptContext';
 
 // console.groupCollapsed("src/Project/ListUnit.js");console.groupEnd();
 
-const ListUnit = ({ project, onDelete, infoAlert, handleGetUpComingList, handleGetList }) => {
+const ListUnit = ({ project, onDelete, infoAlert, handleGetUpComingList, handleGetList, currPage }) => {
   // console.group('ListUnit(', project, statusMapping, ') invoked.'); console.groupEnd();
 
   const { decodedToken, isTopLevel, pjtStatusMapping, empPositionMapping } = useLoadScript();
@@ -89,6 +89,7 @@ const ListUnit = ({ project, onDelete, infoAlert, handleGetUpComingList, handleG
           infoAlert={infoAlert}
           handleGetList={handleGetList}
           handleGetUpComingList={handleGetUpComingList}
+          currPage={currPage}
         />
       )}
 
@@ -155,19 +156,19 @@ const ListUnit = ({ project, onDelete, infoAlert, handleGetUpComingList, handleG
           <hr />
 
           {project.endDday === 0 ? (
-            <div className={styles.deadline} style={{ color: "#ee311d" }}>
+            <div className={styles.deadline} style={{ color: "#f54336" }}>
               <RxLapTimer className={styles.icon} /> D-day
             </div>
-          ) : project.endDday >= -3 && project.endDday < 0 ? (
-            <div className={styles.deadline} style={{ color: "#ee311d" }}>
+          ) : project.endDday >= -5 && project.endDday < 0 ? (
+            <div className={styles.deadline} style={{ color: "#f54336" }}>
               <RxLapTimer className={styles.icon} /> D{project.endDday}
             </div>
-          ) : project.endDday < -3 ? (
-            <div className={styles.deadline} style={{ color: "#053869" }}>
+          ) : project.endDday < -5 ? (
+            <div className={styles.deadline} style={{ color: "#2b7eb6" }}>
               <RxLapTimer className={styles.icon} /> D{project.endDday}
             </div>
           ) : project.endDday > 0 ? (
-            <div className={styles.deadline} style={{ color: "#053869" }}>
+            <div className={styles.deadline} style={{ color: "#2b7eb6" }}>
               <RxLapTimer className={styles.icon} /> D+{project.endDday}
             </div>
           ) : null}
