@@ -56,6 +56,11 @@ const List = () => {
 
     const handleChangePickedEmployee = (empno, name) => {
         setPickedEmployee({ empno, name });
+        if (empno !== loginEmpData.userId) {
+            setWork("managed");
+        } else {
+            setWork("requested");
+        }// if-else
 
         const fetchData = async () => {
             try {
@@ -63,7 +68,7 @@ const List = () => {
                 setLoading(true); // 로딩 시작
                 setEmployeeData([]); // 초기화
                 const params = new URLSearchParams({
-                    work: work,
+                    work: (empno !== loginEmpData.userId) ? "managed" : "requested",
                     employee: empno,
                 });
 
