@@ -161,7 +161,7 @@ const List = () => {
     handleSearchData("searchText", "");
 
     handleGetList(1);
-  }, [token, handleGetUpComingList, handleGetList]);
+  }, [token]);
 
   //project data 삭제
   const handleProjectDelete = useCallback(
@@ -191,7 +191,7 @@ const List = () => {
         infoAlert("error", "오류가 발생했습니다. 다시 시도해주세요.", " ");
       }
     },
-    [token, searchData, currPage, handleGetList, handleGetUpComingList]
+    [token, searchData, currPage]
   );
 
   function infoAlert(icon, title, msg) {
