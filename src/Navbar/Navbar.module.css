@@ -8,10 +8,10 @@
     width: 100px;
     height: 80vh;
     border-radius: 30px;
-    /* background-color: #337ab7; */
+    background-color: #373737;
     /* background-color: #8383db; */
     /* background-color: #9b9bfa; */
-    background: linear-gradient(180deg, #9b9bfa, #babafc);
+    /* background: linear-gradient(180deg, #9b9bfa, #babafc); */
     z-index: 2;
 
     /* background-image: url("./img/wall.jpg");
@@ -53,7 +53,7 @@
 /* .buttons .flip:hover {
     border-radius: 7px;
     transition: all .3s ease;
-    color: springgreen;
+    color: #;
 } */
 
 .flip .text {
@@ -68,15 +68,11 @@
     margin-bottom: 5px;
 }
 
-/* .flip:hover .icon,
+.flip:hover .icon,
 .flip:hover .text {
-    background: linear-gradient(90deg, #878cfb, #c383fa);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text; 
-    color: transparent;    
+    color: #b2b2ff;    
     transition: all 0.3s ease-in-out;
-} */
+}
 
 .profile {
     position: absolute;

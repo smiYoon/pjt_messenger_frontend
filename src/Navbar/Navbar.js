@@ -133,7 +133,7 @@ const Navbar = () => {
         <Link to={`/member/edit/${decodedToken.empno}`} className={styles.profile_link}>
           <div className={styles.profile_img}>
             <img
-              src={`https://localhost/${decodedToken.empno}`}
+              src={`https://localhost/${decodedToken.empno}.png`}
               alt=''
               className={styles.profileImg} 
               onError={e => { e.target.onerror = null; e.target.src = profile; }}

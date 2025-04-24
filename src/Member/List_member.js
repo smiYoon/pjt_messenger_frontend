@@ -168,7 +168,7 @@ const List_member = () => {
               <div key={member.empno} className={styles.card}>
                 <div className={styles.profile_container}>
                   <img
-                    src={`https://localhost/${member.empno}`}
+                    src={`https://localhost/${member.empno}.png`}
                     className={styles.profileImg}
                     alt='' 
                     onError={e => { e.target.onerror = null; e.target.src = profile; }}
