@@ -189,6 +189,7 @@ const Feedback_list = () => {
                                             <td className={styles.number}>{post.id}</td>
                                             <td className={`${styles.postTitle} ${styles.alignLeft}`}>{post.title}</td>
                                             <td className={styles.writer}>
+                                                {post.employee.department.name}{"  "}
                                                 {post.employee.name}{" "}
                                                 {empPositionMapping[post.employee.position]}
                                             </td>

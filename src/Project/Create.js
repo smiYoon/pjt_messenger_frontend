@@ -28,8 +28,8 @@ const Create = ({ closeModal, infoAlert, handleGetUpComingList, handleGetList })
     endDate: "",
     status: "",
     detail: "",
-    managerEmpno: decodedToken.empno,
-    creatorEmpno: decodedToken.empno,
+    managerEmpno: decodedToken?.empno,
+    creatorEmpno: decodedToken?.empno,
   });
 
   useEffect(() => { 
@@ -146,8 +146,8 @@ const Create = ({ closeModal, infoAlert, handleGetUpComingList, handleGetList })
           endDate: "",
           status: "",
           detail: "",
-          managerEmpno: decodedToken.empno,
-          creatorEmpno: decodedToken.empno,
+          managerEmpno: decodedToken?.empno,
+          creatorEmpno: decodedToken?.empno,
         });
         onClose();
       }

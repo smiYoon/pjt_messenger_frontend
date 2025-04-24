@@ -236,7 +236,7 @@ const Modify_member = () => {
                                     onChange={(e) => handleChange(e.target.name, e.target.value)}
                                     />
                                     <div className={styles.position_text}>직급</div> */}
-                                {decodedToken.position === 5 ? (
+                                {decodedToken?.position === 5 ? (
                                     <>
                                         <select
                                             name='dept_id'
