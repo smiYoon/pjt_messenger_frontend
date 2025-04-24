@@ -8,7 +8,10 @@
     width: 100px;
     height: 80vh;
     border-radius: 30px;
-    background-color: #373737;
+    /* background-color: #337ab7; */
+    /* background-color: #8383db; */
+    /* background-color: #9b9bfa; */
+    background: linear-gradient(180deg, #9b9bfa, #babafc);
     z-index: 2;
 
     /* background-image: url("./img/wall.jpg");
@@ -40,27 +43,40 @@
     font-size: 0.9rem;
     font-weight: bold;
     text-decoration: none;
-    color: white;
+    /* color: white; */
     display: flex;
     flex-direction: column;
     border: none;
     transition: color 0.5s ease-in-out;
 }
 
-.buttons .flip:hover {
-    /* border-radius: 7px;
-    transition: all .3s ease; */
-    color: greenyellow;
+/* .buttons .flip:hover {
+    border-radius: 7px;
+    transition: all .3s ease;
+    color: springgreen;
+} */
+
+.flip .text {
+    font-size: 0.9rem;
+    color: #fff;
 }
 
 .flip .icon {
     display: block;
+    color: #fff;
     font-size: 1.3rem;
+    margin-bottom: 5px;
 }
 
-.flip .text {
-    margin-top: 5px;
-}
+/* .flip:hover .icon,
+.flip:hover .text {
+    background: linear-gradient(90deg, #878cfb, #c383fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text; 
+    color: transparent;    
+    transition: all 0.3s ease-in-out;
+} */
 
 .profile {
     position: absolute;
@@ -76,12 +92,19 @@
 .profile .profile_img {
     width: 2.5vw;
     height: 2.5vw;
+    border: 2px solid #6c47ff;
     border-radius: 50%;
+    background-color: skyblue;
     overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .profileImg {
-    width: 2.5vw;
+    width: calc(2.5vw + 10px);
+
 }
 
 .logout {

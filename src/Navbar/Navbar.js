@@ -1,5 +1,5 @@
 import styles from './Navbar.module.css';
-import profile from './img/profile.png';
+import profile from '../Member/img/Default.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
@@ -132,7 +132,12 @@ const Navbar = () => {
       <div className={styles.profile}>
         <Link to={`/member/edit/${decodedToken.empno}`} className={styles.profile_link}>
           <div className={styles.profile_img}>
-            <img src={`https://localhost/${decodedToken.empno}.png`} alt='' className={styles.profileImg} />
+            <img
+              src={`https://localhost/${decodedToken.empno}`}
+              alt=''
+              className={styles.profileImg} 
+              onError={e => { e.target.onerror = null; e.target.src = profile; }}
+            />
           </div>
         </Link>
         <div className={styles.logout}>

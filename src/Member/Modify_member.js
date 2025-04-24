@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import styles from './Modify_member.module.css';
 import profile from '../Navbar/img/profile.png';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useLoadScript } from '../LoadScriptContext';
 
 const Modify_member = () => {
 
-    const { decodedToken, token } = useLoadScript();
+    const [searchParams] = useSearchParams();
+    const page = searchParams.get('page');
+    const { decodedToken, role_level, token } = useLoadScript();
     const navigate = useNavigate();
     const handleCancelClick = () => {
         Swal.fire({
@@ -20,7 +22,7 @@ const Modify_member = () => {
             cancelButtonText: '취소',
         }).then(result => {
             if (result.isConfirmed) {
-                navigate(-1);
+                navigate(`/member/list?page=${page}`);
             } else if (result.isDismissed) {
 
             } // 이전 페이지로 이동
@@ -174,7 +176,7 @@ const Modify_member = () => {
                     <div className={styles.pic}>
                         <div className={styles.pic_container}>
                             <img
-                                src={`https://localhost/${memberForm.empno}.png`}
+                                src={`https://localhost/${memberForm.empno}`}
                                 alt=''
                                 onError={e => { e.target.onerror = null; e.target.src = profile; }}
                             />
