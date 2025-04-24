@@ -10,7 +10,7 @@ import { useLoadScript } from '../LoadScriptContext';
 
 // console.groupCollapsed("src/Project/Modify.js");console.groupEnd();
 
-const Modify = ({ closeModal, infoAlert, project, handleGetUpComingList, handleGetList }) => {
+const Modify = ({ closeModal, infoAlert, project, handleGetUpComingList, handleGetList, currPage }) => {
   // console.group("Modify(", project, ") invoked.");  console.groupEnd();
 
   const { pjtStatusMapping, token } = useLoadScript();
@@ -114,7 +114,7 @@ const Modify = ({ closeModal, infoAlert, project, handleGetUpComingList, handleG
         infoAlert("success", "프로젝트 수정이 완료되었습니다.", " ");
 
         handleGetUpComingList();
-        handleGetList(1, '');
+        handleGetList(currPage, '');
 
         onClose();
       } else {

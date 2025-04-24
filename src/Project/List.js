@@ -308,6 +308,7 @@ const List = () => {
                 infoAlert={infoAlert}
                 handleGetList={handleGetList}
                 handleGetUpComingList={handleGetUpComingList}
+                currPage={currPage}
               />
             ))}
           </div>
