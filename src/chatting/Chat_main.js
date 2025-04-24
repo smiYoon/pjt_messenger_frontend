@@ -125,7 +125,7 @@ const Chat_main = () => {
         }, 10000); // 5000ms = 5초
 
         return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 clear
-    }, [empno, fetchChatrooms]);
+    }, [empno]);
 
 
     useEffect(() => {

@@ -116,7 +116,7 @@ const Notice_list = () => {
         handleSearchData("searchText", "");
 
         handleGetList(1);
-    }, [decodedToken, handleGetList]); // 수정점. [] -> [decodedToken] 04.22 (토큰이 준비될 때 리스트 가져오기.)
+    }, [decodedToken]); // 수정점. [] -> [decodedToken] 04.22 (토큰이 준비될 때 리스트 가져오기.)
 
     if (!decodedToken) return; // 수정점. 04.22
 
