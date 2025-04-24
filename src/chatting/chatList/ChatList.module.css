@@ -81,12 +81,19 @@
 
 /* 아이콘 */
 .empicon {
-    width: 47px;
-    height: 47px;
-    background-color: #6C47FF;
+    width: 40px;
+    height: 40px;
+    /* background-color: #6C47FF; */
     border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
 
-    flex-shrink: 0;
+.empicon img {
+    width: 40px;
 }
 
 /* 오른쪽 정보 */

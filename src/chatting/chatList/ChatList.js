@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { useLoadScript } from "../../LoadScriptContext";
 import styles from './ChatList.module.css';
 
+import profile from '../../Member/img/Default.png';
+import multiProfile from '../../Member/img/MultiDefault.png';
+
 const ChatList = ({ onCreateClick, onChatClick, chatrooms, setChatrooms }) => {
     const { decodedToken, token } = useLoadScript(); // token 추가
     const empno = decodedToken?.empno;
@@ -20,7 +23,7 @@ const ChatList = ({ onCreateClick, onChatClick, chatrooms, setChatrooms }) => {
                 });
 
                 const data = await response.json();
-
+                console.log("채팅방 리스트:", data); // 디버깅용
                 if (Array.isArray(data)) {
                     setChatrooms(data);
                 } else {
@@ -46,7 +49,13 @@ const ChatList = ({ onCreateClick, onChatClick, chatrooms, setChatrooms }) => {
             <div className={styles.roomboxes}>
                 {chatrooms.map((room) => (
                     <div key={room.chat?.id} className={styles.chatroombox} onClick={() => {onChatClick(room.chat?.id); console.log("roomid", room.chat?.id)}}>
-                        <div className={styles.empicon}></div>
+                        <div className={styles.empicon}>
+                            {room?.cnt > 2 ? (
+                                <img src={multiProfile} alt="다수" className={styles.empImg} />
+                            ) : (
+                                <img src={profile} alt='' className={styles.empImg} />
+                            )}
+                        </div>
                         <div className={styles.rightbox}>
                             <div className={styles.projecticon}>{room.chat?.project?.name || ""}</div>
                             <div className={styles.chatname}>{room?.chat?.name}</div>
