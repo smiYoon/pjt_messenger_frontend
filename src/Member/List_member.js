@@ -75,7 +75,7 @@ const List_member = () => {
 
   useEffect(() => {
     fetchMembers();
-  }, [currPage, selectedDeptId, appliedSearchText, appliedSearchWord, pageSize, fetchMembers]);
+  }, [currPage, selectedDeptId, appliedSearchText, appliedSearchWord, pageSize]);
 
   const handlePageChange = (newPage) => {
     setCurrPage(newPage);
