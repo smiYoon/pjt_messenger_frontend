@@ -49,10 +49,17 @@
 .empimg {
     width: 40px;
     height: 40px;
-    background-color: #eee;
+    /* background-color: #eee; */
     border-radius: 50%;
     margin-right: 12px;
-    border: 1px solid #ccc;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.empimg img {
+    width: 40px;
 }
 
 .empname {

@@ -1,4 +1,5 @@
 import styles from './ChatEmpList.module.css';
+import profile from '../../Navbar/img/profile.png';
 
 const ChatEmpList = ({ employees }) => {
 
@@ -12,7 +13,9 @@ const ChatEmpList = ({ employees }) => {
                     <div className={styles.emplist}>
                         {employees.map((emp, idx) => (
                             <div key={idx} className={styles.emp}>
-                                <div className={styles.empimg}></div>
+                                <div className={styles.empimg}>
+                                    <img src= {`https://localhost/${emp.empno}`} onError={e => { e.currentTarget.src = profile; }} alt={emp.name} className={styles.empImg} />
+                                </div>
                                 <div className={styles.empname}>{emp.employee.name || ""}</div>
                             </div>
                         ))}
