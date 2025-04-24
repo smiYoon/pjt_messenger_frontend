@@ -176,7 +176,7 @@ const Modify_member = () => {
                     <div className={styles.pic}>
                         <div className={styles.pic_container}>
                             <img
-                                src={`https://localhost/${memberForm.empno}.png`}
+                                src={`https://localhost/${memberForm.empno}`}
                                 alt=''
                                 onError={e => { e.target.onerror = null; e.target.src = profile; }}
                             />

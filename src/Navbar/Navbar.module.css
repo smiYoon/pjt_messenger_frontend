@@ -53,7 +53,7 @@
 /* .buttons .flip:hover {
     border-radius: 7px;
     transition: all .3s ease;
-    color: #;
+    color: springgreen;
 } */
 
 .flip .text {
@@ -70,7 +70,7 @@
 
 .flip:hover .icon,
 .flip:hover .text {
-    color: #b2b2ff;    
+    color: #a5a9fc;
     transition: all 0.3s ease-in-out;
 }
 
