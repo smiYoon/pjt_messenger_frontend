@@ -61,7 +61,7 @@ const Roomheader = ({ selectedChatRoom }) => {
                     <div className={styles.iconbox}>
                         {displayEmps.map((emp, idx) => (
                             <div key={idx} className={styles.empicon} title={emp.name}>
-                                <img src= {`https://localhost/${emp.empno}`} onError={e => { e.currentTarget.src = profile; }} alt={emp.name} className={styles.empImg} />
+                                <img src= {`https://localhost/${emp?.employee?.empno}.png`} onError={e => { e.currentTarget.src = profile; }} alt={emp.name} className={styles.empImg} />
                             </div>
                         ))}
 
