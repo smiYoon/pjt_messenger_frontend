@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { useLoadScript } from '../LoadScriptContext';
 
 const Feedback_create = () => {
-  const { decodedToken, role_level, token } = useLoadScript();
+  const { decodedToken, token } = useLoadScript();
   const navigate = useNavigate();
 
   const handleCancelClick = () => {

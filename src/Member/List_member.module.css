@@ -142,10 +142,15 @@
     justify-content: center;
     border: 1px solid #6c47ff;
     background-color: skyblue;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .profile_container img {
-    width: 3vw;
+    width: calc(3vw + 20px);
+
 }
 
 .list .card {

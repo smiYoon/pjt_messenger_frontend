@@ -30,7 +30,7 @@ const AiSummary = ({ id, setChatrooms, setSelectedChatRoom, selectedChatRoom , s
         });
 
         if (result.isConfirmed) {
-            const formData = new FormData;
+            const formData = new FormData();
             formData.append("empno", empno);
 
             try  { 
@@ -78,7 +78,7 @@ const AiSummary = ({ id, setChatrooms, setSelectedChatRoom, selectedChatRoom , s
             }
           });
 
-        const formData = new FormData;
+        const formData = new FormData();
         formData.append("empno", empno);
         formData.append("start", formatDateToYMDHM(startDate));
         formData.append("end", formatDateToYMDHM(endDate));
@@ -103,7 +103,7 @@ const AiSummary = ({ id, setChatrooms, setSelectedChatRoom, selectedChatRoom , s
 
     const handleTodaySummary = async () => {
 
-        const formData = new FormData;
+        const formData = new FormData();
         const now = new Date(); // 현재 시간
         const startOfDay = new Date(now);
         startOfDay.setHours(0, 0, 0, 0); // 00:00:00.000으로 설정

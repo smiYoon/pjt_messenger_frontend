@@ -1,6 +1,6 @@
 import './App.css';
 import Navbar from './Navbar/Navbar';
-import Login_new from './Login/Login_new.js';
+import Login from './Login/Login.js';
 import { Member_register, Member_modify, Member_list } from './Member';
 import { Notice_list, Notice_update, Notice_create, Notice_detail, Feedback_list , Feedback_create , Feedback_update, Feedback_detail } from './Board';
 import { Chat_main } from './chatting';
@@ -23,7 +23,7 @@ const App = () => {
       <div className='main'>
         {!excludedRoutes.includes(location.pathname) && <Navbar />}
         <Routes>
-          <Route path="/" element={<Login_new />} />
+          <Route path="/" element={<Login />} />
           <Route path="/member/list" element={<Member_list />} />
           <Route path="/member/edit/:empno" element={<Member_modify />} />
           <Route path="/member/register" element={<Member_register />} />

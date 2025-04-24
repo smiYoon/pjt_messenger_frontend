@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import styles from "./WorkBox.module.css";
-import { useLoadScript } from '../LoadScriptContext.js';
 
 console.groupCollapsed("src/Work/WorkBox.js");console.groupEnd();
 
@@ -15,11 +14,6 @@ const WorkBox = (props) => {
     const {data, loginEmpData, token } = props;
     const [loading, setLoading] = useState(false);
     const [employeeData, setEmployeeData] = useState([]);
-    const userData = {
-        userId: loginEmpData.userId,
-        userDeptId: loginEmpData.userDeptId,
-        userName: loginEmpData.userName,
-    };
 
 
     useEffect(() => {       
@@ -46,7 +40,7 @@ const WorkBox = (props) => {
                     }// try-catch-finally
                   };
                   fetchData();
-        }, []);
+        }, [data.id, token]); 
 
 
 
@@ -104,32 +98,31 @@ const WorkBox = (props) => {
             </div>
 
             <div className={styles.manager}>
-                <div>요청자:  
-                    {
-                        loading 
-                        ? null 
-                        : (
-                            employeeData.workEmployees &&
-                            employeeData.workEmployees.length > 0
-                              ? (() => {
-                                  const names = employeeData.workEmployees.map(item => item.employee.name);
-                                  if (names.length <= 2) {
-                                    return names.join(", ");
-                                  } else {
-                                    return (
-                                      <>
-                                        {names.slice(0, 2).join(", ")}
-                                        {" "}
-                                        <span>
-                                         , ...+{names.length - 2}
-                                        </span>
-                                      </>
-                                    );
-                                  }
-                                })()
-                              : null
-                          )
-                    }
+                <div>요청자: {
+                                loading 
+                                ? null 
+                                : (
+                                    employeeData.workEmployees &&
+                                    employeeData.workEmployees.length > 0
+                                    ? (() => {
+                                        const names = employeeData.workEmployees.map(item => item.employee.name);
+                                        if (names.length <= 2) {
+                                            return names.join(", ");
+                                        } else {
+                                            return (
+                                            <>
+                                                {names.slice(0, 2).join(", ")}
+                                                {" "}
+                                                <span>
+                                                , ...+{names.length - 2}
+                                                </span>
+                                            </>
+                                            );
+                                        }
+                                        })()
+                                    : null
+                                )
+                            }
                 </div> 
                 <div>담당자: {employeeData.employee.name}</div>
             </div>

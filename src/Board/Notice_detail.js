@@ -43,7 +43,7 @@ const Notice_detail = () => {
     };
 
     fetchPostData();
-  }, []);
+  }, [id, token]);
 
   const handleCancelClick = () => {
     navigate(`/board/notice/list`);

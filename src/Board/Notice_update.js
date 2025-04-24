@@ -72,7 +72,7 @@ const Notice_update = () => {
     };
 
     fetchPostData();
-  }, []);
+  }, [id, token]);
 
   // 폼 제출 핸들러
   const handleSubmit = async (event) => {

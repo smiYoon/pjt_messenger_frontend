@@ -7,7 +7,7 @@ import { useLoadScript } from '../LoadScriptContext';
 
 const Feedback_detail = () => {
 
-  const { decodedToken, role_level, token } = useLoadScript();
+  const { decodedToken, token } = useLoadScript();
   const navigate = useNavigate();
   const [post, setPost] = useState([]);
   const { id } = useParams();
@@ -43,7 +43,7 @@ const Feedback_detail = () => {
     };
 
     fetchPostData();
-  }, []);
+  }, [id, token]);
 
   const handleCancelClick = () => {
     navigate(`/board/feedback/list`);

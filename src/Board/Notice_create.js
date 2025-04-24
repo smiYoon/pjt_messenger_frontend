@@ -6,7 +6,7 @@ import { useLoadScript } from '../LoadScriptContext';
 
 const Notice_create = () => {
 
-  const { decodedToken, role_level, token } = useLoadScript();
+  const { decodedToken, token } = useLoadScript();
   const navigate = useNavigate();
 
   const handleCancelClick = () => {

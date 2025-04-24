@@ -192,7 +192,7 @@ const List = () => {
             } // try-catch-finally
         };
         fetchUserData();
-    }, [loginEmpData.userDeptId]); // useEffect
+    }, [loginEmpData.userDeptId, loginEmpData.userId, loginEmpData.userName, loginEmpData.userPosition, token]); // useEffect
 
     useEffect(() => {
         const fetchData = async () => {
@@ -225,7 +225,7 @@ const List = () => {
         };
         // pickedEmployee.empno가 있을 때만 fetch 실행
         if (pickedEmployee.empno) fetchData();
-    }, [work, pickedEmployee]); // useEffect
+    }, [work, pickedEmployee, token]); // useEffect
 
     const [draggedWork, setDraggedWork] = useState(null);
 
@@ -350,7 +350,7 @@ const List = () => {
         <div className={styles.body}>
             <div className={styles.container}>
                 <div className={styles.pageTitle}>
-                    업무 리스트 ({loading ? null : pickedEmployee.name})
+                    {loading ? null : pickedEmployee.name}의 업무 리스트
                 </div>
 
                 <div className={styles.pageMiddle}>
@@ -374,6 +374,7 @@ const List = () => {
                                 {/* 최대 4개만 출력 */}
                                 {departmentMembers
                                     .sort((a, b) => a.name.localeCompare(b.name))
+                                    .filter((emp) => emp.empno !== loginEmpData.userId && emp.empno)
                                     .slice(0, 4)
                                     .map((child, idx) => (
                                         <span
@@ -432,10 +433,7 @@ const List = () => {
                                                 </div>
                                                 {departmentMembers
                                                     .sort((a, b) => a.name.localeCompare(b.name)) // 이름 기준 정렬
-                                                    .filter(
-                                                        (emp) =>
-                                                            emp.empno !== loginEmpData.userId && emp.empno
-                                                    ) // 본인 중복 제거, null 제외
+                                                    .filter((emp) => emp.empno !== loginEmpData.userId && emp.empno)
                                                     .map((emp, idx) => (
                                                         <div
                                                             key={emp.empno || idx}

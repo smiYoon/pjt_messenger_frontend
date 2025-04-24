@@ -158,7 +158,7 @@ const Detail = () => {
             } // try-catch-finally
         }; // fetchDepartmentMembers
         fetchDepartmentMembers();
-    }, [loginEmpData.userDeptId]);
+    }, [loginEmpData.userDeptId, loginEmpData.userId, loginEmpData.userName, loginEmpData.userPosition, token]);
 
     // 담당자 선택/해제
     const handleEmployeeSelect = (emp) => {
@@ -176,6 +176,17 @@ const Detail = () => {
         setIsEmpModalOpen(false);
     };
     
+    useEffect(() => {
+        if(endDate && startDate > endDate) {
+            Swal.fire({
+                text: "종료일은 시작일 이후로 선택해주세요.",
+                icon: "warning",
+                confirmButtonText: "확인",
+                confirmButtonColor: "#6C47FF",
+            }); // Swal.fire
+            setEndDate(null);
+        } // if
+    }, [startDate, endDate]);
 
     useEffect(() => {
         setUploadData(prev => ({
@@ -232,7 +243,7 @@ const Detail = () => {
             }// try-catch-finally
         };
         fetchData();
-    }, [workId]);
+    }, [workId, loginEmpData.userId, token]);
 
     const getDiffDays = (now, endDateStr) => {
         const nowDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -260,19 +271,6 @@ const Detail = () => {
             type: value,
         }));
     };   
-
-
-    useEffect(() => {
-            if(endDate && startDate > endDate) {
-                Swal.fire({
-                    text: "종료일은 시작일 이후로 선택해주세요.",
-                    icon: "warning",
-                    confirmButtonText: "확인",
-                    confirmButtonColor: "#6C47FF",
-                }); // Swal.fire
-                setEndDate(null);
-            } // if
-    }, [startDate]);
 
     const formatDate = (date) => {
         if (typeof date === "string") return date;
@@ -546,7 +544,10 @@ const Detail = () => {
                                         <h3>담당자 선택 ({selectedEmployees.length}명 선택됨)</h3>
                                         <div className={styles.cancelButton}><i className='fas fa-xmark' onClick={() => setIsEmpModalOpen(false)}/></div>
                                         <div className={styles.modalContent}>
-                                            {departmentMembers.sort((a, b) => a.name.localeCompare(b.name)).map(emp => (
+                                            {departmentMembers
+                                            .sort((a, b) => a.name.localeCompare(b.name))
+                                            .filter((emp) => emp.empno !== loginEmpData.userId && emp.empno)
+                                            .map(emp => (
                                                 <div
                                                     key={emp.empno}
                                                     className={`${styles.empItem} ${
@@ -590,9 +591,15 @@ const Detail = () => {
                     <div className={styles.dateBox}>
                         <div>업무 종료일까지</div>
                         <div style={{textAlign: "right"}}>
-                            {loading? 
-                                "로딩중..." : 
-                                (`D-${getDiffDays(new Date(), employeeData.endDate)}`) || "-"}
+                        {
+                            loading
+                                ? "로딩중..."
+                                : (
+                                    isNaN(getDiffDays(new Date(), employeeData.endDate))
+                                    ? "-"
+                                    : `D-${getDiffDays(new Date(), employeeData.endDate)}`
+                                )
+                        }
                         </div>    
                     </div>
 

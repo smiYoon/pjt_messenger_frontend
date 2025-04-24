@@ -1,10 +1,9 @@
 import styles from './List_member.module.css';
 import React, { useState, useEffect, useCallback } from 'react';
 import Organization from '../Organization/Organization';
-import { Link, useNavigate } from 'react-router-dom';
-import profile from '../Navbar/img/profile.png';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import profile from './img/Default.png';
 import { useLoadScript } from '../LoadScriptContext';
-import Swal from 'sweetalert2';
 
 const List_member = () => {
   const { deptName, empPositionMapping, token } = useLoadScript();
@@ -14,9 +13,11 @@ const List_member = () => {
   const [appliedSearchWord, setAppliedSearchWord] = useState("");
   const [selectedDeptId, setSelectedDeptId] = useState(null);
   const [members, setMembers] = useState([]);
+  const [searchParams] = useSearchParams();
+  const initialPage = Number(searchParams.get('page')) || 0;
   const navigate = useNavigate();
 
-  const [currPage, setCurrPage] = useState(0); // 0부터 시작
+  const [currPage, setCurrPage] = useState(initialPage); // 0부터 시작
   const [pageSize] = useState(8);
   const [blockSize] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
@@ -62,7 +63,8 @@ const List_member = () => {
         }));
 
         setTotalPages(isPaginated ? data.totalPages : 1);
-        setMembers(formattedData.sort((a, b) => b.position - a.position));
+        // setMembers(formattedData.sort((a, b) => b.position - a.position));
+        setMembers(formattedData);
       } else {
         setMembers([]);
       }
@@ -165,7 +167,12 @@ const List_member = () => {
             members.map((member) => (
               <div key={member.empno} className={styles.card}>
                 <div className={styles.profile_container}>
-                  <img src={`https://localhost/${member.empno}.png`} className={styles.profileImg} alt='' />
+                  <img
+                    src={`https://localhost/${member.empno}`}
+                    className={styles.profileImg}
+                    alt='' 
+                    onError={e => { e.target.onerror = null; e.target.src = profile; }}
+                    />
                 </div>
                 <div className={styles.name}>
                   {empPositionMapping[member.position]}
@@ -182,7 +189,7 @@ const List_member = () => {
                 <div className={styles.email}>
                   {member.email}
                 </div>
-                <Link to={`/member/edit/${member.empno}`} className={styles.detail}>자세히</Link>
+                <Link to={`/member/edit/${member.empno}?page=${currPage}`} className={styles.detail}>자세히</Link>
               </div>
             ))
           )}

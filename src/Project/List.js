@@ -42,7 +42,7 @@ const List = () => {
     setCurrBlock(Math.floor((currPage - 1) / blockSize));
     setStartPage(currBlock * blockSize);
     setEndPage(Math.min(startPage + blockSize, totalPageCnt));
-  }, [currPage, totalPageCnt, currBlock, startPage, endPage]);
+  }, [currPage, totalPageCnt, currBlock, startPage, endPage, blockSize]);
 
   // 검색어 및 상태 관리
   const [searchData, setSearchData] = useState({
@@ -147,7 +147,7 @@ const List = () => {
         console.error("Error fetching data:", error);
       }
     },
-    [token, searchData, currPage]
+    [token, searchData, currPage, blockSize, currBlock, startPage, endPage, pageSize, totalPageCnt]
   );
 
   // 컴포넌트 마운트 시 첫 데이터 로드
@@ -161,7 +161,7 @@ const List = () => {
     handleSearchData("searchText", "");
 
     handleGetList(1);
-  }, [token]);
+  }, [token, handleGetUpComingList, handleGetList]);
 
   //project data 삭제
   const handleProjectDelete = useCallback(
@@ -191,7 +191,7 @@ const List = () => {
         infoAlert("error", "오류가 발생했습니다. 다시 시도해주세요.", " ");
       }
     },
-    [token, searchData, currPage]
+    [token, searchData, currPage, handleGetList, handleGetUpComingList]
   );
 
   function infoAlert(icon, title, msg) {
