@@ -98,7 +98,8 @@ const WorkBox = (props) => {
             </div>
 
             <div className={styles.manager}>
-                <div>요청자: {
+                <div>요청자: {employeeData.employee.name}</div>
+                <div>담당자: {
                                 loading 
                                 ? null 
                                 : (
@@ -124,7 +125,6 @@ const WorkBox = (props) => {
                                 )
                             }
                 </div> 
-                <div>담당자: {employeeData.employee.name}</div>
             </div>
         </div>
     );
