@@ -70,7 +70,7 @@
 
 .flip:hover .icon,
 .flip:hover .text {
-    color: #a5a9fc;
+    color: #c2c5fc;
     transition: all 0.3s ease-in-out;
 }
 
