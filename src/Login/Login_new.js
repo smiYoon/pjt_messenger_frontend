@@ -8,7 +8,6 @@ import logo from './img/logo.png';
 
 const Login_new = () => {
     console.log("Login() invoked.");
-    const { decodedToken } = useLoadScript();
 
     const navigate = useNavigate();
     const [message, setMessage] = useState();

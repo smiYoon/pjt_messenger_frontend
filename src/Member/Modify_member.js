@@ -7,7 +7,7 @@ import { useLoadScript } from '../LoadScriptContext';
 
 const Modify_member = () => {
 
-    const { decodedToken, role_level, token } = useLoadScript();
+    const { decodedToken, token } = useLoadScript();
     const navigate = useNavigate();
     const handleCancelClick = () => {
         Swal.fire({
@@ -157,7 +157,7 @@ const Modify_member = () => {
 
         fetchMemberData();
         fetchDeptId();
-    }, [empno]);
+    }, [empno, token]);
 
     const level = {
         "1": "팀원",

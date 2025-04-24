@@ -53,7 +53,7 @@ const Chat_main = () => {
             console.log("🧹 기존 소켓 연결 해제");
             newSocket.close();
         };
-    }, [selectedChatRoom?.id]);
+    }, [selectedChatRoom?.id, empno]);
 
 
     const handleChatRoomClick = async (chatId) => {
@@ -92,7 +92,7 @@ const Chat_main = () => {
         const intervalId = setInterval(fetchChatRoomDetail, 10000); // 10초마다 갱신
 
         return () => clearInterval(intervalId);
-    }, [selectedChatRoom?.id]);
+    }, [selectedChatRoom?.id, token]);
 
 
     // 채팅방 리스트 받아오기 (채팅방이름, 등록한사람 아이콘, 프로젝트 유무)
@@ -125,14 +125,14 @@ const Chat_main = () => {
         }, 10000); // 5000ms = 5초
 
         return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 clear
-    }, [empno]);
+    }, [empno, fetchChatrooms]);
 
 
     useEffect(() => {
         if (!selectedChatRoom && chatrooms.length > 0) {
             handleChatRoomClick(chatrooms[0].chat?.id); // 첫 번째 채팅방 자동 선택
         }
-    }, [chatrooms]);
+    }, [chatrooms, selectedChatRoom, handleChatRoomClick]);
 
     return (
         <div className={styles.body}>

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useLoadScript } from '../LoadScriptContext';
 
 const Feedback_list = () => {
-    const { decodedToken, role_level, token, empPositionMapping } = useLoadScript();
+    const { decodedToken, token, empPositionMapping } = useLoadScript();
 
     const [list, setList] = useState([]);
 
@@ -25,7 +25,7 @@ const Feedback_list = () => {
         setCurrBlock(Math.floor((currPage - 1) / blockSize));
         setStartPage(currBlock * blockSize);
         setEndPage(Math.min(startPage + blockSize, totalPageCnt));
-    }, [currPage, totalPageCnt, currBlock, startPage, endPage]);
+    }, [currPage, totalPageCnt, currBlock, startPage, endPage, blockSize]);
 
     // 검색어 및 상태 관리
     const [searchData, setSearchData] = useState({
@@ -103,7 +103,7 @@ const Feedback_list = () => {
                 console.error("Error fetching data:", error);
             }
         },
-        [searchData, currPage, decodedToken] // 수정점. 04.22
+        [searchData, currPage, decodedToken, blockSize, currBlock, pageSize, startPage, token, totalPageCnt] // 수정점. 04.22
     );
 
     // 컴포넌트 마운트 시 첫 데이터 로드
@@ -116,7 +116,7 @@ const Feedback_list = () => {
         handleSearchData("searchText", "");
 
         handleGetList(1);
-    }, [decodedToken]); // 수정점. [] -> [decodedToken] 04.22 (토큰이 준비될 때 리스트 가져오기.)
+    }, [decodedToken, handleGetList]); // 수정점. [] -> [decodedToken] 04.22 (토큰이 준비될 때 리스트 가져오기.)
 
     if (!decodedToken) return; // 수정점. 04.22
 

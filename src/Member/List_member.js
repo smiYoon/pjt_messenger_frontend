@@ -4,7 +4,6 @@ import Organization from '../Organization/Organization';
 import { Link, useNavigate } from 'react-router-dom';
 import profile from '../Navbar/img/profile.png';
 import { useLoadScript } from '../LoadScriptContext';
-import Swal from 'sweetalert2';
 
 const List_member = () => {
   const { deptName, empPositionMapping, token } = useLoadScript();
@@ -14,7 +13,6 @@ const List_member = () => {
   const [appliedSearchWord, setAppliedSearchWord] = useState("");
   const [selectedDeptId, setSelectedDeptId] = useState(null);
   const [members, setMembers] = useState([]);
-  const navigate = useNavigate();
 
   const [currPage, setCurrPage] = useState(0); // 0부터 시작
   const [pageSize] = useState(8);

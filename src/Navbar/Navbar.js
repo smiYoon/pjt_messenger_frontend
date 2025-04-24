@@ -7,7 +7,7 @@ import { useLoadScript } from '../LoadScriptContext';
 import Swal from 'sweetalert2';
 
 const Navbar = () => {
-  const { role_level, decodedToken, updateToken } = useLoadScript();
+  const { decodedToken, updateToken } = useLoadScript();
 
   // decodedToken이 로딩되기 전에는 아무것도 렌더링하지 않도록 처리
   if (!decodedToken) return null;
@@ -44,7 +44,7 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.buttons}>
-        {decodedToken.position == 5 || decodedToken.position == 9 ? (
+        {decodedToken.position === 5 || decodedToken.position === 9 ? (
           <Link to={`/member/list`} className={styles.flip}>
             <i className={`${styles.icon} fas fa-user`} />
             <div className={styles.text}>회원관리</div>
@@ -61,7 +61,7 @@ const Navbar = () => {
           </a>
         )}
 
-        {decodedToken.position != 5 ? (
+        {decodedToken.position !== 5 ? (
           <Link to={`/chat`} className={styles.flip}>
             <i className={`${styles.icon} fas fa-comment-dots`} />
             <div className={styles.text}>채팅</div>
@@ -78,7 +78,7 @@ const Navbar = () => {
           </a>
         )}
 
-        {decodedToken.position != 4 && decodedToken.position != 5 ? (
+        {decodedToken.position !== 4 && decodedToken.position !== 5 ? (
           <Link to={`/work`} className={styles.flip}>
             <i className={`${styles.icon} fas fa-file-pen`} />
             <div className={styles.text}>업무</div>
@@ -94,7 +94,7 @@ const Navbar = () => {
             <div className={styles.text}>업무</div>
           </a>
         )}
-        {decodedToken.position != 5 ? (
+        {decodedToken.position !== 5 ? (
           <Link to={`/board/notice/list`} className={styles.flip}>
             <i className={`${styles.icon} fas fa-chalkboard`} />
             <div className={styles.text}>게시판</div>
@@ -111,7 +111,7 @@ const Navbar = () => {
           </a>
         )}
 
-        {decodedToken.position != 1 && decodedToken.position != 5 ? (
+        {decodedToken.position !== 1 && decodedToken.position !== 5 ? (
           <Link to={`/project/list`} className={styles.flip}>
             <i className={`${styles.icon} fa-solid fa-list-check`} />
             <div className={styles.text}>프로젝트</div>

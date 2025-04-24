@@ -7,7 +7,7 @@ import { useLoadScript } from '../LoadScriptContext';
 
 const Feedback_update = () => {
 
-    const {token , decodedToken } = useLoadScript
+    const {token} = useLoadScript
 
     const navigate = useNavigate();
     const [post, setPost] = useState({
@@ -74,7 +74,7 @@ const Feedback_update = () => {
       };
   
       fetchPostData();
-    }, []);
+    }, [id, token]);
   
     // 폼 제출 핸들러
     const handleSubmit = async (event) => {

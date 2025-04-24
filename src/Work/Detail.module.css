@@ -115,9 +115,17 @@
     border-radius: 30px;
 }
 
+.status1.on:hover{
+    background-color: #1f6474;
+}
+
 .status2.on{
     border: solid 2px #10273b;
     border-radius: 30px;
+}
+
+.status2.on:hover{
+    background-color: #10273b;
 }
 
 .status3.on{
@@ -125,15 +133,23 @@
     border-radius: 30px;
 }
 
+.status3.on:hover{
+    background-color: #865511;
+}
+
 .status4.on{
     border: solid 2px #1f491f;
     border-radius: 30px;
 }
 
-.status1:hover { border: 2px solid #31a6c0; background-color: #31a6c0; color: white;}
-.status2:hover { border: 2px solid #286090; background-color: #286090; color: white;}
-.status3:hover { border: 2px solid #ec971f; background-color: #ec971f; color: white;}
-.status4:hover { border: 2px solid #449d44; background-color: #449d44; color: white;}
+.status4.on:hover{
+    background-color: #1f491f;
+}
+
+.status1:hover { border: 2px solid #1f6474; background-color: #31a6c0; color: white;}
+.status2:hover { border: 2px solid #10273b; background-color: #286090; color: white;}
+.status3:hover { border: 2px solid #865511; background-color: #ec971f; color: white;}
+.status4:hover { border: 2px solid #1f491f; background-color: #449d44; color: white;}
 
 .type{
     width: 20%;
@@ -147,6 +163,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 2px solid white;
 }
 
 .type.on{
@@ -155,6 +172,7 @@
 
 .type:hover{
     background-color: #6C47FF;
+    border: 2px solid #6C47FF;
     color: white;
 }
 
@@ -168,6 +186,9 @@
     cursor: pointer;
 }
 
+.reactDatepicker:focus {
+    outline: none;
+}
 
 .detailInputBox{
     width: 100%;
@@ -313,6 +334,10 @@
 
 .cancelButton {
     color: #222;
+    position: absolute;
+    right: 20px;
+    top: 6.5vh;
+    cursor: pointer;
 }
 
 
@@ -372,13 +397,6 @@
     border-radius: 8px;
     font-size: 1.5rem;
     position: relative;
-}
-
-.cancelButton {
-    position: absolute;
-    right: 20px;
-    top: 6.5vh;
-    cursor: pointer;
 }
 
 .modalContent{

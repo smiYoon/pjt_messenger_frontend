@@ -29,7 +29,7 @@ const Chatting = ({id, messages, setMessages, socket, socketError}) => {
         };
 
         if (id) fetchMessages();
-    }, [id]);
+    }, [id, setMessages, token]);
 
     useEffect(() => {
         if (!socket) return;
@@ -52,7 +52,7 @@ const Chatting = ({id, messages, setMessages, socket, socketError}) => {
         return () => {
             socket.onmessage = null;
         };
-    }, [socket]);
+    }, [socket, empno, setMessages]);
     
     const sendMessage = (msg) => {
         const messageObj = {

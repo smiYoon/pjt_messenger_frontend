@@ -141,7 +141,7 @@ const Create = () => {
             } // try-catch
         }; // fetchDepartmentMembers
         fetchDepartmentMembers();
-    }, [loginEmpData.userDeptId]);
+    }, [loginEmpData.userDeptId, loginEmpData.userPosition, loginEmpData.userId, loginEmpData.userName, loginEmpData.userPosition, token]); // useEffect
 
     // 담당자 선택 모달 핸들러
     const handleEmployeeSelect = (emp) => {
@@ -190,7 +190,7 @@ const Create = () => {
             }); // Swal.fire
             setEndDate(null);
         } // if
-    }, [startDate]);
+    }, [startDate, endDate]);
 
     const formatDate = (date) => date ? date.toISOString().slice(0, 10) : "";
 
@@ -305,7 +305,7 @@ const Create = () => {
             confirmButtonColor: "#6C47FF",
             cancelButtonColor: "#FFFFFF",
             customClass: {
-                cancelButton: styles.cancelButton,
+                cancelButton: styles.backCancelButton,
             },
         }).then((result) => {
             if (result.isConfirmed) {
@@ -325,7 +325,7 @@ const Create = () => {
             confirmButtonColor: "#6C47FF",
             cancelButtonColor: "#FFFFFF",
             customClass: {
-                cancelButton: styles.cancelButton,
+                cancelButton: styles.backCancelButton,
             },
         }).then((result) => {
             if (result.isConfirmed) {
@@ -432,8 +432,12 @@ const Create = () => {
                             <div className={styles.modalBackdrop}>
                                 <div className={styles.empModal}>
                                     <h3>담당자 선택 ({selectedEmployees.length}명 선택됨)</h3>
+                                    <div className={styles.cancelButton}><i className='fas fa-xmark' onClick={() => setIsEmpModalOpen(false)}/></div>
                                     <div className={styles.modalContent}>
-                                        {departmentMembers.sort((a, b) => a.name.localeCompare(b.name)).map(emp => (
+                                        {departmentMembers
+                                        .sort((a, b) => a.name.localeCompare(b.name))
+                                        .filter((emp) => emp.empno !== loginEmpData.userId && emp.empno)
+                                        .map(emp => (
                                             <div 
                                                 key={emp.empno}
                                                 className={`${styles.empItem} ${
