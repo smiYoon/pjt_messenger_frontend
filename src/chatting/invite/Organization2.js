@@ -15,7 +15,7 @@ const Organization2 = ({ onCloseOrgaClick, handleChatRoomClick, id , socket}) =>
 
   const containerRef = useRef(null);
 
-  const { decodedToken, token } = useLoadScript(); //  token 가져옴
+  const { token } = useLoadScript(); //  token 가져옴
 
   useEffect(() => {
     const fetchData = async () => {
