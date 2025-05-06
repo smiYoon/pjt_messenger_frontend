@@ -347,4 +347,5 @@ const Register_member = () => {
     )
 }
 
+
 export default Register_member
